@@ -3955,15 +3955,6 @@
       "norm_label": "ignorepointer"
     },
     {
-      "label": "_triangleWave",
-      "file_type": "code",
-      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
-      "source_location": null,
-      "id": "lib_app_shared_widgets_loading_overlay_dart_trianglewave",
-      "community": 11,
-      "norm_label": "_trianglewave"
-    },
-    {
       "label": "SizedBox",
       "file_type": "code",
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
@@ -3971,6 +3962,15 @@
       "id": "lib_app_shared_widgets_loading_overlay_dart_sizedbox",
       "community": 11,
       "norm_label": "sizedbox"
+    },
+    {
+      "label": "_triangleWave",
+      "file_type": "code",
+      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
+      "source_location": null,
+      "id": "lib_app_shared_widgets_loading_overlay_dart_trianglewave",
+      "community": 11,
+      "norm_label": "_trianglewave"
     },
     {
       "label": "Stack",
@@ -11857,9 +11857,9 @@
       "source_location": null,
       "weight": 1.0,
       "_src": "lib_app_shared_widgets_loading_overlay_dart",
-      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_trianglewave",
+      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_sizedbox",
       "source": "lib_app_shared_widgets_loading_overlay_dart",
-      "target": "lib_app_shared_widgets_loading_overlay_dart_trianglewave"
+      "target": "lib_app_shared_widgets_loading_overlay_dart_sizedbox"
     },
     {
       "relation": "defines",
@@ -11869,9 +11869,9 @@
       "source_location": null,
       "weight": 1.0,
       "_src": "lib_app_shared_widgets_loading_overlay_dart",
-      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_sizedbox",
+      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_trianglewave",
       "source": "lib_app_shared_widgets_loading_overlay_dart",
-      "target": "lib_app_shared_widgets_loading_overlay_dart_sizedbox"
+      "target": "lib_app_shared_widgets_loading_overlay_dart_trianglewave"
     },
     {
       "relation": "defines",

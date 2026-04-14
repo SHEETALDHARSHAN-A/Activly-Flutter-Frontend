@@ -38,7 +38,18 @@ class _LoadingOverlayState extends State<LoadingOverlay>
         child: ColoredBox(
           color: kColorBlack,
           child: Center(
-            child: _UiverseHeartLoader(controller: _controller),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Image.asset(
+                  'assets/Activly-text-with-bottom-line.webp',
+                  width: 300,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(height: 18),
+                _UiverseHeartLoader(controller: _controller),
+              ],
+            ),
           ),
         ),
       ),
@@ -246,4 +257,3 @@ class _BladeSpinnerState extends State<_BladeSpinner>
     );
   }
 }
-

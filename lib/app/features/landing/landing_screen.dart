@@ -82,19 +82,9 @@ class _LandingScreenState extends State<LandingScreen> {
                                     yOffset: 0.15,
                                     delay: const Duration(milliseconds: 450),
                                     child: Image.asset(
-                                      'assets/Activly-text-with-bottom-line.webp',
-                                      width: compact ? 300 : 350,
+                                      'assets/Activly-logo.png',
+                                      width: compact ? 260 : 310,
                                       fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                  SizedBox(height: 10 * compactScale),
-                                  _FadeSlide(
-                                    visible: isLoaded,
-                                    yOffset: 0.12,
-                                    delay: const Duration(milliseconds: 500),
-                                    child: const _BladeSpinner(
-                                      size: 22,
-                                      color: kColorPrimary,
                                     ),
                                   ),
                                   SizedBox(height: 18 * compactScale),
@@ -459,4 +449,3 @@ class _AnimatedSkipForNowState extends State<_AnimatedSkipForNow>
     );
   }
 }
-

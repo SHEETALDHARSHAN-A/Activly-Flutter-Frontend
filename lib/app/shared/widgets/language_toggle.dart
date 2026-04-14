@@ -19,8 +19,8 @@ class LanguageToggle extends StatelessWidget {
     return GestureDetector(
       onTap: onToggle,
       child: Container(
-        width: 82,
-        height: 36,
+        width: kTopControlWidth,
+        height: kTopControlHeight,
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: Colors.black.withValues(alpha: 0.50),

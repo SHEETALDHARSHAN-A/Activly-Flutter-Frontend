@@ -500,7 +500,12 @@ class _AuthScreenState extends State<AuthScreen> {
       child: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, kFixedTopSpace, 24, 12),
+          padding: const EdgeInsets.fromLTRB(
+            kTopControlsSidePadding,
+            kFixedTopSpace,
+            kTopControlsSidePadding,
+            12,
+          ),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 420),
@@ -511,7 +516,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: <Widget>[
-                  const SizedBox(height: 36),
+                  const SizedBox(height: kTopControlHeight),
                   const SizedBox(height: 16),
                   Image.asset(
                     'assets/Activly-logo.png',
@@ -1107,7 +1112,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
                   Positioned(
-                    top: 0,
+                    top: kTopControlsVerticalOffset,
                     left: 0,
                     right: 0,
                     child: Row(

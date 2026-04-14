@@ -251,15 +251,25 @@ class _LandingScreenState extends State<LandingScreen> {
               ),
             ),
             Positioned(
-              top: topInset + 8,
-              right: 16,
+              top: topInset + kTopControlsVerticalOffset,
+              left: kTopControlsSidePadding,
+              right: kTopControlsSidePadding,
               child: _FadeSlide(
                 visible: isLoaded,
                 yOffset: 0,
                 delay: const Duration(milliseconds: 1000),
-                child: LanguageToggle(
-                  language: language,
-                  onToggle: onToggleLanguage,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const SizedBox(
+                      width: kTopControlWidth,
+                      height: kTopControlHeight,
+                    ),
+                    LanguageToggle(
+                      language: language,
+                      onToggle: onToggleLanguage,
+                    ),
+                  ],
                 ),
               ),
             ),

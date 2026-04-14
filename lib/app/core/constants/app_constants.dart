@@ -4,6 +4,10 @@ const Duration kButtonLoadingDuration = Duration(milliseconds: 550);
 const Duration kButtonFillDuration = Duration(milliseconds: 320);
 const Duration kButtonLoaderRevealDelay = Duration(milliseconds: 380);
 const double kFixedTopSpace = 51.0;
+const double kTopControlsVerticalOffset = 8.0;
+const double kTopControlsSidePadding = 16.0;
+const double kTopControlHeight = 36.0;
+const double kTopControlWidth = 82.0;
 
 const Map<AppLanguage, TranslationCopy> kTranslations = {
   AppLanguage.en: TranslationCopy(

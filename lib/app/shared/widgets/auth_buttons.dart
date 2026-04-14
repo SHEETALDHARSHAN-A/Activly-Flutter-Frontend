@@ -283,6 +283,9 @@ class _LoadingOutlinedButtonIconState extends State<_LoadingOutlinedButtonIcon> 
         ),
         backgroundColor: Colors.black.withValues(alpha: 0.45),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+        minimumSize: const Size(0, 36),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: _loading
           ? const _BladeSpinner(size: 18)

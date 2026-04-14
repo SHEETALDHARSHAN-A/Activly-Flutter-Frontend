@@ -9,7 +9,7 @@
       "source_file": "android\\build.gradle.kts",
       "source_location": "L1",
       "id": "android_build_gradle_kts",
-      "community": 39,
+      "community": 40,
       "norm_label": "build.gradle.kts"
     },
     {
@@ -18,7 +18,7 @@
       "source_file": "android\\settings.gradle.kts",
       "source_location": "L1",
       "id": "android_settings_gradle_kts",
-      "community": 40,
+      "community": 41,
       "norm_label": "settings.gradle.kts"
     },
     {
@@ -27,7 +27,7 @@
       "source_file": "android\\app\\build.gradle.kts",
       "source_location": "L1",
       "id": "android_app_build_gradle_kts",
-      "community": 41,
+      "community": 42,
       "norm_label": "build.gradle.kts"
     },
     {
@@ -36,7 +36,7 @@
       "source_file": "android\\app\\src\\main\\java\\io\\flutter\\plugins\\GeneratedPluginRegistrant.java",
       "source_location": "L1",
       "id": "android_app_src_main_java_io_flutter_plugins_generatedpluginregistrant_java",
-      "community": 23,
+      "community": 24,
       "norm_label": "generatedpluginregistrant.java"
     },
     {
@@ -45,7 +45,7 @@
       "source_file": "ios\\Runner\\GeneratedPluginRegistrant.m",
       "source_location": "L15",
       "id": "generatedpluginregistrant_generatedpluginregistrant",
-      "community": 23,
+      "community": 24,
       "norm_label": "generatedpluginregistrant"
     },
     {
@@ -54,7 +54,7 @@
       "source_file": "android\\app\\src\\main\\java\\io\\flutter\\plugins\\GeneratedPluginRegistrant.java",
       "source_location": "L17",
       "id": "generatedpluginregistrant_generatedpluginregistrant_registerwith",
-      "community": 23,
+      "community": 24,
       "norm_label": ".registerwith()"
     },
     {
@@ -63,7 +63,7 @@
       "source_file": "android\\app\\src\\main\\kotlin\\com\\example\\activly\\MainActivity.kt",
       "source_location": "L1",
       "id": "android_app_src_main_kotlin_com_example_activly_mainactivity_kt",
-      "community": 30,
+      "community": 31,
       "norm_label": "mainactivity.kt"
     },
     {
@@ -72,7 +72,7 @@
       "source_file": "android\\app\\src\\main\\kotlin\\com\\example\\activly\\MainActivity.kt",
       "source_location": "L5",
       "id": "mainactivity_mainactivity",
-      "community": 30,
+      "community": 31,
       "norm_label": "mainactivity"
     },
     {
@@ -81,7 +81,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\bin\\cli.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_bin_cli_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "cli.dart"
     },
     {
@@ -90,7 +90,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\bin\\cli.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_bin_cli_dart_runapp",
-      "community": 1,
+      "community": 0,
       "norm_label": "runapp"
     },
     {
@@ -99,7 +99,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_entry_point_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/entry_point.dart"
     },
     {
@@ -108,7 +108,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\dart_skills_lint.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_dart_skills_lint_dart",
-      "community": 42,
+      "community": 43,
       "norm_label": "dart_skills_lint.dart"
     },
     {
@@ -153,7 +153,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\resource_fetcher_service_test.dart",
       "source_location": null,
       "id": "dart_io",
-      "community": 0,
+      "community": 1,
       "norm_label": "dart:io"
     },
     {
@@ -162,7 +162,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\resource_fetcher_service_test.dart",
       "source_location": null,
       "id": "package_logging_logging_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:logging/logging.dart"
     },
     {
@@ -252,7 +252,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\gemini_service_test.dart",
       "source_location": null,
       "id": "dart_convert",
-      "community": 0,
+      "community": 1,
       "norm_label": "dart:convert"
     },
     {
@@ -261,7 +261,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "package_args_args_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:args/args.dart"
     },
     {
@@ -270,7 +270,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "package_meta_meta_dart",
-      "community": 13,
+      "community": 14,
       "norm_label": "package:meta/meta.dart"
     },
     {
@@ -324,7 +324,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\skills_ignores_storage.dart",
       "source_location": null,
       "id": "models_skills_ignores_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "models/skills_ignores.dart"
     },
     {
@@ -369,7 +369,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart",
-      "community": 8,
+      "community": 9,
       "norm_label": "rule_registry.dart"
     },
     {
@@ -378,7 +378,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart_ruleregistry",
-      "community": 8,
+      "community": 9,
       "norm_label": "ruleregistry"
     },
     {
@@ -387,7 +387,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart_checktype",
-      "community": 8,
+      "community": 9,
       "norm_label": "checktype"
     },
     {
@@ -396,7 +396,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart_absolutepathsrule",
-      "community": 8,
+      "community": 9,
       "norm_label": "absolutepathsrule"
     },
     {
@@ -405,7 +405,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart_descriptionlengthrule",
-      "community": 8,
+      "community": 9,
       "norm_label": "descriptionlengthrule"
     },
     {
@@ -414,7 +414,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart_disallowedfieldrule",
-      "community": 8,
+      "community": 9,
       "norm_label": "disallowedfieldrule"
     },
     {
@@ -423,7 +423,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart_nameformatrule",
-      "community": 8,
+      "community": 9,
       "norm_label": "nameformatrule"
     },
     {
@@ -432,7 +432,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart_relativepathsrule",
-      "community": 8,
+      "community": 9,
       "norm_label": "relativepathsrule"
     },
     {
@@ -441,7 +441,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_rule_registry_dart_validyamlmetadatarule",
-      "community": 8,
+      "community": 9,
       "norm_label": "validyamlmetadatarule"
     },
     {
@@ -450,7 +450,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "rules_absolute_paths_rule_dart",
-      "community": 8,
+      "community": 9,
       "norm_label": "rules/absolute_paths_rule.dart"
     },
     {
@@ -459,7 +459,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "rules_description_length_rule_dart",
-      "community": 8,
+      "community": 9,
       "norm_label": "rules/description_length_rule.dart"
     },
     {
@@ -468,7 +468,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "rules_disallowed_field_rule_dart",
-      "community": 8,
+      "community": 9,
       "norm_label": "rules/disallowed_field_rule.dart"
     },
     {
@@ -477,7 +477,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "rules_name_format_rule_dart",
-      "community": 8,
+      "community": 9,
       "norm_label": "rules/name_format_rule.dart"
     },
     {
@@ -486,7 +486,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "rules_relative_paths_rule_dart",
-      "community": 8,
+      "community": 9,
       "norm_label": "rules/relative_paths_rule.dart"
     },
     {
@@ -495,7 +495,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\rule_registry.dart",
       "source_location": null,
       "id": "rules_valid_yaml_metadata_rule_dart",
-      "community": 8,
+      "community": 9,
       "norm_label": "rules/valid_yaml_metadata_rule.dart"
     },
     {
@@ -504,7 +504,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\skills_ignores_storage.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_skills_ignores_storage_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "skills_ignores_storage.dart"
     },
     {
@@ -513,7 +513,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\skills_ignores_storage.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_skills_ignores_storage_dart_skillsignoresstorage",
-      "community": 0,
+      "community": 1,
       "norm_label": "skillsignoresstorage"
     },
     {
@@ -522,7 +522,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\skills_ignores_storage.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_skills_ignores_storage_dart_skillsignores",
-      "community": 0,
+      "community": 1,
       "norm_label": "skillsignores"
     },
     {
@@ -594,7 +594,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\analysis_severity.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_analysis_severity_dart",
-      "community": 43,
+      "community": 44,
       "norm_label": "analysis_severity.dart"
     },
     {
@@ -603,7 +603,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\check_type.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_check_type_dart",
-      "community": 15,
+      "community": 16,
       "norm_label": "check_type.dart"
     },
     {
@@ -612,7 +612,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\check_type.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_check_type_dart_checktype",
-      "community": 15,
+      "community": 16,
       "norm_label": "checktype"
     },
     {
@@ -621,7 +621,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\validation_error.dart",
       "source_location": null,
       "id": "analysis_severity_dart",
-      "community": 15,
+      "community": 16,
       "norm_label": "analysis_severity.dart"
     },
     {
@@ -630,7 +630,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\ignore_entry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_ignore_entry_dart",
-      "community": 19,
+      "community": 20,
       "norm_label": "ignore_entry.dart"
     },
     {
@@ -639,7 +639,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\ignore_entry.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_ignore_entry_dart_ignoreentry",
-      "community": 19,
+      "community": 20,
       "norm_label": "ignoreentry"
     },
     {
@@ -648,7 +648,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skills_ignores.dart",
       "source_location": null,
       "id": "package_json_annotation_json_annotation_dart",
-      "community": 19,
+      "community": 20,
       "norm_label": "package:json_annotation/json_annotation.dart"
     },
     {
@@ -657,7 +657,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\ignore_entry.g.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_ignore_entry_g_dart",
-      "community": 44,
+      "community": 45,
       "norm_label": "ignore_entry.g.dart"
     },
     {
@@ -666,7 +666,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skills_ignores.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_skills_ignores_dart",
-      "community": 19,
+      "community": 20,
       "norm_label": "skills_ignores.dart"
     },
     {
@@ -675,7 +675,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skills_ignores.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_skills_ignores_dart_skillsignores",
-      "community": 19,
+      "community": 20,
       "norm_label": "skillsignores"
     },
     {
@@ -684,7 +684,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skills_ignores.dart",
       "source_location": null,
       "id": "ignore_entry_dart",
-      "community": 19,
+      "community": 20,
       "norm_label": "ignore_entry.dart"
     },
     {
@@ -693,7 +693,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skills_ignores.g.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_skills_ignores_g_dart",
-      "community": 45,
+      "community": 46,
       "norm_label": "skills_ignores.g.dart"
     },
     {
@@ -702,7 +702,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skill_context.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_skill_context_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "skill_context.dart"
     },
     {
@@ -711,7 +711,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skill_context.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_skill_context_dart_skillcontext",
-      "community": 0,
+      "community": 1,
       "norm_label": "skillcontext"
     },
     {
@@ -720,7 +720,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skill_rule.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_skill_rule_dart",
-      "community": 15,
+      "community": 16,
       "norm_label": "skill_rule.dart"
     },
     {
@@ -729,7 +729,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skill_rule.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_skill_rule_dart_skillrule",
-      "community": 15,
+      "community": 16,
       "norm_label": "skillrule"
     },
     {
@@ -738,7 +738,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skill_rule.dart",
       "source_location": null,
       "id": "skill_context_dart",
-      "community": 15,
+      "community": 16,
       "norm_label": "skill_context.dart"
     },
     {
@@ -747,7 +747,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\skill_rule.dart",
       "source_location": null,
       "id": "validation_error_dart",
-      "community": 15,
+      "community": 16,
       "norm_label": "validation_error.dart"
     },
     {
@@ -756,7 +756,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\validation_error.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_validation_error_dart",
-      "community": 15,
+      "community": 16,
       "norm_label": "validation_error.dart"
     },
     {
@@ -765,7 +765,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\lib\\src\\models\\validation_error.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_lib_src_models_validation_error_dart_validationerror",
-      "community": 15,
+      "community": 16,
       "norm_label": "validationerror"
     },
     {
@@ -882,7 +882,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\absolute_paths_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_absolute_paths_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "absolute_paths_test.dart"
     },
     {
@@ -891,7 +891,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\absolute_paths_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_absolute_paths_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -900,7 +900,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\absolute_paths_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_absolute_paths_test_dart_file",
-      "community": 1,
+      "community": 0,
       "norm_label": "file"
     },
     {
@@ -909,7 +909,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_models_analysis_severity_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/models/analysis_severity.dart"
     },
     {
@@ -918,7 +918,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\rule_naming_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_rules_absolute_paths_rule_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/rules/absolute_paths_rule.dart"
     },
     {
@@ -927,7 +927,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\rule_naming_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_rules_relative_paths_rule_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/rules/relative_paths_rule.dart"
     },
     {
@@ -936,7 +936,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\relative_path_flag_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_validator_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/validator.dart"
     },
     {
@@ -945,7 +945,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\resource_fetcher_service_test.dart",
       "source_location": null,
       "id": "package_test_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:test/test.dart"
     },
     {
@@ -954,7 +954,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\relative_path_flag_test.dart",
       "source_location": null,
       "id": "test_utils_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "test_utils.dart"
     },
     {
@@ -963,7 +963,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\cli_integration_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_cli_integration_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "cli_integration_test.dart"
     },
     {
@@ -972,7 +972,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\cli_integration_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_cli_integration_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -981,7 +981,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\cli_integration_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_cli_integration_test_dart_file",
-      "community": 1,
+      "community": 0,
       "norm_label": "file"
     },
     {
@@ -990,7 +990,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\cli_integration_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_cli_integration_test_dart_directory",
-      "community": 1,
+      "community": 0,
       "norm_label": "directory"
     },
     {
@@ -999,7 +999,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_models_check_type_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/models/check_type.dart"
     },
     {
@@ -1008,7 +1008,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\ignore_models_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_models_ignore_entry_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/models/ignore_entry.dart"
     },
     {
@@ -1017,7 +1017,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\skills_ignores_storage_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_models_skills_ignores_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/models/skills_ignores.dart"
     },
     {
@@ -1026,7 +1026,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_rule_registry_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/rule_registry.dart"
     },
     {
@@ -1035,7 +1035,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\config_file_test.dart",
       "source_location": null,
       "id": "package_test_process_test_process_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:test_process/test_process.dart"
     },
     {
@@ -1044,7 +1044,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\config_file_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_config_file_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "config_file_test.dart"
     },
     {
@@ -1053,7 +1053,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\config_file_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_config_file_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1062,7 +1062,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\config_file_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_config_file_test_dart_file",
-      "community": 1,
+      "community": 0,
       "norm_label": "file"
     },
     {
@@ -1071,7 +1071,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\config_file_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_config_file_test_dart_directory",
-      "community": 1,
+      "community": 0,
       "norm_label": "directory"
     },
     {
@@ -1143,7 +1143,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\directory_structure_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_directory_structure_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "directory_structure_test.dart"
     },
     {
@@ -1152,7 +1152,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\directory_structure_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_directory_structure_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1161,7 +1161,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\directory_structure_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_directory_structure_test_dart_file",
-      "community": 1,
+      "community": 0,
       "norm_label": "file"
     },
     {
@@ -1170,7 +1170,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\field_constraints_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_field_constraints_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "field_constraints_test.dart"
     },
     {
@@ -1179,7 +1179,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\field_constraints_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_field_constraints_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1188,7 +1188,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\field_constraints_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_field_constraints_test_dart_file",
-      "community": 1,
+      "community": 0,
       "norm_label": "file"
     },
     {
@@ -1197,7 +1197,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\rule_naming_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_rules_description_length_rule_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/rules/description_length_rule.dart"
     },
     {
@@ -1206,7 +1206,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\rule_naming_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_rules_name_format_rule_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/rules/name_format_rule.dart"
     },
     {
@@ -1215,7 +1215,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\rule_naming_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_rules_valid_yaml_metadata_rule_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/rules/valid_yaml_metadata_rule.dart"
     },
     {
@@ -1224,7 +1224,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\ignore_models_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_ignore_models_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "ignore_models_test.dart"
     },
     {
@@ -1233,7 +1233,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\ignore_models_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_ignore_models_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1242,7 +1242,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\metadata_validation_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_metadata_validation_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "metadata_validation_test.dart"
     },
     {
@@ -1251,7 +1251,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\metadata_validation_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_metadata_validation_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1260,7 +1260,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\metadata_validation_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_metadata_validation_test_dart_file",
-      "community": 1,
+      "community": 0,
       "norm_label": "file"
     },
     {
@@ -1269,7 +1269,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\metadata_validation_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_models_validation_error_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/models/validation_error.dart"
     },
     {
@@ -1278,7 +1278,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\rule_naming_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_rules_disallowed_field_rule_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/rules/disallowed_field_rule.dart"
     },
     {
@@ -1287,7 +1287,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\relative_paths_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_relative_paths_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "relative_paths_test.dart"
     },
     {
@@ -1296,7 +1296,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\relative_paths_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_relative_paths_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1305,7 +1305,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\relative_paths_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_relative_paths_test_dart_file",
-      "community": 1,
+      "community": 0,
       "norm_label": "file"
     },
     {
@@ -1314,7 +1314,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\relative_path_flag_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_relative_path_flag_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "relative_path_flag_test.dart"
     },
     {
@@ -1323,7 +1323,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\relative_path_flag_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_relative_path_flag_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1332,7 +1332,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\relative_path_flag_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_relative_path_flag_test_dart_file",
-      "community": 1,
+      "community": 0,
       "norm_label": "file"
     },
     {
@@ -1341,7 +1341,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_resolve_rules_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "resolve_rules_test.dart"
     },
     {
@@ -1350,7 +1350,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_resolve_rules_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1359,7 +1359,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_resolve_rules_test_dart_createparser",
-      "community": 1,
+      "community": 0,
       "norm_label": "createparser"
     },
     {
@@ -1368,7 +1368,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\resolve_rules_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_config_parser_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/config_parser.dart"
     },
     {
@@ -1377,7 +1377,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\rule_naming_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_rule_naming_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "rule_naming_test.dart"
     },
     {
@@ -1386,7 +1386,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\rule_naming_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_rule_naming_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1395,7 +1395,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\skills_ignores_storage_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_skills_ignores_storage_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "skills_ignores_storage_test.dart"
     },
     {
@@ -1404,7 +1404,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\skills_ignores_storage_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_skills_ignores_storage_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -1413,7 +1413,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\skills_ignores_storage_test.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_src_skills_ignores_storage_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:dart_skills_lint/src/skills_ignores_storage.dart"
     },
     {
@@ -1422,7 +1422,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\test_utils.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_test_utils_dart",
-      "community": 31,
+      "community": 32,
       "norm_label": "test_utils.dart"
     },
     {
@@ -1431,7 +1431,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\test_utils.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_test_utils_dart_buildfrontmatter",
-      "community": 31,
+      "community": 32,
       "norm_label": "buildfrontmatter"
     },
     {
@@ -1440,7 +1440,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\bin\\skills.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_bin_skills_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "skills.dart"
     },
     {
@@ -1449,7 +1449,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\bin\\skills.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_bin_skills_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -1458,7 +1458,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\bin\\skills.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_bin_skills_dart_configurelogging",
-      "community": 0,
+      "community": 1,
       "norm_label": "_configurelogging"
     },
     {
@@ -1467,7 +1467,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\commands\\base_skill_command_test.dart",
       "source_location": null,
       "id": "package_args_command_runner_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:args/command_runner.dart"
     },
     {
@@ -1476,7 +1476,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\resource_fetcher_service_test.dart",
       "source_location": null,
       "id": "package_http_http_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:http/http.dart"
     },
     {
@@ -1485,7 +1485,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\generate_skills_test.dart",
       "source_location": null,
       "id": "package_skills_src_commands_generate_skill_command_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:skills/src/commands/generate_skill_command.dart"
     },
     {
@@ -1494,7 +1494,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\bin\\skills.dart",
       "source_location": null,
       "id": "package_skills_src_commands_update_readme_command_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:skills/src/commands/update_readme_command.dart"
     },
     {
@@ -1503,7 +1503,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\update_skills_test.dart",
       "source_location": null,
       "id": "package_skills_src_commands_update_skill_command_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:skills/src/commands/update_skill_command.dart"
     },
     {
@@ -1512,7 +1512,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\validate_skills_test.dart",
       "source_location": null,
       "id": "package_skills_src_commands_validate_skill_command_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:skills/src/commands/validate_skill_command.dart"
     },
     {
@@ -1521,7 +1521,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_skill_command_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "base_skill_command.dart"
     },
     {
@@ -1530,7 +1530,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_skill_command_dart_baseskillcommand",
-      "community": 0,
+      "community": 8,
       "norm_label": "baseskillcommand"
     },
     {
@@ -1539,7 +1539,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_skill_command_dart_runskill",
-      "community": 0,
+      "community": 8,
       "norm_label": "runskill"
     },
     {
@@ -1548,7 +1548,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "models_skill_params_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "../models/skill_params.dart"
     },
     {
@@ -1557,7 +1557,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "services_gemini_service_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "../services/gemini_service.dart"
     },
     {
@@ -1566,7 +1566,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_readme_command.dart",
       "source_location": null,
       "id": "base_yaml_command_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "base_yaml_command.dart"
     },
     {
@@ -1575,7 +1575,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_yaml_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_yaml_command_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "base_yaml_command.dart"
     },
     {
@@ -1584,7 +1584,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_yaml_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_yaml_command_dart_baseyamlcommand",
-      "community": 0,
+      "community": 1,
       "norm_label": "baseyamlcommand"
     },
     {
@@ -1593,7 +1593,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_yaml_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_yaml_command_dart_runwithskills",
-      "community": 0,
+      "community": 1,
       "norm_label": "runwithskills"
     },
     {
@@ -1602,7 +1602,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\generate_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_generate_skill_command_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "generate_skill_command.dart"
     },
     {
@@ -1611,7 +1611,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\generate_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_generate_skill_command_dart_generateskillcommand",
-      "community": 0,
+      "community": 8,
       "norm_label": "generateskillcommand"
     },
     {
@@ -1620,7 +1620,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "services_resource_fetcher_service_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "../services/resource_fetcher_service.dart"
     },
     {
@@ -1629,7 +1629,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "base_skill_command_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "base_skill_command.dart"
     },
     {
@@ -1638,7 +1638,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_readme_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_update_readme_command_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "update_readme_command.dart"
     },
     {
@@ -1647,7 +1647,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_readme_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_update_readme_command_dart_updatereadmecommand",
-      "community": 0,
+      "community": 8,
       "norm_label": "updatereadmecommand"
     },
     {
@@ -1656,7 +1656,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_update_skill_command_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "update_skill_command.dart"
     },
     {
@@ -1665,7 +1665,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_update_skill_command_dart_updateskillcommand",
-      "community": 0,
+      "community": 8,
       "norm_label": "updateskillcommand"
     },
     {
@@ -1674,7 +1674,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_validate_skill_command_dart",
-      "community": 0,
+      "community": 8,
       "norm_label": "validate_skill_command.dart"
     },
     {
@@ -1683,7 +1683,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_validate_skill_command_dart_validateskillcommand",
-      "community": 0,
+      "community": 8,
       "norm_label": "validateskillcommand"
     },
     {
@@ -1692,7 +1692,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\models\\skill_params.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_models_skill_params_dart",
-      "community": 32,
+      "community": 33,
       "norm_label": "skill_params.dart"
     },
     {
@@ -1701,7 +1701,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\models\\skill_params.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_models_skill_params_dart_skillparams",
-      "community": 32,
+      "community": 33,
       "norm_label": "skillparams"
     },
     {
@@ -1710,7 +1710,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_gemini_service_dart",
-      "community": 13,
+      "community": 14,
       "norm_label": "gemini_service.dart"
     },
     {
@@ -1719,7 +1719,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_gemini_service_dart_geminiservice",
-      "community": 13,
+      "community": 14,
       "norm_label": "geminiservice"
     },
     {
@@ -1728,7 +1728,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_gemini_service_dart_apikeyclient",
-      "community": 13,
+      "community": 14,
       "norm_label": "_apikeyclient"
     },
     {
@@ -1737,7 +1737,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_gemini_service_dart_formatexception",
-      "community": 13,
+      "community": 14,
       "norm_label": "formatexception"
     },
     {
@@ -1746,7 +1746,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_gemini_service_dart_createrequest",
-      "community": 13,
+      "community": 14,
       "norm_label": "_createrequest"
     },
     {
@@ -1755,7 +1755,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_gemini_service_dart_generatecontentrequest",
-      "community": 13,
+      "community": 14,
       "norm_label": "generatecontentrequest"
     },
     {
@@ -1764,7 +1764,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "package_google_cloud_ai_generativelanguage_v1beta_generativelanguage_dart",
-      "community": 13,
+      "community": 14,
       "norm_label": "package:google_cloud_ai_generativelanguage_v1beta/generativelanguage.dart"
     },
     {
@@ -1773,7 +1773,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "package_retry_retry_dart",
-      "community": 13,
+      "community": 14,
       "norm_label": "package:retry/retry.dart"
     },
     {
@@ -1782,7 +1782,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "prompts_dart",
-      "community": 13,
+      "community": 14,
       "norm_label": "prompts.dart"
     },
     {
@@ -1791,7 +1791,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\gemini_service.dart",
       "source_location": null,
       "id": "skill_instructions_dart",
-      "community": 13,
+      "community": 14,
       "norm_label": "skill_instructions.dart"
     },
     {
@@ -1800,7 +1800,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_markdown_converter_dart",
-      "community": 16,
+      "community": 17,
       "norm_label": "markdown_converter.dart"
     },
     {
@@ -1809,7 +1809,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_markdown_converter_dart_markdownconverter",
-      "community": 16,
+      "community": 17,
       "norm_label": "markdownconverter"
     },
     {
@@ -1818,7 +1818,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_markdown_converter_dart_convert",
-      "community": 16,
+      "community": 17,
       "norm_label": "convert"
     },
     {
@@ -1827,7 +1827,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_markdown_converter_dart_convertelement",
-      "community": 16,
+      "community": 17,
       "norm_label": "_convertelement"
     },
     {
@@ -1836,7 +1836,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_markdown_converter_dart_processtag",
-      "community": 16,
+      "community": 17,
       "norm_label": "_processtag"
     },
     {
@@ -1845,7 +1845,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_markdown_converter_dart_processtable",
-      "community": 16,
+      "community": 17,
       "norm_label": "_processtable"
     },
     {
@@ -1854,7 +1854,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_markdown_converter_dart_processdefinitionlist",
-      "community": 16,
+      "community": 17,
       "norm_label": "_processdefinitionlist"
     },
     {
@@ -1863,7 +1863,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "package_html_dom_dart",
-      "community": 16,
+      "community": 17,
       "norm_label": "package:html/dom.dart"
     },
     {
@@ -1872,7 +1872,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\markdown_converter.dart",
       "source_location": null,
       "id": "package_html_parser_dart",
-      "community": 16,
+      "community": 17,
       "norm_label": "package:html/parser.dart"
     },
     {
@@ -1881,7 +1881,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\prompts.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_prompts_dart",
-      "community": 20,
+      "community": 21,
       "norm_label": "prompts.dart"
     },
     {
@@ -1890,7 +1890,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\prompts.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_prompts_dart_prompts",
-      "community": 20,
+      "community": 21,
       "norm_label": "prompts"
     },
     {
@@ -1899,7 +1899,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\prompts.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_prompts_dart_createskillprompt",
-      "community": 20,
+      "community": 21,
       "norm_label": "createskillprompt"
     },
     {
@@ -1908,7 +1908,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\prompts.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_prompts_dart_updateskillprompt",
-      "community": 20,
+      "community": 21,
       "norm_label": "updateskillprompt"
     },
     {
@@ -1917,7 +1917,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\prompts.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_prompts_dart_documentation",
-      "community": 20,
+      "community": 21,
       "norm_label": "documentation"
     },
     {
@@ -1926,7 +1926,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\prompts.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_prompts_dart_validateexistingskillcontentprompt",
-      "community": 20,
+      "community": 21,
       "norm_label": "validateexistingskillcontentprompt"
     },
     {
@@ -1935,7 +1935,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\resource_fetcher_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_resource_fetcher_service_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "resource_fetcher_service.dart"
     },
     {
@@ -1944,7 +1944,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\resource_fetcher_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_resource_fetcher_service_dart_resourcefetcherservice",
-      "community": 0,
+      "community": 1,
       "norm_label": "resourcefetcherservice"
     },
     {
@@ -1953,7 +1953,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\resource_fetcher_service.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_resource_fetcher_service_dart_exception",
-      "community": 0,
+      "community": 1,
       "norm_label": "exception"
     },
     {
@@ -1962,7 +1962,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\resource_fetcher_service.dart",
       "source_location": null,
       "id": "markdown_converter_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "markdown_converter.dart"
     },
     {
@@ -1971,7 +1971,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\services\\skill_instructions.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_services_skill_instructions_dart",
-      "community": 46,
+      "community": 47,
       "norm_label": "skill_instructions.dart"
     },
     {
@@ -1980,7 +1980,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\generate_skills_retry_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_generate_skills_retry_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "generate_skills_retry_test.dart"
     },
     {
@@ -1989,7 +1989,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\generate_skills_retry_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_generate_skills_retry_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -1998,7 +1998,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\generate_skills_retry_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_generate_skills_retry_test_dart_exception",
-      "community": 0,
+      "community": 1,
       "norm_label": "exception"
     },
     {
@@ -2007,7 +2007,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\resource_fetcher_service_test.dart",
       "source_location": null,
       "id": "package_http_testing_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:http/testing.dart"
     },
     {
@@ -2016,7 +2016,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\generate_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_generate_skills_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "generate_skills_test.dart"
     },
     {
@@ -2025,7 +2025,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\generate_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_generate_skills_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -2034,7 +2034,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\generate_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_generate_skills_test_dart_exception",
-      "community": 0,
+      "community": 1,
       "norm_label": "exception"
     },
     {
@@ -2043,7 +2043,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\lint_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_lint_skills_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "lint_skills_test.dart"
     },
     {
@@ -2052,7 +2052,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\lint_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_lint_skills_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -2061,7 +2061,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\lint_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_lint_skills_test_dart_validateskills",
-      "community": 0,
+      "community": 1,
       "norm_label": "validateskills"
     },
     {
@@ -2070,7 +2070,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\lint_skills_test.dart",
       "source_location": null,
       "id": "custom_skill_rules_last_modified_rule_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "custom_skill_rules/last_modified_rule.dart"
     },
     {
@@ -2079,7 +2079,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\markdown_converter_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_markdown_converter_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "markdown_converter_test.dart"
     },
     {
@@ -2088,7 +2088,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\markdown_converter_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_markdown_converter_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -2097,7 +2097,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\markdown_converter_test.dart",
       "source_location": null,
       "id": "package_skills_src_services_markdown_converter_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "package:skills/src/services/markdown_converter.dart"
     },
     {
@@ -2106,7 +2106,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\markdown_table_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_markdown_table_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "markdown_table_test.dart"
     },
     {
@@ -2115,7 +2115,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\markdown_table_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_markdown_table_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -2124,7 +2124,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\update_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_update_skills_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "update_skills_test.dart"
     },
     {
@@ -2133,7 +2133,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\update_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_update_skills_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -2142,7 +2142,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\validate_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_validate_skills_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "validate_skills_test.dart"
     },
     {
@@ -2151,7 +2151,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\validate_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_validate_skills_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -2160,7 +2160,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\validate_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_validate_skills_test_dart_exception",
-      "community": 0,
+      "community": 1,
       "norm_label": "exception"
     },
     {
@@ -2169,7 +2169,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\yaml_assets_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_yaml_assets_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "yaml_assets_test.dart"
     },
     {
@@ -2178,7 +2178,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\yaml_assets_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_yaml_assets_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -2187,7 +2187,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\commands\\base_skill_command_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_commands_base_skill_command_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "base_skill_command_test.dart"
     },
     {
@@ -2196,7 +2196,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\commands\\base_skill_command_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_commands_base_skill_command_test_dart_testskillcommand",
-      "community": 0,
+      "community": 1,
       "norm_label": "_testskillcommand"
     },
     {
@@ -2205,7 +2205,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\commands\\base_skill_command_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_commands_base_skill_command_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -2214,7 +2214,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\commands\\base_skill_command_test.dart",
       "source_location": null,
       "id": "package_skills_src_commands_base_skill_command_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:skills/src/commands/base_skill_command.dart"
     },
     {
@@ -2232,7 +2232,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\gemini_service_test.dart",
       "source_location": null,
       "id": "package_skills_src_services_gemini_service_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:skills/src/services/gemini_service.dart"
     },
     {
@@ -2277,7 +2277,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\gemini_service_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_services_gemini_service_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "gemini_service_test.dart"
     },
     {
@@ -2286,7 +2286,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\gemini_service_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_services_gemini_service_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -2295,7 +2295,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\markdown_converter_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_services_markdown_converter_test_dart",
-      "community": 1,
+      "community": 0,
       "norm_label": "markdown_converter_test.dart"
     },
     {
@@ -2304,7 +2304,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\markdown_converter_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_services_markdown_converter_test_dart_main",
-      "community": 1,
+      "community": 0,
       "norm_label": "main"
     },
     {
@@ -2313,7 +2313,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\resource_fetcher_service_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_services_resource_fetcher_service_test_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "resource_fetcher_service_test.dart"
     },
     {
@@ -2322,7 +2322,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\resource_fetcher_service_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_services_resource_fetcher_service_test_dart_main",
-      "community": 0,
+      "community": 1,
       "norm_label": "main"
     },
     {
@@ -2331,7 +2331,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\services\\resource_fetcher_service_test.dart",
       "source_location": null,
       "id": "package_skills_src_services_resource_fetcher_service_dart",
-      "community": 0,
+      "community": 1,
       "norm_label": "package:skills/src/services/resource_fetcher_service.dart"
     },
     {
@@ -2340,7 +2340,7 @@
       "source_file": "ios\\Flutter\\ephemeral\\flutter_lldb_helper.py",
       "source_location": "L1",
       "id": "ios_flutter_ephemeral_flutter_lldb_helper_py",
-      "community": 25,
+      "community": 26,
       "norm_label": "flutter_lldb_helper.py"
     },
     {
@@ -2349,7 +2349,7 @@
       "source_file": "ios\\Flutter\\ephemeral\\flutter_lldb_helper.py",
       "source_location": "L7",
       "id": "flutter_lldb_helper_handle_new_rx_page",
-      "community": 25,
+      "community": 26,
       "norm_label": "handle_new_rx_page()"
     },
     {
@@ -2358,7 +2358,7 @@
       "source_file": "ios\\Flutter\\ephemeral\\flutter_lldb_helper.py",
       "source_location": "L24",
       "id": "flutter_lldb_helper_lldb_init_module",
-      "community": 25,
+      "community": 26,
       "norm_label": "__lldb_init_module()"
     },
     {
@@ -2366,7 +2366,7 @@
       "file_type": "rationale",
       "source_file": "ios\\Flutter\\ephemeral\\flutter_lldb_helper.py",
       "source_location": "L8",
-      "community": 25,
+      "community": 26,
       "norm_label": "intercept notify_debugger_about_rx_pages and touch the pages.",
       "id": "flutter_lldb_helper_rationale_8"
     },
@@ -2376,7 +2376,7 @@
       "source_file": "ios\\Runner\\AppDelegate.swift",
       "source_location": "L1",
       "id": "ios_runner_appdelegate_swift",
-      "community": 17,
+      "community": 18,
       "norm_label": "appdelegate.swift"
     },
     {
@@ -2385,7 +2385,7 @@
       "source_file": "macos\\Runner\\AppDelegate.swift",
       "source_location": "L4",
       "id": "appdelegate_appdelegate",
-      "community": 17,
+      "community": 18,
       "norm_label": "appdelegate"
     },
     {
@@ -2394,7 +2394,7 @@
       "source_file": "",
       "source_location": "",
       "id": "flutterappdelegate",
-      "community": 17,
+      "community": 18,
       "norm_label": "flutterappdelegate"
     },
     {
@@ -2403,7 +2403,7 @@
       "source_file": "",
       "source_location": "",
       "id": "flutterimplicitenginedelegate",
-      "community": 17,
+      "community": 18,
       "norm_label": "flutterimplicitenginedelegate"
     },
     {
@@ -2412,7 +2412,7 @@
       "source_file": "ios\\Runner\\AppDelegate.swift",
       "source_location": "L6",
       "id": "appdelegate_appdelegate_application",
-      "community": 17,
+      "community": 18,
       "norm_label": ".application()"
     },
     {
@@ -2421,7 +2421,7 @@
       "source_file": "ios\\Runner\\AppDelegate.swift",
       "source_location": "L13",
       "id": "appdelegate_appdelegate_didinitializeimplicitflutterengine",
-      "community": 17,
+      "community": 18,
       "norm_label": ".didinitializeimplicitflutterengine()"
     },
     {
@@ -2430,7 +2430,7 @@
       "source_file": "ios\\Runner\\GeneratedPluginRegistrant.h",
       "source_location": "L1",
       "id": "ios_runner_generatedpluginregistrant_h",
-      "community": 47,
+      "community": 48,
       "norm_label": "generatedpluginregistrant.h"
     },
     {
@@ -2439,7 +2439,7 @@
       "source_file": "ios\\Runner\\GeneratedPluginRegistrant.m",
       "source_location": "L1",
       "id": "ios_runner_generatedpluginregistrant_m",
-      "community": 23,
+      "community": 24,
       "norm_label": "generatedpluginregistrant.m"
     },
     {
@@ -2448,7 +2448,7 @@
       "source_file": "ios\\Runner\\GeneratedPluginRegistrant.m",
       "source_location": "L17",
       "id": "generatedpluginregistrant_generatedpluginregistrant_registerwithregistry",
-      "community": 23,
+      "community": 24,
       "norm_label": "-registerwithregistry"
     },
     {
@@ -2457,7 +2457,7 @@
       "source_file": "ios\\Runner\\Runner-Bridging-Header.h",
       "source_location": "L1",
       "id": "ios_runner_runner_bridging_header_h",
-      "community": 48,
+      "community": 49,
       "norm_label": "runner-bridging-header.h"
     },
     {
@@ -2466,7 +2466,7 @@
       "source_file": "ios\\Runner\\SceneDelegate.swift",
       "source_location": "L1",
       "id": "ios_runner_scenedelegate_swift",
-      "community": 29,
+      "community": 30,
       "norm_label": "scenedelegate.swift"
     },
     {
@@ -2475,7 +2475,7 @@
       "source_file": "ios\\Runner\\SceneDelegate.swift",
       "source_location": "L4",
       "id": "scenedelegate_scenedelegate",
-      "community": 29,
+      "community": 30,
       "norm_label": "scenedelegate"
     },
     {
@@ -2484,7 +2484,7 @@
       "source_file": "",
       "source_location": "",
       "id": "flutterscenedelegate",
-      "community": 29,
+      "community": 30,
       "norm_label": "flutterscenedelegate"
     },
     {
@@ -2493,7 +2493,7 @@
       "source_file": "ios\\RunnerTests\\RunnerTests.swift",
       "source_location": "L1",
       "id": "ios_runnertests_runnertests_swift",
-      "community": 24,
+      "community": 25,
       "norm_label": "runnertests.swift"
     },
     {
@@ -2502,7 +2502,7 @@
       "source_file": "macos\\RunnerTests\\RunnerTests.swift",
       "source_location": "L5",
       "id": "runnertests_runnertests",
-      "community": 24,
+      "community": 25,
       "norm_label": "runnertests"
     },
     {
@@ -2511,7 +2511,7 @@
       "source_file": "",
       "source_location": "",
       "id": "xctestcase",
-      "community": 24,
+      "community": 25,
       "norm_label": "xctestcase"
     },
     {
@@ -2520,7 +2520,7 @@
       "source_file": "macos\\RunnerTests\\RunnerTests.swift",
       "source_location": "L7",
       "id": "runnertests_runnertests_testexample",
-      "community": 24,
+      "community": 25,
       "norm_label": ".testexample()"
     },
     {
@@ -2583,7 +2583,7 @@
       "source_file": "test\\app\\features\\auth\\auth_screen_smoke_test.dart",
       "source_location": null,
       "id": "package_flutter_material_dart",
-      "community": 12,
+      "community": 13,
       "norm_label": "package:flutter/material.dart"
     },
     {
@@ -2628,7 +2628,7 @@
       "source_file": "lib\\main.dart",
       "source_location": null,
       "id": "lib_main_dart",
-      "community": 12,
+      "community": 13,
       "norm_label": "main.dart"
     },
     {
@@ -2637,7 +2637,7 @@
       "source_file": "lib\\main.dart",
       "source_location": null,
       "id": "lib_main_dart_main",
-      "community": 12,
+      "community": 13,
       "norm_label": "main"
     },
     {
@@ -2646,7 +2646,7 @@
       "source_file": "test\\app\\features\\shell\\activly_shell_smoke_test.dart",
       "source_location": null,
       "id": "package_activly_activly_app_dart",
-      "community": 12,
+      "community": 13,
       "norm_label": "package:activly/activly_app.dart"
     },
     {
@@ -2655,7 +2655,7 @@
       "source_file": "lib\\app\\core\\constants\\app_constants.dart",
       "source_location": null,
       "id": "lib_app_core_constants_app_constants_dart",
-      "community": 49,
+      "community": 50,
       "norm_label": "app_constants.dart"
     },
     {
@@ -2664,7 +2664,7 @@
       "source_file": "lib\\app\\core\\models\\translation_copy.dart",
       "source_location": null,
       "id": "lib_app_core_models_translation_copy_dart",
-      "community": 33,
+      "community": 34,
       "norm_label": "translation_copy.dart"
     },
     {
@@ -2673,7 +2673,7 @@
       "source_file": "lib\\app\\core\\models\\translation_copy.dart",
       "source_location": null,
       "id": "lib_app_core_models_translation_copy_dart_translationcopy",
-      "community": 33,
+      "community": 34,
       "norm_label": "translationcopy"
     },
     {
@@ -2682,7 +2682,7 @@
       "source_file": "lib\\app\\core\\types\\app_types.dart",
       "source_location": null,
       "id": "lib_app_core_types_app_types_dart",
-      "community": 50,
+      "community": 51,
       "norm_label": "app_types.dart"
     },
     {
@@ -2729,6 +2729,15 @@
       "id": "lib_app_features_auth_auth_screen_dart_dispose",
       "community": 3,
       "norm_label": "dispose"
+    },
+    {
+      "label": "_centerFocusedInput",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_auth_auth_screen_dart_centerfocusedinput",
+      "community": 3,
+      "norm_label": "_centerfocusedinput"
     },
     {
       "label": "_goToStep",
@@ -2898,7 +2907,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart",
-      "community": 9,
+      "community": 10,
       "norm_label": "landing_screen.dart"
     },
     {
@@ -2907,7 +2916,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_landingscreen",
-      "community": 9,
+      "community": 10,
       "norm_label": "landingscreen"
     },
     {
@@ -2916,7 +2925,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_landingscreenstate",
-      "community": 9,
+      "community": 10,
       "norm_label": "_landingscreenstate"
     },
     {
@@ -2925,7 +2934,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_fadeslide",
-      "community": 9,
+      "community": 10,
       "norm_label": "_fadeslide"
     },
     {
@@ -2934,7 +2943,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_animatedskipfornow",
-      "community": 9,
+      "community": 10,
       "norm_label": "_animatedskipfornow"
     },
     {
@@ -2943,7 +2952,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_animatedskipfornowstate",
-      "community": 9,
+      "community": 10,
       "norm_label": "_animatedskipfornowstate"
     },
     {
@@ -2952,7 +2961,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_build",
-      "community": 9,
+      "community": 10,
       "norm_label": "build"
     },
     {
@@ -2961,7 +2970,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_directionality",
-      "community": 9,
+      "community": 10,
       "norm_label": "directionality"
     },
     {
@@ -2970,7 +2979,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_singlechildscrollview",
-      "community": 9,
+      "community": 10,
       "norm_label": "singlechildscrollview"
     },
     {
@@ -2979,7 +2988,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_sizedbox",
-      "community": 9,
+      "community": 10,
       "norm_label": "sizedbox"
     },
     {
@@ -2988,7 +2997,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_gesturedetector",
-      "community": 9,
+      "community": 10,
       "norm_label": "gesturedetector"
     },
     {
@@ -2997,7 +3006,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_opacity",
-      "community": 9,
+      "community": 10,
       "norm_label": "opacity"
     },
     {
@@ -3006,7 +3015,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_dispose",
-      "community": 9,
+      "community": 10,
       "norm_label": "dispose"
     },
     {
@@ -3015,7 +3024,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_mouseregion",
-      "community": 9,
+      "community": 10,
       "norm_label": "mouseregion"
     },
     {
@@ -3024,7 +3033,7 @@
       "source_file": "lib\\app\\features\\landing\\landing_screen.dart",
       "source_location": null,
       "id": "lib_app_features_landing_landing_screen_dart_container",
-      "community": 9,
+      "community": 10,
       "norm_label": "container"
     },
     {
@@ -3222,7 +3231,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart",
-      "community": 21,
+      "community": 22,
       "norm_label": "google_g_arcs_painter.dart"
     },
     {
@@ -3231,7 +3240,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_googlegarcspainter",
-      "community": 21,
+      "community": 22,
       "norm_label": "_googlegarcspainter"
     },
     {
@@ -3240,7 +3249,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_paint",
-      "community": 21,
+      "community": 22,
       "norm_label": "paint"
     },
     {
@@ -3249,7 +3258,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_color",
-      "community": 21,
+      "community": 22,
       "norm_label": "color"
     },
     {
@@ -3258,7 +3267,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_arc",
-      "community": 21,
+      "community": 22,
       "norm_label": "arc"
     },
     {
@@ -3267,7 +3276,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_shouldrepaint",
-      "community": 21,
+      "community": 22,
       "norm_label": "shouldrepaint"
     },
     {
@@ -3456,7 +3465,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart",
-      "community": 11,
+      "community": 12,
       "norm_label": "landing_buttons.dart"
     },
     {
@@ -3465,7 +3474,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_socialbutton",
-      "community": 11,
+      "community": 12,
       "norm_label": "_socialbutton"
     },
     {
@@ -3474,7 +3483,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_pillbutton",
-      "community": 11,
+      "community": 12,
       "norm_label": "_pillbutton"
     },
     {
@@ -3483,7 +3492,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_sweepbutton",
-      "community": 11,
+      "community": 12,
       "norm_label": "_sweepbutton"
     },
     {
@@ -3492,7 +3501,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_sweepbuttonstate",
-      "community": 11,
+      "community": 12,
       "norm_label": "_sweepbuttonstate"
     },
     {
@@ -3501,7 +3510,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_glasspillbutton",
-      "community": 11,
+      "community": 12,
       "norm_label": "_glasspillbutton"
     },
     {
@@ -3510,7 +3519,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_glasspillbuttonstate",
-      "community": 11,
+      "community": 12,
       "norm_label": "_glasspillbuttonstate"
     },
     {
@@ -3519,7 +3528,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_googlebrandicon",
-      "community": 11,
+      "community": 12,
       "norm_label": "_googlebrandicon"
     },
     {
@@ -3528,7 +3537,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_build",
-      "community": 11,
+      "community": 12,
       "norm_label": "build"
     },
     {
@@ -3537,7 +3546,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_row",
-      "community": 11,
+      "community": 12,
       "norm_label": "row"
     },
     {
@@ -3546,7 +3555,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_sizedbox",
-      "community": 11,
+      "community": 12,
       "norm_label": "sizedbox"
     },
     {
@@ -3555,7 +3564,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_function",
-      "community": 11,
+      "community": 12,
       "norm_label": "function"
     },
     {
@@ -3564,7 +3573,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_mouseregion",
-      "community": 11,
+      "community": 12,
       "norm_label": "mouseregion"
     },
     {
@@ -3573,7 +3582,7 @@
       "source_file": "lib\\app\\shared\\widgets\\landing_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_landing_buttons_dart_align",
-      "community": 11,
+      "community": 12,
       "norm_label": "align"
     },
     {
@@ -3582,7 +3591,7 @@
       "source_file": "lib\\app\\shared\\widgets\\language_toggle.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_language_toggle_dart",
-      "community": 26,
+      "community": 27,
       "norm_label": "language_toggle.dart"
     },
     {
@@ -3591,7 +3600,7 @@
       "source_file": "lib\\app\\shared\\widgets\\language_toggle.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_language_toggle_dart_languagetoggle",
-      "community": 26,
+      "community": 27,
       "norm_label": "languagetoggle"
     },
     {
@@ -3600,7 +3609,7 @@
       "source_file": "lib\\app\\shared\\widgets\\language_toggle.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_language_toggle_dart_build",
-      "community": 26,
+      "community": 27,
       "norm_label": "build"
     },
     {
@@ -3609,7 +3618,7 @@
       "source_file": "lib\\app\\shared\\widgets\\language_toggle.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_language_toggle_dart_gesturedetector",
-      "community": 26,
+      "community": 27,
       "norm_label": "gesturedetector"
     },
     {
@@ -3618,7 +3627,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart",
-      "community": 10,
+      "community": 11,
       "norm_label": "loading_overlay.dart"
     },
     {
@@ -3627,7 +3636,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_loadingoverlay",
-      "community": 10,
+      "community": 11,
       "norm_label": "loadingoverlay"
     },
     {
@@ -3636,7 +3645,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_loadingoverlaystate",
-      "community": 10,
+      "community": 11,
       "norm_label": "_loadingoverlaystate"
     },
     {
@@ -3645,7 +3654,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_heartglyph",
-      "community": 10,
+      "community": 11,
       "norm_label": "_heartglyph"
     },
     {
@@ -3654,7 +3663,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_bladespinner",
-      "community": 10,
+      "community": 11,
       "norm_label": "_bladespinner"
     },
     {
@@ -3663,7 +3672,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_bladespinnerstate",
-      "community": 10,
+      "community": 11,
       "norm_label": "_bladespinnerstate"
     },
     {
@@ -3672,7 +3681,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_initstate",
-      "community": 10,
+      "community": 11,
       "norm_label": "initstate"
     },
     {
@@ -3681,7 +3690,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_dispose",
-      "community": 10,
+      "community": 11,
       "norm_label": "dispose"
     },
     {
@@ -3690,7 +3699,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_segment",
-      "community": 10,
+      "community": 11,
       "norm_label": "_segment"
     },
     {
@@ -3699,7 +3708,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_build",
-      "community": 10,
+      "community": 11,
       "norm_label": "build"
     },
     {
@@ -3708,7 +3717,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_ignorepointer",
-      "community": 10,
+      "community": 11,
       "norm_label": "ignorepointer"
     },
     {
@@ -3717,7 +3726,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_heartopacity",
-      "community": 10,
+      "community": 11,
       "norm_label": "heartopacity"
     },
     {
@@ -3726,7 +3735,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_heartlift",
-      "community": 10,
+      "community": 11,
       "norm_label": "heartlift"
     },
     {
@@ -3735,7 +3744,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_sizedbox",
-      "community": 10,
+      "community": 11,
       "norm_label": "sizedbox"
     },
     {
@@ -3744,7 +3753,7 @@
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_loading_overlay_dart_stack",
-      "community": 10,
+      "community": 11,
       "norm_label": "stack"
     },
     {
@@ -3753,7 +3762,7 @@
       "source_file": "lib\\app\\shared\\widgets\\video_widgets.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_video_widgets_dart",
-      "community": 18,
+      "community": 19,
       "norm_label": "video_widgets.dart"
     },
     {
@@ -3762,7 +3771,7 @@
       "source_file": "lib\\app\\shared\\widgets\\video_widgets.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_video_widgets_dart_videolayer",
-      "community": 18,
+      "community": 19,
       "norm_label": "_videolayer"
     },
     {
@@ -3771,7 +3780,7 @@
       "source_file": "lib\\app\\shared\\widgets\\video_widgets.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_video_widgets_dart_videofallback",
-      "community": 18,
+      "community": 19,
       "norm_label": "_videofallback"
     },
     {
@@ -3780,7 +3789,7 @@
       "source_file": "lib\\app\\shared\\widgets\\video_widgets.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_video_widgets_dart_build",
-      "community": 18,
+      "community": 19,
       "norm_label": "build"
     },
     {
@@ -3789,7 +3798,7 @@
       "source_file": "lib\\app\\shared\\widgets\\video_widgets.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_video_widgets_dart_layoutbuilder",
-      "community": 18,
+      "community": 19,
       "norm_label": "layoutbuilder"
     },
     {
@@ -3798,7 +3807,7 @@
       "source_file": "lib\\app\\shared\\widgets\\video_widgets.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_video_widgets_dart_fittedbox",
-      "community": 18,
+      "community": 19,
       "norm_label": "fittedbox"
     },
     {
@@ -3807,7 +3816,7 @@
       "source_file": "lib\\app\\shared\\widgets\\video_widgets.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_video_widgets_dart_decoratedbox",
-      "community": 18,
+      "community": 19,
       "norm_label": "decoratedbox"
     },
     {
@@ -3816,7 +3825,7 @@
       "source_file": "linux\\flutter\\generated_plugin_registrant.cc",
       "source_location": "L1",
       "id": "linux_flutter_generated_plugin_registrant_cc",
-      "community": 34,
+      "community": 35,
       "norm_label": "generated_plugin_registrant.cc"
     },
     {
@@ -3825,7 +3834,7 @@
       "source_file": "linux\\flutter\\generated_plugin_registrant.cc",
       "source_location": "L10",
       "id": "generated_plugin_registrant_fl_register_plugins",
-      "community": 34,
+      "community": 35,
       "norm_label": "fl_register_plugins()"
     },
     {
@@ -3834,7 +3843,7 @@
       "source_file": "linux\\flutter\\generated_plugin_registrant.h",
       "source_location": "L1",
       "id": "linux_flutter_generated_plugin_registrant_h",
-      "community": 51,
+      "community": 52,
       "norm_label": "generated_plugin_registrant.h"
     },
     {
@@ -3843,7 +3852,7 @@
       "source_file": "linux\\runner\\main.cc",
       "source_location": "L1",
       "id": "linux_runner_main_cc",
-      "community": 35,
+      "community": 36,
       "norm_label": "main.cc"
     },
     {
@@ -3852,7 +3861,7 @@
       "source_file": "linux\\runner\\main.cc",
       "source_location": "L3",
       "id": "main_main",
-      "community": 35,
+      "community": 36,
       "norm_label": "main()"
     },
     {
@@ -3861,7 +3870,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L1",
       "id": "linux_runner_my_application_cc",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application.cc"
     },
     {
@@ -3870,7 +3879,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L18",
       "id": "my_application_first_frame_cb",
-      "community": 14,
+      "community": 15,
       "norm_label": "first_frame_cb()"
     },
     {
@@ -3879,7 +3888,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L23",
       "id": "my_application_my_application_activate",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application_activate()"
     },
     {
@@ -3888,7 +3897,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L82",
       "id": "my_application_my_application_local_command_line",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application_local_command_line()"
     },
     {
@@ -3897,7 +3906,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L103",
       "id": "my_application_my_application_startup",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application_startup()"
     },
     {
@@ -3906,7 +3915,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L112",
       "id": "my_application_my_application_shutdown",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application_shutdown()"
     },
     {
@@ -3915,7 +3924,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L121",
       "id": "my_application_my_application_dispose",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application_dispose()"
     },
     {
@@ -3924,7 +3933,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L127",
       "id": "my_application_my_application_class_init",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application_class_init()"
     },
     {
@@ -3933,7 +3942,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L136",
       "id": "my_application_my_application_init",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application_init()"
     },
     {
@@ -3942,7 +3951,7 @@
       "source_file": "linux\\runner\\my_application.cc",
       "source_location": "L138",
       "id": "my_application_my_application_new",
-      "community": 14,
+      "community": 15,
       "norm_label": "my_application_new()"
     },
     {
@@ -3951,7 +3960,7 @@
       "source_file": "linux\\runner\\my_application.h",
       "source_location": "L1",
       "id": "linux_runner_my_application_h",
-      "community": 52,
+      "community": 53,
       "norm_label": "my_application.h"
     },
     {
@@ -3960,7 +3969,7 @@
       "source_file": "macos\\Flutter\\GeneratedPluginRegistrant.swift",
       "source_location": "L1",
       "id": "macos_flutter_generatedpluginregistrant_swift",
-      "community": 36,
+      "community": 37,
       "norm_label": "generatedpluginregistrant.swift"
     },
     {
@@ -3969,7 +3978,7 @@
       "source_file": "macos\\Flutter\\GeneratedPluginRegistrant.swift",
       "source_location": "L10",
       "id": "generatedpluginregistrant_registergeneratedplugins",
-      "community": 36,
+      "community": 37,
       "norm_label": "registergeneratedplugins()"
     },
     {
@@ -3978,7 +3987,7 @@
       "source_file": "macos\\Runner\\AppDelegate.swift",
       "source_location": "L1",
       "id": "macos_runner_appdelegate_swift",
-      "community": 17,
+      "community": 18,
       "norm_label": "appdelegate.swift"
     },
     {
@@ -3987,7 +3996,7 @@
       "source_file": "macos\\Runner\\AppDelegate.swift",
       "source_location": "L6",
       "id": "appdelegate_appdelegate_applicationshouldterminateafterlastwindowclosed",
-      "community": 17,
+      "community": 18,
       "norm_label": ".applicationshouldterminateafterlastwindowclosed()"
     },
     {
@@ -3996,7 +4005,7 @@
       "source_file": "macos\\Runner\\AppDelegate.swift",
       "source_location": "L10",
       "id": "appdelegate_appdelegate_applicationsupportssecurerestorablestate",
-      "community": 17,
+      "community": 18,
       "norm_label": ".applicationsupportssecurerestorablestate()"
     },
     {
@@ -4005,7 +4014,7 @@
       "source_file": "macos\\Runner\\MainFlutterWindow.swift",
       "source_location": "L1",
       "id": "macos_runner_mainflutterwindow_swift",
-      "community": 27,
+      "community": 28,
       "norm_label": "mainflutterwindow.swift"
     },
     {
@@ -4014,7 +4023,7 @@
       "source_file": "macos\\Runner\\MainFlutterWindow.swift",
       "source_location": "L4",
       "id": "mainflutterwindow_mainflutterwindow",
-      "community": 27,
+      "community": 28,
       "norm_label": "mainflutterwindow"
     },
     {
@@ -4023,7 +4032,7 @@
       "source_file": "",
       "source_location": "",
       "id": "nswindow",
-      "community": 27,
+      "community": 28,
       "norm_label": "nswindow"
     },
     {
@@ -4032,7 +4041,7 @@
       "source_file": "macos\\Runner\\MainFlutterWindow.swift",
       "source_location": "L5",
       "id": "mainflutterwindow_mainflutterwindow_awakefromnib",
-      "community": 27,
+      "community": 28,
       "norm_label": ".awakefromnib()"
     },
     {
@@ -4041,7 +4050,7 @@
       "source_file": "macos\\RunnerTests\\RunnerTests.swift",
       "source_location": "L1",
       "id": "macos_runnertests_runnertests_swift",
-      "community": 24,
+      "community": 25,
       "norm_label": "runnertests.swift"
     },
     {
@@ -4050,7 +4059,7 @@
       "source_file": "test\\widget_test.dart",
       "source_location": null,
       "id": "test_widget_test_dart",
-      "community": 12,
+      "community": 13,
       "norm_label": "widget_test.dart"
     },
     {
@@ -4059,7 +4068,7 @@
       "source_file": "test\\widget_test.dart",
       "source_location": null,
       "id": "test_widget_test_dart_main",
-      "community": 12,
+      "community": 13,
       "norm_label": "main"
     },
     {
@@ -4068,7 +4077,7 @@
       "source_file": "test\\app\\features\\shell\\activly_shell_smoke_test.dart",
       "source_location": null,
       "id": "package_flutter_test_flutter_test_dart",
-      "community": 12,
+      "community": 13,
       "norm_label": "package:flutter_test/flutter_test.dart"
     },
     {
@@ -4077,7 +4086,7 @@
       "source_file": "test\\app\\features\\auth\\auth_screen_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_auth_auth_screen_smoke_test_dart",
-      "community": 12,
+      "community": 13,
       "norm_label": "auth_screen_smoke_test.dart"
     },
     {
@@ -4086,7 +4095,7 @@
       "source_file": "test\\app\\features\\auth\\auth_screen_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_auth_auth_screen_smoke_test_dart_main",
-      "community": 12,
+      "community": 13,
       "norm_label": "main"
     },
     {
@@ -4095,7 +4104,7 @@
       "source_file": "test\\app\\features\\landing\\landing_screen_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_landing_landing_screen_smoke_test_dart",
-      "community": 12,
+      "community": 13,
       "norm_label": "landing_screen_smoke_test.dart"
     },
     {
@@ -4104,7 +4113,7 @@
       "source_file": "test\\app\\features\\landing\\landing_screen_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_landing_landing_screen_smoke_test_dart_main",
-      "community": 12,
+      "community": 13,
       "norm_label": "main"
     },
     {
@@ -4113,7 +4122,7 @@
       "source_file": "test\\app\\features\\shell\\activly_shell_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_shell_activly_shell_smoke_test_dart",
-      "community": 12,
+      "community": 13,
       "norm_label": "activly_shell_smoke_test.dart"
     },
     {
@@ -4122,7 +4131,7 @@
       "source_file": "test\\app\\features\\shell\\activly_shell_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_shell_activly_shell_smoke_test_dart_main",
-      "community": 12,
+      "community": 13,
       "norm_label": "main"
     },
     {
@@ -4131,7 +4140,7 @@
       "source_file": "windows\\flutter\\generated_plugin_registrant.cc",
       "source_location": "L1",
       "id": "windows_flutter_generated_plugin_registrant_cc",
-      "community": 37,
+      "community": 38,
       "norm_label": "generated_plugin_registrant.cc"
     },
     {
@@ -4140,7 +4149,7 @@
       "source_file": "windows\\flutter\\generated_plugin_registrant.cc",
       "source_location": "L10",
       "id": "generated_plugin_registrant_registerplugins",
-      "community": 37,
+      "community": 38,
       "norm_label": "registerplugins()"
     },
     {
@@ -4149,7 +4158,7 @@
       "source_file": "windows\\flutter\\generated_plugin_registrant.h",
       "source_location": "L1",
       "id": "windows_flutter_generated_plugin_registrant_h",
-      "community": 53,
+      "community": 54,
       "norm_label": "generated_plugin_registrant.h"
     },
     {
@@ -4158,7 +4167,7 @@
       "source_file": "windows\\runner\\flutter_window.cpp",
       "source_location": "L1",
       "id": "windows_runner_flutter_window_cpp",
-      "community": 22,
+      "community": 23,
       "norm_label": "flutter_window.cpp"
     },
     {
@@ -4167,7 +4176,7 @@
       "source_file": "windows\\runner\\flutter_window.h",
       "source_location": "L12",
       "id": "flutter_window_flutterwindow",
-      "community": 22,
+      "community": 23,
       "norm_label": "flutterwindow()"
     },
     {
@@ -4176,7 +4185,7 @@
       "source_file": "windows\\runner\\flutter_window.cpp",
       "source_location": "L12",
       "id": "flutter_window_oncreate",
-      "community": 22,
+      "community": 23,
       "norm_label": "oncreate()"
     },
     {
@@ -4185,7 +4194,7 @@
       "source_file": "windows\\runner\\flutter_window.cpp",
       "source_location": "L42",
       "id": "flutter_window_ondestroy",
-      "community": 22,
+      "community": 23,
       "norm_label": "ondestroy()"
     },
     {
@@ -4194,7 +4203,7 @@
       "source_file": "windows\\runner\\flutter_window.cpp",
       "source_location": "L50",
       "id": "flutter_window_messagehandler",
-      "community": 22,
+      "community": 23,
       "norm_label": "messagehandler()"
     },
     {
@@ -4203,7 +4212,7 @@
       "source_file": "windows\\runner\\flutter_window.h",
       "source_location": "L1",
       "id": "windows_runner_flutter_window_h",
-      "community": 22,
+      "community": 23,
       "norm_label": "flutter_window.h"
     },
     {
@@ -4212,7 +4221,7 @@
       "source_file": "windows\\runner\\main.cpp",
       "source_location": "L1",
       "id": "windows_runner_main_cpp",
-      "community": 38,
+      "community": 39,
       "norm_label": "main.cpp"
     },
     {
@@ -4221,7 +4230,7 @@
       "source_file": "windows\\runner\\main.cpp",
       "source_location": "L8",
       "id": "main_wwinmain",
-      "community": 38,
+      "community": 39,
       "norm_label": "wwinmain()"
     },
     {
@@ -4230,7 +4239,7 @@
       "source_file": "windows\\runner\\resource.h",
       "source_location": "L1",
       "id": "windows_runner_resource_h",
-      "community": 54,
+      "community": 55,
       "norm_label": "resource.h"
     },
     {
@@ -4239,7 +4248,7 @@
       "source_file": "windows\\runner\\utils.cpp",
       "source_location": "L1",
       "id": "windows_runner_utils_cpp",
-      "community": 28,
+      "community": 29,
       "norm_label": "utils.cpp"
     },
     {
@@ -4248,7 +4257,7 @@
       "source_file": "windows\\runner\\utils.cpp",
       "source_location": "L10",
       "id": "utils_createandattachconsole",
-      "community": 28,
+      "community": 29,
       "norm_label": "createandattachconsole()"
     },
     {
@@ -4257,7 +4266,7 @@
       "source_file": "windows\\runner\\utils.cpp",
       "source_location": "L24",
       "id": "utils_getcommandlinearguments",
-      "community": 28,
+      "community": 29,
       "norm_label": "getcommandlinearguments()"
     },
     {
@@ -4266,7 +4275,7 @@
       "source_file": "windows\\runner\\utils.cpp",
       "source_location": "L44",
       "id": "utils_utf8fromutf16",
-      "community": 28,
+      "community": 29,
       "norm_label": "utf8fromutf16()"
     },
     {
@@ -4275,7 +4284,7 @@
       "source_file": "windows\\runner\\utils.h",
       "source_location": "L1",
       "id": "windows_runner_utils_h",
-      "community": 55,
+      "community": 56,
       "norm_label": "utils.h"
     },
     {
@@ -4473,7 +4482,7 @@
       "source_file": "windows\\runner\\win32_window.h",
       "source_location": "L1",
       "id": "windows_runner_win32_window_h",
-      "community": 56,
+      "community": 57,
       "norm_label": "win32_window.h"
     }
   ],
@@ -10069,6 +10078,18 @@
       "_tgt": "lib_app_features_auth_auth_screen_dart_dispose",
       "source": "lib_app_features_auth_auth_screen_dart",
       "target": "lib_app_features_auth_auth_screen_dart_dispose"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_auth_auth_screen_dart",
+      "_tgt": "lib_app_features_auth_auth_screen_dart_centerfocusedinput",
+      "source": "lib_app_features_auth_auth_screen_dart",
+      "target": "lib_app_features_auth_auth_screen_dart_centerfocusedinput"
     },
     {
       "relation": "defines",

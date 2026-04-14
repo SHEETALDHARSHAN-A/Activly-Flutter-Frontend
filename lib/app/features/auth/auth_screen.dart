@@ -504,24 +504,14 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 420),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      _LoadingOutlinedButtonIcon(
-                        onTap: () async => _handleTopBack(),
-                        icon: Icon(backIcon, size: 16),
-                        label: widget.t.back,
-                      ),
-                      LanguageToggle(
-                        language: widget.language,
-                        onToggle: widget.onToggleLanguage,
-                      ),
-                    ],
-                  ),
+              child: Stack(
+                children: <Widget>[
+                  Positioned.fill(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: <Widget>[
+                  const SizedBox(height: 36),
                   const SizedBox(height: 16),
                   Image.asset(
                     'assets/Activly-logo.png',
@@ -1112,13 +1102,34 @@ class _AuthScreenState extends State<AuthScreen> {
                           ],
                         ),
                       ),
-                  const SizedBox(height: 12),
+                    ],
+                  ),
+                ),
+              ),
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        _LoadingOutlinedButtonIcon(
+                          onTap: () async => _handleTopBack(),
+                          icon: Icon(backIcon, size: 16),
+                          label: widget.t.back,
+                        ),
+                        LanguageToggle(
+                          language: widget.language,
+                          onToggle: widget.onToggleLanguage,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ),
-      ),
       ),
     );
   }

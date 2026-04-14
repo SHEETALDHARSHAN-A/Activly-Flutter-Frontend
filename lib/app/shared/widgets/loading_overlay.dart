@@ -11,7 +11,24 @@ class LoadingOverlay extends StatefulWidget {
 
 class _LoadingOverlayState extends State<LoadingOverlay>
     with SingleTickerProviderStateMixin {
+  static const String _brandImageAsset =
+      'assets/Activly-text-with-bottom-line.webp';
+
   late final AnimationController _controller;
+  bool _isBrandImageLoaded = false;
+
+  void _markBrandImageLoaded() {
+    if (_isBrandImageLoaded) {
+      return;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _isBrandImageLoaded) {
+        return;
+      }
+      setState(() => _isBrandImageLoaded = true);
+    });
+  }
 
   @override
   void initState() {
@@ -42,12 +59,44 @@ class _LoadingOverlayState extends State<LoadingOverlay>
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Image.asset(
-                  'assets/Activly-text-with-bottom-line.webp',
+                  _brandImageAsset,
                   width: 300,
                   fit: BoxFit.contain,
+                  frameBuilder: (
+                    BuildContext context,
+                    Widget child,
+                    int? frame,
+                    bool wasSynchronouslyLoaded,
+                  ) {
+                    if (wasSynchronouslyLoaded || frame != null) {
+                      _markBrandImageLoaded();
+                    }
+                    return child;
+                  },
+                  errorBuilder: (
+                    BuildContext context,
+                    Object error,
+                    StackTrace? stackTrace,
+                  ) {
+                    // Do not block the loader forever if the image fails.
+                    _markBrandImageLoaded();
+                    return const SizedBox(width: 300, height: 44);
+                  },
                 ),
                 const SizedBox(height: 18),
-                _UiverseHeartLoader(controller: _controller),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 220),
+                  child: _isBrandImageLoaded
+                      ? KeyedSubtree(
+                          key: const ValueKey<String>('heart-loader'),
+                          child: _UiverseHeartLoader(controller: _controller),
+                        )
+                      : const SizedBox(
+                          key: ValueKey<String>('heart-loader-placeholder'),
+                          width: 186,
+                          height: 186,
+                        ),
+                ),
               ],
             ),
           ),
@@ -58,131 +107,139 @@ class _LoadingOverlayState extends State<LoadingOverlay>
 }
 
 class _UiverseHeartLoader extends StatelessWidget {
-  const _UiverseHeartLoader({required this.controller});
+  const _UiverseHeartLoader({
+    required this.controller,
+    this.size = 62,
+    this.color = kColorLoaderHeart,
+    this.shadowColor = kColorLoaderShadowBase,
+  });
 
-  static const double _unit = 62;
+  // Matches CSS cubic-bezier(0.75, 0, 0.5, 1)
   static const Cubic _motionCurve = Cubic(0.75, 0, 0.5, 1);
 
   final Animation<double> controller;
+  final double size;
+  final Color color;
+  final Color shadowColor;
 
-  double _triangleWave(double t, double center, double halfWidth) {
-    final normalized = ((t - center).abs() / halfWidth).clamp(0.0, 1.0);
-    return 1 - normalized;
+  double _lerp(double start, double end, double t) {
+    return start + ((end - start) * t);
+  }
+
+  // Mirrors CSS keyframes: start -> mid at breakAt% -> end.
+  double _keyframeValue(
+    double start,
+    double mid,
+    double end,
+    int breakAt,
+    double t,
+  ) {
+    final pivot = breakAt / 100;
+    if (t <= pivot) {
+      return _lerp(start, mid, (t / pivot).clamp(0.0, 1.0));
+    }
+    return _lerp(mid, end, ((t - pivot) / (1 - pivot)).clamp(0.0, 1.0));
+  }
+
+  Widget _circle(double unit) {
+    return Container(
+      width: unit,
+      height: unit,
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final unit = size;
+    final canvasSize = unit * 3;
+    final shadowHeight = unit * 0.24;
+
     return SizedBox(
-      width: 190,
-      height: 178,
+      width: canvasSize,
       child: AnimatedBuilder(
         animation: controller,
         builder: (BuildContext context, Widget? child) {
           final t = _motionCurve.transform(controller.value);
+
           final heartRotation = t * 4 * math.pi;
 
-          final squarePulse = _triangleWave(t, 0.5, 0.5);
-          final squareScale = 1 - (0.5 * squarePulse);
-          final squareRadius = (_unit / 2) * squarePulse;
+          final leftTx = _keyframeValue(-28, 0, -28, 60, t);
+          final leftTy = _keyframeValue(-27, 0, -27, 60, t);
+          final leftScale = _keyframeValue(1, 0.4, 1, 60, t);
 
-          final leftPulse = _triangleWave(t, 0.6, 0.12);
-          final leftScale = 1 - (0.6 * leftPulse);
+          final rightTx = _keyframeValue(28, 0, 28, 40, t);
+          final rightTy = _keyframeValue(-27, 0, -27, 40, t);
+          final rightScale = _keyframeValue(1, 0.4, 1, 40, t);
 
-          final rightPulse = _triangleWave(t, 0.4, 0.12);
-          final rightScale = 1 - (0.6 * rightPulse);
+          final squareScale = _keyframeValue(1, 0.5, 1, 50, t);
+          final squareRadiusFactor = _keyframeValue(0, 1, 0, 50, t);
 
-          final shadowPulse = _triangleWave(t, 0.5, 0.5);
-          final shadowScale = 1 - (0.5 * shadowPulse);
-          final shadowColor = Color.lerp(
-            kColorLoaderShadowBase,
-            kColorLoaderShadowPulse,
-            shadowPulse,
-          )!;
+          final shadowScale = _keyframeValue(1, 0.5, 1, 50, t);
 
-          return Stack(
-            alignment: Alignment.center,
+          return Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Positioned(
-                bottom: 12,
-                child: Transform.scale(
-                  scale: shadowScale,
-                  child: Container(
-                    width: _unit,
-                    height: _unit * 0.24,
-                    decoration: BoxDecoration(
-                      color: shadowColor,
-                      border: Border.all(color: shadowColor),
-                      borderRadius: BorderRadius.circular(_unit),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 8,
+              SizedBox(
+                width: canvasSize,
+                height: canvasSize * 0.9,
                 child: Transform.rotate(
                   angle: heartRotation,
-                  child: SizedBox(
-                    width: _unit * 2,
-                    height: _unit * 2,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        Transform.translate(
-                          offset: const Offset(-28, -27),
-                          child: Transform.scale(
-                            scale: leftScale,
-                            child: const _LoaderHeartCircle(),
-                          ),
-                        ),
-                        Transform.translate(
-                          offset: const Offset(28, -27),
-                          child: Transform.scale(
-                            scale: rightScale,
-                            child: const _LoaderHeartCircle(),
-                          ),
-                        ),
-                        Transform.rotate(
-                          angle: -math.pi / 4,
-                          child: Transform.scale(
-                            scale: squareScale,
-                            child: Container(
-                              width: _unit,
-                              height: _unit,
-                              decoration: BoxDecoration(
-                                color: kColorLoaderHeart,
-                                border: Border.all(color: kColorLoaderHeart),
-                                borderRadius: BorderRadius.circular(
-                                  squareRadius,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Transform.rotate(
+                        angle: -math.pi / 4,
+                        child: Transform.scale(
+                          scale: squareScale,
+                          child: Container(
+                            width: unit,
+                            height: unit,
+                            decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.circular(
+                                (squareRadiusFactor * unit / 2).clamp(
+                                  0.0,
+                                  unit / 2,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Transform.translate(
+                        offset: Offset(leftTx, leftTy),
+                        child: Transform.scale(
+                          scale: leftScale,
+                          child: _circle(unit),
+                        ),
+                      ),
+                      Transform.translate(
+                        offset: Offset(rightTx, rightTy),
+                        child: Transform.scale(
+                          scale: rightScale,
+                          child: _circle(unit),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Transform.scale(
+                scale: shadowScale,
+                child: Container(
+                  width: unit,
+                  height: shadowHeight,
+                  decoration: BoxDecoration(
+                    color: shadowColor,
+                    borderRadius: BorderRadius.circular(shadowHeight / 2),
                   ),
                 ),
               ),
             ],
           );
         },
-      ),
-    );
-  }
-}
-
-class _LoaderHeartCircle extends StatelessWidget {
-  const _LoaderHeartCircle();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: _UiverseHeartLoader._unit,
-      height: _UiverseHeartLoader._unit,
-      decoration: BoxDecoration(
-        color: kColorLoaderHeart,
-        border: Border.all(color: kColorLoaderHeart),
-        shape: BoxShape.circle,
       ),
     );
   }
@@ -249,7 +306,7 @@ class _BladeSpinnerState extends State<_BladeSpinner>
                     ),
                   ),
                 ),
-              );
+              ),
             }),
           );
         },

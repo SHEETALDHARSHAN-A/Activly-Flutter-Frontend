@@ -125,13 +125,15 @@ class _UiverseHeartLoader extends StatelessWidget {
     double mid,
     double end,
     int breakAt,
-    double t,
+    double progress,
   ) {
     final pivot = breakAt / 100;
-    if (t <= pivot) {
-      return _lerp(start, mid, (t / pivot).clamp(0.0, 1.0));
+    if (progress <= pivot) {
+      final local = (progress / pivot).clamp(0.0, 1.0);
+      return _lerp(start, mid, _motionCurve.transform(local));
     }
-    return _lerp(mid, end, ((t - pivot) / (1 - pivot)).clamp(0.0, 1.0));
+    final local = ((progress - pivot) / (1 - pivot)).clamp(0.0, 1.0);
+    return _lerp(mid, end, _motionCurve.transform(local));
   }
 
   Widget _circle(double unit) {
@@ -156,22 +158,28 @@ class _UiverseHeartLoader extends StatelessWidget {
       child: AnimatedBuilder(
         animation: controller,
         builder: (BuildContext context, Widget? child) {
-          final t = _motionCurve.transform(controller.value);
+          final progress = controller.value;
 
-          final heartRotation = t * 4 * math.pi;
+          final heartRotation = _keyframeValue(0, 2 * math.pi, 4 * math.pi, 50, progress);
 
-          final leftTx = _keyframeValue(-28, 0, -28, 60, t);
-          final leftTy = _keyframeValue(-27, 0, -27, 60, t);
-          final leftScale = _keyframeValue(1, 0.4, 1, 60, t);
+          final leftTx = _keyframeValue(-28, 0, -28, 60, progress);
+          final leftTy = _keyframeValue(-27, 0, -27, 60, progress);
+          final leftScale = _keyframeValue(1, 0.4, 1, 60, progress);
 
-          final rightTx = _keyframeValue(28, 0, 28, 40, t);
-          final rightTy = _keyframeValue(-27, 0, -27, 40, t);
-          final rightScale = _keyframeValue(1, 0.4, 1, 40, t);
+          final rightTx = _keyframeValue(28, 0, 28, 40, progress);
+          final rightTy = _keyframeValue(-27, 0, -27, 40, progress);
+          final rightScale = _keyframeValue(1, 0.4, 1, 40, progress);
 
-          final squareScale = _keyframeValue(1, 0.5, 1, 50, t);
-          final squareRadiusFactor = _keyframeValue(0, 1, 0, 50, t);
+          final squareScale = _keyframeValue(1, 0.5, 1, 50, progress);
+          final squareRadiusFactor = _keyframeValue(0, 1, 0, 50, progress);
 
-          final shadowScale = _keyframeValue(1, 0.5, 1, 50, t);
+          final shadowScale = _keyframeValue(1, 0.5, 1, 50, progress);
+          final shadowPulse = _keyframeValue(0, 1, 0, 50, progress);
+          final shadowColor = Color.lerp(
+            kColorLoaderShadowBase,
+            kColorLoaderShadowPulse,
+            shadowPulse,
+          )!;
 
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -228,7 +236,7 @@ class _UiverseHeartLoader extends StatelessWidget {
                   width: unit,
                   height: shadowHeight,
                   decoration: BoxDecoration(
-                    color: kColorLoaderShadowBase,
+                    color: shadowColor,
                     borderRadius: BorderRadius.circular(shadowHeight / 2),
                   ),
                 ),

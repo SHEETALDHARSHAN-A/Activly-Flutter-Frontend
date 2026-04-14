@@ -289,19 +289,22 @@ class _LoadingOutlinedButtonIconState extends State<_LoadingOutlinedButtonIcon> 
       ),
       child: _loading
           ? const _BladeSpinner(size: 18)
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                widget.icon,
-                const SizedBox(width: 8),
-                Text(
-                  widget.label,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+          : FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  widget.icon,
+                  const SizedBox(width: 6),
+                  Text(
+                    widget.label,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
     );
   }

@@ -7,12 +7,14 @@ class AuthScreen extends StatefulWidget {
     required this.t,
     required this.onToggleLanguage,
     required this.onBackToLanding,
+    required this.onAuthSuccess,
   });
 
   final AppLanguage language;
   final TranslationCopy t;
   final VoidCallback onToggleLanguage;
   final VoidCallback onBackToLanding;
+  final VoidCallback onAuthSuccess;
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -195,6 +197,10 @@ class _AuthScreenState extends State<AuthScreen> {
       ? 'يرجى إدخال البريد أو الهاتف.'
       : 'Please enter your email or phone.';
 
+    String get _missingSignInFieldsText => _isArabic
+      ? 'يرجى إدخال البريد او الهاتف وكلمة المرور.'
+      : 'Please enter your email/phone and password.';
+
   String get _expiredOtpText => _isArabic ? 'انتهت صلاحية الرمز' : 'Expired OTP';
 
   void _handleTopBack() {
@@ -316,13 +322,8 @@ class _AuthScreenState extends State<AuthScreen> {
       return;
     }
 
-    setState(() {
-      _signInIdentifier.text = _otpDestination;
-      _signInPassword.clear();
-      _notice = widget.t.accountCreatedNotice;
-      _step = AuthStep.signIn;
-    });
     _resendTimer?.cancel();
+    widget.onAuthSuccess();
   }
 
   void _handleSaveNewPassword() {
@@ -340,7 +341,14 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void _handleSignInSubmit() {
-    // Reference behavior is currently UI-only (no backend call/navigation).
+    if (_signInIdentifier.text.trim().isEmpty ||
+        _signInPassword.text.trim().isEmpty) {
+      setState(() => _notice = _missingSignInFieldsText);
+      return;
+    }
+
+    setState(() => _notice = '');
+    widget.onAuthSuccess();
   }
 
   void _onOtpChanged(int index, String value) {

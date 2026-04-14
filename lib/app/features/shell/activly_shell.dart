@@ -11,9 +11,11 @@ class ActivlyShell extends StatefulWidget {
 
 class _ActivlyShellState extends State<ActivlyShell> {
   static const double _splitLayoutBreakpoint = 1100;
+  static const Duration _loaderDisplayDuration = Duration(milliseconds: 2800);
 
   AppLanguage _language = AppLanguage.en;
   final bool _isLoaded = true;
+  bool _isLoaderMinimumElapsed = false;
   int _currentVideoIndex = 0;
   AppPage _activePage = AppPage.landing;
 
@@ -22,12 +24,44 @@ class _ActivlyShellState extends State<ActivlyShell> {
       List<VideoPlayerController?>.filled(kVideoAssets.length, null);
 
   Timer? _carouselTimer;
+  Timer? _loaderTimer;
 
   TranslationCopy get _t => kTranslations[_language]!;
+
+  bool get _allLandingVideosFailed => _videoError.every((hasError) => hasError);
+
+  bool get _isCurrentLandingVideoRenderable {
+    final current = _videoControllers[_currentVideoIndex];
+    final isInitialized = current?.value.isInitialized ?? false;
+    return isInitialized && !_videoError[_currentVideoIndex];
+  }
+
+  bool get _showLoader {
+    if (!_isLoaderMinimumElapsed) {
+      return true;
+    }
+
+    if (_activePage != AppPage.landing || !widget.enableVideos) {
+      return false;
+    }
+
+    if (_allLandingVideosFailed) {
+      return false;
+    }
+
+    return !_isCurrentLandingVideoRenderable;
+  }
 
   @override
   void initState() {
     super.initState();
+
+    _loaderTimer = Timer(_loaderDisplayDuration, () {
+      if (!mounted) {
+        return;
+      }
+      setState(() => _isLoaderMinimumElapsed = true);
+    });
 
     if (widget.enableVideos) {
       _startCarouselTimer();
@@ -38,6 +72,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
   @override
   void dispose() {
     _carouselTimer?.cancel();
+    _loaderTimer?.cancel();
     for (final controller in _videoControllers) {
       controller?.dispose();
     }
@@ -53,6 +88,10 @@ class _ActivlyShellState extends State<ActivlyShell> {
         await controller.initialize();
         await controller.setVolume(0);
         await controller.setLooping(true);
+
+        if (mounted) {
+          setState(() {});
+        }
 
         controller.addListener(() {
           if (!mounted) {
@@ -174,6 +213,13 @@ class _ActivlyShellState extends State<ActivlyShell> {
     setState(() => _activePage = AppPage.aiMatch);
   }
 
+  Future<void> _goToLandingPage() async {
+    if (!mounted) {
+      return;
+    }
+    setState(() => _activePage = AppPage.landing);
+  }
+
   Future<void> _goToLoginPage() async {
     if (!mounted) {
       return;
@@ -207,7 +253,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
           language: _language,
           t: _t,
           onToggleLanguage: _toggleLanguage,
-          onSkip: () => unawaited(_goToLoginPage()),
+          onSkip: () => unawaited(_goToLandingPage()),
         );
       }
 
@@ -216,6 +262,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
         t: _t,
         onToggleLanguage: _toggleLanguage,
         onBackToLanding: () => setState(() => _activePage = AppPage.landing),
+        onAuthSuccess: () => unawaited(_goToAiMatchPage()),
       );
     }
 
@@ -300,6 +347,9 @@ class _ActivlyShellState extends State<ActivlyShell> {
                   ],
                 ),
               ),
+            Positioned.fill(
+              child: LoadingOverlay(isVisible: _showLoader),
+            ),
           ],
         ),
       ),

@@ -18,7 +18,7 @@ class _LoadingOverlayState extends State<LoadingOverlay>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3400),
+      duration: const Duration(milliseconds: 2880),
     )..repeat();
   }
 
@@ -28,123 +28,30 @@ class _LoadingOverlayState extends State<LoadingOverlay>
     super.dispose();
   }
 
-  static double _segment(double value, double start, double end) {
-    if (value <= start) {
-      return 0;
-    }
-    if (value >= end) {
-      return 1;
-    }
-    return (value - start) / (end - start);
-  }
-
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       ignoring: !widget.isVisible,
       child: AnimatedOpacity(
         opacity: widget.isVisible ? 1 : 0,
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 360),
         child: ColoredBox(
           color: kColorBlack,
           child: Center(
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (BuildContext context, Widget? child) {
-                final progress = _controller.value;
-                final writeProgress = _segment(progress, 0.07, 0.80);
-                final bgOpacity = progress < 0.82
-                    ? 0.0
-                    : ((progress - 0.82) / 0.18).clamp(0.0, 1.0) * 0.08;
-                final jitter = math.sin(progress * 2 * math.pi * 17) * 0.45;
-
-                double heartOpacity(double delay) {
-                  final shifted = (progress - delay) % 1;
-                  if (shifted < 0.79 || shifted > 0.98) {
-                    return 0;
-                  }
-                  if (shifted < 0.84) {
-                    return (shifted - 0.79) / 0.05;
-                  }
-                  if (shifted < 0.92) {
-                    return 1 - ((shifted - 0.84) / 0.08) * 0.45;
-                  }
-                  return (1 - (shifted - 0.92) / 0.06).clamp(0, 1) * 0.55;
-                }
-
-                double heartLift(double delay) {
-                  final shifted = (progress - delay) % 1;
-                  if (shifted < 0.79 || shifted > 0.98) {
-                    return 0.6;
-                  }
-                  if (shifted < 0.84) {
-                    return 0.6 - ((shifted - 0.79) / 0.05) * 3.2;
-                  }
-                  if (shifted < 0.92) {
-                    return -2.6 + ((shifted - 0.84) / 0.08) * 2.6;
-                  }
-                  return 0;
-                }
-
-                return SizedBox(
-                  width: math.min(MediaQuery.sizeOf(context).width * 0.78, 700),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Expanded(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: <Widget>[
-                            Opacity(
-                              opacity: bgOpacity,
-                              child: Image.asset('assets/Activly-text.png'),
-                            ),
-                            Transform.translate(
-                              offset: Offset(jitter, -jitter * 0.7),
-                              child: Stack(
-                                children: <Widget>[
-                                  Opacity(
-                                    opacity: 0,
-                                    child: Image.asset('assets/Activly-text.png'),
-                                  ),
-                                  Positioned.fill(
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      widthFactor: writeProgress,
-                                      child: Image.asset('assets/Activly-text.png'),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 6),
-                        child: Row(
-                          children: <Widget>[
-                            _HeartGlyph(
-                              opacity: heartOpacity(0),
-                              yOffset: heartLift(0),
-                            ),
-                            _HeartGlyph(
-                              opacity: heartOpacity(0.04),
-                              yOffset: heartLift(0.04),
-                            ),
-                            _HeartGlyph(
-                              opacity: heartOpacity(0.08),
-                              yOffset: heartLift(0.08),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 360),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/Activly-logo.png',
+                    width: 210,
+                    fit: BoxFit.contain,
                   ),
-                );
-              },
+                  const SizedBox(height: 26),
+                  _UiverseHeartLoader(controller: _controller),
+                ],
+              ),
             ),
           ),
         ),
@@ -153,28 +60,152 @@ class _LoadingOverlayState extends State<LoadingOverlay>
   }
 }
 
-class _HeartGlyph extends StatelessWidget {
-  const _HeartGlyph({required this.opacity, required this.yOffset});
+class _UiverseHeartLoader extends StatelessWidget {
+  const _UiverseHeartLoader({required this.controller});
 
-  final double opacity;
-  final double yOffset;
+  final Animation<double> controller;
 
   @override
   Widget build(BuildContext context) {
+    return SizedBox(
+      width: 154,
+      height: 130,
+      child: AnimatedBuilder(
+        animation: controller,
+        builder: (BuildContext context, Widget? child) {
+          final t = controller.value;
+          final jump = (math.sin((2 * math.pi * t) - (math.pi / 2)) + 1) / 2;
+          final lift = -24 * jump;
+          final heartScale = 1 - (0.20 * jump);
+          final shadowWidth = 76 - (30 * jump);
+
+          return Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Positioned(
+                bottom: 8,
+                child: Container(
+                  width: shadowWidth,
+                  height: 12,
+                  decoration: BoxDecoration(
+                    color: kColorWhite.withValues(alpha: 0.22),
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                ),
+              ),
+              _LoaderOrb(progress: t, delay: 0.08),
+              _LoaderOrb(progress: t, delay: 0.41),
+              _LoaderOrb(progress: t, delay: 0.72),
+              Transform.translate(
+                offset: Offset(0, lift),
+                child: Transform.scale(
+                  scale: heartScale,
+                  child: const _HeartShape(),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _LoaderOrb extends StatelessWidget {
+  const _LoaderOrb({required this.progress, required this.delay});
+
+  final double progress;
+  final double delay;
+
+  @override
+  Widget build(BuildContext context) {
+    final phase = (progress + delay) % 1.0;
+    final angle = (2 * math.pi * phase) - (math.pi / 2);
+    final dx = math.cos(angle) * 33;
+    final dy = math.sin(angle) * 12;
+    final opacity = (0.28 + (0.72 * (1 - phase))).clamp(0.0, 1.0);
+
     return Transform.translate(
-      offset: Offset(0, yOffset),
+      offset: Offset(dx, dy - 8),
       child: Opacity(
         opacity: opacity,
-        child: const Text(
-          '❤',
-          style: TextStyle(
+        child: Container(
+          width: 8,
+          height: 8,
+          decoration: const BoxDecoration(
             color: kColorLavender,
-            fontSize: 14,
-            shadows: <Shadow>[
-              Shadow(blurRadius: 8, color: kColorShadowPurple44),
-            ],
+            shape: BoxShape.circle,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _HeartShape extends StatelessWidget {
+  const _HeartShape();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 82,
+      height: 72,
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          Transform.rotate(
+            angle: -math.pi / 4,
+            child: Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: kColorPrimary,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    blurRadius: 16,
+                    spreadRadius: -8,
+                    color: kColorPrimary.withValues(alpha: 0.70),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const Positioned(
+            left: 11,
+            top: 8,
+            child: _HeartCircle(),
+          ),
+          const Positioned(
+            right: 11,
+            top: 8,
+            child: _HeartCircle(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _HeartCircle extends StatelessWidget {
+  const _HeartCircle();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        color: kColorPrimary,
+        shape: BoxShape.circle,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            blurRadius: 14,
+            spreadRadius: -8,
+            color: kColorPrimary.withValues(alpha: 0.66),
+          ),
+        ],
       ),
     );
   }

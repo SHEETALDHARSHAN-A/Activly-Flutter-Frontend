@@ -4,6 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Auth screen renders sign in state', (WidgetTester tester) async {
+    await tester.binding.setSurfaceSize(const Size(430, 932));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -12,6 +15,7 @@ void main() {
             t: kTranslations[AppLanguage.en]!,
             onToggleLanguage: () {},
             onBackToLanding: () {},
+            onAuthSuccess: () {},
           ),
         ),
       ),

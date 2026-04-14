@@ -13,8 +13,8 @@ class LanguageToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = kTranslations[language]!;
-    final selectedTextColor = Colors.black;
-    final unselectedTextColor = Colors.white;
+    final selectedTextColor = kColorBlack;
+    final unselectedTextColor = kColorWhite;
 
     return GestureDetector(
       onTap: onToggle,
@@ -23,7 +23,7 @@ class LanguageToggle extends StatelessWidget {
         height: kTopControlHeight,
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.50),
+          color: kColorBlack.withValues(alpha: 0.50),
           borderRadius: BorderRadius.circular(999),
         ),
         child: Stack(
@@ -38,7 +38,7 @@ class LanguageToggle extends StatelessWidget {
                 width: 36,
                 height: 28,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: kColorWhite,
                   borderRadius: BorderRadius.circular(999),
                 ),
               ),
@@ -81,3 +81,4 @@ class LanguageToggle extends StatelessWidget {
     );
   }
 }
+

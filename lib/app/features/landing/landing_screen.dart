@@ -12,6 +12,7 @@ class LandingScreen extends StatefulWidget {
     required this.onSelectVideo,
     required this.onContinueEmail,
     required this.onContinuePhone,
+    required this.onSkipForNow,
   });
 
   final AppLanguage language;
@@ -23,6 +24,7 @@ class LandingScreen extends StatefulWidget {
   final ValueChanged<int> onSelectVideo;
   final AsyncTapCallback onContinueEmail;
   final AsyncTapCallback onContinuePhone;
+  final VoidCallback onSkipForNow;
 
   @override
   State<LandingScreen> createState() => _LandingScreenState();
@@ -98,7 +100,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                           style: TextStyle(
                                             fontSize: compact ? 14 : 16,
                                             fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+                                            color: kColorWhite,
                                           ),
                                         ),
                                         Text(
@@ -107,7 +109,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                           style: TextStyle(
                                             fontSize: compact ? 14 : 16,
                                             fontWeight: FontWeight.w500,
-                                            color: Colors.white,
+                                            color: kColorWhite,
                                           ),
                                         ),
                                       ],
@@ -162,7 +164,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                         Expanded(
                                           child: Container(
                                             height: 1,
-                                            color: Colors.white.withValues(
+                                            color: kColorWhite.withValues(
                                               alpha: 0.20,
                                             ),
                                           ),
@@ -174,7 +176,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                           child: Text(
                                             t.or,
                                             style: TextStyle(
-                                              color: Colors.white.withValues(
+                                              color: kColorWhite.withValues(
                                                 alpha: 0.55,
                                               ),
                                               fontSize: 12,
@@ -184,7 +186,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                         Expanded(
                                           child: Container(
                                             height: 1,
-                                            color: Colors.white.withValues(
+                                            color: kColorWhite.withValues(
                                               alpha: 0.20,
                                             ),
                                           ),
@@ -235,7 +237,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                     child: _AnimatedSkipForNow(
                                       label: t.skipForNow,
                                       icon: Icon(arrowIcon, size: 18),
-                                      onTap: () {},
+                                      onTap: widget.onSkipForNow,
                                     ),
                                   ),
                                   SizedBox(height: 22 * compactScale),
@@ -294,8 +296,8 @@ class _LandingScreenState extends State<LandingScreen> {
                         width: active ? 24 : 8,
                         decoration: BoxDecoration(
                           color: active
-                              ? Colors.white
-                              : Colors.white.withValues(alpha: 0.40),
+                              ? kColorWhite
+                              : kColorWhite.withValues(alpha: 0.40),
                           borderRadius: BorderRadius.circular(99),
                         ),
                       ),
@@ -411,7 +413,7 @@ class _AnimatedSkipForNowState extends State<_AnimatedSkipForNow>
                 Text(
                   widget.label,
                   style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.90),
+                    color: kColorWhite.withValues(alpha: 0.90),
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     decoration: TextDecoration.none,
@@ -420,7 +422,7 @@ class _AnimatedSkipForNowState extends State<_AnimatedSkipForNow>
                 const SizedBox(width: 6),
                 IconTheme(
                   data: IconThemeData(
-                    color: Colors.white.withValues(alpha: 0.90),
+                    color: kColorWhite.withValues(alpha: 0.90),
                     size: 18,
                   ),
                   child: widget.icon,
@@ -435,7 +437,7 @@ class _AnimatedSkipForNowState extends State<_AnimatedSkipForNow>
                   height: 1.5,
                   width: 88 * _controller.value,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF7C4CFF),
+                    color: kColorPrimary,
                     borderRadius: BorderRadius.circular(99),
                   ),
                 );
@@ -447,3 +449,4 @@ class _AnimatedSkipForNowState extends State<_AnimatedSkipForNow>
     );
   }
 }
+

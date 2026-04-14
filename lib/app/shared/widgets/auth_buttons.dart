@@ -56,7 +56,7 @@ class _AsyncSegmentButtonState extends State<_AsyncSegmentButton> {
         height: 36,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: widget.selected ? Colors.white : Colors.transparent,
+          color: widget.selected ? kColorWhite : Colors.transparent,
           borderRadius: BorderRadius.circular(999),
         ),
         child: _loading
@@ -68,8 +68,8 @@ class _AsyncSegmentButtonState extends State<_AsyncSegmentButton> {
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                   color: widget.selected
-                      ? Colors.black
-                      : Colors.white.withValues(alpha: 0.70),
+                      ? kColorBlack
+                      : kColorWhite.withValues(alpha: 0.70),
                 ),
               ),
       ),
@@ -98,13 +98,13 @@ class _ActionButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: null,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white.withValues(alpha: 0.40),
-            foregroundColor: Colors.black.withValues(alpha: 0.60),
+            backgroundColor: kColorWhite.withValues(alpha: 0.40),
+            foregroundColor: kColorBlack.withValues(alpha: 0.60),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 8,
-            shadowColor: Colors.black.withValues(alpha: 0.20),
+            shadowColor: kColorBlack.withValues(alpha: 0.20),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -129,9 +129,9 @@ class _ActionButton extends StatelessWidget {
       radius: 12,
       onTap: onTap,
       selected: false,
-      baseColor: Colors.white,
-      overlayColor: const Color(0xFF7C4CFF),
-      shadowColor: Colors.black.withValues(alpha: 0.20),
+      baseColor: kColorWhite,
+      overlayColor: kColorPrimary,
+      shadowColor: kColorBlack.withValues(alpha: 0.20),
       builder: (bool hovered) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -141,7 +141,7 @@ class _ActionButton extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
-                color: hovered ? Colors.white : Colors.black,
+                color: hovered ? kColorWhite : kColorBlack,
               ),
             ),
             const SizedBox(width: 8),
@@ -151,7 +151,7 @@ class _ActionButton extends StatelessWidget {
               child: Icon(
                 icon,
                 size: 18,
-                color: hovered ? Colors.white : Colors.black,
+                color: hovered ? kColorWhite : kColorBlack,
               ),
             ),
           ],
@@ -203,7 +203,7 @@ class _LoadingTextButtonState extends State<_LoadingTextButton> {
     final style =
         widget.style ??
         TextButton.styleFrom(
-          foregroundColor: Colors.white.withValues(alpha: 0.80),
+          foregroundColor: kColorWhite.withValues(alpha: 0.80),
         );
 
     if (_loading) {
@@ -220,7 +220,7 @@ class _LoadingTextButtonState extends State<_LoadingTextButton> {
           widget.textStyle ??
           const TextStyle(
             decoration: TextDecoration.underline,
-            decorationColor: Color(0xFF7C4CFF),
+            decorationColor: kColorPrimary,
           ),
     );
 
@@ -277,11 +277,11 @@ class _LoadingOutlinedButtonIconState extends State<_LoadingOutlinedButtonIcon> 
     return OutlinedButton(
       onPressed: _loading ? null : _handleTap,
       style: OutlinedButton.styleFrom(
-        foregroundColor: Colors.white,
+        foregroundColor: kColorWhite,
         side: BorderSide(
-          color: Colors.white.withValues(alpha: 0.30),
+          color: kColorWhite.withValues(alpha: 0.30),
         ),
-        backgroundColor: Colors.black.withValues(alpha: 0.45),
+        backgroundColor: kColorBlack.withValues(alpha: 0.45),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
         fixedSize: const Size(kTopControlWidth, kTopControlHeight),
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -343,10 +343,11 @@ class _LoadingLinkTextState extends State<_LoadingLinkText> {
       child: Text(
         widget.text,
         style: const TextStyle(
-          color: Color(0xFF7C4CFF),
+          color: kColorPrimary,
           fontWeight: FontWeight.w500,
         ),
       ),
     );
   }
 }
+

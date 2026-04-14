@@ -9,6 +9,60 @@ const double kTopControlsSidePadding = 16.0;
 const double kTopControlHeight = 36.0;
 const double kTopControlWidth = 82.0;
 
+const Color kColorWhite = Color(0xFFFFFFFF);
+const Color kColorBlack = Color(0xFF000000);
+const Color kColorPrimary = Color(0xFF7C4CFF);
+const Color kColorPrimaryAccent = Color(0xFF8B5CF6);
+const Color kColorPrimarySoft = Color(0xFF9F7BFF);
+const Color kColorSurfaceDark = Color(0xFF0D0D0D);
+const Color kColorPanelDark = Color(0xFF0B0B0D);
+const Color kColorLavender = Color(0xFFECE8FE);
+const Color kColorSpinnerNeutral = Color(0xFF69717D);
+const Color kColorVideoFallbackStart = Color(0xFF2A2A2A);
+const Color kColorVideoFallbackEnd = Color(0xFF101010);
+
+const Color kColorGoogleRed = Color(0xFFEA4335);
+const Color kColorGoogleYellow = Color(0xFFFBBC05);
+const Color kColorGoogleGreen = Color(0xFF34A853);
+const Color kColorGoogleBlue = Color(0xFF4285F4);
+
+const Color kColorShadowBlack70 = Color.fromRGBO(0, 0, 0, 0.70);
+const Color kColorShadowPurple44 = Color.fromRGBO(124, 76, 255, 0.44);
+
+const Color kAiColorPrimary = kColorPrimary;
+const Color kAiColorPrimaryAccent = kColorPrimaryAccent;
+const Color kAiColorPrimarySoft = kColorPrimarySoft;
+const Color kAiColorAvatarStart = Color(0xFFF5F3FF);
+const Color kAiColorAvatarEnd = Color(0xFFE0D8FF);
+const Color kAiColorSurface = kColorWhite;
+const Color kAiColorSurfaceBorder = Color(0xFFE8E8E8);
+const Color kAiColorSurfaceSelected = Color(0xFFF4EFFF);
+const Color kAiColorTextDark = Color(0xFF161616);
+const Color kAiColorTextInput = Color(0xFF1A1C1C);
+const Color kAiColorHint = Color(0xFF8B8F98);
+
+const Color kAiColorSubtitle = Color.fromRGBO(255, 255, 255, 0.72);
+const Color kAiColorGlass = Color.fromRGBO(255, 255, 255, 0.10);
+const Color kAiColorGlassBorder = Color.fromRGBO(255, 255, 255, 0.16);
+const Color kAiColorGlassBorderSoft = Color.fromRGBO(255, 255, 255, 0.15);
+const Color kAiColorMutedText = Color.fromRGBO(255, 255, 255, 0.75);
+const Color kAiColorSkipBorder = Color.fromRGBO(255, 255, 255, 0.26);
+const Color kAiColorSkipBackground = Color.fromRGBO(0, 0, 0, 0.45);
+const Color kAiColorWaveStart = Color.fromRGBO(139, 92, 246, 0.00);
+const Color kAiColorWaveEnd = Color.fromRGBO(139, 92, 246, 0.32);
+const Color kAiColorInputLabel = Color.fromRGBO(255, 255, 255, 0.78);
+const Color kAiColorInputHintLight = Color.fromRGBO(255, 255, 255, 0.44);
+const Color kAiColorInputFill = Color.fromRGBO(0, 0, 0, 0.20);
+const Color kAiColorInputBorder = Color.fromRGBO(255, 255, 255, 0.20);
+const Color kAiColorBottomNavBackground = Color.fromRGBO(0, 0, 0, 0.55);
+const Color kAiColorBottomNavBorder = Color.fromRGBO(255, 255, 255, 0.10);
+const Color kAiColorBottomNavInactive = Color.fromRGBO(255, 255, 255, 0.66);
+const Color kAiColorChoiceChevronInactive = Color.fromRGBO(124, 76, 255, 0.40);
+
+const Color kAiShadowMedium = Color.fromRGBO(0, 0, 0, 0.45);
+const Color kAiShadowInput = Color.fromRGBO(0, 0, 0, 0.40);
+const Color kAiShadowPurple = Color.fromRGBO(124, 76, 255, 0.75);
+
 const Map<AppLanguage, TranslationCopy> kTranslations = {
   AppLanguage.en: TranslationCopy(
     appName: 'Activly',

@@ -77,7 +77,7 @@ class _VideoFallback extends StatelessWidget {
     return const DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: <Color>[Color(0xFF2A2A2A), Color(0xFF101010)],
+          colors: <Color>[kColorVideoFallbackStart, kColorVideoFallbackEnd],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -85,3 +85,4 @@ class _VideoFallback extends StatelessWidget {
     );
   }
 }
+

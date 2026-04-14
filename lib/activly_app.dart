@@ -13,6 +13,7 @@ part 'app/core/constants/app_constants.dart';
 part 'app/features/shell/activly_shell.dart';
 part 'app/features/landing/landing_screen.dart';
 part 'app/features/auth/auth_screen.dart';
+part 'app/features/ai_match/ai_match_onboarding_screen.dart';
 part 'app/shared/widgets/video_widgets.dart';
 part 'app/shared/widgets/loading_overlay.dart';
 part 'app/shared/widgets/language_toggle.dart';
@@ -38,14 +39,14 @@ class ActivlyApp extends StatelessWidget {
       title: 'Activly',
       theme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: kColorBlack,
         colorScheme: const ColorScheme.dark(
-          primary: Color(0xFF7C4CFF),
-          surface: Color(0xFF0D0D0D),
+          primary: kColorPrimary,
+          surface: kColorSurfaceDark,
         ),
         textTheme: baseText.apply(
-          bodyColor: Colors.white,
-          displayColor: Colors.white,
+          bodyColor: kColorWhite,
+          displayColor: kColorWhite,
         ),
       ),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
@@ -55,3 +56,4 @@ class ActivlyApp extends StatelessWidget {
     );
   }
 }
+

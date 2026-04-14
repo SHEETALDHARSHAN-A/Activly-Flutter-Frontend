@@ -46,7 +46,7 @@ class _LoadingOverlayState extends State<LoadingOverlay>
         opacity: widget.isVisible ? 1 : 0,
         duration: const Duration(milliseconds: 500),
         child: ColoredBox(
-          color: Colors.black,
+          color: kColorBlack,
           child: Center(
             child: AnimatedBuilder(
               animation: _controller,
@@ -168,10 +168,10 @@ class _HeartGlyph extends StatelessWidget {
         child: const Text(
           '❤',
           style: TextStyle(
-            color: Color(0xFFECE8FE),
+            color: kColorLavender,
             fontSize: 14,
             shadows: <Shadow>[
-              Shadow(blurRadius: 8, color: Color.fromRGBO(124, 76, 255, 0.44)),
+              Shadow(blurRadius: 8, color: kColorShadowPurple44),
             ],
           ),
         ),
@@ -234,7 +234,7 @@ class _BladeSpinnerState extends State<_BladeSpinner>
                     width: bladeWidth,
                     height: bladeHeight,
                     decoration: BoxDecoration(
-                      color: (widget.color ?? const Color(0xFF69717D)).withValues(
+                      color: (widget.color ?? kColorSpinnerNeutral).withValues(
                         alpha: opacity,
                       ),
                       borderRadius: BorderRadius.circular(widget.size * 0.0555),
@@ -249,3 +249,4 @@ class _BladeSpinnerState extends State<_BladeSpinner>
     );
   }
 }
+

@@ -414,7 +414,7 @@ class _AuthScreenState extends State<AuthScreen> {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.white.withValues(alpha: 0.80),
+            color: kColorWhite.withValues(alpha: 0.80),
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -429,12 +429,12 @@ class _AuthScreenState extends State<AuthScreen> {
           style: const TextStyle(fontSize: 14),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.45)),
+            hintStyle: TextStyle(color: kColorWhite.withValues(alpha: 0.45)),
             filled: true,
-            fillColor: Colors.white.withValues(alpha: 0.10),
+            fillColor: kColorWhite.withValues(alpha: 0.10),
             prefixIcon: Icon(
               icon,
-              color: Colors.white.withValues(alpha: 0.55),
+              color: kColorWhite.withValues(alpha: 0.55),
               size: 18,
             ),
             suffixIcon: showToggle
@@ -444,7 +444,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       showText
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined,
-                      color: Colors.white.withValues(alpha: 0.55),
+                      color: kColorWhite.withValues(alpha: 0.55),
                       size: 18,
                     ),
                   )
@@ -456,13 +456,13 @@ class _AuthScreenState extends State<AuthScreen> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: Colors.white.withValues(alpha: 0.20),
+                color: kColorWhite.withValues(alpha: 0.20),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: Colors.white.withValues(alpha: 0.50),
+                color: kColorWhite.withValues(alpha: 0.50),
               ),
             ),
           ),
@@ -527,9 +527,9 @@ class _AuthScreenState extends State<AuthScreen> {
                   Container(
                     padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.45),
+                          color: kColorBlack.withValues(alpha: 0.45),
                           border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.20),
+                            color: kColorWhite.withValues(alpha: 0.20),
                           ),
                           borderRadius: BorderRadius.circular(24),
                           boxShadow: const <BoxShadow>[
@@ -537,7 +537,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               blurRadius: 60,
                               spreadRadius: -35,
                               offset: Offset(0, 24),
-                              color: Color.fromRGBO(0, 0, 0, 0.70),
+                              color: kColorShadowBlack70,
                             ),
                           ],
                         ),
@@ -585,7 +585,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Colors.white.withValues(alpha: 0.70),
+                                color: kColorWhite.withValues(alpha: 0.70),
                               ),
                             ),
                             if (_step == AuthStep.otp && _otpDestination.isNotEmpty)
@@ -596,7 +596,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Colors.white.withValues(alpha: 0.9),
+                                    color: kColorWhite.withValues(alpha: 0.9),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -606,9 +606,9 @@ class _AuthScreenState extends State<AuthScreen> {
                               Container(
                                 padding: const EdgeInsets.all(4),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.10),
+                                  color: kColorWhite.withValues(alpha: 0.10),
                                   border: Border.all(
-                                    color: Colors.white.withValues(alpha: 0.20),
+                                    color: kColorWhite.withValues(alpha: 0.20),
                                   ),
                                   borderRadius: BorderRadius.circular(999),
                                 ),
@@ -670,7 +670,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       onTap: () async =>
                                           _goToStep(AuthStep.forgotPassword),
                                       textStyle: TextStyle(
-                                        color: Colors.white.withValues(
+                                        color: kColorWhite.withValues(
                                           alpha: 0.80,
                                         ),
                                         fontSize: 12,
@@ -687,7 +687,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   Text.rich(
                                     TextSpan(
                                       style: TextStyle(
-                                        color: Colors.white.withValues(
+                                        color: kColorWhite.withValues(
                                           alpha: 0.70,
                                         ),
                                         fontSize: 12,
@@ -715,7 +715,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 11,
-                                      color: Colors.white.withValues(
+                                      color: kColorWhite.withValues(
                                         alpha: 0.55,
                                       ),
                                     ),
@@ -798,7 +798,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   Text.rich(
                                     TextSpan(
                                       style: TextStyle(
-                                        color: Colors.white.withValues(
+                                        color: kColorWhite.withValues(
                                           alpha: 0.70,
                                         ),
                                         fontSize: 12,
@@ -849,7 +849,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                     label: widget.t.backToSignIn,
                                     onTap: () async => _goToStep(AuthStep.signIn),
                                     textStyle: TextStyle(
-                                      color: Colors.white.withValues(alpha: 0.75),
+                                      color: kColorWhite.withValues(alpha: 0.75),
                                       fontSize: 12,
                                       decoration: TextDecoration.none,
                                     ),
@@ -866,9 +866,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                       vertical: 10,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Colors.white.withValues(alpha: 0.05),
+                                      color: kColorWhite.withValues(alpha: 0.05),
                                       border: Border.all(
-                                        color: Colors.white.withValues(alpha: 0.20),
+                                        color: kColorWhite.withValues(alpha: 0.20),
                                       ),
                                       borderRadius: BorderRadius.circular(16),
                                     ),
@@ -878,7 +878,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                           _otpDestination.contains('@')
                                               ? Icons.mail_outline
                                               : Icons.phone_outlined,
-                                          color: const Color(0xFF7C4CFF),
+                                          color: kColorPrimary,
                                           size: 16,
                                         ),
                                         const SizedBox(width: 8),
@@ -910,15 +910,15 @@ class _AuthScreenState extends State<AuthScreen> {
                                           ),
                                           style: TextButton.styleFrom(
                                             foregroundColor:
-                                                const Color(0xFFECE8FE),
+                                                kColorLavender,
                                             backgroundColor:
-                                                const Color(0xFF7C4CFF)
+                                                kColorPrimary
                                                     .withValues(alpha: 0.10),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(999),
                                               side: BorderSide(
-                                                color: const Color(0xFF7C4CFF)
+                                                color: kColorPrimary
                                                     .withValues(alpha: 0.40),
                                               ),
                                             ),
@@ -983,13 +983,13 @@ class _AuthScreenState extends State<AuthScreen> {
                                               decoration: InputDecoration(
                                                 counterText: '',
                                                 filled: true,
-                                                fillColor: Colors.white
+                                                fillColor: kColorWhite
                                                     .withValues(alpha: 0.10),
                                                 enabledBorder: OutlineInputBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                   borderSide: BorderSide(
-                                                    color: Colors.white
+                                                    color: kColorWhite
                                                         .withValues(alpha: 0.20),
                                                   ),
                                                 ),
@@ -997,7 +997,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                                   borderRadius:
                                                       BorderRadius.circular(12),
                                                   borderSide: const BorderSide(
-                                                    color: Color(0xFF7C4CFF),
+                                                    color: kColorPrimary,
                                                   ),
                                                 ),
                                               ),
@@ -1025,7 +1025,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                             ? '${widget.t.resendCode} : $_resendSeconds'
                                             : _expiredOtpText,
                                         style: TextStyle(
-                                          color: Colors.white.withValues(
+                                          color: kColorWhite.withValues(
                                             alpha: 0.70,
                                           ),
                                           fontSize: 12,
@@ -1046,7 +1046,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                           _otpFocusNodes.first.requestFocus();
                                         },
                                         textStyle: const TextStyle(
-                                          color: Color(0xFF7C4CFF),
+                                          color: kColorPrimary,
                                         ),
                                       ),
                                     ],
@@ -1097,7 +1097,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                     label: widget.t.backToSignIn,
                                     onTap: () async => _goToStep(AuthStep.signIn),
                                     textStyle: TextStyle(
-                                      color: Colors.white.withValues(alpha: 0.75),
+                                      color: kColorWhite.withValues(alpha: 0.75),
                                       fontSize: 12,
                                       decoration: TextDecoration.none,
                                     ),
@@ -1139,3 +1139,4 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 }
+

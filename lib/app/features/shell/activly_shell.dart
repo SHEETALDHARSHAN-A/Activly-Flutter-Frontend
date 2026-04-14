@@ -167,6 +167,13 @@ class _ActivlyShellState extends State<ActivlyShell> {
     });
   }
 
+  Future<void> _goToAiMatchPage() async {
+    if (!mounted) {
+      return;
+    }
+    setState(() => _activePage = AppPage.aiMatch);
+  }
+
   Future<void> _goToLoginPage() async {
     if (!mounted) {
       return;
@@ -191,6 +198,16 @@ class _ActivlyShellState extends State<ActivlyShell> {
           onSelectVideo: _setCurrentVideo,
           onContinueEmail: _goToLoginPage,
           onContinuePhone: _goToLoginPage,
+          onSkipForNow: () => unawaited(_goToAiMatchPage()),
+        );
+      }
+
+      if (_activePage == AppPage.aiMatch) {
+        return AiMatchOnboardingScreen(
+          language: _language,
+          t: _t,
+          onToggleLanguage: _toggleLanguage,
+          onSkip: () => unawaited(_goToLoginPage()),
         );
       }
 
@@ -204,7 +221,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
 
     return Scaffold(
       body: DecoratedBox(
-        decoration: const BoxDecoration(color: Colors.black),
+        decoration: const BoxDecoration(color: kColorBlack),
         child: Stack(
           children: <Widget>[
             if (useSplitLayout)
@@ -227,9 +244,9 @@ class _ActivlyShellState extends State<ActivlyShell> {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: <Color>[
-                                  Colors.black.withValues(alpha: 0.22),
-                                  Colors.black.withValues(alpha: 0.34),
-                                  Colors.black.withValues(alpha: 0.54),
+                                  kColorBlack.withValues(alpha: 0.22),
+                                  kColorBlack.withValues(alpha: 0.34),
+                                  kColorBlack.withValues(alpha: 0.54),
                                 ],
                               ),
                             ),
@@ -241,10 +258,10 @@ class _ActivlyShellState extends State<ActivlyShell> {
                   Expanded(
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0B0B0D),
+                        color: kColorPanelDark,
                         border: Border(
                           left: BorderSide(
-                            color: Colors.white.withValues(alpha: 0.10),
+                            color: kColorWhite.withValues(alpha: 0.10),
                           ),
                         ),
                       ),
@@ -271,9 +288,9 @@ class _ActivlyShellState extends State<ActivlyShell> {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: <Color>[
-                              Colors.black.withValues(alpha: 0.30),
-                              Colors.black.withValues(alpha: 0.40),
-                              Colors.black.withValues(alpha: 0.60),
+                              kColorBlack.withValues(alpha: 0.30),
+                              kColorBlack.withValues(alpha: 0.40),
+                              kColorBlack.withValues(alpha: 0.60),
                             ],
                           ),
                         ),
@@ -319,3 +336,4 @@ class _ShellVideoBackground extends StatelessWidget {
     );
   }
 }
+

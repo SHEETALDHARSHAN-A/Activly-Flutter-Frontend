@@ -12,23 +12,23 @@ class _GoogleGArcsPainter extends CustomPainter {
     final radius = math.min(size.width, size.height) / 2;
 
     final paints = <Color, Paint>{
-      const Color(0xFFEA4335): Paint()
-        ..color = const Color(0xFFEA4335)
+      kColorGoogleRed: Paint()
+        ..color = kColorGoogleRed
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.butt
         ..strokeWidth = strokeWidth,
-      const Color(0xFFFBBC05): Paint()
-        ..color = const Color(0xFFFBBC05)
+      kColorGoogleYellow: Paint()
+        ..color = kColorGoogleYellow
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.butt
         ..strokeWidth = strokeWidth,
-      const Color(0xFF34A853): Paint()
-        ..color = const Color(0xFF34A853)
+      kColorGoogleGreen: Paint()
+        ..color = kColorGoogleGreen
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.butt
         ..strokeWidth = strokeWidth,
-      const Color(0xFF4285F4): Paint()
-        ..color = const Color(0xFF4285F4)
+      kColorGoogleBlue: Paint()
+        ..color = kColorGoogleBlue
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.butt
         ..strokeWidth = strokeWidth,
@@ -44,10 +44,10 @@ class _GoogleGArcsPainter extends CustomPainter {
       );
     }
 
-    arc(const Color(0xFFEA4335), 212, 95);
-    arc(const Color(0xFFFBBC05), 307, 55);
-    arc(const Color(0xFF34A853), 2, 92);
-    arc(const Color(0xFF4285F4), 94, 118);
+    arc(kColorGoogleRed, 212, 95);
+    arc(kColorGoogleYellow, 307, 55);
+    arc(kColorGoogleGreen, 2, 92);
+    arc(kColorGoogleBlue, 94, 118);
   }
 
   @override
@@ -55,3 +55,4 @@ class _GoogleGArcsPainter extends CustomPainter {
     return oldDelegate.strokeWidth != strokeWidth;
   }
 }
+

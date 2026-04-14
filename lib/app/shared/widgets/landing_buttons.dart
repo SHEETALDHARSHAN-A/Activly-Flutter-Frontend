@@ -24,9 +24,9 @@ class _SocialButton extends StatelessWidget {
       radius: 12,
       onTap: onPressed,
       selected: selected,
-      baseColor: Colors.white,
-      overlayColor: const Color(0xFF7C4CFF),
-      shadowColor: Colors.black.withValues(alpha: 0.20),
+      baseColor: kColorWhite,
+      overlayColor: kColorPrimary,
+      shadowColor: kColorBlack.withValues(alpha: 0.20),
       builder: (bool hovered) {
         return Row(
           children: <Widget>[
@@ -40,7 +40,7 @@ class _SocialButton extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  color: hovered ? Colors.white : Colors.black,
+                  color: hovered ? kColorWhite : kColorBlack,
                 ),
               ),
             ),
@@ -51,7 +51,7 @@ class _SocialButton extends StatelessWidget {
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 300),
                 opacity: hovered ? 1 : 0,
-                child: Icon(arrowIcon, size: 18, color: Colors.white),
+                child: Icon(arrowIcon, size: 18, color: kColorWhite),
               ),
             ),
           ],
@@ -85,7 +85,7 @@ class _PillButton extends StatelessWidget {
       childBuilder: (bool hovered) {
         return Row(
           children: <Widget>[
-            Icon(icon, size: 16, color: Colors.white),
+            Icon(icon, size: 16, color: kColorWhite),
             const SizedBox(width: 6),
             Text(
               label,
@@ -100,7 +100,7 @@ class _PillButton extends StatelessWidget {
               child: Icon(
                 arrowIcon,
                 size: 16,
-                color: Colors.white.withValues(alpha: 0.90),
+                color: kColorWhite.withValues(alpha: 0.90),
               ),
             ),
           ],
@@ -220,7 +220,7 @@ class _SweepButtonState extends State<_SweepButton> {
                       padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Center(
                         child: _loading && _showLoader
-                            ? const _BladeSpinner(size: 24, color: Colors.white)
+                            ? const _BladeSpinner(size: 24, color: kColorWhite)
                             : widget.builder(active),
                       ),
                     ),
@@ -316,8 +316,8 @@ class _GlassPillButtonState extends State<_GlassPillButton> {
             height: 40,
             constraints: const BoxConstraints(minWidth: 120),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.10),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.20)),
+              color: kColorWhite.withValues(alpha: 0.10),
+              border: Border.all(color: kColorWhite.withValues(alpha: 0.20)),
               borderRadius: BorderRadius.circular(widget.radius),
             ),
             child: ClipRRect(
@@ -344,14 +344,14 @@ class _GlassPillButtonState extends State<_GlassPillButton> {
                           ),
                         );
                       },
-                      child: const ColoredBox(color: Color(0xFF7C4CFF)),
+                      child: const ColoredBox(color: kColorPrimary),
                     ),
                   ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 14),
                       child: Center(
                         child: _loading && _showLoader
-                            ? const _BladeSpinner(size: 22, color: Colors.white)
+                            ? const _BladeSpinner(size: 22, color: kColorWhite)
                             : FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: widget.childBuilder(active),
@@ -394,3 +394,4 @@ class _GoogleBrandIcon extends StatelessWidget {
     );
   }
 }
+

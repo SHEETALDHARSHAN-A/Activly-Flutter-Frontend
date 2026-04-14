@@ -107,20 +107,13 @@ class _LoadingOverlayState extends State<LoadingOverlay>
 }
 
 class _UiverseHeartLoader extends StatelessWidget {
-  const _UiverseHeartLoader({
-    required this.controller,
-    this.size = 62,
-    this.color = kColorLoaderHeart,
-    this.shadowColor = kColorLoaderShadowBase,
-  });
+  const _UiverseHeartLoader({required this.controller});
 
   // Matches CSS cubic-bezier(0.75, 0, 0.5, 1)
   static const Cubic _motionCurve = Cubic(0.75, 0, 0.5, 1);
+  static const double _unit = 62;
 
   final Animation<double> controller;
-  final double size;
-  final Color color;
-  final Color shadowColor;
 
   double _lerp(double start, double end, double t) {
     return start + ((end - start) * t);
@@ -145,13 +138,16 @@ class _UiverseHeartLoader extends StatelessWidget {
     return Container(
       width: unit,
       height: unit,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      decoration: const BoxDecoration(
+        color: kColorLoaderHeart,
+        shape: BoxShape.circle,
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final unit = size;
+    const unit = _unit;
     final canvasSize = unit * 3;
     final shadowHeight = unit * 0.24;
 
@@ -196,7 +192,7 @@ class _UiverseHeartLoader extends StatelessWidget {
                             width: unit,
                             height: unit,
                             decoration: BoxDecoration(
-                              color: color,
+                              color: kColorLoaderHeart,
                               borderRadius: BorderRadius.circular(
                                 (squareRadiusFactor * unit / 2).clamp(
                                   0.0,
@@ -232,7 +228,7 @@ class _UiverseHeartLoader extends StatelessWidget {
                   width: unit,
                   height: shadowHeight,
                   decoration: BoxDecoration(
-                    color: shadowColor,
+                    color: kColorLoaderShadowBase,
                     borderRadius: BorderRadius.circular(shadowHeight / 2),
                   ),
                 ),
@@ -306,7 +302,7 @@ class _BladeSpinnerState extends State<_BladeSpinner>
                     ),
                   ),
                 ),
-              ),
+              );
             }),
           );
         },

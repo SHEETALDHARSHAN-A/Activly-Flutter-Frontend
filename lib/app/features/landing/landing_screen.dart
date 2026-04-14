@@ -426,7 +426,7 @@ class _AnimatedSkipForNowState extends State<_AnimatedSkipForNow>
                   height: 1.5,
                   width: 88 * _controller.value,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.90),
+                    color: const Color(0xFF7C4CFF),
                     borderRadius: BorderRadius.circular(99),
                   ),
                 );

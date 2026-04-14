@@ -3,6 +3,7 @@ part of 'package:activly/activly_app.dart';
 const Duration kButtonLoadingDuration = Duration(milliseconds: 550);
 const Duration kButtonFillDuration = Duration(milliseconds: 320);
 const Duration kButtonLoaderRevealDelay = Duration(milliseconds: 380);
+const double kFixedTopSpace = 51.0;
 
 const Map<AppLanguage, TranslationCopy> kTranslations = {
   AppLanguage.en: TranslationCopy(

@@ -44,8 +44,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
     final isArabic = language == AppLanguage.ar;
     final arrowIcon = isArabic ? Icons.chevron_left : Icons.chevron_right;
-    final mediaQuery = MediaQuery.of(context);
-    final topInset = math.max(mediaQuery.viewPadding.top, 51.0);
+    final topInset = kFixedTopSpace;
 
     return Directionality(
       textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,

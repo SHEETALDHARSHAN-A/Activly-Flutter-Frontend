@@ -13,8 +13,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
   static const double _splitLayoutBreakpoint = 1100;
 
   AppLanguage _language = AppLanguage.en;
-  bool _isLoaded = false;
-  bool _isLoaderVisible = true;
+  final bool _isLoaded = true;
   int _currentVideoIndex = 0;
   AppPage _activePage = AppPage.landing;
 
@@ -22,37 +21,27 @@ class _ActivlyShellState extends State<ActivlyShell> {
   final List<VideoPlayerController?> _videoControllers =
       List<VideoPlayerController?>.filled(kVideoAssets.length, null);
 
-  Timer? _fallbackTimer;
   Timer? _carouselTimer;
-  bool _hasRevealedPage = false;
 
   TranslationCopy get _t => kTranslations[_language]!;
 
   @override
   void initState() {
     super.initState();
-    _startFallbackTimer();
 
     if (widget.enableVideos) {
+      _startCarouselTimer();
       unawaited(_initializeVideos());
-    } else {
-      Future<void>.delayed(const Duration(milliseconds: 450), _revealPage);
     }
   }
 
   @override
   void dispose() {
-    _fallbackTimer?.cancel();
     _carouselTimer?.cancel();
     for (final controller in _videoControllers) {
       controller?.dispose();
     }
     super.dispose();
-  }
-
-  void _startFallbackTimer() {
-    _fallbackTimer?.cancel();
-    _fallbackTimer = Timer(const Duration(milliseconds: 6500), _revealPage);
   }
 
   Future<void> _initializeVideos() async {
@@ -68,12 +57,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
         controller.addListener(() {
           if (!mounted) {
             return;
-          }
-
-          if (i == _currentVideoIndex &&
-              controller.value.isInitialized &&
-              controller.value.isPlaying) {
-            _revealPage();
           }
         });
       } catch (_) {
@@ -124,9 +107,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
 
     try {
       await current.play();
-      if (index == _currentVideoIndex) {
-        _revealPage();
-      }
     } catch (_) {
       Future<void>.delayed(const Duration(milliseconds: 220), () async {
         if (!mounted || _currentVideoIndex != index) {
@@ -135,7 +115,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
         try {
           await current.play();
         } catch (_) {
-          // fallback timer reveals page
+          // Keep current frame if playback fails.
         }
       });
     }
@@ -164,19 +144,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
     unawaited(_playVideoSafely(nextIndex));
   }
 
-  void _revealPage() {
-    if (_hasRevealedPage || !mounted) {
-      return;
-    }
-
-    _hasRevealedPage = true;
-    setState(() {
-      _isLoaderVisible = false;
-      _isLoaded = true;
-    });
-    _startCarouselTimer();
-  }
-
   void _handleVideoFailure(int index) {
     if (!mounted) {
       return;
@@ -186,12 +153,10 @@ class _ActivlyShellState extends State<ActivlyShell> {
       _videoError[index] = true;
     });
 
-    if (_isLoaderVisible && index == _currentVideoIndex) {
+    if (index == _currentVideoIndex) {
       final fallbackIndex = _getNextPlayableIndex(index, skipIndex: index);
       if (fallbackIndex != index) {
         _setCurrentVideo(fallbackIndex);
-      } else {
-        _revealPage();
       }
     }
   }
@@ -318,7 +283,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
                   ],
                 ),
               ),
-            LoadingOverlay(isVisible: _isLoaderVisible),
           ],
         ),
       ),

@@ -18,6 +18,9 @@ const Color kColorSurfaceDark = Color(0xFF0D0D0D);
 const Color kColorPanelDark = Color(0xFF0B0B0D);
 const Color kColorLavender = Color(0xFFECE8FE);
 const Color kColorSpinnerNeutral = Color(0xFF69717D);
+const Color kColorLoaderHeart = Color(0xFFFC0065);
+const Color kColorLoaderShadowBase = Color(0xFFD7D7D7);
+const Color kColorLoaderShadowPulse = Color(0xFFE4E4E4);
 const Color kColorVideoFallbackStart = Color(0xFF2A2A2A);
 const Color kColorVideoFallbackEnd = Color(0xFF101010);
 

@@ -1,11 +1,11 @@
 # Graph Report - .  (2026-04-14)
 
 ## Corpus Check
-- 112 files · ~499,947 words
+- 113 files · ~507,977 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 498 nodes · 648 edges · 58 communities detected
+- 524 nodes · 673 edges · 58 communities detected
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
@@ -91,36 +91,36 @@ Cohesion: 0.05
 Nodes (50): runApp, File, main, Directory, File, main, Directory, File (+42 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.07
-Nodes (39): custom_skill_rules/last_modified_rule.dart, dart:convert, dart:io, SkillContext, SkillsIgnores, SkillsIgnoresStorage, _configureLogging, main (+31 more)
+Cohesion: 0.06
+Nodes (47): base_skill_command.dart, base_yaml_command.dart, dart:convert, dart:io, SkillContext, SkillsIgnores, SkillsIgnoresStorage, _configureLogging (+39 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.09
 Nodes (32): config_parser.dart, Configuration, DirectoryConfig, _parseSeverity, _applyIgnores, _expandPath, _generateBaselineFile, _loadIgnores (+24 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.08
-Nodes (23): AuthScreen, _AuthScreenState, build, _centerFocusedInput, _clearOtpDigits, Color, Column, Directionality (+15 more)
+Cohesion: 0.07
+Nodes (28): _AiBottomNav, _AiBottomNavItem, _AiChatInput, _AiChatPanel, _AiChoiceButton, _AiCoachBubble, _AiDetailsPanel, _AiField (+20 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.1
-Nodes (20): ActivlyShell, _ActivlyShellState, AnimatedOpacity, AuthScreen, build, dispose, _getNextPlayableIndex, _handleVideoFailure (+12 more)
+Nodes (17): dart:math, ActivlyApp, build, MaterialApp, runActivlyApp, main, package:activly/activly_app.dart, package:flutter/material.dart (+9 more)
 
 ### Community 5 - "Community 5"
+Cohesion: 0.09
+Nodes (22): AuthScreen, _AuthScreenState, build, _centerFocusedInput, _clearOtpDigits, Column, Directionality, dispose (+14 more)
+
+### Community 6 - "Community 6"
 Cohesion: 0.17
 Nodes (16): Create(), Destroy(), EnableFullDpiSupportIfAvailable(), GetClientArea(), GetThisFromHandle(), GetWindowClass(), MessageHandler(), OnCreate() (+8 more)
 
-### Community 6 - "Community 6"
-Cohesion: 0.1
-Nodes (19): _ActionButton, _AsyncSegmentButton, _AsyncSegmentButtonState, _BladeSpinner, build, GestureDetector, _LoadingLinkText, _LoadingLinkTextState (+11 more)
-
 ### Community 7 - "Community 7"
-Cohesion: 0.11
-Nodes (16): dart:async, dart:math, CustomRule, File, main, MismatchRule, LastModifiedRule, ActivlyApp (+8 more)
+Cohesion: 0.1
+Nodes (19): ActivlyShell, _ActivlyShellState, AiMatchOnboardingScreen, AnimatedOpacity, AuthScreen, build, dispose, _getNextPlayableIndex (+11 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.19
-Nodes (11): base_skill_command.dart, base_yaml_command.dart, BaseSkillCommand, runSkill, GenerateSkillCommand, UpdateReadmeCommand, UpdateSkillCommand, ValidateSkillCommand (+3 more)
+Cohesion: 0.1
+Nodes (19): _ActionButton, _AsyncSegmentButton, _AsyncSegmentButtonState, _BladeSpinner, build, GestureDetector, _LoadingLinkText, _LoadingLinkTextState (+11 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.13
@@ -132,15 +132,15 @@ Nodes (14): _AnimatedSkipForNow, _AnimatedSkipForNowState, build, Container, Dir
 
 ### Community 11 - "Community 11"
 Cohesion: 0.13
-Nodes (14): _BladeSpinner, _BladeSpinnerState, build, dispose, _HeartGlyph, heartLift, heartOpacity, IgnorePointer (+6 more)
+Nodes (14): _BladeSpinner, _BladeSpinnerState, build, Container, dispose, IgnorePointer, initState, _LoaderHeartCircle (+6 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.14
 Nodes (13): Align, build, Function, _GlassPillButton, _GlassPillButtonState, _GoogleBrandIcon, MouseRegion, _PillButton (+5 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.19
-Nodes (8): main, package:activly/activly_app.dart, package:flutter/material.dart, package:flutter_test/flutter_test.dart, main, main, main, main
+Cohesion: 0.15
+Nodes (10): custom_skill_rules/last_modified_rule.dart, dart:async, CustomRule, File, main, MismatchRule, LastModifiedRule, main (+2 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.18
@@ -176,19 +176,19 @@ Nodes (5): createSkillPrompt, Documentation, Prompts, updateSkillPrompt, validat
 
 ### Community 22 - "Community 22"
 Cohesion: 0.33
-Nodes (5): arc, Color, _GoogleGArcsPainter, paint, shouldRepaint
-
-### Community 23 - "Community 23"
-Cohesion: 0.33
 Nodes (1): FlutterWindow()
 
-### Community 24 - "Community 24"
+### Community 23 - "Community 23"
 Cohesion: 0.4
 Nodes (2): GeneratedPluginRegistrant, -registerWithRegistry
 
-### Community 25 - "Community 25"
+### Community 24 - "Community 24"
 Cohesion: 0.4
 Nodes (2): RunnerTests, XCTestCase
+
+### Community 25 - "Community 25"
+Cohesion: 0.4
+Nodes (4): arc, _GoogleGArcsPainter, paint, shouldRepaint
 
 ### Community 26 - "Community 26"
 Cohesion: 0.5
@@ -319,7 +319,7 @@ Cohesion: 1.0
 Nodes (0): 
 
 ## Knowledge Gaps
-- **275 isolated node(s):** `MainActivity`, `runApp`, `DirectoryConfig`, `Configuration`, `_parseSeverity` (+270 more)
+- **300 isolated node(s):** `MainActivity`, `runApp`, `DirectoryConfig`, `Configuration`, `_parseSeverity` (+295 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **Thin community `Community 31`** (2 nodes): `MainActivity.kt`, `MainActivity`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
@@ -379,17 +379,17 @@ Nodes (0):
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dart:io` connect `Community 1` to `Community 0`, `Community 2`, `Community 7`, `Community 8`, `Community 14`?**
-  _High betweenness centrality (0.088) - this node is a cross-community bridge._
-- **Why does `package:test/test.dart` connect `Community 0` to `Community 1`, `Community 7`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `dart:io` connect `Community 1` to `Community 0`, `Community 2`, `Community 13`, `Community 14`?**
+  _High betweenness centrality (0.079) - this node is a cross-community bridge._
+- **Why does `package:test/test.dart` connect `Community 0` to `Community 1`, `Community 13`?**
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+- **Why does `dart:async` connect `Community 13` to `Community 4`?**
+  _High betweenness centrality (0.036) - this node is a cross-community bridge._
 - **What connects `MainActivity`, `runApp`, `DirectoryConfig` to the rest of the system?**
-  _275 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _300 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.09 - nodes in this community are weakly interconnected._
-- **Should `Community 3` be split into smaller, more focused modules?**
-  _Cohesion score 0.08 - nodes in this community are weakly interconnected._

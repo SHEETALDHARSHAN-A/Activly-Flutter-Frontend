@@ -36,7 +36,7 @@
       "source_file": "android\\app\\src\\main\\java\\io\\flutter\\plugins\\GeneratedPluginRegistrant.java",
       "source_location": "L1",
       "id": "android_app_src_main_java_io_flutter_plugins_generatedpluginregistrant_java",
-      "community": 24,
+      "community": 23,
       "norm_label": "generatedpluginregistrant.java"
     },
     {
@@ -45,7 +45,7 @@
       "source_file": "ios\\Runner\\GeneratedPluginRegistrant.m",
       "source_location": "L15",
       "id": "generatedpluginregistrant_generatedpluginregistrant",
-      "community": 24,
+      "community": 23,
       "norm_label": "generatedpluginregistrant"
     },
     {
@@ -54,7 +54,7 @@
       "source_file": "android\\app\\src\\main\\java\\io\\flutter\\plugins\\GeneratedPluginRegistrant.java",
       "source_location": "L17",
       "id": "generatedpluginregistrant_generatedpluginregistrant_registerwith",
-      "community": 24,
+      "community": 23,
       "norm_label": ".registerwith()"
     },
     {
@@ -1080,7 +1080,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\custom_rule_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_custom_rule_test_dart",
-      "community": 7,
+      "community": 13,
       "norm_label": "custom_rule_test.dart"
     },
     {
@@ -1089,7 +1089,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\custom_rule_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_custom_rule_test_dart_customrule",
-      "community": 7,
+      "community": 13,
       "norm_label": "customrule"
     },
     {
@@ -1098,7 +1098,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\custom_rule_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_custom_rule_test_dart_mismatchrule",
-      "community": 7,
+      "community": 13,
       "norm_label": "mismatchrule"
     },
     {
@@ -1107,7 +1107,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\custom_rule_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_custom_rule_test_dart_main",
-      "community": 7,
+      "community": 13,
       "norm_label": "main"
     },
     {
@@ -1116,7 +1116,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\dart_skills_lint\\test\\custom_rule_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_dart_skills_lint_test_custom_rule_test_dart_file",
-      "community": 7,
+      "community": 13,
       "norm_label": "file"
     },
     {
@@ -1125,7 +1125,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "dart_async",
-      "community": 7,
+      "community": 13,
       "norm_label": "dart:async"
     },
     {
@@ -1134,7 +1134,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\custom_skill_rules\\last_modified_rule.dart",
       "source_location": null,
       "id": "package_dart_skills_lint_dart_skills_lint_dart",
-      "community": 7,
+      "community": 13,
       "norm_label": "package:dart_skills_lint/dart_skills_lint.dart"
     },
     {
@@ -1521,7 +1521,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_skill_command_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "base_skill_command.dart"
     },
     {
@@ -1530,7 +1530,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_skill_command_dart_baseskillcommand",
-      "community": 8,
+      "community": 1,
       "norm_label": "baseskillcommand"
     },
     {
@@ -1539,7 +1539,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\base_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_base_skill_command_dart_runskill",
-      "community": 8,
+      "community": 1,
       "norm_label": "runskill"
     },
     {
@@ -1548,7 +1548,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "models_skill_params_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "../models/skill_params.dart"
     },
     {
@@ -1557,7 +1557,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "services_gemini_service_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "../services/gemini_service.dart"
     },
     {
@@ -1566,7 +1566,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_readme_command.dart",
       "source_location": null,
       "id": "base_yaml_command_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "base_yaml_command.dart"
     },
     {
@@ -1602,7 +1602,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\generate_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_generate_skill_command_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "generate_skill_command.dart"
     },
     {
@@ -1611,7 +1611,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\generate_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_generate_skill_command_dart_generateskillcommand",
-      "community": 8,
+      "community": 1,
       "norm_label": "generateskillcommand"
     },
     {
@@ -1620,7 +1620,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "services_resource_fetcher_service_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "../services/resource_fetcher_service.dart"
     },
     {
@@ -1629,7 +1629,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "base_skill_command_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "base_skill_command.dart"
     },
     {
@@ -1638,7 +1638,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_readme_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_update_readme_command_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "update_readme_command.dart"
     },
     {
@@ -1647,7 +1647,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_readme_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_update_readme_command_dart_updatereadmecommand",
-      "community": 8,
+      "community": 1,
       "norm_label": "updatereadmecommand"
     },
     {
@@ -1656,7 +1656,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_update_skill_command_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "update_skill_command.dart"
     },
     {
@@ -1665,7 +1665,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\update_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_update_skill_command_dart_updateskillcommand",
-      "community": 8,
+      "community": 1,
       "norm_label": "updateskillcommand"
     },
     {
@@ -1674,7 +1674,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_validate_skill_command_dart",
-      "community": 8,
+      "community": 1,
       "norm_label": "validate_skill_command.dart"
     },
     {
@@ -1683,7 +1683,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\lib\\src\\commands\\validate_skill_command.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_lib_src_commands_validate_skill_command_dart_validateskillcommand",
-      "community": 8,
+      "community": 1,
       "norm_label": "validateskillcommand"
     },
     {
@@ -2043,7 +2043,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\lint_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_lint_skills_test_dart",
-      "community": 1,
+      "community": 13,
       "norm_label": "lint_skills_test.dart"
     },
     {
@@ -2052,7 +2052,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\lint_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_lint_skills_test_dart_main",
-      "community": 1,
+      "community": 13,
       "norm_label": "main"
     },
     {
@@ -2061,7 +2061,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\lint_skills_test.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_lint_skills_test_dart_validateskills",
-      "community": 1,
+      "community": 13,
       "norm_label": "validateskills"
     },
     {
@@ -2070,7 +2070,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\lint_skills_test.dart",
       "source_location": null,
       "id": "custom_skill_rules_last_modified_rule_dart",
-      "community": 1,
+      "community": 13,
       "norm_label": "custom_skill_rules/last_modified_rule.dart"
     },
     {
@@ -2241,7 +2241,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\custom_skill_rules\\last_modified_rule.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_custom_skill_rules_last_modified_rule_dart",
-      "community": 7,
+      "community": 13,
       "norm_label": "last_modified_rule.dart"
     },
     {
@@ -2250,7 +2250,7 @@
       "source_file": "external\\flutter-skills-repo\\tool\\generator\\test\\custom_skill_rules\\last_modified_rule.dart",
       "source_location": null,
       "id": "external_flutter_skills_repo_tool_generator_test_custom_skill_rules_last_modified_rule_dart_lastmodifiedrule",
-      "community": 7,
+      "community": 13,
       "norm_label": "lastmodifiedrule"
     },
     {
@@ -2439,7 +2439,7 @@
       "source_file": "ios\\Runner\\GeneratedPluginRegistrant.m",
       "source_location": "L1",
       "id": "ios_runner_generatedpluginregistrant_m",
-      "community": 24,
+      "community": 23,
       "norm_label": "generatedpluginregistrant.m"
     },
     {
@@ -2448,7 +2448,7 @@
       "source_file": "ios\\Runner\\GeneratedPluginRegistrant.m",
       "source_location": "L17",
       "id": "generatedpluginregistrant_generatedpluginregistrant_registerwithregistry",
-      "community": 24,
+      "community": 23,
       "norm_label": "-registerwithregistry"
     },
     {
@@ -2493,7 +2493,7 @@
       "source_file": "ios\\RunnerTests\\RunnerTests.swift",
       "source_location": "L1",
       "id": "ios_runnertests_runnertests_swift",
-      "community": 25,
+      "community": 24,
       "norm_label": "runnertests.swift"
     },
     {
@@ -2502,7 +2502,7 @@
       "source_file": "macos\\RunnerTests\\RunnerTests.swift",
       "source_location": "L5",
       "id": "runnertests_runnertests",
-      "community": 25,
+      "community": 24,
       "norm_label": "runnertests"
     },
     {
@@ -2511,7 +2511,7 @@
       "source_file": "",
       "source_location": "",
       "id": "xctestcase",
-      "community": 25,
+      "community": 24,
       "norm_label": "xctestcase"
     },
     {
@@ -2520,7 +2520,7 @@
       "source_file": "macos\\RunnerTests\\RunnerTests.swift",
       "source_location": "L7",
       "id": "runnertests_runnertests_testexample",
-      "community": 25,
+      "community": 24,
       "norm_label": ".testexample()"
     },
     {
@@ -2529,7 +2529,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "lib_activly_app_dart",
-      "community": 7,
+      "community": 4,
       "norm_label": "activly_app.dart"
     },
     {
@@ -2538,7 +2538,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "lib_activly_app_dart_activlyapp",
-      "community": 7,
+      "community": 4,
       "norm_label": "activlyapp"
     },
     {
@@ -2547,7 +2547,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "lib_activly_app_dart_runactivlyapp",
-      "community": 7,
+      "community": 4,
       "norm_label": "runactivlyapp"
     },
     {
@@ -2556,7 +2556,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "lib_activly_app_dart_build",
-      "community": 7,
+      "community": 4,
       "norm_label": "build"
     },
     {
@@ -2565,7 +2565,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "lib_activly_app_dart_materialapp",
-      "community": 7,
+      "community": 4,
       "norm_label": "materialapp"
     },
     {
@@ -2574,7 +2574,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "dart_math",
-      "community": 7,
+      "community": 4,
       "norm_label": "dart:math"
     },
     {
@@ -2583,7 +2583,7 @@
       "source_file": "test\\app\\features\\auth\\auth_screen_smoke_test.dart",
       "source_location": null,
       "id": "package_flutter_material_dart",
-      "community": 13,
+      "community": 4,
       "norm_label": "package:flutter/material.dart"
     },
     {
@@ -2592,7 +2592,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "package_flutter_services_dart",
-      "community": 7,
+      "community": 4,
       "norm_label": "package:flutter/services.dart"
     },
     {
@@ -2601,7 +2601,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "package_flutter_svg_flutter_svg_dart",
-      "community": 7,
+      "community": 4,
       "norm_label": "package:flutter_svg/flutter_svg.dart"
     },
     {
@@ -2610,7 +2610,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "package_google_fonts_google_fonts_dart",
-      "community": 7,
+      "community": 4,
       "norm_label": "package:google_fonts/google_fonts.dart"
     },
     {
@@ -2619,7 +2619,7 @@
       "source_file": "lib\\activly_app.dart",
       "source_location": null,
       "id": "package_video_player_video_player_dart",
-      "community": 7,
+      "community": 4,
       "norm_label": "package:video_player/video_player.dart"
     },
     {
@@ -2628,7 +2628,7 @@
       "source_file": "lib\\main.dart",
       "source_location": null,
       "id": "lib_main_dart",
-      "community": 13,
+      "community": 4,
       "norm_label": "main.dart"
     },
     {
@@ -2637,7 +2637,7 @@
       "source_file": "lib\\main.dart",
       "source_location": null,
       "id": "lib_main_dart_main",
-      "community": 13,
+      "community": 4,
       "norm_label": "main"
     },
     {
@@ -2646,7 +2646,7 @@
       "source_file": "test\\app\\features\\shell\\activly_shell_smoke_test.dart",
       "source_location": null,
       "id": "package_activly_activly_app_dart",
-      "community": 13,
+      "community": 4,
       "norm_label": "package:activly/activly_app.dart"
     },
     {
@@ -2686,12 +2686,273 @@
       "norm_label": "app_types.dart"
     },
     {
+      "label": "ai_match_onboarding_screen.dart",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "community": 3,
+      "norm_label": "ai_match_onboarding_screen.dart"
+    },
+    {
+      "label": "AiMatchOnboardingScreen",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimatchonboardingscreen",
+      "community": 3,
+      "norm_label": "aimatchonboardingscreen"
+    },
+    {
+      "label": "_AiMatchOnboardingScreenState",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimatchonboardingscreenstate",
+      "community": 3,
+      "norm_label": "_aimatchonboardingscreenstate"
+    },
+    {
+      "label": "_AiTopSkipButton",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aitopskipbutton",
+      "community": 3,
+      "norm_label": "_aitopskipbutton"
+    },
+    {
+      "label": "_AiModeToggle",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimodetoggle",
+      "community": 3,
+      "norm_label": "_aimodetoggle"
+    },
+    {
+      "label": "_AiModeToggleButton",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimodetogglebutton",
+      "community": 3,
+      "norm_label": "_aimodetogglebutton"
+    },
+    {
+      "label": "_AiChatPanel",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichatpanel",
+      "community": 3,
+      "norm_label": "_aichatpanel"
+    },
+    {
+      "label": "_AiCoachBubble",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aicoachbubble",
+      "community": 3,
+      "norm_label": "_aicoachbubble"
+    },
+    {
+      "label": "_AiUserBubble",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aiuserbubble",
+      "community": 3,
+      "norm_label": "_aiuserbubble"
+    },
+    {
+      "label": "_AiChoiceButton",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichoicebutton",
+      "community": 3,
+      "norm_label": "_aichoicebutton"
+    },
+    {
+      "label": "_AiDetailsPanel",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aidetailspanel",
+      "community": 3,
+      "norm_label": "_aidetailspanel"
+    },
+    {
+      "label": "_AiField",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aifield",
+      "community": 3,
+      "norm_label": "_aifield"
+    },
+    {
+      "label": "_AiChatInput",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichatinput",
+      "community": 3,
+      "norm_label": "_aichatinput"
+    },
+    {
+      "label": "_AiBottomNav",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aibottomnav",
+      "community": 3,
+      "norm_label": "_aibottomnav"
+    },
+    {
+      "label": "_AiBottomNavItem",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aibottomnavitem",
+      "community": 3,
+      "norm_label": "_aibottomnavitem"
+    },
+    {
+      "label": "dispose",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_dispose",
+      "community": 3,
+      "norm_label": "dispose"
+    },
+    {
+      "label": "build",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_build",
+      "community": 3,
+      "norm_label": "build"
+    },
+    {
+      "label": "Directionality",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_directionality",
+      "community": 3,
+      "norm_label": "directionality"
+    },
+    {
+      "label": "SizedBox",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_sizedbox",
+      "community": 3,
+      "norm_label": "sizedbox"
+    },
+    {
+      "label": "Positioned",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_positioned",
+      "community": 3,
+      "norm_label": "positioned"
+    },
+    {
+      "label": "Container",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_container",
+      "community": 3,
+      "norm_label": "container"
+    },
+    {
+      "label": "GestureDetector",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_gesturedetector",
+      "community": 3,
+      "norm_label": "gesturedetector"
+    },
+    {
+      "label": "Padding",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_padding",
+      "community": 3,
+      "norm_label": "padding"
+    },
+    {
+      "label": "Row",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_row",
+      "community": 3,
+      "norm_label": "row"
+    },
+    {
+      "label": "Align",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_align",
+      "community": 3,
+      "norm_label": "align"
+    },
+    {
+      "label": "Material",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_material",
+      "community": 3,
+      "norm_label": "material"
+    },
+    {
+      "label": "TextField",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_textfield",
+      "community": 3,
+      "norm_label": "textfield"
+    },
+    {
+      "label": "DecoratedBox",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_decoratedbox",
+      "community": 3,
+      "norm_label": "decoratedbox"
+    },
+    {
+      "label": "Column",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "id": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_column",
+      "community": 3,
+      "norm_label": "column"
+    },
+    {
       "label": "auth_screen.dart",
       "file_type": "code",
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart",
-      "community": 3,
+      "community": 5,
       "norm_label": "auth_screen.dart"
     },
     {
@@ -2700,7 +2961,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_authscreen",
-      "community": 3,
+      "community": 5,
       "norm_label": "authscreen"
     },
     {
@@ -2709,7 +2970,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_authscreenstate",
-      "community": 3,
+      "community": 5,
       "norm_label": "_authscreenstate"
     },
     {
@@ -2718,7 +2979,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_initstate",
-      "community": 3,
+      "community": 5,
       "norm_label": "initstate"
     },
     {
@@ -2727,7 +2988,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_dispose",
-      "community": 3,
+      "community": 5,
       "norm_label": "dispose"
     },
     {
@@ -2736,7 +2997,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_centerfocusedinput",
-      "community": 3,
+      "community": 5,
       "norm_label": "_centerfocusedinput"
     },
     {
@@ -2745,7 +3006,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_gotostep",
-      "community": 3,
+      "community": 5,
       "norm_label": "_gotostep"
     },
     {
@@ -2754,7 +3015,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_handletopback",
-      "community": 3,
+      "community": 5,
       "norm_label": "_handletopback"
     },
     {
@@ -2763,7 +3024,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_clearotpdigits",
-      "community": 3,
+      "community": 5,
       "norm_label": "_clearotpdigits"
     },
     {
@@ -2772,7 +3033,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_startotptimer",
-      "community": 3,
+      "community": 5,
       "norm_label": "_startotptimer"
     },
     {
@@ -2781,7 +3042,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_handlecreateaccount",
-      "community": 3,
+      "community": 5,
       "norm_label": "_handlecreateaccount"
     },
     {
@@ -2790,7 +3051,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_handlesendresetcode",
-      "community": 3,
+      "community": 5,
       "norm_label": "_handlesendresetcode"
     },
     {
@@ -2799,7 +3060,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_handleverifyotp",
-      "community": 3,
+      "community": 5,
       "norm_label": "_handleverifyotp"
     },
     {
@@ -2808,7 +3069,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_handlesavenewpassword",
-      "community": 3,
+      "community": 5,
       "norm_label": "_handlesavenewpassword"
     },
     {
@@ -2817,7 +3078,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_handlesigninsubmit",
-      "community": 3,
+      "community": 5,
       "norm_label": "_handlesigninsubmit"
     },
     {
@@ -2826,7 +3087,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_onotpchanged",
-      "community": 3,
+      "community": 5,
       "norm_label": "_onotpchanged"
     },
     {
@@ -2835,7 +3096,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_textposition",
-      "community": 3,
+      "community": 5,
       "norm_label": "textposition"
     },
     {
@@ -2844,7 +3105,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_inputfield",
-      "community": 3,
+      "community": 5,
       "norm_label": "_inputfield"
     },
     {
@@ -2853,7 +3114,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_column",
-      "community": 3,
+      "community": 5,
       "norm_label": "column"
     },
     {
@@ -2862,7 +3123,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_sizedbox",
-      "community": 3,
+      "community": 5,
       "norm_label": "sizedbox"
     },
     {
@@ -2871,7 +3132,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_build",
-      "community": 3,
+      "community": 5,
       "norm_label": "build"
     },
     {
@@ -2880,17 +3141,8 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_directionality",
-      "community": 3,
+      "community": 5,
       "norm_label": "directionality"
-    },
-    {
-      "label": "Color",
-      "file_type": "code",
-      "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
-      "source_location": null,
-      "id": "lib_app_features_auth_auth_screen_dart_color",
-      "community": 3,
-      "norm_label": "color"
     },
     {
       "label": "TextStyle",
@@ -2898,7 +3150,7 @@
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "id": "lib_app_features_auth_auth_screen_dart_textstyle",
-      "community": 3,
+      "community": 5,
       "norm_label": "textstyle"
     },
     {
@@ -3042,7 +3294,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart",
-      "community": 4,
+      "community": 7,
       "norm_label": "activly_shell.dart"
     },
     {
@@ -3051,7 +3303,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_activlyshell",
-      "community": 4,
+      "community": 7,
       "norm_label": "activlyshell"
     },
     {
@@ -3060,7 +3312,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_activlyshellstate",
-      "community": 4,
+      "community": 7,
       "norm_label": "_activlyshellstate"
     },
     {
@@ -3069,7 +3321,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_shellvideobackground",
-      "community": 4,
+      "community": 7,
       "norm_label": "_shellvideobackground"
     },
     {
@@ -3078,7 +3330,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_initstate",
-      "community": 4,
+      "community": 7,
       "norm_label": "initstate"
     },
     {
@@ -3087,17 +3339,8 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_dispose",
-      "community": 4,
+      "community": 7,
       "norm_label": "dispose"
-    },
-    {
-      "label": "_startFallbackTimer",
-      "file_type": "code",
-      "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
-      "source_location": null,
-      "id": "lib_app_features_shell_activly_shell_dart_startfallbacktimer",
-      "community": 4,
-      "norm_label": "_startfallbacktimer"
     },
     {
       "label": "_playVideoSafely",
@@ -3105,7 +3348,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_playvideosafely",
-      "community": 4,
+      "community": 7,
       "norm_label": "_playvideosafely"
     },
     {
@@ -3114,7 +3357,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_getnextplayableindex",
-      "community": 4,
+      "community": 7,
       "norm_label": "_getnextplayableindex"
     },
     {
@@ -3123,7 +3366,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_startcarouseltimer",
-      "community": 4,
+      "community": 7,
       "norm_label": "_startcarouseltimer"
     },
     {
@@ -3132,17 +3375,8 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_setcurrentvideo",
-      "community": 4,
+      "community": 7,
       "norm_label": "_setcurrentvideo"
-    },
-    {
-      "label": "_revealPage",
-      "file_type": "code",
-      "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
-      "source_location": null,
-      "id": "lib_app_features_shell_activly_shell_dart_revealpage",
-      "community": 4,
-      "norm_label": "_revealpage"
     },
     {
       "label": "_handleVideoFailure",
@@ -3150,7 +3384,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_handlevideofailure",
-      "community": 4,
+      "community": 7,
       "norm_label": "_handlevideofailure"
     },
     {
@@ -3159,7 +3393,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_togglelanguage",
-      "community": 4,
+      "community": 7,
       "norm_label": "_togglelanguage"
     },
     {
@@ -3168,7 +3402,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_build",
-      "community": 4,
+      "community": 7,
       "norm_label": "build"
     },
     {
@@ -3177,7 +3411,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_pagecontent",
-      "community": 4,
+      "community": 7,
       "norm_label": "pagecontent"
     },
     {
@@ -3186,8 +3420,17 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_landingscreen",
-      "community": 4,
+      "community": 7,
       "norm_label": "landingscreen"
+    },
+    {
+      "label": "AiMatchOnboardingScreen",
+      "file_type": "code",
+      "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
+      "source_location": null,
+      "id": "lib_app_features_shell_activly_shell_dart_aimatchonboardingscreen",
+      "community": 7,
+      "norm_label": "aimatchonboardingscreen"
     },
     {
       "label": "AuthScreen",
@@ -3195,7 +3438,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_authscreen",
-      "community": 4,
+      "community": 7,
       "norm_label": "authscreen"
     },
     {
@@ -3204,7 +3447,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_scaffold",
-      "community": 4,
+      "community": 7,
       "norm_label": "scaffold"
     },
     {
@@ -3213,7 +3456,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_stack",
-      "community": 4,
+      "community": 7,
       "norm_label": "stack"
     },
     {
@@ -3222,7 +3465,7 @@
       "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
       "source_location": null,
       "id": "lib_app_features_shell_activly_shell_dart_animatedopacity",
-      "community": 4,
+      "community": 7,
       "norm_label": "animatedopacity"
     },
     {
@@ -3231,7 +3474,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart",
-      "community": 22,
+      "community": 25,
       "norm_label": "google_g_arcs_painter.dart"
     },
     {
@@ -3240,7 +3483,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_googlegarcspainter",
-      "community": 22,
+      "community": 25,
       "norm_label": "_googlegarcspainter"
     },
     {
@@ -3249,17 +3492,8 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_paint",
-      "community": 22,
+      "community": 25,
       "norm_label": "paint"
-    },
-    {
-      "label": "Color",
-      "file_type": "code",
-      "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
-      "source_location": null,
-      "id": "lib_app_shared_painters_google_g_arcs_painter_dart_color",
-      "community": 22,
-      "norm_label": "color"
     },
     {
       "label": "arc",
@@ -3267,7 +3501,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_arc",
-      "community": 22,
+      "community": 25,
       "norm_label": "arc"
     },
     {
@@ -3276,7 +3510,7 @@
       "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
       "source_location": null,
       "id": "lib_app_shared_painters_google_g_arcs_painter_dart_shouldrepaint",
-      "community": 22,
+      "community": 25,
       "norm_label": "shouldrepaint"
     },
     {
@@ -3285,7 +3519,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart",
-      "community": 6,
+      "community": 8,
       "norm_label": "auth_buttons.dart"
     },
     {
@@ -3294,7 +3528,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_segmentbutton",
-      "community": 6,
+      "community": 8,
       "norm_label": "_segmentbutton"
     },
     {
@@ -3303,7 +3537,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_asyncsegmentbutton",
-      "community": 6,
+      "community": 8,
       "norm_label": "_asyncsegmentbutton"
     },
     {
@@ -3312,7 +3546,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_asyncsegmentbuttonstate",
-      "community": 6,
+      "community": 8,
       "norm_label": "_asyncsegmentbuttonstate"
     },
     {
@@ -3321,7 +3555,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_actionbutton",
-      "community": 6,
+      "community": 8,
       "norm_label": "_actionbutton"
     },
     {
@@ -3330,7 +3564,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_loadingtextbutton",
-      "community": 6,
+      "community": 8,
       "norm_label": "_loadingtextbutton"
     },
     {
@@ -3339,7 +3573,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_loadingtextbuttonstate",
-      "community": 6,
+      "community": 8,
       "norm_label": "_loadingtextbuttonstate"
     },
     {
@@ -3348,7 +3582,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_loadingoutlinedbuttonicon",
-      "community": 6,
+      "community": 8,
       "norm_label": "_loadingoutlinedbuttonicon"
     },
     {
@@ -3357,7 +3591,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_loadingoutlinedbuttoniconstate",
-      "community": 6,
+      "community": 8,
       "norm_label": "_loadingoutlinedbuttoniconstate"
     },
     {
@@ -3366,7 +3600,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_loadinglinktext",
-      "community": 6,
+      "community": 8,
       "norm_label": "_loadinglinktext"
     },
     {
@@ -3375,7 +3609,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_loadinglinktextstate",
-      "community": 6,
+      "community": 8,
       "norm_label": "_loadinglinktextstate"
     },
     {
@@ -3384,7 +3618,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_build",
-      "community": 6,
+      "community": 8,
       "norm_label": "build"
     },
     {
@@ -3393,7 +3627,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_gesturedetector",
-      "community": 6,
+      "community": 8,
       "norm_label": "gesturedetector"
     },
     {
@@ -3402,7 +3636,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_sizedbox",
-      "community": 6,
+      "community": 8,
       "norm_label": "sizedbox"
     },
     {
@@ -3411,7 +3645,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_sweepbutton",
-      "community": 6,
+      "community": 8,
       "norm_label": "_sweepbutton"
     },
     {
@@ -3420,7 +3654,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_row",
-      "community": 6,
+      "community": 8,
       "norm_label": "row"
     },
     {
@@ -3429,7 +3663,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_textbutton",
-      "community": 6,
+      "community": 8,
       "norm_label": "textbutton"
     },
     {
@@ -3438,7 +3672,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_textstyle",
-      "community": 6,
+      "community": 8,
       "norm_label": "textstyle"
     },
     {
@@ -3447,7 +3681,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_outlinedbutton",
-      "community": 6,
+      "community": 8,
       "norm_label": "outlinedbutton"
     },
     {
@@ -3456,7 +3690,7 @@
       "source_file": "lib\\app\\shared\\widgets\\auth_buttons.dart",
       "source_location": null,
       "id": "lib_app_shared_widgets_auth_buttons_dart_bladespinner",
-      "community": 6,
+      "community": 8,
       "norm_label": "_bladespinner"
     },
     {
@@ -3649,13 +3883,22 @@
       "norm_label": "_loadingoverlaystate"
     },
     {
-      "label": "_HeartGlyph",
+      "label": "_UiverseHeartLoader",
       "file_type": "code",
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
-      "id": "lib_app_shared_widgets_loading_overlay_dart_heartglyph",
+      "id": "lib_app_shared_widgets_loading_overlay_dart_uiverseheartloader",
       "community": 11,
-      "norm_label": "_heartglyph"
+      "norm_label": "_uiverseheartloader"
+    },
+    {
+      "label": "_LoaderHeartCircle",
+      "file_type": "code",
+      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
+      "source_location": null,
+      "id": "lib_app_shared_widgets_loading_overlay_dart_loaderheartcircle",
+      "community": 11,
+      "norm_label": "_loaderheartcircle"
     },
     {
       "label": "_BladeSpinner",
@@ -3694,15 +3937,6 @@
       "norm_label": "dispose"
     },
     {
-      "label": "_segment",
-      "file_type": "code",
-      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
-      "source_location": null,
-      "id": "lib_app_shared_widgets_loading_overlay_dart_segment",
-      "community": 11,
-      "norm_label": "_segment"
-    },
-    {
       "label": "build",
       "file_type": "code",
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
@@ -3721,22 +3955,13 @@
       "norm_label": "ignorepointer"
     },
     {
-      "label": "heartOpacity",
+      "label": "_triangleWave",
       "file_type": "code",
       "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
       "source_location": null,
-      "id": "lib_app_shared_widgets_loading_overlay_dart_heartopacity",
+      "id": "lib_app_shared_widgets_loading_overlay_dart_trianglewave",
       "community": 11,
-      "norm_label": "heartopacity"
-    },
-    {
-      "label": "heartLift",
-      "file_type": "code",
-      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
-      "source_location": null,
-      "id": "lib_app_shared_widgets_loading_overlay_dart_heartlift",
-      "community": 11,
-      "norm_label": "heartlift"
+      "norm_label": "_trianglewave"
     },
     {
       "label": "SizedBox",
@@ -3755,6 +3980,15 @@
       "id": "lib_app_shared_widgets_loading_overlay_dart_stack",
       "community": 11,
       "norm_label": "stack"
+    },
+    {
+      "label": "Container",
+      "file_type": "code",
+      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
+      "source_location": null,
+      "id": "lib_app_shared_widgets_loading_overlay_dart_container",
+      "community": 11,
+      "norm_label": "container"
     },
     {
       "label": "video_widgets.dart",
@@ -4050,7 +4284,7 @@
       "source_file": "macos\\RunnerTests\\RunnerTests.swift",
       "source_location": "L1",
       "id": "macos_runnertests_runnertests_swift",
-      "community": 25,
+      "community": 24,
       "norm_label": "runnertests.swift"
     },
     {
@@ -4059,7 +4293,7 @@
       "source_file": "test\\widget_test.dart",
       "source_location": null,
       "id": "test_widget_test_dart",
-      "community": 13,
+      "community": 4,
       "norm_label": "widget_test.dart"
     },
     {
@@ -4068,7 +4302,7 @@
       "source_file": "test\\widget_test.dart",
       "source_location": null,
       "id": "test_widget_test_dart_main",
-      "community": 13,
+      "community": 4,
       "norm_label": "main"
     },
     {
@@ -4077,7 +4311,7 @@
       "source_file": "test\\app\\features\\shell\\activly_shell_smoke_test.dart",
       "source_location": null,
       "id": "package_flutter_test_flutter_test_dart",
-      "community": 13,
+      "community": 4,
       "norm_label": "package:flutter_test/flutter_test.dart"
     },
     {
@@ -4086,7 +4320,7 @@
       "source_file": "test\\app\\features\\auth\\auth_screen_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_auth_auth_screen_smoke_test_dart",
-      "community": 13,
+      "community": 4,
       "norm_label": "auth_screen_smoke_test.dart"
     },
     {
@@ -4095,7 +4329,7 @@
       "source_file": "test\\app\\features\\auth\\auth_screen_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_auth_auth_screen_smoke_test_dart_main",
-      "community": 13,
+      "community": 4,
       "norm_label": "main"
     },
     {
@@ -4104,7 +4338,7 @@
       "source_file": "test\\app\\features\\landing\\landing_screen_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_landing_landing_screen_smoke_test_dart",
-      "community": 13,
+      "community": 4,
       "norm_label": "landing_screen_smoke_test.dart"
     },
     {
@@ -4113,7 +4347,7 @@
       "source_file": "test\\app\\features\\landing\\landing_screen_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_landing_landing_screen_smoke_test_dart_main",
-      "community": 13,
+      "community": 4,
       "norm_label": "main"
     },
     {
@@ -4122,7 +4356,7 @@
       "source_file": "test\\app\\features\\shell\\activly_shell_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_shell_activly_shell_smoke_test_dart",
-      "community": 13,
+      "community": 4,
       "norm_label": "activly_shell_smoke_test.dart"
     },
     {
@@ -4131,7 +4365,7 @@
       "source_file": "test\\app\\features\\shell\\activly_shell_smoke_test.dart",
       "source_location": null,
       "id": "test_app_features_shell_activly_shell_smoke_test_dart_main",
-      "community": 13,
+      "community": 4,
       "norm_label": "main"
     },
     {
@@ -4167,7 +4401,7 @@
       "source_file": "windows\\runner\\flutter_window.cpp",
       "source_location": "L1",
       "id": "windows_runner_flutter_window_cpp",
-      "community": 23,
+      "community": 22,
       "norm_label": "flutter_window.cpp"
     },
     {
@@ -4176,7 +4410,7 @@
       "source_file": "windows\\runner\\flutter_window.h",
       "source_location": "L12",
       "id": "flutter_window_flutterwindow",
-      "community": 23,
+      "community": 22,
       "norm_label": "flutterwindow()"
     },
     {
@@ -4185,7 +4419,7 @@
       "source_file": "windows\\runner\\flutter_window.cpp",
       "source_location": "L12",
       "id": "flutter_window_oncreate",
-      "community": 23,
+      "community": 22,
       "norm_label": "oncreate()"
     },
     {
@@ -4194,7 +4428,7 @@
       "source_file": "windows\\runner\\flutter_window.cpp",
       "source_location": "L42",
       "id": "flutter_window_ondestroy",
-      "community": 23,
+      "community": 22,
       "norm_label": "ondestroy()"
     },
     {
@@ -4203,7 +4437,7 @@
       "source_file": "windows\\runner\\flutter_window.cpp",
       "source_location": "L50",
       "id": "flutter_window_messagehandler",
-      "community": 23,
+      "community": 22,
       "norm_label": "messagehandler()"
     },
     {
@@ -4212,7 +4446,7 @@
       "source_file": "windows\\runner\\flutter_window.h",
       "source_location": "L1",
       "id": "windows_runner_flutter_window_h",
-      "community": 23,
+      "community": 22,
       "norm_label": "flutter_window.h"
     },
     {
@@ -4293,7 +4527,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L1",
       "id": "windows_runner_win32_window_cpp",
-      "community": 5,
+      "community": 6,
       "norm_label": "win32_window.cpp"
     },
     {
@@ -4302,7 +4536,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L36",
       "id": "win32_window_scale",
-      "community": 5,
+      "community": 6,
       "norm_label": "scale()"
     },
     {
@@ -4311,7 +4545,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L42",
       "id": "win32_window_enablefulldpisupportifavailable",
-      "community": 5,
+      "community": 6,
       "norm_label": "enablefulldpisupportifavailable()"
     },
     {
@@ -4320,7 +4554,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L59",
       "id": "win32_window_windowclassregistrar",
-      "community": 5,
+      "community": 6,
       "norm_label": "windowclassregistrar"
     },
     {
@@ -4329,7 +4563,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L61",
       "id": "win32_window_windowclassregistrar_windowclassregistrar",
-      "community": 5,
+      "community": 6,
       "norm_label": ".windowclassregistrar()"
     },
     {
@@ -4338,7 +4572,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L89",
       "id": "win32_window_getwindowclass",
-      "community": 5,
+      "community": 6,
       "norm_label": "getwindowclass()"
     },
     {
@@ -4347,7 +4581,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L109",
       "id": "win32_window_unregisterwindowclass",
-      "community": 5,
+      "community": 6,
       "norm_label": "unregisterwindowclass()"
     },
     {
@@ -4356,7 +4590,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L114",
       "id": "win32_window_win32window",
-      "community": 5,
+      "community": 6,
       "norm_label": "win32window()"
     },
     {
@@ -4365,7 +4599,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L123",
       "id": "win32_window_create",
-      "community": 5,
+      "community": 6,
       "norm_label": "create()"
     },
     {
@@ -4374,7 +4608,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L152",
       "id": "win32_window_show",
-      "community": 5,
+      "community": 6,
       "norm_label": "show()"
     },
     {
@@ -4383,7 +4617,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L157",
       "id": "win32_window_wndproc",
-      "community": 5,
+      "community": 6,
       "norm_label": "wndproc()"
     },
     {
@@ -4392,7 +4626,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L176",
       "id": "win32_window_messagehandler",
-      "community": 5,
+      "community": 6,
       "norm_label": "messagehandler()"
     },
     {
@@ -4401,7 +4635,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L224",
       "id": "win32_window_destroy",
-      "community": 5,
+      "community": 6,
       "norm_label": "destroy()"
     },
     {
@@ -4410,7 +4644,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L236",
       "id": "win32_window_getthisfromhandle",
-      "community": 5,
+      "community": 6,
       "norm_label": "getthisfromhandle()"
     },
     {
@@ -4419,7 +4653,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L241",
       "id": "win32_window_setchildcontent",
-      "community": 5,
+      "community": 6,
       "norm_label": "setchildcontent()"
     },
     {
@@ -4428,7 +4662,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L252",
       "id": "win32_window_getclientarea",
-      "community": 5,
+      "community": 6,
       "norm_label": "getclientarea()"
     },
     {
@@ -4437,7 +4671,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L258",
       "id": "win32_window_gethandle",
-      "community": 5,
+      "community": 6,
       "norm_label": "gethandle()"
     },
     {
@@ -4446,7 +4680,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L262",
       "id": "win32_window_setquitonclose",
-      "community": 5,
+      "community": 6,
       "norm_label": "setquitonclose()"
     },
     {
@@ -4455,7 +4689,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L266",
       "id": "win32_window_oncreate",
-      "community": 5,
+      "community": 6,
       "norm_label": "oncreate()"
     },
     {
@@ -4464,7 +4698,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L271",
       "id": "win32_window_ondestroy",
-      "community": 5,
+      "community": 6,
       "norm_label": "ondestroy()"
     },
     {
@@ -4473,7 +4707,7 @@
       "source_file": "windows\\runner\\win32_window.cpp",
       "source_location": "L275",
       "id": "win32_window_updatetheme",
-      "community": 5,
+      "community": 6,
       "norm_label": "updatetheme()"
     },
     {
@@ -10035,6 +10269,342 @@
       "relation": "defines",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimatchonboardingscreen",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimatchonboardingscreen"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimatchonboardingscreenstate",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimatchonboardingscreenstate"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aitopskipbutton",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aitopskipbutton"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimodetoggle",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimodetoggle"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimodetogglebutton",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aimodetogglebutton"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichatpanel",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichatpanel"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aicoachbubble",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aicoachbubble"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aiuserbubble",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aiuserbubble"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichoicebutton",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichoicebutton"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aidetailspanel",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aidetailspanel"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aifield",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aifield"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichatinput",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aichatinput"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aibottomnav",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aibottomnav"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aibottomnavitem",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_aibottomnavitem"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_dispose",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_dispose"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_build",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_build"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_directionality",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_directionality"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_sizedbox",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_sizedbox"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_positioned",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_positioned"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_container",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_container"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_gesturedetector",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_gesturedetector"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_padding",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_padding"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_row",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_row"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_align",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_align"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_material",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_material"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_textfield",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_textfield"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_decoratedbox",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_decoratedbox"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\ai_match\\ai_match_onboarding_screen.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "_tgt": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_column",
+      "source": "lib_app_features_ai_match_ai_match_onboarding_screen_dart",
+      "target": "lib_app_features_ai_match_ai_match_onboarding_screen_dart_column"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
       "source_location": null,
       "weight": 1.0,
@@ -10291,18 +10861,6 @@
       "source_location": null,
       "weight": 1.0,
       "_src": "lib_app_features_auth_auth_screen_dart",
-      "_tgt": "lib_app_features_auth_auth_screen_dart_color",
-      "source": "lib_app_features_auth_auth_screen_dart",
-      "target": "lib_app_features_auth_auth_screen_dart_color"
-    },
-    {
-      "relation": "defines",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib\\app\\features\\auth\\auth_screen.dart",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "lib_app_features_auth_auth_screen_dart",
       "_tgt": "lib_app_features_auth_auth_screen_dart_textstyle",
       "source": "lib_app_features_auth_auth_screen_dart",
       "target": "lib_app_features_auth_auth_screen_dart_textstyle"
@@ -10543,18 +11101,6 @@
       "source_location": null,
       "weight": 1.0,
       "_src": "lib_app_features_shell_activly_shell_dart",
-      "_tgt": "lib_app_features_shell_activly_shell_dart_startfallbacktimer",
-      "source": "lib_app_features_shell_activly_shell_dart",
-      "target": "lib_app_features_shell_activly_shell_dart_startfallbacktimer"
-    },
-    {
-      "relation": "defines",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "lib_app_features_shell_activly_shell_dart",
       "_tgt": "lib_app_features_shell_activly_shell_dart_playvideosafely",
       "source": "lib_app_features_shell_activly_shell_dart",
       "target": "lib_app_features_shell_activly_shell_dart_playvideosafely"
@@ -10594,18 +11140,6 @@
       "_tgt": "lib_app_features_shell_activly_shell_dart_setcurrentvideo",
       "source": "lib_app_features_shell_activly_shell_dart",
       "target": "lib_app_features_shell_activly_shell_dart_setcurrentvideo"
-    },
-    {
-      "relation": "defines",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "lib_app_features_shell_activly_shell_dart",
-      "_tgt": "lib_app_features_shell_activly_shell_dart_revealpage",
-      "source": "lib_app_features_shell_activly_shell_dart",
-      "target": "lib_app_features_shell_activly_shell_dart_revealpage"
     },
     {
       "relation": "defines",
@@ -10666,6 +11200,18 @@
       "_tgt": "lib_app_features_shell_activly_shell_dart_landingscreen",
       "source": "lib_app_features_shell_activly_shell_dart",
       "target": "lib_app_features_shell_activly_shell_dart_landingscreen"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\features\\shell\\activly_shell.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_features_shell_activly_shell_dart",
+      "_tgt": "lib_app_features_shell_activly_shell_dart_aimatchonboardingscreen",
+      "source": "lib_app_features_shell_activly_shell_dart",
+      "target": "lib_app_features_shell_activly_shell_dart_aimatchonboardingscreen"
     },
     {
       "relation": "defines",
@@ -10738,18 +11284,6 @@
       "_tgt": "lib_app_shared_painters_google_g_arcs_painter_dart_paint",
       "source": "lib_app_shared_painters_google_g_arcs_painter_dart",
       "target": "lib_app_shared_painters_google_g_arcs_painter_dart_paint"
-    },
-    {
-      "relation": "defines",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib\\app\\shared\\painters\\google_g_arcs_painter.dart",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "lib_app_shared_painters_google_g_arcs_painter_dart",
-      "_tgt": "lib_app_shared_painters_google_g_arcs_painter_dart_color",
-      "source": "lib_app_shared_painters_google_g_arcs_painter_dart",
-      "target": "lib_app_shared_painters_google_g_arcs_painter_dart_color"
     },
     {
       "relation": "defines",
@@ -11227,9 +11761,21 @@
       "source_location": null,
       "weight": 1.0,
       "_src": "lib_app_shared_widgets_loading_overlay_dart",
-      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_heartglyph",
+      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_uiverseheartloader",
       "source": "lib_app_shared_widgets_loading_overlay_dart",
-      "target": "lib_app_shared_widgets_loading_overlay_dart_heartglyph"
+      "target": "lib_app_shared_widgets_loading_overlay_dart_uiverseheartloader"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_shared_widgets_loading_overlay_dart",
+      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_loaderheartcircle",
+      "source": "lib_app_shared_widgets_loading_overlay_dart",
+      "target": "lib_app_shared_widgets_loading_overlay_dart_loaderheartcircle"
     },
     {
       "relation": "defines",
@@ -11287,18 +11833,6 @@
       "source_location": null,
       "weight": 1.0,
       "_src": "lib_app_shared_widgets_loading_overlay_dart",
-      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_segment",
-      "source": "lib_app_shared_widgets_loading_overlay_dart",
-      "target": "lib_app_shared_widgets_loading_overlay_dart_segment"
-    },
-    {
-      "relation": "defines",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "lib_app_shared_widgets_loading_overlay_dart",
       "_tgt": "lib_app_shared_widgets_loading_overlay_dart_build",
       "source": "lib_app_shared_widgets_loading_overlay_dart",
       "target": "lib_app_shared_widgets_loading_overlay_dart_build"
@@ -11323,21 +11857,9 @@
       "source_location": null,
       "weight": 1.0,
       "_src": "lib_app_shared_widgets_loading_overlay_dart",
-      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_heartopacity",
+      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_trianglewave",
       "source": "lib_app_shared_widgets_loading_overlay_dart",
-      "target": "lib_app_shared_widgets_loading_overlay_dart_heartopacity"
-    },
-    {
-      "relation": "defines",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
-      "source_location": null,
-      "weight": 1.0,
-      "_src": "lib_app_shared_widgets_loading_overlay_dart",
-      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_heartlift",
-      "source": "lib_app_shared_widgets_loading_overlay_dart",
-      "target": "lib_app_shared_widgets_loading_overlay_dart_heartlift"
+      "target": "lib_app_shared_widgets_loading_overlay_dart_trianglewave"
     },
     {
       "relation": "defines",
@@ -11362,6 +11884,18 @@
       "_tgt": "lib_app_shared_widgets_loading_overlay_dart_stack",
       "source": "lib_app_shared_widgets_loading_overlay_dart",
       "target": "lib_app_shared_widgets_loading_overlay_dart_stack"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib\\app\\shared\\widgets\\loading_overlay.dart",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "lib_app_shared_widgets_loading_overlay_dart",
+      "_tgt": "lib_app_shared_widgets_loading_overlay_dart_container",
+      "source": "lib_app_shared_widgets_loading_overlay_dart",
+      "target": "lib_app_shared_widgets_loading_overlay_dart_container"
     },
     {
       "relation": "defines",

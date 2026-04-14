@@ -38,21 +38,7 @@ class _LoadingOverlayState extends State<LoadingOverlay>
         child: ColoredBox(
           color: kColorBlack,
           child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 360),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/Activly-logo.png',
-                    width: 210,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(height: 26),
-                  _UiverseHeartLoader(controller: _controller),
-                ],
-              ),
-            ),
+            child: _UiverseHeartLoader(controller: _controller),
           ),
         ),
       ),
@@ -63,44 +49,107 @@ class _LoadingOverlayState extends State<LoadingOverlay>
 class _UiverseHeartLoader extends StatelessWidget {
   const _UiverseHeartLoader({required this.controller});
 
+  static const double _unit = 62;
+  static const Cubic _motionCurve = Cubic(0.75, 0, 0.5, 1);
+
   final Animation<double> controller;
+
+  double _triangleWave(double t, double center, double halfWidth) {
+    final normalized = ((t - center).abs() / halfWidth).clamp(0.0, 1.0);
+    return 1 - normalized;
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 154,
-      height: 130,
+      width: 190,
+      height: 178,
       child: AnimatedBuilder(
         animation: controller,
         builder: (BuildContext context, Widget? child) {
-          final t = controller.value;
-          final jump = (math.sin((2 * math.pi * t) - (math.pi / 2)) + 1) / 2;
-          final lift = -24 * jump;
-          final heartScale = 1 - (0.20 * jump);
-          final shadowWidth = 76 - (30 * jump);
+          final t = _motionCurve.transform(controller.value);
+          final heartRotation = t * 4 * math.pi;
+
+          final squarePulse = _triangleWave(t, 0.5, 0.5);
+          final squareScale = 1 - (0.5 * squarePulse);
+          final squareRadius = (_unit / 2) * squarePulse;
+
+          final leftPulse = _triangleWave(t, 0.6, 0.12);
+          final leftScale = 1 - (0.6 * leftPulse);
+
+          final rightPulse = _triangleWave(t, 0.4, 0.12);
+          final rightScale = 1 - (0.6 * rightPulse);
+
+          final shadowPulse = _triangleWave(t, 0.5, 0.5);
+          final shadowScale = 1 - (0.5 * shadowPulse);
+          final shadowColor = Color.lerp(
+            kColorLoaderShadowBase,
+            kColorLoaderShadowPulse,
+            shadowPulse,
+          )!;
 
           return Stack(
             alignment: Alignment.center,
             children: <Widget>[
               Positioned(
-                bottom: 8,
-                child: Container(
-                  width: shadowWidth,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    color: kColorWhite.withValues(alpha: 0.22),
-                    borderRadius: BorderRadius.circular(99),
+                bottom: 12,
+                child: Transform.scale(
+                  scale: shadowScale,
+                  child: Container(
+                    width: _unit,
+                    height: _unit * 0.24,
+                    decoration: BoxDecoration(
+                      color: shadowColor,
+                      border: Border.all(color: shadowColor),
+                      borderRadius: BorderRadius.circular(_unit),
+                    ),
                   ),
                 ),
               ),
-              _LoaderOrb(progress: t, delay: 0.08),
-              _LoaderOrb(progress: t, delay: 0.41),
-              _LoaderOrb(progress: t, delay: 0.72),
-              Transform.translate(
-                offset: Offset(0, lift),
-                child: Transform.scale(
-                  scale: heartScale,
-                  child: const _HeartShape(),
+              Positioned(
+                top: 8,
+                child: Transform.rotate(
+                  angle: heartRotation,
+                  child: SizedBox(
+                    width: _unit * 2,
+                    height: _unit * 2,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        Transform.translate(
+                          offset: const Offset(-28, -27),
+                          child: Transform.scale(
+                            scale: leftScale,
+                            child: const _LoaderHeartCircle(),
+                          ),
+                        ),
+                        Transform.translate(
+                          offset: const Offset(28, -27),
+                          child: Transform.scale(
+                            scale: rightScale,
+                            child: const _LoaderHeartCircle(),
+                          ),
+                        ),
+                        Transform.rotate(
+                          angle: -math.pi / 4,
+                          child: Transform.scale(
+                            scale: squareScale,
+                            child: Container(
+                              width: _unit,
+                              height: _unit,
+                              decoration: BoxDecoration(
+                                color: kColorLoaderHeart,
+                                border: Border.all(color: kColorLoaderHeart),
+                                borderRadius: BorderRadius.circular(
+                                  squareRadius,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -111,101 +160,18 @@ class _UiverseHeartLoader extends StatelessWidget {
   }
 }
 
-class _LoaderOrb extends StatelessWidget {
-  const _LoaderOrb({required this.progress, required this.delay});
-
-  final double progress;
-  final double delay;
-
-  @override
-  Widget build(BuildContext context) {
-    final phase = (progress + delay) % 1.0;
-    final angle = (2 * math.pi * phase) - (math.pi / 2);
-    final dx = math.cos(angle) * 33;
-    final dy = math.sin(angle) * 12;
-    final opacity = (0.28 + (0.72 * (1 - phase))).clamp(0.0, 1.0);
-
-    return Transform.translate(
-      offset: Offset(dx, dy - 8),
-      child: Opacity(
-        opacity: opacity,
-        child: Container(
-          width: 8,
-          height: 8,
-          decoration: const BoxDecoration(
-            color: kColorLavender,
-            shape: BoxShape.circle,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _HeartShape extends StatelessWidget {
-  const _HeartShape();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 82,
-      height: 72,
-      child: Stack(
-        alignment: Alignment.center,
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          Transform.rotate(
-            angle: -math.pi / 4,
-            child: Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                color: kColorPrimary,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    blurRadius: 16,
-                    spreadRadius: -8,
-                    color: kColorPrimary.withValues(alpha: 0.70),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Positioned(
-            left: 11,
-            top: 8,
-            child: _HeartCircle(),
-          ),
-          const Positioned(
-            right: 11,
-            top: 8,
-            child: _HeartCircle(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HeartCircle extends StatelessWidget {
-  const _HeartCircle();
+class _LoaderHeartCircle extends StatelessWidget {
+  const _LoaderHeartCircle();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 36,
-      height: 36,
+      width: _UiverseHeartLoader._unit,
+      height: _UiverseHeartLoader._unit,
       decoration: BoxDecoration(
-        color: kColorPrimary,
+        color: kColorLoaderHeart,
+        border: Border.all(color: kColorLoaderHeart),
         shape: BoxShape.circle,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            blurRadius: 14,
-            spreadRadius: -8,
-            color: kColorPrimary.withValues(alpha: 0.66),
-          ),
-        ],
       ),
     );
   }

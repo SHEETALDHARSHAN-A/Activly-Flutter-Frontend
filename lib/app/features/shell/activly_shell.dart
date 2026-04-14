@@ -10,6 +10,8 @@ class ActivlyShell extends StatefulWidget {
 }
 
 class _ActivlyShellState extends State<ActivlyShell> {
+  static const double _splitLayoutBreakpoint = 1100;
+
   AppLanguage _language = AppLanguage.en;
   bool _isLoaded = false;
   bool _isLoaderVisible = true;
@@ -209,66 +211,147 @@ class _ActivlyShellState extends State<ActivlyShell> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final useSplitLayout = screenWidth >= _splitLayoutBreakpoint;
+
+    Widget pageContent() {
+      if (_activePage == AppPage.landing) {
+        return LandingScreen(
+          language: _language,
+          isLoaded: _isLoaded,
+          t: _t,
+          currentVideoIndex: _currentVideoIndex,
+          totalVideos: kVideoAssets.length,
+          onToggleLanguage: _toggleLanguage,
+          onSelectVideo: _setCurrentVideo,
+          onContinueEmail: _goToLoginPage,
+          onContinuePhone: _goToLoginPage,
+        );
+      }
+
+      return AuthScreen(
+        language: _language,
+        t: _t,
+        onToggleLanguage: _toggleLanguage,
+        onBackToLanding: () => setState(() => _activePage = AppPage.landing),
+      );
+    }
+
     return Scaffold(
       body: DecoratedBox(
         decoration: const BoxDecoration(color: Colors.black),
         child: Stack(
           children: <Widget>[
-            Positioned.fill(
-              child: Stack(
-                children: List<Widget>.generate(kVideoAssets.length, (index) {
-                  final isActive = index == _currentVideoIndex;
-                  final controller = _videoControllers[index];
-
-                  return AnimatedOpacity(
-                    opacity: isActive ? 1 : 0,
-                    duration: const Duration(milliseconds: 1000),
-                    child: _videoError[index]
-                        ? const _VideoFallback()
-                        : _VideoLayer(controller: controller),
-                  );
-                }),
-              ),
-            ),
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: <Color>[
-                      Colors.black.withValues(alpha: 0.30),
-                      Colors.black.withValues(alpha: 0.40),
-                      Colors.black.withValues(alpha: 0.60),
-                    ],
+            if (useSplitLayout)
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned.fill(
+                          child: _ShellVideoBackground(
+                            currentVideoIndex: _currentVideoIndex,
+                            videoControllers: _videoControllers,
+                            videoError: _videoError,
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: <Color>[
+                                  Colors.black.withValues(alpha: 0.22),
+                                  Colors.black.withValues(alpha: 0.34),
+                                  Colors.black.withValues(alpha: 0.54),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ),
-            if (_activePage == AppPage.landing)
-              LandingScreen(
-                language: _language,
-                isLoaded: _isLoaded,
-                t: _t,
-                currentVideoIndex: _currentVideoIndex,
-                totalVideos: kVideoAssets.length,
-                onToggleLanguage: _toggleLanguage,
-                onSelectVideo: _setCurrentVideo,
-                onContinueEmail: _goToLoginPage,
-                onContinuePhone: _goToLoginPage,
+                  Expanded(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF0B0B0D),
+                        border: Border(
+                          left: BorderSide(
+                            color: Colors.white.withValues(alpha: 0.10),
+                          ),
+                        ),
+                      ),
+                      child: pageContent(),
+                    ),
+                  ),
+                ],
               )
             else
-              AuthScreen(
-                language: _language,
-                t: _t,
-                onToggleLanguage: _toggleLanguage,
-                onBackToLanding: () =>
-                    setState(() => _activePage = AppPage.landing),
+              Positioned.fill(
+                child: Stack(
+                  children: <Widget>[
+                    Positioned.fill(
+                      child: _ShellVideoBackground(
+                        currentVideoIndex: _currentVideoIndex,
+                        videoControllers: _videoControllers,
+                        videoError: _videoError,
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: <Color>[
+                              Colors.black.withValues(alpha: 0.30),
+                              Colors.black.withValues(alpha: 0.40),
+                              Colors.black.withValues(alpha: 0.60),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(child: pageContent()),
+                  ],
+                ),
               ),
             LoadingOverlay(isVisible: _isLoaderVisible),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ShellVideoBackground extends StatelessWidget {
+  const _ShellVideoBackground({
+    required this.currentVideoIndex,
+    required this.videoControllers,
+    required this.videoError,
+  });
+
+  final int currentVideoIndex;
+  final List<VideoPlayerController?> videoControllers;
+  final List<bool> videoError;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: List<Widget>.generate(kVideoAssets.length, (index) {
+        final isActive = index == currentVideoIndex;
+        final controller = videoControllers[index];
+
+        return AnimatedOpacity(
+          opacity: isActive ? 1 : 0,
+          duration: const Duration(milliseconds: 1000),
+          child: videoError[index]
+              ? const _VideoFallback()
+              : _VideoLayer(controller: controller),
+        );
+      }),
     );
   }
 }

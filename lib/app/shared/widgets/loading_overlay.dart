@@ -181,9 +181,10 @@ class _HeartGlyph extends StatelessWidget {
 }
 
 class _BladeSpinner extends StatefulWidget {
-  const _BladeSpinner({this.size = 18});
+  const _BladeSpinner({this.size = 18, this.color});
 
   final double size;
+  final Color? color;
 
   @override
   State<_BladeSpinner> createState() => _BladeSpinnerState();
@@ -233,7 +234,9 @@ class _BladeSpinnerState extends State<_BladeSpinner>
                     width: bladeWidth,
                     height: bladeHeight,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF69717D).withValues(alpha: opacity),
+                      color: (widget.color ?? const Color(0xFF69717D)).withValues(
+                        alpha: opacity,
+                      ),
                       borderRadius: BorderRadius.circular(widget.size * 0.0555),
                     ),
                   ),

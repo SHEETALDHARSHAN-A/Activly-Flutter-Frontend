@@ -60,7 +60,7 @@ class _AsyncSegmentButtonState extends State<_AsyncSegmentButton> {
           borderRadius: BorderRadius.circular(999),
         ),
         child: _loading
-            ? const _BladeSpinner(size: 14)
+            ? const _BladeSpinner(size: 16)
             : Text(
                 widget.label,
                 textAlign: TextAlign.center,
@@ -128,6 +128,7 @@ class _ActionButton extends StatelessWidget {
       height: 44,
       radius: 12,
       onTap: onTap,
+      selected: false,
       baseColor: Colors.white,
       overlayColor: const Color(0xFF7C4CFF),
       shadowColor: Colors.black.withValues(alpha: 0.20),
@@ -198,24 +199,30 @@ class _LoadingTextButtonState extends State<_LoadingTextButton> {
 
   @override
   Widget build(BuildContext context) {
-    final labelWidget = _loading
-        ? const _BladeSpinner(size: 14)
-        : Text(
-            widget.label,
-            style:
-                widget.textStyle ??
-                const TextStyle(
-                  decoration: TextDecoration.underline,
-                  decorationColor: Color(0xFF7C4CFF),
-                ),
-          );
-
     final enabledTap = widget.enabled && !_loading;
     final style =
         widget.style ??
         TextButton.styleFrom(
           foregroundColor: Colors.white.withValues(alpha: 0.80),
         );
+
+    if (_loading) {
+      return TextButton(
+        onPressed: null,
+        style: style,
+        child: const _BladeSpinner(size: 16),
+      );
+    }
+
+    final labelWidget = Text(
+      widget.label,
+      style:
+          widget.textStyle ??
+          const TextStyle(
+            decoration: TextDecoration.underline,
+            decorationColor: Color(0xFF7C4CFF),
+          ),
+    );
 
     if (widget.icon != null) {
       return TextButton.icon(
@@ -267,7 +274,7 @@ class _LoadingOutlinedButtonIconState extends State<_LoadingOutlinedButtonIcon> 
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton.icon(
+    return OutlinedButton(
       onPressed: _loading ? null : _handleTap,
       style: OutlinedButton.styleFrom(
         foregroundColor: Colors.white,
@@ -277,14 +284,22 @@ class _LoadingOutlinedButtonIconState extends State<_LoadingOutlinedButtonIcon> 
         backgroundColor: Colors.black.withValues(alpha: 0.45),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
       ),
-      icon: _loading ? const _BladeSpinner(size: 14) : widget.icon,
-      label: Text(
-        widget.label,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
+      child: _loading
+          ? const _BladeSpinner(size: 18)
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                widget.icon,
+                const SizedBox(width: 8),
+                Text(
+                  widget.label,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
@@ -317,7 +332,7 @@ class _LoadingLinkTextState extends State<_LoadingLinkText> {
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const _BladeSpinner(size: 14);
+      return const _BladeSpinner(size: 16);
     }
 
     return GestureDetector(

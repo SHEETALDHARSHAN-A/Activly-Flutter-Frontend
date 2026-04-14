@@ -6,6 +6,7 @@ class _SocialButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     required this.arrowIcon,
+    this.selected = false,
     this.compact = false,
   });
 
@@ -13,6 +14,7 @@ class _SocialButton extends StatelessWidget {
   final Widget icon;
   final AsyncTapCallback onPressed;
   final IconData arrowIcon;
+  final bool selected;
   final bool compact;
 
   @override
@@ -21,6 +23,7 @@ class _SocialButton extends StatelessWidget {
       height: compact ? 40 : 44,
       radius: 12,
       onTap: onPressed,
+      selected: selected,
       baseColor: Colors.white,
       overlayColor: const Color(0xFF7C4CFF),
       shadowColor: Colors.black.withValues(alpha: 0.20),
@@ -64,18 +67,21 @@ class _PillButton extends StatelessWidget {
     required this.icon,
     required this.arrowIcon,
     required this.onTap,
+    this.selected = false,
   });
 
   final String label;
   final IconData icon;
   final IconData arrowIcon;
   final AsyncTapCallback onTap;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
     return _GlassPillButton(
       onTap: onTap,
       radius: 999,
+      selected: selected,
       childBuilder: (bool hovered) {
         return Row(
           children: <Widget>[
@@ -109,6 +115,7 @@ class _SweepButton extends StatefulWidget {
     required this.height,
     required this.radius,
     required this.onTap,
+    required this.selected,
     required this.baseColor,
     required this.overlayColor,
     required this.shadowColor,
@@ -118,6 +125,7 @@ class _SweepButton extends StatefulWidget {
   final double height;
   final double radius;
   final AsyncTapCallback onTap;
+  final bool selected;
   final Color baseColor;
   final Color overlayColor;
   final Color shadowColor;
@@ -130,22 +138,52 @@ class _SweepButton extends StatefulWidget {
 class _SweepButtonState extends State<_SweepButton> {
   bool _hovered = false;
   bool _loading = false;
+  bool _pressed = false;
+  bool _showLoader = false;
 
   Future<void> _handleTap() async {
     if (_loading) {
       return;
     }
 
-    setState(() => _loading = true);
-    await Future<void>.delayed(kButtonLoadingDuration);
-    await widget.onTap();
+    setState(() {
+      _loading = true;
+      _pressed = true;
+      _hovered = true;
+      _showLoader = false;
+    });
+
+    await Future<void>.delayed(kButtonFillDuration);
+
+    if (!mounted) {
+      return;
+    }
+
+    final operation = widget.onTap();
+
+    if (!mounted) {
+      return;
+    }
+
+    await Future<void>.delayed(kButtonLoaderRevealDelay);
+    if (mounted && _loading) {
+      setState(() => _showLoader = true);
+    }
+
+    await operation;
     if (mounted) {
-      setState(() => _loading = false);
+      setState(() {
+        _loading = false;
+        _pressed = false;
+        _showLoader = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final active = _hovered || _pressed || widget.selected;
+
     return SizedBox(
       width: double.infinity,
       height: widget.height,
@@ -174,18 +212,18 @@ class _SweepButtonState extends State<_SweepButton> {
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeOut,
                       alignment: Alignment.centerLeft,
-                      widthFactor: _hovered ? 1 : 0,
+                      widthFactor: active ? 1 : 0,
                       child: ColoredBox(color: widget.overlayColor),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    child: Center(
-                      child: _loading
-                          ? const _BladeSpinner(size: 18)
-                          : widget.builder(_hovered),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                      child: Center(
+                        child: _loading && _showLoader
+                            ? const _BladeSpinner(size: 24, color: Colors.white)
+                            : widget.builder(active),
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -200,11 +238,13 @@ class _GlassPillButton extends StatefulWidget {
   const _GlassPillButton({
     required this.onTap,
     required this.radius,
+    required this.selected,
     required this.childBuilder,
   });
 
   final AsyncTapCallback onTap;
   final double radius;
+  final bool selected;
   final Widget Function(bool hovered) childBuilder;
 
   @override
@@ -214,22 +254,52 @@ class _GlassPillButton extends StatefulWidget {
 class _GlassPillButtonState extends State<_GlassPillButton> {
   bool _hovered = false;
   bool _loading = false;
+  bool _pressed = false;
+  bool _showLoader = false;
 
   Future<void> _handleTap() async {
     if (_loading) {
       return;
     }
 
-    setState(() => _loading = true);
-    await Future<void>.delayed(kButtonLoadingDuration);
-    await widget.onTap();
+    setState(() {
+      _loading = true;
+      _pressed = true;
+      _hovered = true;
+      _showLoader = false;
+    });
+
+    await Future<void>.delayed(kButtonFillDuration);
+
+    if (!mounted) {
+      return;
+    }
+
+    final operation = widget.onTap();
+
+    if (!mounted) {
+      return;
+    }
+
+    await Future<void>.delayed(kButtonLoaderRevealDelay);
+    if (mounted && _loading) {
+      setState(() => _showLoader = true);
+    }
+
+    await operation;
     if (mounted) {
-      setState(() => _loading = false);
+      setState(() {
+        _loading = false;
+        _pressed = false;
+        _showLoader = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final active = _hovered || _pressed || widget.selected;
+
     return MouseRegion(
       onEnter: (_) {
         if (!_loading) {
@@ -256,7 +326,10 @@ class _GlassPillButtonState extends State<_GlassPillButton> {
                 children: <Widget>[
                   Positioned.fill(
                     child: TweenAnimationBuilder<double>(
-                      tween: Tween<double>(begin: 0, end: _hovered ? 1 : 0),
+                      tween: Tween<double>(
+                        begin: 0,
+                        end: active ? 1 : 0,
+                      ),
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeOut,
                       builder:
@@ -274,17 +347,17 @@ class _GlassPillButtonState extends State<_GlassPillButton> {
                       child: const ColoredBox(color: Color(0xFF7C4CFF)),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    child: Center(
-                      child: _loading
-                          ? const _BladeSpinner(size: 16)
-                          : FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: widget.childBuilder(_hovered),
-                            ),
-                    ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                      child: Center(
+                        child: _loading && _showLoader
+                            ? const _BladeSpinner(size: 22, color: Colors.white)
+                            : FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: widget.childBuilder(active),
+                              ),
+                     ),
+                   ),
                 ],
               ),
             ),
@@ -302,53 +375,22 @@ class _GoogleBrandIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stroke = size * 0.22;
+    final fallbackStroke = size * 0.22;
 
-    return SizedBox(
+    return SvgPicture.asset(
+      'assets/google.svg',
       width: size,
       height: size,
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          SizedBox(
-            width: size,
-            height: size,
-            child: CircularProgressIndicator(
-              value: 0.75,
-              strokeWidth: stroke,
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4285F4)),
-              backgroundColor: Colors.transparent,
-            ),
+      fit: BoxFit.contain,
+      placeholderBuilder: (BuildContext context) {
+        return SizedBox(
+          width: size,
+          height: size,
+          child: CustomPaint(
+            painter: _GoogleGArcsPainter(strokeWidth: fallbackStroke),
           ),
-          Positioned(
-            right: 0,
-            child: Container(
-              width: size * 0.52,
-              height: stroke,
-              color: Colors.white,
-            ),
-          ),
-          Positioned(
-            right: 0,
-            child: Container(
-              width: size * 0.35,
-              height: stroke,
-              color: const Color(0xFF4285F4),
-            ),
-          ),
-          Positioned(
-            left: size * 0.08,
-            top: size * 0.12,
-            child: SizedBox(
-              width: size * 0.84,
-              height: size * 0.84,
-              child: CustomPaint(
-                painter: _GoogleGArcsPainter(strokeWidth: stroke),
-              ),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

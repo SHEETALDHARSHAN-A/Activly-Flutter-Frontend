@@ -423,8 +423,10 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 420),
-              child: Column(
-                children: <Widget>[
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -439,17 +441,15 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 16),
                   Image.asset(
                     'assets/Activly-logo.png',
-                    width: 220,
+                    width: 186,
                     fit: BoxFit.contain,
                   ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
+                  const SizedBox(height: 18),
+                  Container(
+                    padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
                           color: Colors.black.withValues(alpha: 0.45),
                           border: Border.all(
@@ -1021,13 +1021,13 @@ class _AuthScreenState extends State<AuthScreen> {
                           ],
                         ),
                       ),
-                    ),
-                  ),
+                  const SizedBox(height: 12),
                 ],
               ),
             ),
           ),
         ),
+      ),
       ),
     );
   }

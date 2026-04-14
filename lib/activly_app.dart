@@ -48,6 +48,9 @@ class ActivlyApp extends StatelessWidget {
           displayColor: Colors.white,
         ),
       ),
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        scrollbars: false,
+      ),
       home: ActivlyShell(enableVideos: enableVideos),
     );
   }

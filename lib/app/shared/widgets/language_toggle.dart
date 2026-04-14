@@ -13,6 +13,8 @@ class LanguageToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = kTranslations[language]!;
+    final selectedTextColor = Colors.black;
+    final unselectedTextColor = Colors.white;
 
     return GestureDetector(
       onTap: onToggle,
@@ -30,8 +32,8 @@ class LanguageToggle extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeOutBack,
               alignment: language == AppLanguage.en
-                  ? Alignment.centerLeft
-                  : Alignment.centerRight,
+                  ? AlignmentDirectional.centerStart
+                  : AlignmentDirectional.centerEnd,
               child: Container(
                 width: 36,
                 height: 28,
@@ -51,8 +53,8 @@ class LanguageToggle extends StatelessWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: language == AppLanguage.en
-                            ? Colors.black
-                            : Colors.white.withValues(alpha: 0.70),
+                            ? selectedTextColor
+                            : unselectedTextColor,
                       ),
                     ),
                   ),
@@ -65,8 +67,8 @@ class LanguageToggle extends StatelessWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: language == AppLanguage.ar
-                            ? Colors.black
-                            : Colors.white.withValues(alpha: 0.70),
+                            ? selectedTextColor
+                            : unselectedTextColor,
                       ),
                     ),
                   ),

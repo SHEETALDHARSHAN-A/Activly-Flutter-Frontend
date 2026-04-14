@@ -1,6 +1,6 @@
 part of 'package:activly/activly_app.dart';
 
-class LandingScreen extends StatelessWidget {
+class LandingScreen extends StatefulWidget {
   const LandingScreen({
     super.key,
     required this.language,
@@ -25,28 +25,34 @@ class LandingScreen extends StatelessWidget {
   final AsyncTapCallback onContinuePhone;
 
   @override
+  State<LandingScreen> createState() => _LandingScreenState();
+}
+
+class _LandingScreenState extends State<LandingScreen> {
+  int _selectedSocial = -1;
+  int _selectedPill = -1;
+
+  @override
   Widget build(BuildContext context) {
+    final language = widget.language;
+    final isLoaded = widget.isLoaded;
+    final t = widget.t;
+    final currentVideoIndex = widget.currentVideoIndex;
+    final totalVideos = widget.totalVideos;
+    final onToggleLanguage = widget.onToggleLanguage;
+    final onSelectVideo = widget.onSelectVideo;
+
     final isArabic = language == AppLanguage.ar;
     final arrowIcon = isArabic ? Icons.chevron_left : Icons.chevron_right;
+    final mediaQuery = MediaQuery.of(context);
+    final topInset = math.max(mediaQuery.viewPadding.top, 51.0);
 
     return Directionality(
       textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
       child: SafeArea(
+        top: false,
         child: Stack(
           children: <Widget>[
-            Positioned(
-              top: 8,
-              right: 16,
-              child: _FadeSlide(
-                visible: isLoaded,
-                yOffset: 0,
-                delay: const Duration(milliseconds: 1000),
-                child: LanguageToggle(
-                  language: language,
-                  onToggle: onToggleLanguage,
-                ),
-              ),
-            ),
             Positioned.fill(
               child: Align(
                 alignment: Alignment.bottomCenter,
@@ -116,8 +122,13 @@ class LandingScreen extends StatelessWidget {
                                     child: _SocialButton(
                                       title: t.continueWithGoogle,
                                       compact: compact,
+                                      selected: _selectedSocial == 0,
                                       icon: const _GoogleBrandIcon(size: 20),
-                                      onPressed: () async {},
+                                      onPressed: () async {
+                                        if (mounted) {
+                                          setState(() => _selectedSocial = 0);
+                                        }
+                                      },
                                       arrowIcon: arrowIcon,
                                     ),
                                   ),
@@ -129,12 +140,17 @@ class LandingScreen extends StatelessWidget {
                                     child: _SocialButton(
                                       title: t.continueWithApple,
                                       compact: compact,
+                                      selected: _selectedSocial == 1,
                                       icon: SvgPicture.asset(
                                         'assets/Apple_light.svg',
                                         width: 20,
                                         height: 20,
                                       ),
-                                      onPressed: () async {},
+                                      onPressed: () async {
+                                        if (mounted) {
+                                          setState(() => _selectedSocial = 1);
+                                        }
+                                      },
                                       arrowIcon: arrowIcon,
                                     ),
                                   ),
@@ -189,14 +205,26 @@ class LandingScreen extends StatelessWidget {
                                           label: t.email,
                                           icon: Icons.mail_outline,
                                           arrowIcon: arrowIcon,
-                                          onTap: onContinueEmail,
+                                          selected: _selectedPill == 0,
+                                          onTap: () async {
+                                            if (mounted) {
+                                              setState(() => _selectedPill = 0);
+                                            }
+                                            await widget.onContinueEmail();
+                                          },
                                         ),
                                         const SizedBox(width: 10),
                                         _PillButton(
                                           label: t.phone,
                                           icon: Icons.phone_outlined,
                                           arrowIcon: arrowIcon,
-                                          onTap: onContinuePhone,
+                                          selected: _selectedPill == 1,
+                                          onTap: () async {
+                                            if (mounted) {
+                                              setState(() => _selectedPill = 1);
+                                            }
+                                            await widget.onContinuePhone();
+                                          },
                                         ),
                                       ],
                                     ),
@@ -205,12 +233,13 @@ class LandingScreen extends StatelessWidget {
                                   _FadeSlide(
                                     visible: isLoaded,
                                     delay: const Duration(milliseconds: 1100),
-                                    child: _LoadingTextButton(
+                                    child: _AnimatedSkipForNow(
                                       label: t.skipForNow,
                                       icon: Icon(arrowIcon, size: 18),
-                                      onTap: () async {},
+                                      onTap: () {},
                                     ),
                                   ),
+                                  SizedBox(height: 22 * compactScale),
                                 ],
                               ),
                             ),
@@ -223,7 +252,20 @@ class LandingScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: 20,
+              top: topInset + 8,
+              right: 16,
+              child: _FadeSlide(
+                visible: isLoaded,
+                yOffset: 0,
+                delay: const Duration(milliseconds: 1000),
+                child: LanguageToggle(
+                  language: language,
+                  onToggle: onToggleLanguage,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 10,
               left: 0,
               right: 0,
               child: _FadeSlide(
@@ -309,6 +351,90 @@ class _FadeSlide extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _AnimatedSkipForNow extends StatefulWidget {
+  const _AnimatedSkipForNow({
+    required this.label,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String label;
+  final Widget icon;
+  final VoidCallback onTap;
+
+  @override
+  State<_AnimatedSkipForNow> createState() => _AnimatedSkipForNowState();
+}
+
+class _AnimatedSkipForNowState extends State<_AnimatedSkipForNow>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 450),
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => _controller.forward(),
+      onExit: (_) => _controller.reverse(),
+      child: GestureDetector(
+        onTapDown: (_) => _controller.forward(),
+        onTapUp: (_) => widget.onTap(),
+        onTapCancel: () => _controller.reverse(),
+        behavior: HitTestBehavior.translucent,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  widget.label,
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.90),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                IconTheme(
+                  data: IconThemeData(
+                    color: Colors.white.withValues(alpha: 0.90),
+                    size: 18,
+                  ),
+                  child: widget.icon,
+                ),
+              ],
+            ),
+            const SizedBox(height: 2),
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (BuildContext context, Widget? child) {
+                return Container(
+                  height: 1.5,
+                  width: 88 * _controller.value,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.90),
+                    borderRadius: BorderRadius.circular(99),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

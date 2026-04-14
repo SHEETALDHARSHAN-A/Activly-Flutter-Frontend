@@ -16,13 +16,55 @@ class _VideoLayer extends StatelessWidget {
       return const _VideoFallback();
     }
 
-    return FittedBox(
-      fit: BoxFit.cover,
-      child: SizedBox(
-        width: size.width,
-        height: size.height,
-        child: VideoPlayer(controller!),
-      ),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final targetWidth = constraints.maxWidth;
+        final targetHeight = constraints.maxHeight;
+
+        if (!targetWidth.isFinite ||
+            !targetHeight.isFinite ||
+            targetWidth <= 0 ||
+            targetHeight <= 0) {
+          return FittedBox(
+            fit: BoxFit.cover,
+            child: SizedBox(
+              width: size.width,
+              height: size.height,
+              child: VideoPlayer(controller!),
+            ),
+          );
+        }
+
+        final sourceAspect = size.width / size.height;
+        final targetAspect = targetWidth / targetHeight;
+
+        double renderWidth;
+        double renderHeight;
+        if (sourceAspect > targetAspect) {
+          renderHeight = targetHeight;
+          renderWidth = targetHeight * sourceAspect;
+        } else {
+          renderWidth = targetWidth;
+          renderHeight = targetWidth / sourceAspect;
+        }
+
+        return SizedBox.expand(
+          child: ClipRect(
+            child: OverflowBox(
+              minWidth: renderWidth,
+              maxWidth: renderWidth,
+              minHeight: renderHeight,
+              maxHeight: renderHeight,
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: renderWidth,
+                height: renderHeight,
+                child: VideoPlayer(controller!),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

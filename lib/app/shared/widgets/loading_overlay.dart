@@ -93,8 +93,8 @@ class _LoadingOverlayState extends State<LoadingOverlay>
                         )
                       : const SizedBox(
                           key: ValueKey<String>('heart-loader-placeholder'),
-                          width: 186,
-                          height: 186,
+                          width: 168,
+                          height: 168,
                         ),
                 ),
               ],
@@ -111,7 +111,7 @@ class _UiverseHeartLoader extends StatelessWidget {
 
   // Matches CSS cubic-bezier(0.75, 0, 0.5, 1)
   static const Cubic _motionCurve = Cubic(0.75, 0, 0.5, 1);
-  static const double _unit = 62;
+  static const double _unit = 56;
 
   final Animation<double> controller;
 
@@ -139,7 +139,7 @@ class _UiverseHeartLoader extends StatelessWidget {
       width: unit,
       height: unit,
       decoration: const BoxDecoration(
-        color: kColorLoaderHeart,
+        color: kColorPrimary,
         shape: BoxShape.circle,
       ),
     );
@@ -192,7 +192,7 @@ class _UiverseHeartLoader extends StatelessWidget {
                             width: unit,
                             height: unit,
                             decoration: BoxDecoration(
-                              color: kColorLoaderHeart,
+                              color: kColorPrimary,
                               borderRadius: BorderRadius.circular(
                                 (squareRadiusFactor * unit / 2).clamp(
                                   0.0,

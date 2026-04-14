@@ -39,6 +39,17 @@ class _AuthScreenState extends State<AuthScreen> {
   late final TextEditingController _resetPassword;
   late final TextEditingController _resetConfirmPassword;
 
+  late final FocusNode _signInIdentifierFocus;
+  late final FocusNode _signInPasswordFocus;
+  late final FocusNode _createNameFocus;
+  late final FocusNode _createEmailFocus;
+  late final FocusNode _createPhoneFocus;
+  late final FocusNode _createPasswordFocus;
+  late final FocusNode _createConfirmPasswordFocus;
+  late final FocusNode _forgotIdentifierFocus;
+  late final FocusNode _resetPasswordFocus;
+  late final FocusNode _resetConfirmPasswordFocus;
+
   late final List<TextEditingController> _otpControllers;
   late final List<FocusNode> _otpFocusNodes;
   List<String> _otpDigits = List<String>.filled(_otpLength, '');
@@ -66,11 +77,42 @@ class _AuthScreenState extends State<AuthScreen> {
     _forgotIdentifier = TextEditingController();
     _resetPassword = TextEditingController();
     _resetConfirmPassword = TextEditingController();
+
+    _signInIdentifierFocus = FocusNode();
+    _signInPasswordFocus = FocusNode();
+    _createNameFocus = FocusNode();
+    _createEmailFocus = FocusNode();
+    _createPhoneFocus = FocusNode();
+    _createPasswordFocus = FocusNode();
+    _createConfirmPasswordFocus = FocusNode();
+    _forgotIdentifierFocus = FocusNode();
+    _resetPasswordFocus = FocusNode();
+    _resetConfirmPasswordFocus = FocusNode();
+
+    final focusNodes = <FocusNode>[
+      _signInIdentifierFocus,
+      _signInPasswordFocus,
+      _createNameFocus,
+      _createEmailFocus,
+      _createPhoneFocus,
+      _createPasswordFocus,
+      _createConfirmPasswordFocus,
+      _forgotIdentifierFocus,
+      _resetPasswordFocus,
+      _resetConfirmPasswordFocus,
+    ];
+    for (final node in focusNodes) {
+      node.addListener(() => _centerFocusedInput(node));
+    }
+
     _otpControllers = List<TextEditingController>.generate(
       _otpLength,
       (_) => TextEditingController(),
     );
     _otpFocusNodes = List<FocusNode>.generate(_otpLength, (_) => FocusNode());
+    for (final node in _otpFocusNodes) {
+      node.addListener(() => _centerFocusedInput(node));
+    }
   }
 
   @override
@@ -87,6 +129,17 @@ class _AuthScreenState extends State<AuthScreen> {
     _resetPassword.dispose();
     _resetConfirmPassword.dispose();
 
+    _signInIdentifierFocus.dispose();
+    _signInPasswordFocus.dispose();
+    _createNameFocus.dispose();
+    _createEmailFocus.dispose();
+    _createPhoneFocus.dispose();
+    _createPasswordFocus.dispose();
+    _createConfirmPasswordFocus.dispose();
+    _forgotIdentifierFocus.dispose();
+    _resetPasswordFocus.dispose();
+    _resetConfirmPasswordFocus.dispose();
+
     for (final controller in _otpControllers) {
       controller.dispose();
     }
@@ -94,6 +147,31 @@ class _AuthScreenState extends State<AuthScreen> {
       node.dispose();
     }
     super.dispose();
+  }
+
+  void _centerFocusedInput(FocusNode node) {
+    if (!node.hasFocus) {
+      return;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !node.hasFocus) {
+        return;
+      }
+
+      final targetContext = node.context;
+      if (targetContext == null) {
+        return;
+      }
+
+      Scrollable.ensureVisible(
+        targetContext,
+        alignment: 0.5,
+        duration: const Duration(milliseconds: 280),
+        curve: Curves.easeOutCubic,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
+      );
+    });
   }
 
   void _goToStep(AuthStep nextStep) {
@@ -318,6 +396,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget _inputField({
     required String label,
     required TextEditingController controller,
+    required FocusNode focusNode,
     required IconData icon,
     String? hint,
     TextInputType keyboardType = TextInputType.text,
@@ -342,6 +421,7 @@ class _AuthScreenState extends State<AuthScreen> {
         const SizedBox(height: 8),
         TextField(
           controller: controller,
+          focusNode: focusNode,
           keyboardType: keyboardType,
           textInputAction: textInputAction,
           onSubmitted: onSubmitted,
@@ -565,6 +645,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.emailOrPhone,
                                     controller: _signInIdentifier,
+                                    focusNode: _signInIdentifierFocus,
                                     icon: Icons.mail_outline,
                                     hint: widget.t.emailOrPhone,
                                     showText: true,
@@ -574,6 +655,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.password,
                                     controller: _signInPassword,
+                                    focusNode: _signInPasswordFocus,
                                     icon: Icons.lock_outline,
                                     obscure: true,
                                     showToggle: true,
@@ -651,6 +733,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.fullName,
                                     controller: _createName,
+                                    focusNode: _createNameFocus,
                                     icon: Icons.person_outline,
                                     hint:
                                         _isArabic ? 'اسمك الكامل' : 'Your full name',
@@ -661,6 +744,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.email,
                                     controller: _createEmail,
+                                    focusNode: _createEmailFocus,
                                     icon: Icons.mail_outline,
                                     hint: 'name@example.com',
                                     keyboardType: TextInputType.emailAddress,
@@ -671,6 +755,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.phone,
                                     controller: _createPhone,
+                                    focusNode: _createPhoneFocus,
                                     icon: Icons.phone_outlined,
                                     hint: '+971 50 000 0000',
                                     keyboardType: TextInputType.phone,
@@ -681,6 +766,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.password,
                                     controller: _createPassword,
+                                    focusNode: _createPasswordFocus,
                                     icon: Icons.lock_outline,
                                     obscure: true,
                                     showToggle: true,
@@ -694,6 +780,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.confirmPassword,
                                     controller: _createConfirmPassword,
+                                    focusNode: _createConfirmPasswordFocus,
                                     icon: Icons.lock_outline,
                                     obscure: true,
                                     showToggle: true,
@@ -747,6 +834,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.emailOrPhone,
                                     controller: _forgotIdentifier,
+                                    focusNode: _forgotIdentifierFocus,
                                     icon: Icons.mail_outline,
                                     hint: widget.t.emailOrPhone,
                                     showText: true,
@@ -976,6 +1064,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.password,
                                     controller: _resetPassword,
+                                    focusNode: _resetPasswordFocus,
                                     icon: Icons.lock_outline,
                                     obscure: true,
                                     showToggle: true,
@@ -989,6 +1078,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   _inputField(
                                     label: widget.t.confirmPassword,
                                     controller: _resetConfirmPassword,
+                                    focusNode: _resetConfirmPasswordFocus,
                                     icon: Icons.lock_outline,
                                     obscure: true,
                                     showToggle: true,

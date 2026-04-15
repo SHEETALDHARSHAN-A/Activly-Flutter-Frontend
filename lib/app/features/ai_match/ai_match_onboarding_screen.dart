@@ -18,89 +18,48 @@ const Color _kAiBottomNavBackground = kAiColorBottomNavBackgroundLight;
 const Color _kAiBottomNavBorder = kAiColorBottomNavBorderLight;
 const Color _kAiBottomNavInactive = kAiColorBottomNavInactiveLight;
 
-const Color _kAiDarkPageBackground = Color(0xFF0A0F18);
-const Color _kAiDarkBackdropOrbPrimary = Color(0xFF33245C);
-const Color _kAiDarkBackdropOrbWarm = Color(0xFF264157);
-const Color _kAiDarkCardBackground = Color(0xAA141E30);
-const Color _kAiDarkCardBorder = Color(0x66BFCDEA);
-const Color _kAiDarkMutedText = Color(0xFFAEBBD2);
-const Color _kAiDarkPrimaryText = Color(0xFFF5F8FF);
-const Color _kAiDarkSurfaceContainer = Color(0x66223149);
-const Color _kAiDarkInputBorder = Color(0x66A0B1D1);
-const Color _kAiDarkInputFill = Color(0xAA101A2C);
-const Color _kAiDarkWave = Color(0xFFAA8DFF);
-const Color _kAiDarkProgressInactive = Color(0x55495A79);
-const Color _kAiDarkProgressTrack = Color(0x66495A79);
-const Color _kAiDarkBubbleBorder = Color(0x6693A6C9);
-const Color _kAiDarkBottomNavBackground = Color(0xE6141D2F);
-const Color _kAiDarkBottomNavBorder = Color(0x6652668B);
-const Color _kAiDarkBottomNavInactive = Color(0xFFA1B2D1);
-const Color _kAiGlassLight = Color(0x66FFFFFF);
-const Color _kAiGlassDark = Color(0x55203355);
-const Color _kAiGlassBorderLight = Color(0xA3FFFFFF);
-const Color _kAiGlassBorderDark = Color(0x80D8E1FF);
+const Color _kAiGlassColor = Color(0x66FFFFFF);
+const Color _kAiGlassBorderColor = Color(0xA3FFFFFF);
 
-bool _aiIsDark(BuildContext context) =>
-    Theme.of(context).brightness == Brightness.dark;
+Color _aiPageBackground(BuildContext context) => _kAiPageBackground;
 
-Color _aiPageBackground(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkPageBackground : _kAiPageBackground;
+Color _aiBackdropOrbPrimary(BuildContext context) => _kAiBackdropOrbPrimary;
 
-Color _aiBackdropOrbPrimary(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkBackdropOrbPrimary : _kAiBackdropOrbPrimary;
+Color _aiBackdropOrbWarm(BuildContext context) => _kAiBackdropOrbWarm;
 
-Color _aiBackdropOrbWarm(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkBackdropOrbWarm : _kAiBackdropOrbWarm;
+Color _aiCardBackground(BuildContext context) => _kAiCardBackground;
 
-Color _aiCardBackground(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkCardBackground : _kAiCardBackground;
+Color _aiCardBorder(BuildContext context) => _kAiCardBorder;
 
-Color _aiCardBorder(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkCardBorder : _kAiCardBorder;
+Color _aiMutedText(BuildContext context) => _kAiMutedText;
 
-Color _aiMutedText(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkMutedText : _kAiMutedText;
+Color _aiPrimaryText(BuildContext context) => _kAiPrimaryText;
 
-Color _aiPrimaryText(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkPrimaryText : _kAiPrimaryText;
+Color _aiSurfaceContainer(BuildContext context) => _kAiSurfaceContainer;
 
-Color _aiSurfaceContainer(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkSurfaceContainer : _kAiSurfaceContainer;
+Color _aiInputBorder(BuildContext context) => _kAiInputBorder;
 
-Color _aiInputBorder(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkInputBorder : _kAiInputBorder;
+Color _aiInputFill(BuildContext context) => _kAiInputFill;
 
-Color _aiInputFill(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkInputFill : _kAiInputFill;
+Color _aiWaveColor(BuildContext context) => _kAiWavePurple;
 
-Color _aiWaveColor(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkWave : _kAiWavePurple;
+Color _aiProgressInactive(BuildContext context) => _kAiProgressInactive;
 
-Color _aiProgressInactive(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkProgressInactive : _kAiProgressInactive;
-
-Color _aiProgressTrack(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkProgressTrack : _kAiProgressTrack;
+Color _aiProgressTrack(BuildContext context) => _kAiProgressTrack;
 
 Color _aiProgressActive(BuildContext context) => kColorLoaderHeart;
 
-Color _aiBubbleBorder(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkBubbleBorder : _kAiBubbleBorder;
+Color _aiBubbleBorder(BuildContext context) => _kAiBubbleBorder;
 
-Color _aiBottomNavBackground(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkBottomNavBackground : _kAiBottomNavBackground;
+Color _aiBottomNavBackground(BuildContext context) => _kAiBottomNavBackground;
 
-Color _aiBottomNavBorder(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkBottomNavBorder : _kAiBottomNavBorder;
+Color _aiBottomNavBorder(BuildContext context) => _kAiBottomNavBorder;
 
-Color _aiBottomNavInactive(BuildContext context) =>
-    _aiIsDark(context) ? _kAiDarkBottomNavInactive : _kAiBottomNavInactive;
+Color _aiBottomNavInactive(BuildContext context) => _kAiBottomNavInactive;
 
-Color _aiGlassColor(BuildContext context) =>
-    _aiIsDark(context) ? _kAiGlassDark : _kAiGlassLight;
+Color _aiGlassColor(BuildContext context) => _kAiGlassColor;
 
-Color _aiGlassBorderColor(BuildContext context) =>
-    _aiIsDark(context) ? _kAiGlassBorderDark : _kAiGlassBorderLight;
+Color _aiGlassBorderColor(BuildContext context) => _kAiGlassBorderColor;
 
 class AiMatchOnboardingScreen extends StatefulWidget {
   const AiMatchOnboardingScreen({
@@ -128,7 +87,6 @@ class AiMatchOnboardingScreen extends StatefulWidget {
 }
 
 class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
-  bool _isDarkMode = false;
   bool _chatMode = true;
   int _selectedEnergy = -1;
   bool _isPageReady = false;
@@ -146,9 +104,6 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    _isDarkMode =
-        WidgetsBinding.instance.platformDispatcher.platformBrightness ==
-        Brightness.dark;
 
     _childAgeController.addListener(_onFormChanged);
     _goalsController.addListener(_onFormChanged);
@@ -238,9 +193,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
     final inputBottomOffset = showBottomNav ? 76.0 : 12.0 + bottomInset;
     final waveBottomOffset = showBottomNav ? 76.0 : 0.0;
 
-    final localTheme = Theme.of(
-      context,
-    ).copyWith(brightness: _isDarkMode ? Brightness.dark : Brightness.light);
+    final localTheme = Theme.of(context).copyWith(brightness: Brightness.light);
 
     return Theme(
       data: localTheme,
@@ -340,15 +293,11 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                         skipLabel: widget.t.skipForNow,
                         isArabic: isArabic,
                         language: widget.language,
-                        isDarkMode: _isDarkMode,
                         showBackButton: showBackButton,
                         showSkipButton: showSkipButton,
                         onBack: _handleBack,
                         onSkip: _handleSkip,
                         onToggleLanguage: widget.onToggleLanguage,
-                        onToggleTheme: () {
-                          setState(() => _isDarkMode = !_isDarkMode);
-                        },
                       ),
                     ),
                     Positioned(
@@ -412,9 +361,9 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                                   child: LoadingOverlay(
                                     isVisible: true,
                                     showBrandImage: false,
-                                    backgroundColor: _aiIsDark(themedContext)
-                                        ? kColorBlack.withValues(alpha: 0.24)
-                                        : kColorBlack.withValues(alpha: 0.10),
+                                    backgroundColor: kColorBlack.withValues(
+                                      alpha: 0.10,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -456,7 +405,7 @@ class _AiGlassPanel extends StatelessWidget {
     final rawBackground = backgroundColor ?? _aiGlassColor(context);
     // Backdrop blur on Flutter web can trigger unstable WebGL offscreen surfaces.
     final resolvedBackground = kIsWeb
-        ? rawBackground.withValues(alpha: _aiIsDark(context) ? 0.92 : 0.96)
+        ? rawBackground.withValues(alpha: 0.96)
         : rawBackground;
 
     final panel = Container(
@@ -490,26 +439,22 @@ class _AiTopBar extends StatelessWidget {
     required this.skipLabel,
     required this.isArabic,
     required this.language,
-    required this.isDarkMode,
     required this.showBackButton,
     required this.showSkipButton,
     required this.onBack,
     required this.onSkip,
     required this.onToggleLanguage,
-    required this.onToggleTheme,
   });
 
   final String title;
   final String skipLabel;
   final bool isArabic;
   final AppLanguage language;
-  final bool isDarkMode;
   final bool showBackButton;
   final bool showSkipButton;
   final VoidCallback onBack;
   final VoidCallback onSkip;
   final VoidCallback onToggleLanguage;
-  final VoidCallback onToggleTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -544,11 +489,6 @@ class _AiTopBar extends StatelessWidget {
                 : Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      _AiThemeToggleButton(
-                        isDarkMode: isDarkMode,
-                        onTap: onToggleTheme,
-                      ),
-                      const SizedBox(width: 8),
                       LanguageToggle(
                         language: language,
                         onToggle: onToggleLanguage,
@@ -557,39 +497,6 @@ class _AiTopBar extends StatelessWidget {
                   ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _AiThemeToggleButton extends StatelessWidget {
-  const _AiThemeToggleButton({required this.isDarkMode, required this.onTap});
-
-  final bool isDarkMode;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const CircleBorder(),
-        child: Container(
-          width: 36,
-          height: 36,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: _aiGlassColor(context),
-            shape: BoxShape.circle,
-            border: Border.all(color: _aiGlassBorderColor(context)),
-          ),
-          child: Icon(
-            isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
-            size: 18,
-            color: _aiPrimaryText(context),
-          ),
-        ),
       ),
     );
   }

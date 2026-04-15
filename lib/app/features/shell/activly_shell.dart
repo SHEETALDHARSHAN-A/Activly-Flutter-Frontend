@@ -233,6 +233,21 @@ class _ActivlyShellState extends State<ActivlyShell> {
     final useSplitLayout = screenWidth >= _splitLayoutBreakpoint;
 
     Widget pageContent() {
+      if (_activePage == AppPage.main) {
+        return MainScreen(
+          language: _language,
+          t: _t,
+          onToggleLanguage: _toggleLanguage,
+          onSeeAllFeatured: () => setState(() => _activePage = AppPage.featuredAll),
+        );
+      }
+
+      if (_activePage == AppPage.featuredAll) {
+        return FeaturedAllScreen(
+          onBack: () => setState(() => _activePage = AppPage.main),
+        );
+      }
+
       if (_activePage == AppPage.landing) {
         return LandingScreen(
           language: _language,
@@ -244,7 +259,11 @@ class _ActivlyShellState extends State<ActivlyShell> {
           onSelectVideo: _setCurrentVideo,
           onContinueEmail: _goToLoginPage,
           onContinuePhone: _goToLoginPage,
-          onSkipForNow: () => unawaited(_goToAiMatchPage()),
+          onSkipForNow: () async {
+            if (mounted) {
+              setState(() => _activePage = AppPage.main);
+            }
+          },
         );
       }
 

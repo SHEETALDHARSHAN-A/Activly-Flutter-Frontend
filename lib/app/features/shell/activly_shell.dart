@@ -11,11 +11,9 @@ class ActivlyShell extends StatefulWidget {
 
 class _ActivlyShellState extends State<ActivlyShell> {
   static const double _splitLayoutBreakpoint = 1100;
-  static const Duration _loaderDisplayDuration = Duration(milliseconds: 2800);
 
   AppLanguage _language = AppLanguage.en;
   final bool _isLoaded = true;
-  bool _isLoaderMinimumElapsed = false;
   int _currentVideoIndex = 0;
   AppPage _activePage = AppPage.landing;
 
@@ -24,7 +22,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
       List<VideoPlayerController?>.filled(kVideoAssets.length, null);
 
   Timer? _carouselTimer;
-  Timer? _loaderTimer;
 
   TranslationCopy get _t => kTranslations[_language]!;
 
@@ -37,10 +34,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
   }
 
   bool get _showLoader {
-    if (!_isLoaderMinimumElapsed) {
-      return true;
-    }
-
     if (_activePage != AppPage.landing || !widget.enableVideos) {
       return false;
     }
@@ -56,13 +49,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
   void initState() {
     super.initState();
 
-    _loaderTimer = Timer(_loaderDisplayDuration, () {
-      if (!mounted) {
-        return;
-      }
-      setState(() => _isLoaderMinimumElapsed = true);
-    });
-
     if (widget.enableVideos) {
       _startCarouselTimer();
       unawaited(_initializeVideos());
@@ -72,7 +58,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
   @override
   void dispose() {
     _carouselTimer?.cancel();
-    _loaderTimer?.cancel();
     for (final controller in _videoControllers) {
       controller?.dispose();
     }
@@ -213,13 +198,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
     setState(() => _activePage = AppPage.aiMatch);
   }
 
-  Future<void> _goToLandingPage() async {
-    if (!mounted) {
-      return;
-    }
-    setState(() => _activePage = AppPage.landing);
-  }
-
   Future<void> _goToLoginPage() async {
     if (!mounted) {
       return;
@@ -253,7 +231,8 @@ class _ActivlyShellState extends State<ActivlyShell> {
           language: _language,
           t: _t,
           onToggleLanguage: _toggleLanguage,
-          onSkip: () => unawaited(_goToLandingPage()),
+          isInAppMode: true,
+          showBottomNavInAppMode: true,
         );
       }
 
@@ -347,9 +326,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
                   ],
                 ),
               ),
-            Positioned.fill(
-              child: LoadingOverlay(isVisible: _showLoader),
-            ),
+            Positioned.fill(child: LoadingOverlay(isVisible: _showLoader)),
           ],
         ),
       ),
@@ -386,4 +363,3 @@ class _ShellVideoBackground extends StatelessWidget {
     );
   }
 }
-

@@ -1,9 +1,16 @@
 part of 'package:activly/activly_app.dart';
 
 class LoadingOverlay extends StatefulWidget {
-  const LoadingOverlay({super.key, required this.isVisible});
+  const LoadingOverlay({
+    super.key,
+    required this.isVisible,
+    this.backgroundColor = kColorBlack,
+    this.showBrandImage = true,
+  });
 
   final bool isVisible;
+  final Color backgroundColor;
+  final bool showBrandImage;
 
   @override
   State<LoadingOverlay> createState() => _LoadingOverlayState();
@@ -53,40 +60,43 @@ class _LoadingOverlayState extends State<LoadingOverlay>
         opacity: widget.isVisible ? 1 : 0,
         duration: const Duration(milliseconds: 360),
         child: ColoredBox(
-          color: kColorBlack,
+          color: widget.backgroundColor,
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Image.asset(
-                  _brandImageAsset,
-                  width: 300,
-                  fit: BoxFit.contain,
-                  frameBuilder: (
-                    BuildContext context,
-                    Widget child,
-                    int? frame,
-                    bool wasSynchronouslyLoaded,
-                  ) {
-                    if (wasSynchronouslyLoaded || frame != null) {
-                      _markBrandImageLoaded();
-                    }
-                    return child;
-                  },
-                  errorBuilder: (
-                    BuildContext context,
-                    Object error,
-                    StackTrace? stackTrace,
-                  ) {
-                    // Do not block the loader forever if the image fails.
-                    _markBrandImageLoaded();
-                    return const SizedBox(width: 300, height: 44);
-                  },
-                ),
-                const SizedBox(height: 18),
+                if (widget.showBrandImage)
+                  Image.asset(
+                    _brandImageAsset,
+                    width: 300,
+                    fit: BoxFit.contain,
+                    frameBuilder:
+                        (
+                          BuildContext context,
+                          Widget child,
+                          int? frame,
+                          bool wasSynchronouslyLoaded,
+                        ) {
+                          if (wasSynchronouslyLoaded || frame != null) {
+                            _markBrandImageLoaded();
+                          }
+                          return child;
+                        },
+                    errorBuilder:
+                        (
+                          BuildContext context,
+                          Object error,
+                          StackTrace? stackTrace,
+                        ) {
+                          // Do not block the loader forever if the image fails.
+                          _markBrandImageLoaded();
+                          return const SizedBox(width: 300, height: 44);
+                        },
+                  ),
+                if (widget.showBrandImage) const SizedBox(height: 18),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 220),
-                  child: _isBrandImageLoaded
+                  child: (!widget.showBrandImage || _isBrandImageLoaded)
                       ? KeyedSubtree(
                           key: const ValueKey<String>('heart-loader'),
                           child: _UiverseHeartLoader(controller: _controller),
@@ -113,7 +123,15 @@ class _UiverseHeartLoader extends StatelessWidget {
   static const Cubic _motionCurve = Cubic(0.75, 0, 0.5, 1);
   static const double _unit = 56;
 
-  final Animation<double> controller;
+  final AnimationController controller;
+
+  static const List<Color> _heartPalette = <Color>[
+    kColorPrimary,
+    kColorPrimaryAccent,
+    kColorGoogleBlue,
+    kColorGoogleGreen,
+    kColorGoogleRed,
+  ];
 
   double _lerp(double start, double end, double t) {
     return start + ((end - start) * t);
@@ -136,14 +154,11 @@ class _UiverseHeartLoader extends StatelessWidget {
     return _lerp(mid, end, _motionCurve.transform(local));
   }
 
-  Widget _circle(double unit) {
+  Widget _circle(double unit, Color color) {
     return Container(
       width: unit,
       height: unit,
-      decoration: const BoxDecoration(
-        color: kColorPrimary,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
 
@@ -159,8 +174,24 @@ class _UiverseHeartLoader extends StatelessWidget {
         animation: controller,
         builder: (BuildContext context, Widget? child) {
           final progress = controller.value;
+          final durationMs = controller.duration?.inMilliseconds ?? 1;
+          final elapsedMs = controller.lastElapsedDuration?.inMilliseconds ?? 0;
+          final cycleIndex = durationMs > 0 ? elapsedMs ~/ durationMs : 0;
+          final colorA = _heartPalette[cycleIndex % _heartPalette.length];
+          final colorB = _heartPalette[(cycleIndex + 1) % _heartPalette.length];
+          final heartColor = Color.lerp(
+            colorA,
+            colorB,
+            Curves.easeInOut.transform(progress),
+          )!;
 
-          final heartRotation = _keyframeValue(0, 2 * math.pi, 4 * math.pi, 50, progress);
+          final heartRotation = _keyframeValue(
+            0,
+            2 * math.pi,
+            4 * math.pi,
+            50,
+            progress,
+          );
 
           final leftTx = _keyframeValue(-28, 0, -28, 60, progress);
           final leftTy = _keyframeValue(-27, 0, -27, 60, progress);
@@ -200,7 +231,7 @@ class _UiverseHeartLoader extends StatelessWidget {
                             width: unit,
                             height: unit,
                             decoration: BoxDecoration(
-                              color: kColorPrimary,
+                              color: heartColor,
                               borderRadius: BorderRadius.circular(
                                 (squareRadiusFactor * unit / 2).clamp(
                                   0.0,
@@ -215,14 +246,14 @@ class _UiverseHeartLoader extends StatelessWidget {
                         offset: Offset(leftTx, leftTy),
                         child: Transform.scale(
                           scale: leftScale,
-                          child: _circle(unit),
+                          child: _circle(unit, heartColor),
                         ),
                       ),
                       Transform.translate(
                         offset: Offset(rightTx, rightTy),
                         child: Transform.scale(
                           scale: rightScale,
-                          child: _circle(unit),
+                          child: _circle(unit, heartColor),
                         ),
                       ),
                     ],

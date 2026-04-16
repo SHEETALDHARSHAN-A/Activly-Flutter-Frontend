@@ -58,6 +58,8 @@ class AiMatchOnboardingScreen extends StatefulWidget {
     this.onBack,
     this.isInAppMode = false,
     this.showBottomNavInAppMode = true,
+    this.showInAppBackButton = false,
+    this.useMinimalBackArrow = false,
   });
 
   final AppLanguage language;
@@ -67,6 +69,8 @@ class AiMatchOnboardingScreen extends StatefulWidget {
   final VoidCallback? onBack;
   final bool isInAppMode;
   final bool showBottomNavInAppMode;
+  final bool showInAppBackButton;
+  final bool useMinimalBackArrow;
 
   @override
   State<AiMatchOnboardingScreen> createState() =>
@@ -327,7 +331,9 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
     final isArabic = widget.language == AppLanguage.ar;
     final title = isArabic ? 'مطابقة ذكية' : 'AI Match';
 
-    final showBackButton = !widget.isInAppMode && widget.onBack != null;
+    final showBackButton =
+        widget.onBack != null &&
+        (!widget.isInAppMode || widget.showInAppBackButton);
     final showSkipButton = !widget.isInAppMode && widget.onSkip != null;
 
     final bottomInset = MediaQuery.viewPaddingOf(context).bottom;
@@ -565,6 +571,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                         language: widget.language,
                         showBackButton: showBackButton,
                         showSkipButton: showSkipButton,
+                        useMinimalBackArrow: widget.useMinimalBackArrow,
                         onBack: _handleBack,
                         onSkip: _handleSkip,
                         onToggleLanguage: widget.onToggleLanguage,
@@ -698,6 +705,7 @@ class _AiTopBar extends StatelessWidget {
     required this.language,
     required this.showBackButton,
     required this.showSkipButton,
+    required this.useMinimalBackArrow,
     required this.showTitle,
     required this.onBack,
     required this.onSkip,
@@ -710,6 +718,7 @@ class _AiTopBar extends StatelessWidget {
   final AppLanguage language;
   final bool showBackButton;
   final bool showSkipButton;
+  final bool useMinimalBackArrow;
   final bool showTitle;
   final VoidCallback onBack;
   final VoidCallback onSkip;
@@ -737,9 +746,15 @@ class _AiTopBar extends StatelessWidget {
               ),
             ),
           Align(
-            alignment: AlignmentDirectional.centerStart,
+            alignment: useMinimalBackArrow
+                ? Alignment.centerLeft
+                : AlignmentDirectional.centerStart,
             child: showBackButton
-                ? _AiTopIconButton(isArabic: isArabic, onTap: onBack)
+                ? _AiTopIconButton(
+                    isArabic: isArabic,
+                    onTap: onBack,
+                    minimalStyle: useMinimalBackArrow,
+                  )
                 : const SizedBox(width: 40, height: 40),
           ),
           Align(
@@ -817,13 +832,40 @@ class _AiBottomShadowOverlay extends StatelessWidget {
 }
 
 class _AiTopIconButton extends StatelessWidget {
-  const _AiTopIconButton({required this.isArabic, required this.onTap});
+  const _AiTopIconButton({
+    required this.isArabic,
+    required this.onTap,
+    this.minimalStyle = false,
+  });
 
   final bool isArabic;
   final VoidCallback onTap;
+  final bool minimalStyle;
 
   @override
   Widget build(BuildContext context) {
+    if (minimalStyle) {
+      return Material(
+        color: Colors.transparent,
+        shape: const CircleBorder(),
+        child: InkWell(
+          onTap: onTap,
+          customBorder: const CircleBorder(),
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: Center(
+              child: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 24,
+                color: _aiPrimaryText(context),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -1742,80 +1784,12 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
           savedAt: kidDetailsSavedAt,
         ),
         const SizedBox(height: 12),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: SizedBox(
-                height: 50,
-                child: OutlinedButton.icon(
-                  onPressed: onSaveKidDetails,
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: _aiPrimaryText(context),
-                    side: BorderSide(color: _aiCardBorder(context)),
-                    backgroundColor: _aiCardBackground(context),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                  icon: Icon(
-                    kidDetailsSaved
-                        ? Icons.check_circle_rounded
-                        : Icons.save_outlined,
-                    size: 18,
-                  ),
-                  label: Text(
-                    saveCta,
-                    style: GoogleFonts.plusJakartaSans(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: SizedBox(
-                height: 50,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(999),
-                    gradient: const LinearGradient(
-                      colors: <Color>[kAiColorPrimaryAccent, kAiColorPrimary],
-                    ),
-                    boxShadow: const <BoxShadow>[
-                      BoxShadow(
-                        blurRadius: 24,
-                        spreadRadius: -18,
-                        offset: Offset(0, 12),
-                        color: kAiShadowPurple,
-                      ),
-                    ],
-                  ),
-                  child: ElevatedButton.icon(
-                    onPressed: onNext,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: kColorWhite,
-                      backgroundColor: Colors.transparent,
-                      shadowColor: Colors.transparent,
-                      surfaceTintColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                    ),
-                    icon: const Icon(Icons.arrow_forward_rounded, size: 18),
-                    label: Text(
-                      cta,
-                      style: GoogleFonts.plusJakartaSans(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        _AiStepActionButtons(
+          previousLabel: saveCta,
+          nextLabel: cta,
+          stepLabel: '1/3',
+          onPrevious: onSaveKidDetails,
+          onNext: onNext,
         ),
       ],
     );
@@ -1857,8 +1831,8 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
     final interestHint = isArabic
         ? 'مثال: تعلم تركيب أجهزة الكمبيوتر...'
         : 'e.g. Learning to build custom PC builds...';
+    final previousLabel = isArabic ? 'السابق' : 'Previous';
     final cta = isArabic ? 'التالي' : 'Next';
-    final backToStepOne = isArabic ? 'العودة للخطوة 1' : 'Back to Step 1';
 
     final skillOptions = isArabic
         ? const <_AiSelectableLabel>[
@@ -2022,70 +1996,12 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
           }).toList(),
         ),
         const SizedBox(height: 24),
-        SizedBox(
-          height: 46,
-          child: OutlinedButton.icon(
-            onPressed: onBackToStepOne,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: _aiPrimaryText(context),
-              side: BorderSide(color: _aiCardBorder(context)),
-              backgroundColor: _aiCardBackground(context),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(999),
-              ),
-            ),
-            icon: Icon(
-              isArabic ? Icons.arrow_forward_rounded : Icons.arrow_back_rounded,
-              size: 18,
-            ),
-            label: Text(
-              backToStepOne,
-              style: GoogleFonts.plusJakartaSans(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: 54,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(999),
-              gradient: const LinearGradient(
-                colors: <Color>[kAiColorPrimaryAccent, kAiColorPrimary],
-              ),
-              boxShadow: const <BoxShadow>[
-                BoxShadow(
-                  blurRadius: 24,
-                  spreadRadius: -18,
-                  offset: Offset(0, 12),
-                  color: kAiShadowPurple,
-                ),
-              ],
-            ),
-            child: ElevatedButton.icon(
-              onPressed: onNext,
-              style: ElevatedButton.styleFrom(
-                foregroundColor: kColorWhite,
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                surfaceTintColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(999),
-                ),
-              ),
-              icon: const Icon(Icons.arrow_forward_rounded, size: 18),
-              label: Text(
-                cta,
-                style: GoogleFonts.plusJakartaSans(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
+        _AiStepActionButtons(
+          previousLabel: previousLabel,
+          nextLabel: cta,
+          stepLabel: '2/3',
+          onPrevious: onBackToStepOne,
+          onNext: onNext,
         ),
       ],
     );
@@ -2144,11 +2060,17 @@ class _AiDetailsStepThreePanel extends StatelessWidget {
     final locationHint = isArabic
         ? 'أدخل الرمز البريدي أو الحي'
         : 'Enter zip code or neighborhood';
-    final backLabel = isArabic ? 'العودة للخطوة 2' : 'Back to Step 2';
+    final previousLabel = isArabic ? 'السابق' : 'Previous';
     final cta = isArabic ? 'ابحث عن التطابقات' : 'Find Matches';
     final engineCaption = isArabic
         ? 'مدعوم بمحرك المطابقة الذكي'
         : 'Powered by AI Matchmaking Engine v4.2';
+    final socialProofTitle = isArabic
+        ? 'عائلات في منطقتك تبحث الآن'
+        : 'Families nearby are matching now';
+    final socialProofSubtitle = isArabic
+        ? 'تابع لعرض أفضل الخيارات المقترحة لطفلك.'
+        : 'Continue to unlock your best personalized matches.';
 
     final dayLabels = isArabic
         ? const <String>['ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح']
@@ -2409,70 +2331,19 @@ class _AiDetailsStepThreePanel extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 18),
-        SizedBox(
-          height: 46,
-          child: OutlinedButton.icon(
-            onPressed: onBackToStepTwo,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: _aiPrimaryText(context),
-              side: BorderSide(color: _aiCardBorder(context)),
-              backgroundColor: _aiCardBackground(context),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(999),
-              ),
-            ),
-            icon: Icon(
-              isArabic ? Icons.arrow_forward_rounded : Icons.arrow_back_rounded,
-              size: 18,
-            ),
-            label: Text(
-              backLabel,
-              style: GoogleFonts.plusJakartaSans(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
+        _AiFindMatchesSocialProof(
+          title: socialProofTitle,
+          subtitle: socialProofSubtitle,
+          isArabic: isArabic,
         ),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: 54,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(999),
-              gradient: const LinearGradient(
-                colors: <Color>[kAiColorPrimaryAccent, kAiColorPrimary],
-              ),
-              boxShadow: const <BoxShadow>[
-                BoxShadow(
-                  blurRadius: 24,
-                  spreadRadius: -18,
-                  offset: Offset(0, 12),
-                  color: kAiShadowPurple,
-                ),
-              ],
-            ),
-            child: ElevatedButton.icon(
-              onPressed: onFindMatches,
-              style: ElevatedButton.styleFrom(
-                foregroundColor: kColorWhite,
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                surfaceTintColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(999),
-                ),
-              ),
-              icon: const Icon(Icons.auto_awesome_rounded, size: 18),
-              label: Text(
-                cta,
-                style: GoogleFonts.plusJakartaSans(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ),
+        const SizedBox(height: 14),
+        _AiStepActionButtons(
+          previousLabel: previousLabel,
+          nextLabel: cta,
+          stepLabel: '3/3',
+          useAvatarBadge: true,
+          onPrevious: onBackToStepTwo,
+          onNext: onFindMatches,
         ),
         const SizedBox(height: 12),
         Text(
@@ -2486,6 +2357,310 @@ class _AiDetailsStepThreePanel extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _AiStepActionButtons extends StatelessWidget {
+  const _AiStepActionButtons({
+    required this.previousLabel,
+    required this.nextLabel,
+    required this.stepLabel,
+    required this.onPrevious,
+    required this.onNext,
+    this.useAvatarBadge = false,
+  });
+
+  final String previousLabel;
+  final String nextLabel;
+  final String stepLabel;
+  final VoidCallback onPrevious;
+  final VoidCallback onNext;
+  final bool useAvatarBadge;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: SizedBox(
+            height: 56,
+            child: TextButton(
+              onPressed: onPrevious,
+              style: TextButton.styleFrom(
+                foregroundColor: _aiPrimaryText(context),
+                backgroundColor: _aiSurfaceContainer(
+                  context,
+                ).withValues(alpha: 0.74),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: Text(
+                previousLabel,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: SizedBox(
+            height: 56,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: <Color>[kAiColorPrimaryAccent, kAiColorPrimary],
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: const <BoxShadow>[
+                  BoxShadow(
+                    blurRadius: 20,
+                    spreadRadius: -16,
+                    offset: Offset(0, 10),
+                    color: kAiShadowPurple,
+                  ),
+                ],
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: onNext,
+                  borderRadius: BorderRadius.circular(16),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 6, 6, 6),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                nextLabel,
+                                style: GoogleFonts.plusJakartaSans(
+                                  color: kColorWhite,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: useAvatarBadge ? 64 : 54,
+                          height: 44,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: useAvatarBadge
+                                ? Colors.transparent
+                                : kColorWhite.withValues(alpha: 0.94),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: useAvatarBadge
+                              ? const _AiAvatarBadgeCircles()
+                              : Text(
+                                  stepLabel,
+                                  style: GoogleFonts.plusJakartaSans(
+                                    color: _aiPrimaryText(context),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AiAvatarBadgeCircles extends StatelessWidget {
+  const _AiAvatarBadgeCircles();
+
+  @override
+  Widget build(BuildContext context) {
+    const avatarSize = 24.0;
+    const overlap = 16.0;
+
+    final avatarColors = <Color>[
+      const Color(0xFFE9D7FF),
+      const Color(0xFFFFD8E8),
+      const Color(0xFFDDF0FF),
+    ];
+    final icons = <IconData>[
+      Icons.person_rounded,
+      Icons.face_rounded,
+      Icons.child_care_rounded,
+    ];
+
+    return SizedBox(
+      width: 58,
+      height: avatarSize,
+      child: Stack(
+        children: <Widget>[
+          for (int i = 0; i < icons.length; i++)
+            Positioned(
+              left: i * overlap,
+              child: Container(
+                width: avatarSize,
+                height: avatarSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: avatarColors[i],
+                  border: Border.all(
+                    color: kAiColorPrimary.withValues(alpha: 0.40),
+                    width: 1.2,
+                  ),
+                ),
+                child: Icon(icons[i], size: 13, color: _aiPrimaryText(context)),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AiFindMatchesSocialProof extends StatelessWidget {
+  const _AiFindMatchesSocialProof({
+    required this.title,
+    required this.subtitle,
+    required this.isArabic,
+  });
+
+  final String title;
+  final String subtitle;
+  final bool isArabic;
+
+  @override
+  Widget build(BuildContext context) {
+    return _AiGlassPanel(
+      radius: 16,
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      backgroundColor: _aiCardBackground(context),
+      borderColor: _aiCardBorder(context),
+      child: Row(
+        children: <Widget>[
+          _AiAvatarCirclesStrip(isArabic: isArabic),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.plusJakartaSans(
+                    color: _aiPrimaryText(context),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.plusJakartaSans(
+                    color: _aiMutedText(context),
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    height: 1.25,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AiAvatarCirclesStrip extends StatelessWidget {
+  const _AiAvatarCirclesStrip({required this.isArabic});
+
+  final bool isArabic;
+
+  @override
+  Widget build(BuildContext context) {
+    const avatarSize = 30.0;
+    const avatarOverlap = 20.0;
+    const extraCount = 58;
+
+    final iconSet = <IconData>[
+      Icons.person_rounded,
+      Icons.sports_soccer_rounded,
+      Icons.palette_rounded,
+      Icons.music_note_rounded,
+    ];
+    final avatarColors = <Color>[
+      const Color(0xFFF7D5FF),
+      const Color(0xFFFFE6AF),
+      const Color(0xFFD7F3FF),
+      const Color(0xFFE2F6D8),
+    ];
+    final stackWidth = (iconSet.length - 1) * avatarOverlap + avatarSize + 40;
+
+    return SizedBox(
+      width: stackWidth,
+      height: avatarSize,
+      child: Stack(
+        children: <Widget>[
+          for (int i = 0; i < iconSet.length; i++)
+            Positioned(
+              left: i * avatarOverlap,
+              child: Container(
+                width: avatarSize,
+                height: avatarSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: avatarColors[i],
+                  border: Border.all(
+                    color: _aiCardBackground(context),
+                    width: 2,
+                  ),
+                ),
+                child: Icon(
+                  iconSet[i],
+                  size: 15,
+                  color: _aiPrimaryText(context),
+                ),
+              ),
+            ),
+          Positioned(
+            left: iconSet.length * avatarOverlap + 2,
+            child: Container(
+              width: 38,
+              height: avatarSize,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kAiColorPrimary,
+                border: Border.all(color: _aiCardBackground(context), width: 2),
+              ),
+              child: Text(
+                '+$extraCount',
+                style: GoogleFonts.plusJakartaSans(
+                  color: kColorWhite,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

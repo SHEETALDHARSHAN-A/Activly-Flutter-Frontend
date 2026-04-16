@@ -17,6 +17,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
   int _currentVideoIndex = 0;
   AppPage _activePage = AppPage.entry;
   AppPage _loginBackTarget = AppPage.entry;
+  bool _aiMatchOpenedFromSkip = false;
 
   final List<bool> _videoError = List<bool>.filled(kVideoAssets.length, false);
   final List<VideoPlayerController?> _videoControllers =
@@ -193,18 +194,24 @@ class _ActivlyShellState extends State<ActivlyShell> {
     });
   }
 
-  Future<void> _goToAiMatchPage() async {
+  Future<void> _goToAiMatchPage({bool fromSkipForNow = false}) async {
     if (!mounted) {
       return;
     }
-    setState(() => _activePage = AppPage.aiMatch);
+    setState(() {
+      _aiMatchOpenedFromSkip = fromSkipForNow;
+      _activePage = AppPage.aiMatch;
+    });
   }
 
   Future<void> _goToLandingPage() async {
     if (!mounted) {
       return;
     }
-    setState(() => _activePage = AppPage.landing);
+    setState(() {
+      _aiMatchOpenedFromSkip = false;
+      _activePage = AppPage.landing;
+    });
   }
 
   Future<void> _goToLoginPage({required AppPage backTarget}) async {
@@ -212,6 +219,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
       return;
     }
     setState(() {
+      _aiMatchOpenedFromSkip = false;
       _loginBackTarget = backTarget;
       _activePage = AppPage.login;
     });
@@ -229,7 +237,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
           isLoaded: _isLoaded,
           onToggleLanguage: _toggleLanguage,
           onGetStarted: () => unawaited(_goToLandingPage()),
-          onLogin: () => unawaited(_goToLoginPage(backTarget: AppPage.entry)),
         );
       }
 
@@ -260,7 +267,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
           onSelectVideo: _setCurrentVideo,
           onContinueEmail: () => _goToLoginPage(backTarget: AppPage.landing),
           onContinuePhone: () => _goToLoginPage(backTarget: AppPage.landing),
-          onSkipForNow: () => unawaited(_goToAiMatchPage()),
+          onSkipForNow: () => unawaited(_goToAiMatchPage(fromSkipForNow: true)),
         );
       }
 
@@ -269,8 +276,16 @@ class _ActivlyShellState extends State<ActivlyShell> {
           language: _language,
           t: _t,
           onToggleLanguage: _toggleLanguage,
+          onBack: _aiMatchOpenedFromSkip
+              ? () => setState(() {
+                  _aiMatchOpenedFromSkip = false;
+                  _activePage = AppPage.landing;
+                })
+              : null,
           isInAppMode: true,
           showBottomNavInAppMode: false,
+          showInAppBackButton: _aiMatchOpenedFromSkip,
+          useMinimalBackArrow: _aiMatchOpenedFromSkip,
         );
       }
 
@@ -279,7 +294,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
         t: _t,
         onToggleLanguage: _toggleLanguage,
         onBackToLanding: () => setState(() => _activePage = _loginBackTarget),
-        onAuthSuccess: () => unawaited(_goToAiMatchPage()),
+        onAuthSuccess: () => unawaited(_goToAiMatchPage(fromSkipForNow: false)),
       );
     }
 
@@ -378,14 +393,12 @@ class _LandingEntryGateScreen extends StatelessWidget {
     required this.isLoaded,
     required this.onToggleLanguage,
     required this.onGetStarted,
-    required this.onLogin,
   });
 
   final AppLanguage language;
   final bool isLoaded;
   final VoidCallback onToggleLanguage;
   final VoidCallback onGetStarted;
-  final VoidCallback onLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -394,10 +407,9 @@ class _LandingEntryGateScreen extends StatelessWidget {
         ? 'ابدأ رحلة نشاط طفلك.'
         : 'Start your child activity journey.';
     final subtitle = isArabic
-        ? 'اضغط ابدأ الآن أو سجّل الدخول للمتابعة.'
-        : 'Tap Get Started or Login to continue.';
+        ? 'اضغط ابدأ الآن للمتابعة.'
+        : 'Tap Get Started to continue.';
     final getStartedLabel = isArabic ? 'ابدأ الآن' : 'Get Started';
-    final loginLabel = isArabic ? 'تسجيل الدخول' : 'Login';
 
     return Directionality(
       textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
@@ -532,40 +544,6 @@ class _LandingEntryGateScreen extends StatelessWidget {
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w700,
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 12 * compactScale),
-                                    AnimatedOpacity(
-                                      opacity: isLoaded ? 1 : 0,
-                                      duration: const Duration(
-                                        milliseconds: 860,
-                                      ),
-                                      child: SizedBox(
-                                        height: 50,
-                                        child: OutlinedButton(
-                                          onPressed: onLogin,
-                                          style: OutlinedButton.styleFrom(
-                                            foregroundColor: kColorWhite,
-                                            side: BorderSide(
-                                              color: kColorWhite.withValues(
-                                                alpha: 0.38,
-                                              ),
-                                            ),
-                                            backgroundColor: kColorBlack
-                                                .withValues(alpha: 0.28),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(999),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            loginLabel,
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700,
                                             ),
                                           ),
                                         ),

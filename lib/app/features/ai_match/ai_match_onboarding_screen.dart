@@ -8,15 +8,10 @@ const Color _kAiCardBorder = kAiColorSurfaceBorder;
 const Color _kAiMutedText = kAiColorTextMutedDark;
 const Color _kAiPrimaryText = kAiColorTextDark;
 const Color _kAiSurfaceContainer = kAiColorSurfaceContainerLight;
-const Color _kAiInputBorder = kAiColorInputBorderLight;
-const Color _kAiInputFill = kAiColorInputFillLight;
-const Color _kAiWavePurple = kAiColorPrimaryAccent;
-const Color _kAiProgressInactive = kAiColorProgressInactive;
 const Color _kAiProgressTrack = kAiColorProgressTrack;
 const Color _kAiBubbleBorder = kAiColorBubbleBorder;
 const Color _kAiBottomNavBackground = kAiColorBottomNavBackgroundLight;
 const Color _kAiBottomNavBorder = kAiColorBottomNavBorderLight;
-const Color _kAiBottomNavInactive = kAiColorBottomNavInactiveLight;
 
 const Color _kAiGlassColor = Color(0x66FFFFFF);
 const Color _kAiGlassBorderColor = Color(0xA3FFFFFF);
@@ -37,17 +32,9 @@ Color _aiPrimaryText(BuildContext context) => _kAiPrimaryText;
 
 Color _aiSurfaceContainer(BuildContext context) => _kAiSurfaceContainer;
 
-Color _aiInputBorder(BuildContext context) => _kAiInputBorder;
-
-Color _aiInputFill(BuildContext context) => _kAiInputFill;
-
-Color _aiWaveColor(BuildContext context) => _kAiWavePurple;
-
-Color _aiProgressInactive(BuildContext context) => _kAiProgressInactive;
-
 Color _aiProgressTrack(BuildContext context) => _kAiProgressTrack;
 
-Color _aiProgressActive(BuildContext context) => kColorLoaderHeart;
+Color _aiProgressActive(BuildContext context) => kAiColorPrimary;
 
 Color _aiBubbleBorder(BuildContext context) => _kAiBubbleBorder;
 
@@ -55,11 +42,11 @@ Color _aiBottomNavBackground(BuildContext context) => _kAiBottomNavBackground;
 
 Color _aiBottomNavBorder(BuildContext context) => _kAiBottomNavBorder;
 
-Color _aiBottomNavInactive(BuildContext context) => _kAiBottomNavInactive;
-
 Color _aiGlassColor(BuildContext context) => _kAiGlassColor;
 
 Color _aiGlassBorderColor(BuildContext context) => _kAiGlassBorderColor;
+
+double _milesToMeters(double miles) => miles * 1609.344;
 
 class AiMatchOnboardingScreen extends StatefulWidget {
   const AiMatchOnboardingScreen({
@@ -87,17 +74,43 @@ class AiMatchOnboardingScreen extends StatefulWidget {
 }
 
 class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
-  bool _chatMode = true;
+  static const String _kPrefsKidName = 'ai_match.kid_name';
+  static const String _kPrefsKidAge = 'ai_match.kid_age';
+  static const String _kPrefsKidGender = 'ai_match.kid_gender';
+  static const String _kPrefsKidInterest = 'ai_match.kid_interest';
+
+  bool _chatMode = false;
+  int _detailsStep = 1;
   int _selectedEnergy = -1;
   bool _isPageReady = false;
   bool _showInitialOverlay = false;
   bool _initialOverlayVisible = false;
+  bool _kidDetailsSaved = false;
+  String _selectedSkillLevel = 'Intermediate';
+  String _selectedGender = 'Girl';
+  String _selectedTimePreference = 'Morning';
+  DateTime? _kidDetailsSavedAt;
+  RangeValues _budgetRange = const RangeValues(45, 120);
+  double _radiusMiles = 5;
+  LatLng _mapCenter = const LatLng(25.2048, 55.2708);
+  final Set<String> _selectedFocusAreas = <String>{
+    'Confidence Building',
+    'Competitive Prep',
+  };
+  final Set<int> _selectedPreferredDays = <int>{0, 2, 4};
 
+  final ScrollController _contentScrollController = ScrollController();
   final TextEditingController _messageController = TextEditingController();
+  final TextEditingController _kidNameController = TextEditingController();
   final TextEditingController _childAgeController = TextEditingController(
     text: '6',
   );
   final TextEditingController _goalsController = TextEditingController();
+  final TextEditingController _specificInterestController =
+      TextEditingController();
+  final TextEditingController _locationController = TextEditingController(
+    text: 'Downtown, Dubai',
+  );
 
   Timer? _initialOverlayDelayTimer;
 
@@ -105,8 +118,12 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   void initState() {
     super.initState();
 
+    _kidNameController.addListener(_onFormChanged);
     _childAgeController.addListener(_onFormChanged);
     _goalsController.addListener(_onFormChanged);
+    _specificInterestController.addListener(_onFormChanged);
+    _locationController.addListener(_onFormChanged);
+    unawaited(_restoreSavedKidDetails());
 
     _initialOverlayDelayTimer = Timer(const Duration(milliseconds: 120), () {
       if (!mounted || _isPageReady) {
@@ -132,24 +149,146 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
 
   void _onFormChanged() {
     if (mounted) {
-      setState(() {});
+      setState(() => _kidDetailsSaved = false);
     }
+  }
+
+  Future<void> _restoreSavedKidDetails() async {
+    final prefs = await SharedPreferences.getInstance();
+    final name = prefs.getString(_kPrefsKidName);
+    final age = prefs.getString(_kPrefsKidAge);
+    final gender = prefs.getString(_kPrefsKidGender);
+    final interest = prefs.getString(_kPrefsKidInterest);
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      if (name != null && name.isNotEmpty) {
+        _kidNameController.text = name;
+      }
+      if (age != null && age.isNotEmpty) {
+        _childAgeController.text = age;
+      }
+      if (gender != null && gender.isNotEmpty) {
+        _selectedGender = gender;
+      }
+      if (interest != null && interest.isNotEmpty) {
+        _goalsController.text = interest;
+      }
+
+      final hasSavedData =
+          (name != null && name.isNotEmpty) ||
+          (age != null && age.isNotEmpty) ||
+          (gender != null && gender.isNotEmpty) ||
+          (interest != null && interest.isNotEmpty);
+      _kidDetailsSaved = hasSavedData;
+      _kidDetailsSavedAt = hasSavedData ? DateTime.now() : null;
+    });
+  }
+
+  Future<void> _saveKidDetails({required bool isArabic}) async {
+    final name = _kidNameController.text.trim();
+    final age = _childAgeController.text.trim();
+    final interest = _goalsController.text.trim();
+
+    if (name.isEmpty || age.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            isArabic
+                ? 'يرجى إدخال اسم الطفل والعمر قبل الحفظ.'
+                : 'Please enter kid name and age before saving.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kPrefsKidName, name);
+    await prefs.setString(_kPrefsKidAge, age);
+    await prefs.setString(_kPrefsKidGender, _selectedGender);
+    await prefs.setString(_kPrefsKidInterest, interest);
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _kidDetailsSaved = true;
+      _kidDetailsSavedAt = DateTime.now();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          isArabic
+              ? 'تم حفظ تفاصيل الطفل بنجاح.'
+              : 'Kid details saved successfully.',
+        ),
+      ),
+    );
   }
 
   int get _currentStep {
-    final hasAge = _childAgeController.text.trim().isNotEmpty;
-    final hasGoals = _goalsController.text.trim().isNotEmpty;
-
-    if (!_chatMode && hasAge && hasGoals) {
+    if (_chatMode) {
       return 3;
     }
-    if (_selectedEnergy >= 0 || (!_chatMode && hasAge)) {
-      return 2;
+
+    return _detailsStep.clamp(1, 3);
+  }
+
+  void _scrollToTopNextFrame() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_contentScrollController.hasClients) {
+        return;
+      }
+      _contentScrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 320),
+        curve: Curves.easeOutCubic,
+      );
+    });
+  }
+
+  void _setDetailsStep(int nextStep) {
+    final targetStep = nextStep.clamp(1, 3);
+    setState(() {
+      _chatMode = false;
+      _detailsStep = targetStep;
+    });
+    _scrollToTopNextFrame();
+  }
+
+  void _setChatMode() {
+    if (_chatMode) {
+      return;
     }
-    return 1;
+    setState(() => _chatMode = true);
+    _scrollToTopNextFrame();
+  }
+
+  void _setDetailsMode() {
+    if (!_chatMode) {
+      return;
+    }
+    setState(() => _chatMode = false);
+    _scrollToTopNextFrame();
   }
 
   void _handleBack() {
+    if (_chatMode) {
+      _setDetailsStep(3);
+      return;
+    }
+
+    if (!_chatMode && _detailsStep > 1) {
+      _setDetailsStep(_detailsStep - 1);
+      return;
+    }
+
     if (widget.onBack != null) {
       widget.onBack!();
       return;
@@ -168,11 +307,18 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   @override
   void dispose() {
     _initialOverlayDelayTimer?.cancel();
+    _kidNameController.removeListener(_onFormChanged);
     _childAgeController.removeListener(_onFormChanged);
     _goalsController.removeListener(_onFormChanged);
+    _specificInterestController.removeListener(_onFormChanged);
+    _locationController.removeListener(_onFormChanged);
+    _contentScrollController.dispose();
     _messageController.dispose();
+    _kidNameController.dispose();
     _childAgeController.dispose();
     _goalsController.dispose();
+    _specificInterestController.dispose();
+    _locationController.dispose();
     super.dispose();
   }
 
@@ -180,18 +326,20 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   Widget build(BuildContext context) {
     final isArabic = widget.language == AppLanguage.ar;
     final title = isArabic ? 'مطابقة ذكية' : 'AI Match';
-    final subtitle = isArabic
-        ? 'اختر وضع الدردشة او املأ التفاصيل للوصول الى تطابق ادق.'
-        : 'Pick chat or fill details to generate a better activity match.';
 
-    final showBottomNav = widget.isInAppMode && widget.showBottomNavInAppMode;
     final showBackButton = !widget.isInAppMode && widget.onBack != null;
     final showSkipButton = !widget.isInAppMode && widget.onSkip != null;
 
     final bottomInset = MediaQuery.viewPaddingOf(context).bottom;
-    final contentBottomPadding = showBottomNav ? 210.0 : 144.0 + bottomInset;
-    final inputBottomOffset = showBottomNav ? 76.0 : 12.0 + bottomInset;
-    final waveBottomOffset = showBottomNav ? 76.0 : 0.0;
+    final contentBottomPadding = _chatMode
+        ? 144.0 + bottomInset
+        : 36.0 + bottomInset;
+    final inputBottomOffset = _chatMode ? 12.0 + bottomInset : 0.0;
+    final bottomFadeHeight = inputBottomOffset + 108;
+    final topBarTop = kFixedTopSpace + kTopControlsVerticalOffset;
+    final fixedChatToggleTop = topBarTop + 52;
+    final contentTopPadding = fixedChatToggleTop;
+    final topShadowHeight = fixedChatToggleTop;
 
     final localTheme = Theme.of(context).copyWith(brightness: Brightness.light);
 
@@ -212,6 +360,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                     const Positioned.fill(child: _AiAmbientBackground()),
                     Positioned.fill(
                       child: SingleChildScrollView(
+                        controller: _contentScrollController,
                         physics: const BouncingScrollPhysics(),
                         child: Center(
                           child: ConstrainedBox(
@@ -219,38 +368,35 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(
                                 20,
-                                kFixedTopSpace + kTopControlHeight + 34,
+                                contentTopPadding,
                                 20,
                                 contentBottomPadding,
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: <Widget>[
-                                  _AiModeToggle(
-                                    isArabic: isArabic,
-                                    chatSelected: _chatMode,
-                                    onSelectChat: () =>
-                                        setState(() => _chatMode = true),
-                                    onSelectDetails: () =>
-                                        setState(() => _chatMode = false),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  _AiThreeStepProgressBar(
-                                    isArabic: isArabic,
-                                    currentStep: _currentStep,
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    subtitle,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w600,
-                                      height: 1.4,
-                                      color: _aiMutedText(themedContext),
+                                  Center(
+                                    child: ConstrainedBox(
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 430,
+                                      ),
+                                      child: _AiModeToggle(
+                                        isArabic: isArabic,
+                                        chatSelected: _chatMode,
+                                        onSelectChat: _setChatMode,
+                                        onSelectDetails: _setDetailsMode,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(height: 18),
+                                  if (!_chatMode) ...<Widget>[
+                                    _AiThreeStepProgressBar(
+                                      isArabic: isArabic,
+                                      currentStep: _currentStep,
+                                    ),
+                                    const SizedBox(height: 18),
+                                  ] else
+                                    const SizedBox(height: 8),
                                   AnimatedSwitcher(
                                     duration: const Duration(milliseconds: 250),
                                     switchInCurve: Curves.easeOut,
@@ -269,12 +415,117 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                                             },
                                           )
                                         : _AiDetailsPanel(
-                                            key: const ValueKey<String>(
-                                              'details-mode',
+                                            key: ValueKey<String>(
+                                              'details-mode-step-$_detailsStep',
                                             ),
                                             isArabic: isArabic,
+                                            detailsStep: _detailsStep,
+                                            kidNameController:
+                                                _kidNameController,
                                             ageController: _childAgeController,
                                             goalsController: _goalsController,
+                                            selectedGender: _selectedGender,
+                                            kidDetailsSaved: _kidDetailsSaved,
+                                            kidDetailsSavedAt:
+                                                _kidDetailsSavedAt,
+                                            skillLevel: _selectedSkillLevel,
+                                            specificInterestController:
+                                                _specificInterestController,
+                                            selectedFocusAreas:
+                                                _selectedFocusAreas,
+                                            onSelectGender: (String gender) {
+                                              setState(() {
+                                                _selectedGender = gender;
+                                                _kidDetailsSaved = false;
+                                              });
+                                            },
+                                            onSelectSkillLevel: (String level) {
+                                              setState(
+                                                () =>
+                                                    _selectedSkillLevel = level,
+                                              );
+                                            },
+                                            onToggleFocusArea:
+                                                (String focusArea) {
+                                                  setState(() {
+                                                    if (_selectedFocusAreas
+                                                        .contains(focusArea)) {
+                                                      _selectedFocusAreas
+                                                          .remove(focusArea);
+                                                    } else {
+                                                      _selectedFocusAreas.add(
+                                                        focusArea,
+                                                      );
+                                                    }
+                                                  });
+                                                },
+                                            onSaveKidDetails: () => unawaited(
+                                              _saveKidDetails(
+                                                isArabic: isArabic,
+                                              ),
+                                            ),
+                                            onNext: () {
+                                              if (_detailsStep < 3) {
+                                                _setDetailsStep(
+                                                  _detailsStep + 1,
+                                                );
+                                                return;
+                                              }
+                                              _setChatMode();
+                                            },
+                                            onBackToStepOne: () {
+                                              _setDetailsStep(1);
+                                            },
+                                            onBackToStepTwo: () {
+                                              _setDetailsStep(2);
+                                            },
+                                            selectedPreferredDays:
+                                                _selectedPreferredDays,
+                                            onTogglePreferredDay:
+                                                (int dayIndex) {
+                                                  setState(() {
+                                                    if (_selectedPreferredDays
+                                                        .contains(dayIndex)) {
+                                                      _selectedPreferredDays
+                                                          .remove(dayIndex);
+                                                    } else {
+                                                      _selectedPreferredDays
+                                                          .add(dayIndex);
+                                                    }
+                                                  });
+                                                },
+                                            selectedTimePreference:
+                                                _selectedTimePreference,
+                                            onSelectTimePreference:
+                                                (String value) {
+                                                  setState(
+                                                    () =>
+                                                        _selectedTimePreference =
+                                                            value,
+                                                  );
+                                                },
+                                            budgetRange: _budgetRange,
+                                            onBudgetChanged:
+                                                (RangeValues values) {
+                                                  setState(
+                                                    () => _budgetRange = values,
+                                                  );
+                                                },
+                                            locationController:
+                                                _locationController,
+                                            radiusMiles: _radiusMiles,
+                                            onRadiusChanged: (double value) {
+                                              setState(
+                                                () => _radiusMiles = value,
+                                              );
+                                            },
+                                            mapCenter: _mapCenter,
+                                            onMapCenterChanged: (LatLng value) {
+                                              setState(
+                                                () => _mapCenter = value,
+                                              );
+                                            },
+                                            onFindMatches: _setChatMode,
                                           ),
                                   ),
                                 ],
@@ -285,7 +536,26 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                       ),
                     ),
                     Positioned(
-                      top: kFixedTopSpace + kTopControlsVerticalOffset,
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: IgnorePointer(
+                        child: _AiTopShadowOverlay(height: topShadowHeight),
+                      ),
+                    ),
+                    if (_chatMode)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: IgnorePointer(
+                          child: _AiBottomShadowOverlay(
+                            height: bottomFadeHeight,
+                          ),
+                        ),
+                      ),
+                    Positioned(
+                      top: topBarTop,
                       left: kTopControlsSidePadding,
                       right: kTopControlsSidePadding,
                       child: _AiTopBar(
@@ -298,36 +568,23 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                         onBack: _handleBack,
                         onSkip: _handleSkip,
                         onToggleLanguage: widget.onToggleLanguage,
+                        showTitle: false,
                       ),
                     ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: waveBottomOffset,
-                      child: IgnorePointer(
-                        child: SizedBox(height: 146, child: _AiBottomWave()),
-                      ),
-                    ),
-                    Positioned(
-                      left: 20,
-                      right: 20,
-                      bottom: inputBottomOffset,
-                      child: Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 420),
-                          child: _AiChatInput(
-                            isArabic: isArabic,
-                            controller: _messageController,
+                    if (_chatMode)
+                      Positioned(
+                        left: 20,
+                        right: 20,
+                        bottom: inputBottomOffset,
+                        child: Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 420),
+                            child: _AiChatInput(
+                              isArabic: isArabic,
+                              controller: _messageController,
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    if (showBottomNav)
-                      const Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: _AiBottomNav(),
                       ),
                     if (_showInitialOverlay)
                       Positioned.fill(
@@ -351,10 +608,10 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                                 Positioned.fill(
                                   child: _AiOnboardingSkeleton(
                                     isInAppMode: widget.isInAppMode,
+                                    isChatMode: _chatMode,
                                     contentBottomPadding: contentBottomPadding,
                                     inputBottomOffset: inputBottomOffset,
-                                    waveBottomOffset: waveBottomOffset,
-                                    showBottomNav: showBottomNav,
+                                    showBottomNav: false,
                                   ),
                                 ),
                                 Positioned.fill(
@@ -441,6 +698,7 @@ class _AiTopBar extends StatelessWidget {
     required this.language,
     required this.showBackButton,
     required this.showSkipButton,
+    required this.showTitle,
     required this.onBack,
     required this.onSkip,
     required this.onToggleLanguage,
@@ -452,6 +710,7 @@ class _AiTopBar extends StatelessWidget {
   final AppLanguage language;
   final bool showBackButton;
   final bool showSkipButton;
+  final bool showTitle;
   final VoidCallback onBack;
   final VoidCallback onSkip;
   final VoidCallback onToggleLanguage;
@@ -463,19 +722,20 @@ class _AiTopBar extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Align(
-            child: Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.plusJakartaSans(
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
-                color: _aiPrimaryText(context),
+          if (showTitle)
+            Align(
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: _aiPrimaryText(context),
+                ),
               ),
             ),
-          ),
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: showBackButton
@@ -497,6 +757,60 @@ class _AiTopBar extends StatelessWidget {
                   ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AiTopShadowOverlay extends StatelessWidget {
+  const _AiTopShadowOverlay({required this.height});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final background = _aiPageBackground(context);
+
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            background.withValues(alpha: 0.98),
+            background.withValues(alpha: 0.90),
+            background.withValues(alpha: 0.0),
+          ],
+          stops: const <double>[0.0, 0.60, 1.0],
+        ),
+      ),
+    );
+  }
+}
+
+class _AiBottomShadowOverlay extends StatelessWidget {
+  const _AiBottomShadowOverlay({required this.height});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final background = _aiPageBackground(context);
+
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            background.withValues(alpha: 0.0),
+            background.withValues(alpha: 0.86),
+            background.withValues(alpha: 0.98),
+          ],
+          stops: const <double>[0.0, 0.58, 1.0],
+        ),
       ),
     );
   }
@@ -543,25 +857,43 @@ class _AiTopSkipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 36,
-      child: OutlinedButton(
-        onPressed: onTap,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: _aiPrimaryText(context),
-          backgroundColor: _aiGlassColor(context),
-          side: BorderSide(color: _aiGlassBorderColor(context)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(999),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: <Color>[
+            kAiColorPrimaryAccent.withValues(alpha: 0.18),
+            kAiColorPrimary.withValues(alpha: 0.10),
+          ],
         ),
-        child: Text(
-          label,
-          style: GoogleFonts.plusJakartaSans(
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: kAiColorPrimary.withValues(alpha: 0.26)),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            blurRadius: 20,
+            spreadRadius: -16,
+            offset: const Offset(0, 10),
+            color: kAiShadowPurple.withValues(alpha: 0.42),
+          ),
+        ],
+      ),
+      child: SizedBox(
+        height: 36,
+        child: TextButton(
+          onPressed: onTap,
+          style: TextButton.styleFrom(
+            foregroundColor: _aiPrimaryText(context),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(999),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
       ),
@@ -580,73 +912,61 @@ class _AiThreeStepProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int activeSegments = 5;
-    if (currentStep <= 1) {
-      activeSegments = 1;
-    } else if (currentStep == 2) {
-      activeSegments = 3;
-    }
+    final step = currentStep.clamp(1, 3);
+    final progress = step / 3;
+    final percent = (progress * 100).floor();
+    final stepLabel = isArabic ? 'الخطوة $step من 3' : 'Step $step of 3';
+    final percentLabel = isArabic ? '$percent٪ مكتمل' : '$percent% Complete';
 
-    return _AiGlassPanel(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
-      radius: 18,
-      boxShadow: const <BoxShadow>[
-        BoxShadow(
-          blurRadius: 24,
-          spreadRadius: -18,
-          offset: Offset(0, 10),
-          color: kAiShadowMedium,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Row(
-            children: List<Widget>.generate(5, (int index) {
-              final active = index < activeSegments;
-
-              return Expanded(
-                child: Padding(
-                  padding: EdgeInsetsDirectional.only(end: index == 4 ? 0 : 8),
-                  child: Container(
-                    height: 14,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(999),
-                      color: _aiProgressTrack(context),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(999),
-                      child: AnimatedAlign(
-                        duration: const Duration(milliseconds: 260),
-                        curve: Curves.easeOut,
-                        alignment: AlignmentDirectional.centerStart,
-                        child: FractionallySizedBox(
-                          widthFactor: active ? 1 : 0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(999),
-                              color: active
-                                  ? _aiProgressActive(context)
-                                  : _aiProgressInactive(context),
-                            ),
-                          ),
-                        ),
+            children: <Widget>[
+              Text(
+                stepLabel,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.4,
+                  color: _aiProgressActive(context),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                percentLabel,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: _aiMutedText(context),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: SizedBox(
+              height: 5,
+              child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                  DecoratedBox(
+                    decoration: BoxDecoration(color: _aiProgressTrack(context)),
+                  ),
+                  FractionallySizedBox(
+                    widthFactor: progress,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: _aiProgressActive(context),
                       ),
                     ),
                   ),
-                ),
-              );
-            }),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            isArabic ? 'قائمة بدء الاستخدام' : 'Getting Started Checklist',
-            textAlign: TextAlign.center,
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.2,
-              color: _aiMutedText(context),
+                ],
+              ),
             ),
           ),
         ],
@@ -682,17 +1002,17 @@ class _AiModeToggle extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: _AiModeToggleButton(
-              label: chatLabel,
-              selected: chatSelected,
-              onTap: onSelectChat,
+              label: detailsLabel,
+              selected: !chatSelected,
+              onTap: onSelectDetails,
             ),
           ),
           const SizedBox(width: 8),
           Expanded(
             child: _AiModeToggleButton(
-              label: detailsLabel,
-              selected: !chatSelected,
-              onTap: onSelectDetails,
+              label: chatLabel,
+              selected: chatSelected,
+              onTap: onSelectChat,
             ),
           ),
         ],
@@ -778,6 +1098,8 @@ class _AiChatPanel extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
+        _AiChatHeroCard(isArabic: isArabic, selectedEnergy: selectedEnergy),
+        const SizedBox(height: 14),
         _AiCoachBubble(
           text: isArabic
               ? 'اهلا! انا مساعد Activly. كم عمر طفلك الآن؟'
@@ -816,6 +1138,142 @@ class _AiChatPanel extends StatelessWidget {
   }
 }
 
+class _AiChatHeroCard extends StatelessWidget {
+  const _AiChatHeroCard({required this.isArabic, required this.selectedEnergy});
+
+  final bool isArabic;
+  final int selectedEnergy;
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedEnergyLabel = isArabic
+        ? <String>['طاقة عالية', 'تركيز وهدوء', 'مزيج متوازن']
+        : <String>['High Energy', 'Focused and Quiet', 'Balanced Mix'];
+
+    final currentEnergy = selectedEnergy >= 0 && selectedEnergy < 3
+        ? selectedEnergyLabel[selectedEnergy]
+        : (isArabic ? 'متكيف' : 'Adaptive');
+
+    final title = isArabic ? 'مساعد Activly جاهز' : 'Activly Coach Is Ready';
+    final subtitle = isArabic
+        ? 'سنخصص الاقتراحات بسرعة حسب العمر والطاقة والهدف.'
+        : 'We will personalize activity picks by age, energy, and goal in seconds.';
+
+    return _AiGlassPanel(
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 13),
+      radius: 20,
+      backgroundColor: _aiCardBackground(context),
+      borderColor: _aiCardBorder(context),
+      boxShadow: const <BoxShadow>[
+        BoxShadow(
+          blurRadius: 24,
+          spreadRadius: -18,
+          offset: Offset(0, 12),
+          color: kAiShadowMedium,
+        ),
+      ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: const LinearGradient(
+                    colors: <Color>[kAiColorAvatarStart, kAiColorAvatarEnd],
+                  ),
+                ),
+                child: const Icon(
+                  Icons.smart_toy_rounded,
+                  color: kAiColorPrimary,
+                  size: 18,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  title,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    color: _aiPrimaryText(context),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            subtitle,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 12,
+              height: 1.35,
+              fontWeight: FontWeight.w600,
+              color: _aiMutedText(context),
+            ),
+          ),
+          const SizedBox(height: 11),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: <Widget>[
+              _AiSignalChip(
+                label: isArabic ? 'مناسب للعمر' : 'Age tuned',
+                highlighted: false,
+              ),
+              _AiSignalChip(
+                label: isArabic ? 'يراعي الهدف' : 'Goal aware',
+                highlighted: false,
+              ),
+              _AiSignalChip(
+                label: currentEnergy,
+                highlighted: selectedEnergy >= 0,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AiSignalChip extends StatelessWidget {
+  const _AiSignalChip({required this.label, required this.highlighted});
+
+  final String label;
+  final bool highlighted;
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor = highlighted
+        ? kAiColorPrimary.withValues(alpha: 0.46)
+        : _aiCardBorder(context);
+    final fillColor = highlighted
+        ? kAiColorPrimary.withValues(alpha: 0.12)
+        : _aiSurfaceContainer(context).withValues(alpha: 0.62);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: fillColor,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: borderColor),
+      ),
+      child: Text(
+        label,
+        style: GoogleFonts.plusJakartaSans(
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          color: highlighted ? kAiColorPrimary : _aiMutedText(context),
+        ),
+      ),
+    );
+  }
+}
+
 class _AiCoachBubble extends StatelessWidget {
   const _AiCoachBubble({required this.text});
 
@@ -837,7 +1295,7 @@ class _AiCoachBubble extends StatelessWidget {
             border: Border.all(color: kAiColorPrimary.withValues(alpha: 0.14)),
           ),
           child: const Icon(
-            Icons.auto_awesome,
+            Icons.smart_toy_rounded,
             color: kAiColorPrimary,
             size: 18,
           ),
@@ -936,14 +1394,16 @@ class _AiChoiceButton extends StatelessWidget {
         child: _AiGlassPanel(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
           radius: 16,
-          backgroundColor: _aiCardBackground(context),
+          backgroundColor: selected
+              ? kAiColorPrimary.withValues(alpha: 0.10)
+              : _aiCardBackground(context),
           borderColor: selected ? kAiColorPrimary : _aiCardBorder(context),
-          boxShadow: const <BoxShadow>[
+          boxShadow: <BoxShadow>[
             BoxShadow(
-              blurRadius: 20,
+              blurRadius: selected ? 24 : 20,
               spreadRadius: -18,
-              offset: Offset(0, 12),
-              color: kAiShadowMedium,
+              offset: const Offset(0, 12),
+              color: selected ? kAiShadowPurple : kAiShadowMedium,
             ),
           ],
           child: Row(
@@ -954,12 +1414,14 @@ class _AiChoiceButton extends StatelessWidget {
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _aiPrimaryText(context),
+                    color: selected ? kAiColorPrimary : _aiPrimaryText(context),
                   ),
                 ),
               ),
               Icon(
-                Icons.chevron_right_rounded,
+                selected
+                    ? Icons.check_circle_rounded
+                    : Icons.chevron_right_rounded,
                 size: 18,
                 color: selected
                     ? kAiColorPrimary
@@ -977,91 +1439,1467 @@ class _AiDetailsPanel extends StatelessWidget {
   const _AiDetailsPanel({
     super.key,
     required this.isArabic,
+    required this.detailsStep,
+    required this.kidNameController,
     required this.ageController,
     required this.goalsController,
+    required this.selectedGender,
+    required this.kidDetailsSaved,
+    required this.kidDetailsSavedAt,
+    required this.skillLevel,
+    required this.specificInterestController,
+    required this.selectedFocusAreas,
+    required this.onSelectGender,
+    required this.onSelectSkillLevel,
+    required this.onToggleFocusArea,
+    required this.onSaveKidDetails,
+    required this.onNext,
+    required this.onBackToStepOne,
+    required this.onBackToStepTwo,
+    required this.selectedPreferredDays,
+    required this.onTogglePreferredDay,
+    required this.selectedTimePreference,
+    required this.onSelectTimePreference,
+    required this.budgetRange,
+    required this.onBudgetChanged,
+    required this.locationController,
+    required this.radiusMiles,
+    required this.onRadiusChanged,
+    required this.mapCenter,
+    required this.onMapCenterChanged,
+    required this.onFindMatches,
   });
 
   final bool isArabic;
+  final int detailsStep;
+  final TextEditingController kidNameController;
   final TextEditingController ageController;
   final TextEditingController goalsController;
+  final String selectedGender;
+  final bool kidDetailsSaved;
+  final DateTime? kidDetailsSavedAt;
+  final String skillLevel;
+  final TextEditingController specificInterestController;
+  final Set<String> selectedFocusAreas;
+  final ValueChanged<String> onSelectGender;
+  final ValueChanged<String> onSelectSkillLevel;
+  final ValueChanged<String> onToggleFocusArea;
+  final VoidCallback onSaveKidDetails;
+  final VoidCallback onNext;
+  final VoidCallback onBackToStepOne;
+  final VoidCallback onBackToStepTwo;
+  final Set<int> selectedPreferredDays;
+  final ValueChanged<int> onTogglePreferredDay;
+  final String selectedTimePreference;
+  final ValueChanged<String> onSelectTimePreference;
+  final RangeValues budgetRange;
+  final ValueChanged<RangeValues> onBudgetChanged;
+  final TextEditingController locationController;
+  final double radiusMiles;
+  final ValueChanged<double> onRadiusChanged;
+  final LatLng mapCenter;
+  final ValueChanged<LatLng> onMapCenterChanged;
+  final VoidCallback onFindMatches;
 
   @override
   Widget build(BuildContext context) {
-    final ageLabel = isArabic ? 'عمر الطفل' : 'Child Age';
-    final goalsLabel = isArabic ? 'الهدف الرئيسي' : 'Main Goal';
-    final goalsHint = isArabic
-        ? 'مثال: نشاط اجتماعي او تركيز'
-        : 'Example: social confidence or focus';
-    final cta = isArabic ? 'توليد التطابقات' : 'Generate Matches';
+    if (detailsStep == 1) {
+      return _AiDetailsStepOnePanel(
+        isArabic: isArabic,
+        kidNameController: kidNameController,
+        ageController: ageController,
+        goalsController: goalsController,
+        selectedGender: selectedGender,
+        kidDetailsSaved: kidDetailsSaved,
+        kidDetailsSavedAt: kidDetailsSavedAt,
+        onSelectGender: onSelectGender,
+        onSaveKidDetails: onSaveKidDetails,
+        onNext: onNext,
+      );
+    }
 
-    return _AiGlassPanel(
-      padding: const EdgeInsets.all(16),
-      radius: 22,
-      backgroundColor: _aiCardBackground(context),
-      borderColor: _aiCardBorder(context),
-      boxShadow: const <BoxShadow>[
-        BoxShadow(
-          blurRadius: 26,
-          spreadRadius: -20,
-          offset: Offset(0, 12),
-          color: kAiShadowMedium,
+    if (detailsStep == 2) {
+      return _AiDetailsStepTwoPanel(
+        isArabic: isArabic,
+        skillLevel: skillLevel,
+        specificInterestController: specificInterestController,
+        selectedFocusAreas: selectedFocusAreas,
+        onSelectSkillLevel: onSelectSkillLevel,
+        onToggleFocusArea: onToggleFocusArea,
+        onNext: onNext,
+        onBackToStepOne: onBackToStepOne,
+      );
+    }
+
+    return _AiDetailsStepThreePanel(
+      isArabic: isArabic,
+      selectedPreferredDays: selectedPreferredDays,
+      onTogglePreferredDay: onTogglePreferredDay,
+      selectedTimePreference: selectedTimePreference,
+      onSelectTimePreference: onSelectTimePreference,
+      budgetRange: budgetRange,
+      onBudgetChanged: onBudgetChanged,
+      locationController: locationController,
+      radiusMiles: radiusMiles,
+      onRadiusChanged: onRadiusChanged,
+      mapCenter: mapCenter,
+      onMapCenterChanged: onMapCenterChanged,
+      onBackToStepTwo: onBackToStepTwo,
+      onFindMatches: onFindMatches,
+    );
+  }
+}
+
+class _AiDetailsStepOnePanel extends StatelessWidget {
+  const _AiDetailsStepOnePanel({
+    required this.isArabic,
+    required this.kidNameController,
+    required this.ageController,
+    required this.goalsController,
+    required this.selectedGender,
+    required this.kidDetailsSaved,
+    required this.kidDetailsSavedAt,
+    required this.onSelectGender,
+    required this.onSaveKidDetails,
+    required this.onNext,
+  });
+
+  final bool isArabic;
+  final TextEditingController kidNameController;
+  final TextEditingController ageController;
+  final TextEditingController goalsController;
+  final String selectedGender;
+  final bool kidDetailsSaved;
+  final DateTime? kidDetailsSavedAt;
+  final ValueChanged<String> onSelectGender;
+  final VoidCallback onSaveKidDetails;
+  final VoidCallback onNext;
+
+  @override
+  Widget build(BuildContext context) {
+    final title = isArabic ? 'لنبدأ ببيانات الطفل.' : 'Start with kid details.';
+    final subtitle = isArabic
+        ? 'ملف صغير ودقيق يعطي تطابقات أذكى خلال ثوانٍ.'
+        : 'A small precise profile gives smarter matches in seconds.';
+    final profileLabel = isArabic ? 'بيانات الطفل' : 'KID DETAILS';
+    final nameHint = isArabic ? 'اسم الطفل' : 'Kid name';
+    final ageHint = isArabic ? 'العمر' : 'Age';
+    final genderLabel = isArabic ? 'الجنس' : 'GENDER';
+    final interestsLabel = isArabic
+        ? 'ما الذي يثير فضوله؟'
+        : 'WHAT SPARKS THEIR CURIOSITY?';
+    final saveCta = isArabic ? 'حفظ التفاصيل' : 'Save Details';
+    final cta = isArabic ? 'التالي' : 'Next';
+    final currentInterest = goalsController.text.trim();
+
+    final genderOptions = isArabic
+        ? const <_AiSelectableLabel>[
+            _AiSelectableLabel(value: 'Girl', label: 'بنت'),
+            _AiSelectableLabel(value: 'Boy', label: 'ولد'),
+            _AiSelectableLabel(value: 'Other', label: 'آخر'),
+          ]
+        : const <_AiSelectableLabel>[
+            _AiSelectableLabel(value: 'Girl', label: 'Girl'),
+            _AiSelectableLabel(value: 'Boy', label: 'Boy'),
+            _AiSelectableLabel(value: 'Other', label: 'Other'),
+          ];
+
+    final interests = isArabic
+        ? const <_AiInterestOption>[
+            _AiInterestOption(
+              value: 'Art & Craft',
+              label: 'فن وأعمال',
+              icon: Icons.palette_outlined,
+            ),
+            _AiInterestOption(
+              value: 'Soccer',
+              label: 'كرة القدم',
+              icon: Icons.sports_soccer_outlined,
+            ),
+            _AiInterestOption(
+              value: 'Science',
+              label: 'علوم',
+              icon: Icons.science_outlined,
+            ),
+            _AiInterestOption(
+              value: 'Music',
+              label: 'موسيقى',
+              icon: Icons.music_note_outlined,
+            ),
+          ]
+        : const <_AiInterestOption>[
+            _AiInterestOption(
+              value: 'Art & Craft',
+              label: 'Art & Craft',
+              icon: Icons.palette_outlined,
+            ),
+            _AiInterestOption(
+              value: 'Soccer',
+              label: 'Soccer',
+              icon: Icons.sports_soccer_outlined,
+            ),
+            _AiInterestOption(
+              value: 'Science',
+              label: 'Science',
+              icon: Icons.science_outlined,
+            ),
+            _AiInterestOption(
+              value: 'Music',
+              label: 'Music',
+              icon: Icons.music_note_outlined,
+            ),
+          ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Text(
+          title,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 27,
+            fontWeight: FontWeight.w800,
+            height: 1.05,
+            color: _aiPrimaryText(context),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          subtitle,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: _aiMutedText(context),
+          ),
+        ),
+        const SizedBox(height: 16),
+        _AiSectionLabel(label: profileLabel),
+        const SizedBox(height: 10),
+        Row(
+          children: <Widget>[
+            Expanded(
+              flex: 2,
+              child: _AiCompactInputField(
+                controller: kidNameController,
+                hintText: nameHint,
+                icon: Icons.badge_rounded,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _AiCompactInputField(
+                controller: ageController,
+                hintText: ageHint,
+                icon: Icons.cake_rounded,
+                keyboardType: TextInputType.number,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        _AiSectionLabel(label: genderLabel),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: genderOptions.map((_AiSelectableLabel option) {
+            return _AiGenderChip(
+              label: option.label,
+              selected: selectedGender == option.value,
+              onTap: () => onSelectGender(option.value),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 14),
+        _AiSectionLabel(label: interestsLabel),
+        const SizedBox(height: 10),
+        GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: interests.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 6,
+            mainAxisSpacing: 6,
+            childAspectRatio: 2.25,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            final option = interests[index];
+            return _AiInterestCard(
+              option: option,
+              selected: currentInterest == option.value,
+              onTap: () => goalsController.text = option.value,
+            );
+          },
+        ),
+        const SizedBox(height: 12),
+        _AiKidLiveProfileCard(
+          isArabic: isArabic,
+          kidName: kidNameController.text.trim(),
+          kidAge: ageController.text.trim(),
+          kidGender: selectedGender,
+          selectedInterest: currentInterest,
+          detailsSaved: kidDetailsSaved,
+          savedAt: kidDetailsSavedAt,
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: SizedBox(
+                height: 50,
+                child: OutlinedButton.icon(
+                  onPressed: onSaveKidDetails,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: _aiPrimaryText(context),
+                    side: BorderSide(color: _aiCardBorder(context)),
+                    backgroundColor: _aiCardBackground(context),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                  ),
+                  icon: Icon(
+                    kidDetailsSaved
+                        ? Icons.check_circle_rounded
+                        : Icons.save_outlined,
+                    size: 18,
+                  ),
+                  label: Text(
+                    saveCta,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: SizedBox(
+                height: 50,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(999),
+                    gradient: const LinearGradient(
+                      colors: <Color>[kAiColorPrimaryAccent, kAiColorPrimary],
+                    ),
+                    boxShadow: const <BoxShadow>[
+                      BoxShadow(
+                        blurRadius: 24,
+                        spreadRadius: -18,
+                        offset: Offset(0, 12),
+                        color: kAiShadowPurple,
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton.icon(
+                    onPressed: onNext,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: kColorWhite,
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      surfaceTintColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                    ),
+                    icon: const Icon(Icons.arrow_forward_rounded, size: 18),
+                    label: Text(
+                      cta,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          _AiField(
-            label: ageLabel,
-            controller: ageController,
-            keyboardType: TextInputType.number,
+    );
+  }
+}
+
+class _AiDetailsStepTwoPanel extends StatelessWidget {
+  const _AiDetailsStepTwoPanel({
+    required this.isArabic,
+    required this.skillLevel,
+    required this.specificInterestController,
+    required this.selectedFocusAreas,
+    required this.onSelectSkillLevel,
+    required this.onToggleFocusArea,
+    required this.onNext,
+    required this.onBackToStepOne,
+  });
+
+  final bool isArabic;
+  final String skillLevel;
+  final TextEditingController specificInterestController;
+  final Set<String> selectedFocusAreas;
+  final ValueChanged<String> onSelectSkillLevel;
+  final ValueChanged<String> onToggleFocusArea;
+  final VoidCallback onNext;
+  final VoidCallback onBackToStepOne;
+
+  @override
+  Widget build(BuildContext context) {
+    final title = isArabic ? 'طور المتعة أكثر.' : 'Level up the fun.';
+    final subtitle = isArabic
+        ? 'أخبرنا عن المستوى الحالي والأهداف المحددة.'
+        : 'Tell us about their skill level and specific goals.';
+    final skillLabel = isArabic ? 'المستوى الحالي' : 'CURRENT SKILL LEVEL';
+    final interestLabel = isArabic ? 'اهتمام محدد' : 'SPECIFIC INTEREST';
+    final focusLabel = isArabic
+        ? 'محاور التركيز والأهداف'
+        : 'FOCUS AREAS & GOALS';
+    final interestHint = isArabic
+        ? 'مثال: تعلم تركيب أجهزة الكمبيوتر...'
+        : 'e.g. Learning to build custom PC builds...';
+    final cta = isArabic ? 'التالي' : 'Next';
+    final backToStepOne = isArabic ? 'العودة للخطوة 1' : 'Back to Step 1';
+
+    final skillOptions = isArabic
+        ? const <_AiSelectableLabel>[
+            _AiSelectableLabel(value: 'Beginner', label: 'مبتدئ'),
+            _AiSelectableLabel(value: 'Intermediate', label: 'متوسط'),
+            _AiSelectableLabel(value: 'Advanced', label: 'متقدم'),
+          ]
+        : const <_AiSelectableLabel>[
+            _AiSelectableLabel(value: 'Beginner', label: 'Beginner'),
+            _AiSelectableLabel(value: 'Intermediate', label: 'Intermediate'),
+            _AiSelectableLabel(value: 'Advanced', label: 'Advanced'),
+          ];
+
+    final focusOptions = isArabic
+        ? const <_AiSelectableLabel>[
+            _AiSelectableLabel(
+              value: 'Confidence Building',
+              label: 'بناء الثقة',
+            ),
+            _AiSelectableLabel(
+              value: 'Technical Skills',
+              label: 'مهارات تقنية',
+            ),
+            _AiSelectableLabel(
+              value: 'Social Interaction',
+              label: 'تفاعل اجتماعي',
+            ),
+            _AiSelectableLabel(
+              value: 'Competitive Prep',
+              label: 'استعداد تنافسي',
+            ),
+            _AiSelectableLabel(
+              value: 'Creative Expression',
+              label: 'تعبير إبداعي',
+            ),
+          ]
+        : const <_AiSelectableLabel>[
+            _AiSelectableLabel(
+              value: 'Confidence Building',
+              label: 'Confidence Building',
+            ),
+            _AiSelectableLabel(
+              value: 'Technical Skills',
+              label: 'Technical Skills',
+            ),
+            _AiSelectableLabel(
+              value: 'Social Interaction',
+              label: 'Social Interaction',
+            ),
+            _AiSelectableLabel(
+              value: 'Competitive Prep',
+              label: 'Competitive Prep',
+            ),
+            _AiSelectableLabel(
+              value: 'Creative Expression',
+              label: 'Creative Expression',
+            ),
+          ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Text(
+          title,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 29,
+            fontWeight: FontWeight.w800,
+            height: 1.05,
+            color: _aiPrimaryText(context),
           ),
-          const SizedBox(height: 12),
-          _AiField(
-            label: goalsLabel,
-            controller: goalsController,
-            hintText: goalsHint,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          subtitle,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: _aiMutedText(context),
           ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 46,
-            child: ElevatedButton.icon(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: kAiColorPrimary,
-                foregroundColor: kColorWhite,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+        ),
+        const SizedBox(height: 24),
+        const _AiSecondStepHeroCard(),
+        const SizedBox(height: 28),
+        _AiSectionLabel(label: skillLabel),
+        const SizedBox(height: 12),
+        _AiGlassPanel(
+          padding: const EdgeInsets.all(6),
+          radius: 18,
+          backgroundColor: _aiSurfaceContainer(context),
+          borderColor: _aiCardBorder(context),
+          child: Row(
+            children: List<Widget>.generate(skillOptions.length, (int index) {
+              final option = skillOptions[index];
+              return Expanded(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    end: index == skillOptions.length - 1 ? 0 : 6,
+                  ),
+                  child: _AiSkillLevelButton(
+                    label: option.label,
+                    selected: skillLevel == option.value,
+                    onTap: () => onSelectSkillLevel(option.value),
+                  ),
                 ),
-                elevation: 0,
+              );
+            }),
+          ),
+        ),
+        const SizedBox(height: 24),
+        _AiSectionLabel(label: interestLabel),
+        const SizedBox(height: 12),
+        _AiGlassPanel(
+          radius: 18,
+          backgroundColor: _aiCardBackground(context),
+          borderColor: _aiCardBorder(context),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.description_outlined,
+                  size: 20,
+                  color: _aiMutedText(context).withValues(alpha: 0.55),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextField(
+                    controller: specificInterestController,
+                    style: GoogleFonts.plusJakartaSans(
+                      color: _aiPrimaryText(context),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: interestHint,
+                      hintStyle: GoogleFonts.plusJakartaSans(
+                        color: _aiMutedText(context).withValues(alpha: 0.55),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        _AiSectionLabel(label: focusLabel),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: focusOptions.map((_AiSelectableLabel option) {
+            return _AiFocusAreaChip(
+              label: option.label,
+              selected: selectedFocusAreas.contains(option.value),
+              onTap: () => onToggleFocusArea(option.value),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 24),
+        SizedBox(
+          height: 46,
+          child: OutlinedButton.icon(
+            onPressed: onBackToStepOne,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: _aiPrimaryText(context),
+              side: BorderSide(color: _aiCardBorder(context)),
+              backgroundColor: _aiCardBackground(context),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999),
               ),
-              icon: const Icon(Icons.auto_awesome, size: 18),
+            ),
+            icon: Icon(
+              isArabic ? Icons.arrow_forward_rounded : Icons.arrow_back_rounded,
+              size: 18,
+            ),
+            label: Text(
+              backToStepOne,
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 54,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(999),
+              gradient: const LinearGradient(
+                colors: <Color>[kAiColorPrimaryAccent, kAiColorPrimary],
+              ),
+              boxShadow: const <BoxShadow>[
+                BoxShadow(
+                  blurRadius: 24,
+                  spreadRadius: -18,
+                  offset: Offset(0, 12),
+                  color: kAiShadowPurple,
+                ),
+              ],
+            ),
+            child: ElevatedButton.icon(
+              onPressed: onNext,
+              style: ElevatedButton.styleFrom(
+                foregroundColor: kColorWhite,
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                surfaceTintColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              ),
+              icon: const Icon(Icons.arrow_forward_rounded, size: 18),
               label: Text(
                 cta,
                 style: GoogleFonts.plusJakartaSans(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
                 ),
               ),
             ),
           ),
-        ],
+        ),
+      ],
+    );
+  }
+}
+
+class _AiDetailsStepThreePanel extends StatelessWidget {
+  const _AiDetailsStepThreePanel({
+    required this.isArabic,
+    required this.selectedPreferredDays,
+    required this.onTogglePreferredDay,
+    required this.selectedTimePreference,
+    required this.onSelectTimePreference,
+    required this.budgetRange,
+    required this.onBudgetChanged,
+    required this.locationController,
+    required this.radiusMiles,
+    required this.onRadiusChanged,
+    required this.mapCenter,
+    required this.onMapCenterChanged,
+    required this.onBackToStepTwo,
+    required this.onFindMatches,
+  });
+
+  final bool isArabic;
+  final Set<int> selectedPreferredDays;
+  final ValueChanged<int> onTogglePreferredDay;
+  final String selectedTimePreference;
+  final ValueChanged<String> onSelectTimePreference;
+  final RangeValues budgetRange;
+  final ValueChanged<RangeValues> onBudgetChanged;
+  final TextEditingController locationController;
+  final double radiusMiles;
+  final ValueChanged<double> onRadiusChanged;
+  final LatLng mapCenter;
+  final ValueChanged<LatLng> onMapCenterChanged;
+  final VoidCallback onBackToStepTwo;
+  final VoidCallback onFindMatches;
+
+  @override
+  Widget build(BuildContext context) {
+    final title = isArabic ? 'متى وأين؟' : 'When and where?';
+    final subtitle = isArabic
+        ? 'ساعدنا في تحديد الوقت والمكان المثاليين للتطابقات.'
+        : 'Help us narrow down the perfect schedule and location for your matches.';
+    final daysLabel = isArabic ? 'الأيام المفضلة' : 'PREFERRED DAYS';
+    final timeLabel = isArabic ? 'الوقت المفضل' : 'TIME PREFERENCE';
+    final budgetLabel = isArabic ? 'نطاق الميزانية' : 'BUDGET RANGE';
+    final locationLabel = isArabic ? 'الموقع ونطاق البحث' : 'LOCATION & RADIUS';
+    final budgetValue =
+        '\$${budgetRange.start.round()} — \$${budgetRange.end.round()}';
+    final radiusValue = isArabic
+        ? '${radiusMiles.round()} أميال'
+        : '${radiusMiles.round()} Miles';
+    final radiusHint = isArabic ? 'النطاق' : 'RADIUS';
+    final locationHint = isArabic
+        ? 'أدخل الرمز البريدي أو الحي'
+        : 'Enter zip code or neighborhood';
+    final backLabel = isArabic ? 'العودة للخطوة 2' : 'Back to Step 2';
+    final cta = isArabic ? 'ابحث عن التطابقات' : 'Find Matches';
+    final engineCaption = isArabic
+        ? 'مدعوم بمحرك المطابقة الذكي'
+        : 'Powered by AI Matchmaking Engine v4.2';
+
+    final dayLabels = isArabic
+        ? const <String>['ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح']
+        : const <String>['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+    final timeOptions = isArabic
+        ? const <_AiTimeOption>[
+            _AiTimeOption(
+              value: 'Morning',
+              label: 'الصباح',
+              icon: Icons.light_mode_rounded,
+            ),
+            _AiTimeOption(
+              value: 'Afternoon',
+              label: 'بعد الظهر',
+              icon: Icons.wb_sunny_rounded,
+            ),
+            _AiTimeOption(
+              value: 'Evening',
+              label: 'المساء',
+              icon: Icons.dark_mode_rounded,
+            ),
+          ]
+        : const <_AiTimeOption>[
+            _AiTimeOption(
+              value: 'Morning',
+              label: 'Morning',
+              icon: Icons.light_mode_rounded,
+            ),
+            _AiTimeOption(
+              value: 'Afternoon',
+              label: 'Afternoon',
+              icon: Icons.wb_sunny_rounded,
+            ),
+            _AiTimeOption(
+              value: 'Evening',
+              label: 'Evening',
+              icon: Icons.dark_mode_rounded,
+            ),
+          ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Text(
+          title,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 29,
+            fontWeight: FontWeight.w800,
+            height: 1.05,
+            color: _aiPrimaryText(context),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          subtitle,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: _aiMutedText(context),
+          ),
+        ),
+        const SizedBox(height: 24),
+        _AiSectionLabel(label: daysLabel),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List<Widget>.generate(dayLabels.length, (int index) {
+            return _AiDaySelectorButton(
+              label: dayLabels[index],
+              selected: selectedPreferredDays.contains(index),
+              onTap: () => onTogglePreferredDay(index),
+            );
+          }),
+        ),
+        const SizedBox(height: 24),
+        _AiSectionLabel(label: timeLabel),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: timeOptions.map((_AiTimeOption option) {
+            return _AiTimePreferenceButton(
+              icon: option.icon,
+              label: option.label,
+              selected: selectedTimePreference == option.value,
+              onTap: () => onSelectTimePreference(option.value),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 24),
+        _AiGlassPanel(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+          radius: 24,
+          backgroundColor: _aiCardBackground(context),
+          borderColor: _aiCardBorder(context),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  _AiSectionLabel(label: budgetLabel),
+                  const Spacer(),
+                  Text(
+                    budgetValue,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                      color: kAiColorPrimary,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  activeTrackColor: kAiColorPrimary,
+                  inactiveTrackColor: _aiSurfaceContainer(context),
+                  thumbColor: kAiColorPrimary,
+                  overlayColor: kAiColorPrimary.withValues(alpha: 0.12),
+                  rangeThumbShape: const RoundRangeSliderThumbShape(
+                    enabledThumbRadius: 10,
+                  ),
+                  rangeTrackShape: const RoundedRectRangeSliderTrackShape(),
+                ),
+                child: RangeSlider(
+                  values: budgetRange,
+                  min: 20,
+                  max: 150,
+                  divisions: 26,
+                  onChanged: onBudgetChanged,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      '\$20',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        color: _aiMutedText(context),
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '\$150+',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        color: _aiMutedText(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 18),
+        _AiGlassPanel(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+          radius: 24,
+          backgroundColor: _aiCardBackground(context),
+          borderColor: _aiCardBorder(context),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _AiSectionLabel(label: locationLabel),
+              const SizedBox(height: 10),
+              _AiGlassPanel(
+                radius: 16,
+                backgroundColor: _aiSurfaceContainer(context),
+                borderColor: _aiCardBorder(context),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on_rounded,
+                        size: 20,
+                        color: _aiMutedText(context).withValues(alpha: 0.72),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: locationController,
+                          style: GoogleFonts.plusJakartaSans(
+                            color: _aiPrimaryText(context),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                          ),
+                          decoration: InputDecoration(
+                            hintText: locationHint,
+                            hintStyle: GoogleFonts.plusJakartaSans(
+                              color: _aiMutedText(context),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: <Widget>[
+                  Text(
+                    radiusHint,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.4,
+                      color: _aiMutedText(context),
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    radiusValue,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.2,
+                      color: kAiColorPrimary,
+                    ),
+                  ),
+                ],
+              ),
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  activeTrackColor: kAiColorPrimary,
+                  inactiveTrackColor: _aiSurfaceContainer(context),
+                  thumbColor: kAiColorPrimary,
+                  overlayColor: kAiColorPrimary.withValues(alpha: 0.12),
+                ),
+                child: Slider(
+                  value: radiusMiles,
+                  min: 1,
+                  max: 50,
+                  divisions: 49,
+                  onChanged: onRadiusChanged,
+                ),
+              ),
+              const SizedBox(height: 6),
+              _AiRealtimeMapPreview(
+                mapCenter: mapCenter,
+                radiusMiles: radiusMiles,
+                onMapCenterChanged: onMapCenterChanged,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 18),
+        SizedBox(
+          height: 46,
+          child: OutlinedButton.icon(
+            onPressed: onBackToStepTwo,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: _aiPrimaryText(context),
+              side: BorderSide(color: _aiCardBorder(context)),
+              backgroundColor: _aiCardBackground(context),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999),
+              ),
+            ),
+            icon: Icon(
+              isArabic ? Icons.arrow_forward_rounded : Icons.arrow_back_rounded,
+              size: 18,
+            ),
+            label: Text(
+              backLabel,
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 54,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(999),
+              gradient: const LinearGradient(
+                colors: <Color>[kAiColorPrimaryAccent, kAiColorPrimary],
+              ),
+              boxShadow: const <BoxShadow>[
+                BoxShadow(
+                  blurRadius: 24,
+                  spreadRadius: -18,
+                  offset: Offset(0, 12),
+                  color: kAiShadowPurple,
+                ),
+              ],
+            ),
+            child: ElevatedButton.icon(
+              onPressed: onFindMatches,
+              style: ElevatedButton.styleFrom(
+                foregroundColor: kColorWhite,
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                surfaceTintColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              ),
+              icon: const Icon(Icons.auto_awesome_rounded, size: 18),
+              label: Text(
+                cta,
+                style: GoogleFonts.plusJakartaSans(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          engineCaption,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 10,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.4,
+            color: _aiMutedText(context).withValues(alpha: 0.45),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AiDaySelectorButton extends StatelessWidget {
+  const _AiDaySelectorButton({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        customBorder: const CircleBorder(),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          width: 40,
+          height: 40,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: selected
+                ? kAiColorPrimary.withValues(alpha: 0.12)
+                : _aiCardBackground(context),
+            border: Border.all(
+              color: selected ? kAiColorPrimary : _aiCardBorder(context),
+              width: selected ? 2 : 1,
+            ),
+          ),
+          child: Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 13,
+              fontWeight: FontWeight.w800,
+              color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
-class _AiField extends StatelessWidget {
-  const _AiField({
+class _AiTimeOption {
+  const _AiTimeOption({
+    required this.value,
     required this.label,
-    required this.controller,
-    this.hintText,
-    this.keyboardType,
+    required this.icon,
+  });
+
+  final String value;
+  final String label;
+  final IconData icon;
+}
+
+class _AiTimePreferenceButton extends StatelessWidget {
+  const _AiTimePreferenceButton({
+    required this.icon,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: selected
+                ? kAiColorPrimary.withValues(alpha: 0.12)
+                : _aiCardBackground(context),
+            border: Border.all(
+              color: selected ? kAiColorPrimary : _aiCardBorder(context),
+              width: selected ? 2 : 1,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(
+                icon,
+                size: 18,
+                color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AiRealtimeMapPreview extends StatelessWidget {
+  const _AiRealtimeMapPreview({
+    required this.mapCenter,
+    required this.radiusMiles,
+    required this.onMapCenterChanged,
+  });
+
+  final LatLng mapCenter;
+  final double radiusMiles;
+  final ValueChanged<LatLng> onMapCenterChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final radiusMeters = _milesToMeters(radiusMiles);
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(22),
+      child: SizedBox(
+        height: 210,
+        child: FlutterMap(
+          options: MapOptions(
+            initialCenter: mapCenter,
+            initialZoom: 12.5,
+            minZoom: 4,
+            maxZoom: 18,
+            onTap: (_, LatLng point) => onMapCenterChanged(point),
+            onPositionChanged: (position, bool hasGesture) {
+              final center = position.center;
+              if (!hasGesture) {
+                return;
+              }
+              onMapCenterChanged(center);
+            },
+          ),
+          children: <Widget>[
+            TileLayer(
+              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+              userAgentPackageName: 'com.activly.app',
+            ),
+            CircleLayer(
+              circles: <CircleMarker>[
+                CircleMarker(
+                  point: mapCenter,
+                  radius: radiusMeters,
+                  useRadiusInMeter: true,
+                  color: kAiColorPrimary.withValues(alpha: 0.12),
+                  borderColor: kAiColorPrimary.withValues(alpha: 0.48),
+                  borderStrokeWidth: 2,
+                ),
+              ],
+            ),
+            MarkerLayer(
+              markers: <Marker>[
+                Marker(
+                  point: mapCenter,
+                  width: 22,
+                  height: 22,
+                  alignment: Alignment.center,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: kAiColorPrimary,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.circle, size: 8, color: kColorWhite),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            RichAttributionWidget(
+              alignment: AttributionAlignment.bottomRight,
+              attributions: const <SourceAttribution>[
+                TextSourceAttribution('OpenStreetMap contributors'),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AiSelectableLabel {
+  const _AiSelectableLabel({required this.value, required this.label});
+
+  final String value;
+  final String label;
+}
+
+class _AiSkillLevelButton extends StatelessWidget {
+  const _AiSkillLevelButton({
+    required this.label,
+    required this.selected,
+    required this.onTap,
   });
 
   final String label;
-  final String? hintText;
-  final TextInputType? keyboardType;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+          alignment: Alignment.center,
+          height: 44,
+          decoration: BoxDecoration(
+            color: selected ? _aiCardBackground(context) : Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: selected
+                  ? _aiGlassBorderColor(context)
+                  : Colors.transparent,
+            ),
+            boxShadow: selected
+                ? const <BoxShadow>[
+                    BoxShadow(
+                      blurRadius: 20,
+                      spreadRadius: -18,
+                      offset: Offset(0, 12),
+                      color: kAiShadowMedium,
+                    ),
+                  ]
+                : const <BoxShadow>[],
+          ),
+          child: Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 13,
+              fontWeight: FontWeight.w800,
+              color: selected ? kAiColorPrimary : _aiMutedText(context),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AiFocusAreaChip extends StatelessWidget {
+  const _AiFocusAreaChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: selected
+                ? kAiColorPrimary.withValues(alpha: 0.12)
+                : _aiCardBackground(context),
+            border: Border.all(
+              color: selected ? kAiColorPrimary : _aiCardBorder(context),
+              width: selected ? 2 : 1,
+            ),
+          ),
+          child: Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AiSecondStepHeroCard extends StatelessWidget {
+  const _AiSecondStepHeroCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
+          color: kAiColorPrimary.withValues(alpha: 0.08),
+          border: Border.all(color: kColorWhite, width: 4),
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
+              blurRadius: 26,
+              spreadRadius: -18,
+              offset: Offset(0, 14),
+              color: kAiShadowMedium,
+            ),
+          ],
+        ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Image.network(
+              'https://lh3.googleusercontent.com/aida-public/AB6AXuDIcanxNqodQs69sKXENv4oxZMAHzII7zmGA8uroZP9s7XXkSfU3KG484vr1j9tLSMT3Q3_MYvnzPTg1BxtdVBiOyFa2Lj_QRAuqomyQplEmBP3brz0R9bTcrULBm8co1-Q5CSU2J23TgVxZDFEh5SpCp02_oxMqukhh6O4NhDOaV19cfLCACBRycnYdueFOi_gbM5fvPeGllZEohIF2bUskDLyTGkqLMtvwHvueG3_fun-L8IlmDNgtZcx3hH922qNKq4SiaCKiAM',
+              fit: BoxFit.cover,
+              errorBuilder:
+                  (BuildContext context, Object error, StackTrace? stackTrace) {
+                    return DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: <Color>[
+                            kAiColorPrimary.withValues(alpha: 0.18),
+                            kAiColorPrimaryAccent.withValues(alpha: 0.36),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.smart_toy_rounded,
+                          color: kColorWhite,
+                          size: 52,
+                        ),
+                      ),
+                    );
+                  },
+            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: <Color>[
+                    Colors.transparent,
+                    kAiColorPrimary.withValues(alpha: 0.20),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AiSectionLabel extends StatelessWidget {
+  const _AiSectionLabel({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      label,
+      style: GoogleFonts.plusJakartaSans(
+        fontSize: 11,
+        fontWeight: FontWeight.w800,
+        letterSpacing: 0.8,
+        color: _aiMutedText(context).withValues(alpha: 0.7),
+      ),
+    );
+  }
+}
+
+class _AiCompactInputField extends StatelessWidget {
+  const _AiCompactInputField({
+    required this.controller,
+    required this.hintText,
+    required this.icon,
+    this.keyboardType,
+  });
+
   final TextEditingController controller;
+  final String hintText;
+  final IconData icon;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -1069,32 +2907,425 @@ class _AiField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       style: GoogleFonts.plusJakartaSans(
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
         color: _aiPrimaryText(context),
-        fontWeight: FontWeight.w600,
       ),
       decoration: InputDecoration(
-        labelText: label,
         hintText: hintText,
-        labelStyle: GoogleFonts.plusJakartaSans(
-          color: _aiMutedText(context),
-          fontWeight: FontWeight.w600,
-        ),
         hintStyle: GoogleFonts.plusJakartaSans(
-          color: _aiMutedText(context).withValues(alpha: 0.75),
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color: _aiMutedText(context),
         ),
+        prefixIcon: Icon(icon, size: 18, color: _aiMutedText(context)),
         filled: true,
-        fillColor: _aiInputFill(context),
+        fillColor: _aiCardBackground(context),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 14,
+          vertical: 12,
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: _aiInputBorder(context)),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: _aiCardBorder(context)),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: _aiInputBorder(context)),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: _aiCardBorder(context)),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: kAiColorPrimary),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: kAiColorPrimary, width: 1.5),
+        ),
+      ),
+    );
+  }
+}
+
+class _AiGenderChip extends StatelessWidget {
+  const _AiGenderChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(999),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(999),
+            color: selected
+                ? kAiColorPrimary.withValues(alpha: 0.12)
+                : _aiCardBackground(context),
+            border: Border.all(
+              color: selected ? kAiColorPrimary : _aiCardBorder(context),
+            ),
+          ),
+          child: Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AiKidLiveProfileCard extends StatefulWidget {
+  const _AiKidLiveProfileCard({
+    required this.isArabic,
+    required this.kidName,
+    required this.kidAge,
+    required this.kidGender,
+    required this.selectedInterest,
+    required this.detailsSaved,
+    required this.savedAt,
+  });
+
+  final bool isArabic;
+  final String kidName;
+  final String kidAge;
+  final String kidGender;
+  final String selectedInterest;
+  final bool detailsSaved;
+  final DateTime? savedAt;
+
+  @override
+  State<_AiKidLiveProfileCard> createState() => _AiKidLiveProfileCardState();
+}
+
+class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
+  bool _showHint = false;
+
+  String _interestHint(bool isArabic) {
+    final interest = widget.selectedInterest;
+    if (interest == 'Soccer') {
+      return isArabic
+          ? 'اختيار كرة القدم ممتاز. اقترح جلسة تجريبية مساءً لقياس الحماس.'
+          : 'Soccer is a strong pick. Try an evening trial first to test energy.';
+    }
+    if (interest == 'Science') {
+      return isArabic
+          ? 'ميول العلوم واضحة. ابحث عن برنامج تطبيقي وتجارب عملية.'
+          : 'Science interest looks clear. Prioritize hands-on experiment programs.';
+    }
+    if (interest == 'Music') {
+      return isArabic
+          ? 'الموسيقى خيار رائع. ابدأ بحصص قصيرة ثم زد المدة تدريجياً.'
+          : 'Music is a great path. Start with short sessions, then scale duration.';
+    }
+    if (interest == 'Art & Craft') {
+      return isArabic
+          ? 'الفن مناسب لهذا الملف. ركز على بيئة هادئة ومدربة صبورة.'
+          : 'Art fits this profile well. Look for calm spaces with patient mentors.';
+    }
+
+    return isArabic
+        ? 'اختر اهتماماً واحداً لرفع دقة المطابقة قبل الانتقال للخطوة التالية.'
+        : 'Pick one interest to improve matching precision before continuing.';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isArabic = widget.isArabic;
+    final score =
+        ((widget.kidName.isNotEmpty ? 0.32 : 0.0) +
+                (widget.kidAge.isNotEmpty ? 0.24 : 0.0) +
+                (widget.kidGender.isNotEmpty ? 0.18 : 0.0) +
+                (widget.selectedInterest.isNotEmpty ? 0.26 : 0.0))
+            .clamp(0.0, 1.0);
+    final scorePercent = (score * 100).round();
+    final status = score >= 0.8
+        ? (isArabic ? 'جاهز للمطابقة' : 'Ready to match')
+        : (isArabic
+              ? 'الملف يحتاج لمسة أخيرة'
+              : 'Profile needs one more touch');
+
+    String? savedAtLabel;
+    if (widget.savedAt != null) {
+      final hour = widget.savedAt!.hour.toString().padLeft(2, '0');
+      final minute = widget.savedAt!.minute.toString().padLeft(2, '0');
+      savedAtLabel = isArabic
+          ? 'آخر حفظ $hour:$minute'
+          : 'Saved at $hour:$minute';
+    }
+
+    Widget profileChip({required IconData icon, required String text}) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: _aiSurfaceContainer(context),
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(color: _aiCardBorder(context)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(icon, size: 14, color: _aiMutedText(context)),
+            const SizedBox(width: 6),
+            Text(
+              text,
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: _aiPrimaryText(context),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => setState(() => _showHint = !_showHint),
+        borderRadius: BorderRadius.circular(22),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            color: _aiCardBackground(context),
+            border: Border.all(
+              color: widget.detailsSaved
+                  ? kAiColorPrimary.withValues(alpha: 0.55)
+                  : _aiCardBorder(context),
+              width: widget.detailsSaved ? 1.4 : 1,
+            ),
+            boxShadow: const <BoxShadow>[
+              BoxShadow(
+                blurRadius: 18,
+                spreadRadius: -14,
+                offset: Offset(0, 10),
+                color: kAiShadowMedium,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.auto_awesome_rounded,
+                    size: 17,
+                    color: kAiColorPrimary,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      isArabic ? 'بطاقة الملف الذكية' : 'Live Profile Card',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                        color: _aiPrimaryText(context),
+                      ),
+                    ),
+                  ),
+                  if (widget.detailsSaved)
+                    Icon(
+                      Icons.check_circle_rounded,
+                      size: 18,
+                      color: kAiColorPrimary,
+                    ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                switchInCurve: Curves.easeOut,
+                switchOutCurve: Curves.easeIn,
+                child: _showHint
+                    ? Text(
+                        _interestHint(isArabic),
+                        key: const ValueKey<String>('hint-mode'),
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: _aiMutedText(context),
+                          height: 1.35,
+                        ),
+                      )
+                    : Wrap(
+                        key: const ValueKey<String>('profile-mode'),
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: <Widget>[
+                          profileChip(
+                            icon: Icons.badge_rounded,
+                            text: widget.kidName.isEmpty
+                                ? (isArabic ? 'الاسم' : 'Name')
+                                : widget.kidName,
+                          ),
+                          profileChip(
+                            icon: Icons.cake_rounded,
+                            text: widget.kidAge.isEmpty
+                                ? (isArabic ? 'العمر' : 'Age')
+                                : widget.kidAge,
+                          ),
+                          profileChip(
+                            icon: Icons.person_outline_rounded,
+                            text: widget.kidGender,
+                          ),
+                          profileChip(
+                            icon: Icons.interests_rounded,
+                            text: widget.selectedInterest.isEmpty
+                                ? (isArabic ? 'الاهتمام' : 'Interest')
+                                : widget.selectedInterest,
+                          ),
+                        ],
+                      ),
+              ),
+              const SizedBox(height: 10),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(999),
+                child: LinearProgressIndicator(
+                  minHeight: 8,
+                  value: score,
+                  backgroundColor: _aiSurfaceContainer(context),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    kAiColorPrimary,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      '$status • $scorePercent%',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: _aiPrimaryText(context),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    savedAtLabel ??
+                        (isArabic
+                            ? 'انقر للانتقال بين الملخص والنصيحة'
+                            : 'Tap to switch summary and hint'),
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w600,
+                      color: _aiMutedText(context),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AiInterestOption {
+  const _AiInterestOption({
+    required this.value,
+    required this.label,
+    required this.icon,
+  });
+
+  final String value;
+  final String label;
+  final IconData icon;
+}
+
+class _AiInterestCard extends StatelessWidget {
+  const _AiInterestCard({
+    required this.option,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final _AiInterestOption option;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(18),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            color: _aiCardBackground(context),
+            border: Border.all(
+              color: selected ? kAiColorPrimary : _aiCardBorder(context),
+              width: selected ? 1.5 : 1,
+            ),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                blurRadius: 14,
+                spreadRadius: -12,
+                offset: const Offset(0, 8),
+                color: kAiShadowMedium,
+              ),
+            ],
+          ),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _aiSurfaceContainer(context),
+                ),
+                child: Icon(
+                  option.icon,
+                  size: 17,
+                  color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  option.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                    color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+                  ),
+                ),
+              ),
+              if (selected)
+                const Icon(
+                  Icons.check_circle_rounded,
+                  size: 16,
+                  color: kAiColorPrimary,
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -1123,9 +3354,28 @@ class _AiChatInput extends StatelessWidget {
       ],
       child: Row(
         children: <Widget>[
+          const SizedBox(width: 6),
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: kAiColorPrimary.withValues(alpha: 0.10),
+              border: Border.all(
+                color: kAiColorPrimary.withValues(alpha: 0.20),
+              ),
+            ),
+            child: const Icon(
+              Icons.smart_toy_rounded,
+              size: 17,
+              color: kAiColorPrimary,
+            ),
+          ),
+          const SizedBox(width: 4),
           Expanded(
             child: TextField(
               controller: controller,
+              textInputAction: TextInputAction.send,
               style: GoogleFonts.plusJakartaSans(
                 color: _aiPrimaryText(context),
                 fontWeight: FontWeight.w600,
@@ -1137,16 +3387,16 @@ class _AiChatInput extends StatelessWidget {
                 ),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 18,
+                  horizontal: 12,
                   vertical: 14,
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(right: 6),
+            padding: const EdgeInsetsDirectional.only(end: 4),
             child: Material(
-              color: kAiColorPrimary,
+              color: kAiColorPrimary.withValues(alpha: 0.10),
               shape: const CircleBorder(),
               child: InkWell(
                 onTap: () {},
@@ -1154,7 +3404,47 @@ class _AiChatInput extends StatelessWidget {
                 child: const SizedBox(
                   width: 40,
                   height: 40,
-                  child: Icon(Icons.send_rounded, size: 20, color: kColorWhite),
+                  child: Icon(
+                    Icons.mic_none_rounded,
+                    size: 20,
+                    color: kAiColorPrimary,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 6),
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: <Color>[kAiColorPrimaryAccent, kAiColorPrimary],
+                ),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    blurRadius: 22,
+                    spreadRadius: -16,
+                    offset: Offset(0, 10),
+                    color: kAiShadowPurple,
+                  ),
+                ],
+              ),
+              child: Material(
+                color: Colors.transparent,
+                shape: const CircleBorder(),
+                child: InkWell(
+                  onTap: () {},
+                  customBorder: const CircleBorder(),
+                  child: const SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: Icon(
+                      Icons.send_rounded,
+                      size: 20,
+                      color: kColorWhite,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -1168,16 +3458,16 @@ class _AiChatInput extends StatelessWidget {
 class _AiOnboardingSkeleton extends StatefulWidget {
   const _AiOnboardingSkeleton({
     required this.isInAppMode,
+    required this.isChatMode,
     required this.contentBottomPadding,
     required this.inputBottomOffset,
-    required this.waveBottomOffset,
     required this.showBottomNav,
   });
 
   final bool isInAppMode;
+  final bool isChatMode;
   final double contentBottomPadding;
   final double inputBottomOffset;
-  final double waveBottomOffset;
   final bool showBottomNav;
 
   @override
@@ -1206,6 +3496,13 @@ class _AiOnboardingSkeletonState extends State<_AiOnboardingSkeleton>
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.viewPaddingOf(context).bottom;
+    final topBarTop = kFixedTopSpace + kTopControlsVerticalOffset;
+    final fixedChatToggleTop = topBarTop + 52;
+    final contentTopPadding = fixedChatToggleTop;
+    final topShadowHeight = fixedChatToggleTop;
+    final bottomFadeHeight = widget.isChatMode
+        ? widget.inputBottomOffset + 108
+        : 0.0;
 
     return AnimatedBuilder(
       animation: _pulseController,
@@ -1236,43 +3533,60 @@ class _AiOnboardingSkeletonState extends State<_AiOnboardingSkeleton>
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
                           20,
-                          kFixedTopSpace + kTopControlHeight + 34,
+                          contentTopPadding,
                           20,
                           widget.contentBottomPadding,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            _AiSkeletonBlock(
-                              height: 54,
-                              radius: 18,
-                              color: baseColor,
-                            ),
-                            const SizedBox(height: 12),
-                            _AiSkeletonBlock(
-                              height: 72,
-                              radius: 18,
-                              color: baseColor,
-                            ),
-                            const SizedBox(height: 12),
-                            Align(
+                            Center(
                               child: _AiSkeletonBlock(
-                                width: 262,
-                                height: 12,
-                                radius: 8,
-                                color: strongColor,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Align(
-                              child: _AiSkeletonBlock(
-                                width: 216,
-                                height: 12,
-                                radius: 8,
-                                color: strongColor,
+                                height: 54,
+                                radius: 18,
+                                color: baseColor,
                               ),
                             ),
                             const SizedBox(height: 18),
+                            if (!widget.isChatMode) ...<Widget>[
+                              _AiSkeletonBlock(
+                                height: 54,
+                                radius: 18,
+                                color: baseColor,
+                              ),
+                              const SizedBox(height: 12),
+                              _AiSkeletonBlock(
+                                height: 72,
+                                radius: 18,
+                                color: baseColor,
+                              ),
+                              const SizedBox(height: 12),
+                              Align(
+                                child: _AiSkeletonBlock(
+                                  width: 262,
+                                  height: 12,
+                                  radius: 8,
+                                  color: strongColor,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Align(
+                                child: _AiSkeletonBlock(
+                                  width: 216,
+                                  height: 12,
+                                  radius: 8,
+                                  color: strongColor,
+                                ),
+                              ),
+                              const SizedBox(height: 18),
+                            ] else ...<Widget>[
+                              _AiSkeletonBlock(
+                                height: 90,
+                                radius: 20,
+                                color: baseColor,
+                              ),
+                              const SizedBox(height: 14),
+                            ],
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -1357,21 +3671,40 @@ class _AiOnboardingSkeletonState extends State<_AiOnboardingSkeleton>
                 ),
               ),
               Positioned(
-                top: kFixedTopSpace + kTopControlsVerticalOffset,
+                top: 0,
+                left: 0,
+                right: 0,
+                child: IgnorePointer(
+                  child: _AiTopShadowOverlay(height: topShadowHeight),
+                ),
+              ),
+              if (widget.isChatMode)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: IgnorePointer(
+                    child: _AiBottomShadowOverlay(height: bottomFadeHeight),
+                  ),
+                ),
+              Positioned(
+                top: topBarTop,
                 left: kTopControlsSidePadding,
                 right: kTopControlsSidePadding,
                 child: Row(
                   children: <Widget>[
                     const SizedBox(width: 40, height: 40),
                     Expanded(
-                      child: Align(
-                        child: _AiSkeletonBlock(
-                          width: 130,
-                          height: 22,
-                          radius: 8,
-                          color: strongColor,
-                        ),
-                      ),
+                      child: widget.isChatMode
+                          ? const SizedBox.shrink()
+                          : Align(
+                              child: _AiSkeletonBlock(
+                                width: 130,
+                                height: 22,
+                                radius: 8,
+                                color: strongColor,
+                              ),
+                            ),
                     ),
                     _AiSkeletonBlock(
                       width: widget.isInAppMode ? 126 : 80,
@@ -1382,29 +3715,22 @@ class _AiOnboardingSkeletonState extends State<_AiOnboardingSkeleton>
                   ],
                 ),
               ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: widget.waveBottomOffset,
-                child: IgnorePointer(
-                  child: SizedBox(height: 146, child: _AiBottomWave()),
-                ),
-              ),
-              Positioned(
-                left: 20,
-                right: 20,
-                bottom: widget.inputBottomOffset,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 420),
-                    child: _AiSkeletonBlock(
-                      height: 54,
-                      radius: 999,
-                      color: strongColor,
+              if (widget.isChatMode)
+                Positioned(
+                  left: 20,
+                  right: 20,
+                  bottom: widget.inputBottomOffset,
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 420),
+                      child: _AiSkeletonBlock(
+                        height: 54,
+                        radius: 999,
+                        color: strongColor,
+                      ),
                     ),
                   ),
                 ),
-              ),
               if (widget.showBottomNav)
                 Positioned(
                   left: 0,
@@ -1552,170 +3878,6 @@ class _AiBackgroundOrb extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _AiBottomWave extends StatelessWidget {
-  const _AiBottomWave();
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _AiBottomWavePainter(color: _aiWaveColor(context)),
-      child: const SizedBox.expand(),
-    );
-  }
-}
-
-class _AiBottomWavePainter extends CustomPainter {
-  _AiBottomWavePainter({required this.color});
-
-  final Color color;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final basePath = Path()
-      ..moveTo(0, size.height * 0.48)
-      ..cubicTo(
-        size.width * 0.16,
-        size.height * 0.58,
-        size.width * 0.32,
-        size.height * 0.18,
-        size.width * 0.48,
-        size.height * 0.28,
-      )
-      ..cubicTo(
-        size.width * 0.66,
-        size.height * 0.38,
-        size.width * 0.80,
-        size.height * 0.16,
-        size.width,
-        size.height * 0.28,
-      )
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-
-    final topLayerPaint = Paint()
-      ..color = color.withValues(alpha: 0.24)
-      ..style = PaintingStyle.fill;
-
-    final secondLayer = Path()
-      ..moveTo(0, size.height * 0.62)
-      ..cubicTo(
-        size.width * 0.22,
-        size.height * 0.42,
-        size.width * 0.40,
-        size.height * 0.78,
-        size.width * 0.58,
-        size.height * 0.62,
-      )
-      ..cubicTo(
-        size.width * 0.76,
-        size.height * 0.46,
-        size.width * 0.88,
-        size.height * 0.72,
-        size.width,
-        size.height * 0.60,
-      )
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-
-    final bottomLayerPaint = Paint()
-      ..color = color.withValues(alpha: 0.14)
-      ..style = PaintingStyle.fill;
-
-    canvas.drawPath(basePath, topLayerPaint);
-    canvas.drawPath(secondLayer, bottomLayerPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _AiBottomWavePainter oldDelegate) {
-    return oldDelegate.color != color;
-  }
-}
-
-class _AiBottomNav extends StatelessWidget {
-  const _AiBottomNav();
-
-  @override
-  Widget build(BuildContext context) {
-    final bottomInset = MediaQuery.viewPaddingOf(context).bottom;
-
-    return Container(
-      padding: EdgeInsets.fromLTRB(12, 10, 12, math.max(12, bottomInset)),
-      decoration: BoxDecoration(
-        color: _aiBottomNavBackground(context),
-        border: Border(top: BorderSide(color: _aiBottomNavBorder(context))),
-      ),
-      child: const Row(
-        children: <Widget>[
-          Expanded(
-            child: _AiBottomNavItem(
-              icon: Icons.home_outlined,
-              label: 'Home',
-              active: false,
-            ),
-          ),
-          Expanded(
-            child: _AiBottomNavItem(
-              icon: Icons.search,
-              label: 'Search',
-              active: false,
-            ),
-          ),
-          Expanded(
-            child: _AiBottomNavItem(
-              icon: Icons.explore,
-              label: 'Explore',
-              active: true,
-            ),
-          ),
-          Expanded(
-            child: _AiBottomNavItem(
-              icon: Icons.person_outline,
-              label: 'Profile',
-              active: false,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _AiBottomNavItem extends StatelessWidget {
-  const _AiBottomNavItem({
-    required this.icon,
-    required this.label,
-    required this.active,
-  });
-
-  final IconData icon;
-  final String label;
-  final bool active;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = active ? kAiColorPrimary : _aiBottomNavInactive(context);
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Icon(icon, color: color, size: 24),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: GoogleFonts.plusJakartaSans(
-            color: color,
-            fontSize: 10,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 0.2,
-          ),
-        ),
-      ],
     );
   }
 }

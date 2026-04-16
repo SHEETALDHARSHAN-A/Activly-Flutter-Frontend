@@ -216,7 +216,8 @@ class _ActivlyShellState extends State<ActivlyShell> {
           language: _language,
           t: _t,
           onToggleLanguage: _toggleLanguage,
-          onSeeAllFeatured: () => setState(() => _activePage = AppPage.featuredAll),
+          onSeeAllFeatured: () =>
+              setState(() => _activePage = AppPage.featuredAll),
         );
       }
 
@@ -237,11 +238,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
           onSelectVideo: _setCurrentVideo,
           onContinueEmail: _goToLoginPage,
           onContinuePhone: _goToLoginPage,
-          onSkipForNow: () async {
-            if (mounted) {
-              setState(() => _activePage = AppPage.main);
-            }
-          },
+          onSkipForNow: () => unawaited(_goToAiMatchPage()),
         );
       }
 
@@ -251,7 +248,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
           t: _t,
           onToggleLanguage: _toggleLanguage,
           isInAppMode: true,
-          showBottomNavInAppMode: true,
+          showBottomNavInAppMode: false,
         );
       }
 

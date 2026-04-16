@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' show ImageFilter;
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,13 @@ part 'app/shared/widgets/language_toggle.dart';
 part 'app/shared/widgets/landing_buttons.dart';
 part 'app/shared/widgets/auth_buttons.dart';
 part 'app/shared/painters/google_g_arcs_painter.dart';
+part 'app/features/main/main_screen.dart';
+part 'app/features/main/featured_all_screen.dart';
+part 'app/features/main/tabs/home_tab.dart';
+part 'app/features/main/tabs/search_tab.dart';
+part 'app/features/main/tabs/explore_tab.dart';
+part 'app/features/main/tabs/ai_tab.dart';
+part 'app/features/main/tabs/profile_tab.dart';
 
 void runActivlyApp() {
   runApp(const ActivlyApp());

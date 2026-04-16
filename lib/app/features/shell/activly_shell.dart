@@ -15,7 +15,8 @@ class _ActivlyShellState extends State<ActivlyShell> {
   AppLanguage _language = AppLanguage.en;
   final bool _isLoaded = true;
   int _currentVideoIndex = 0;
-  AppPage _activePage = AppPage.landing;
+  AppPage _activePage = AppPage.entry;
+  AppPage _loginBackTarget = AppPage.entry;
 
   final List<bool> _videoError = List<bool>.filled(kVideoAssets.length, false);
   final List<VideoPlayerController?> _videoControllers =
@@ -34,7 +35,8 @@ class _ActivlyShellState extends State<ActivlyShell> {
   }
 
   bool get _showLoader {
-    if (_activePage != AppPage.landing || !widget.enableVideos) {
+    if ((_activePage != AppPage.entry && _activePage != AppPage.landing) ||
+        !widget.enableVideos) {
       return false;
     }
 
@@ -198,11 +200,21 @@ class _ActivlyShellState extends State<ActivlyShell> {
     setState(() => _activePage = AppPage.aiMatch);
   }
 
-  Future<void> _goToLoginPage() async {
+  Future<void> _goToLandingPage() async {
     if (!mounted) {
       return;
     }
-    setState(() => _activePage = AppPage.login);
+    setState(() => _activePage = AppPage.landing);
+  }
+
+  Future<void> _goToLoginPage({required AppPage backTarget}) async {
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _loginBackTarget = backTarget;
+      _activePage = AppPage.login;
+    });
   }
 
   @override
@@ -211,6 +223,16 @@ class _ActivlyShellState extends State<ActivlyShell> {
     final useSplitLayout = screenWidth >= _splitLayoutBreakpoint;
 
     Widget pageContent() {
+      if (_activePage == AppPage.entry) {
+        return _LandingEntryGateScreen(
+          language: _language,
+          isLoaded: _isLoaded,
+          onToggleLanguage: _toggleLanguage,
+          onGetStarted: () => unawaited(_goToLandingPage()),
+          onLogin: () => unawaited(_goToLoginPage(backTarget: AppPage.entry)),
+        );
+      }
+
       if (_activePage == AppPage.main) {
         return MainScreen(
           language: _language,
@@ -236,8 +258,8 @@ class _ActivlyShellState extends State<ActivlyShell> {
           totalVideos: kVideoAssets.length,
           onToggleLanguage: _toggleLanguage,
           onSelectVideo: _setCurrentVideo,
-          onContinueEmail: _goToLoginPage,
-          onContinuePhone: _goToLoginPage,
+          onContinueEmail: () => _goToLoginPage(backTarget: AppPage.landing),
+          onContinuePhone: () => _goToLoginPage(backTarget: AppPage.landing),
           onSkipForNow: () => unawaited(_goToAiMatchPage()),
         );
       }
@@ -256,7 +278,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
         language: _language,
         t: _t,
         onToggleLanguage: _toggleLanguage,
-        onBackToLanding: () => setState(() => _activePage = AppPage.landing),
+        onBackToLanding: () => setState(() => _activePage = _loginBackTarget),
         onAuthSuccess: () => unawaited(_goToAiMatchPage()),
       );
     }
@@ -343,6 +365,240 @@ class _ActivlyShellState extends State<ActivlyShell> {
                 ),
               ),
             Positioned.fill(child: LoadingOverlay(isVisible: _showLoader)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LandingEntryGateScreen extends StatelessWidget {
+  const _LandingEntryGateScreen({
+    required this.language,
+    required this.isLoaded,
+    required this.onToggleLanguage,
+    required this.onGetStarted,
+    required this.onLogin,
+  });
+
+  final AppLanguage language;
+  final bool isLoaded;
+  final VoidCallback onToggleLanguage;
+  final VoidCallback onGetStarted;
+  final VoidCallback onLogin;
+
+  @override
+  Widget build(BuildContext context) {
+    final isArabic = language == AppLanguage.ar;
+    final title = isArabic
+        ? 'ابدأ رحلة نشاط طفلك.'
+        : 'Start your child activity journey.';
+    final subtitle = isArabic
+        ? 'اضغط ابدأ الآن أو سجّل الدخول للمتابعة.'
+        : 'Tap Get Started or Login to continue.';
+    final getStartedLabel = isArabic ? 'ابدأ الآن' : 'Get Started';
+    final loginLabel = isArabic ? 'تسجيل الدخول' : 'Login';
+
+    return Directionality(
+      textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+      child: SafeArea(
+        top: false,
+        child: Stack(
+          children: <Widget>[
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 420),
+                  child: LayoutBuilder(
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                          final compact = constraints.maxHeight < 620;
+                          final compactScale = compact ? 0.86 : 1.0;
+
+                          return SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: constraints.maxHeight,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  24,
+                                  20,
+                                  24,
+                                  48,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: <Widget>[
+                                    AnimatedOpacity(
+                                      opacity: isLoaded ? 1 : 0,
+                                      duration: const Duration(
+                                        milliseconds: 450,
+                                      ),
+                                      child: Image.asset(
+                                        'assets/Activly-logo.png',
+                                        width: compact ? 260 : 310,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    SizedBox(height: 24 * compactScale),
+                                    AnimatedOpacity(
+                                      opacity: isLoaded ? 1 : 0,
+                                      duration: const Duration(
+                                        milliseconds: 550,
+                                      ),
+                                      child: Text(
+                                        title,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: compact ? 26 : 30,
+                                          height: 1.08,
+                                          fontWeight: FontWeight.w700,
+                                          color: kColorWhite,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 8 * compactScale),
+                                    AnimatedOpacity(
+                                      opacity: isLoaded ? 1 : 0,
+                                      duration: const Duration(
+                                        milliseconds: 650,
+                                      ),
+                                      child: Text(
+                                        subtitle,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: compact ? 14 : 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: kColorWhite.withValues(
+                                            alpha: 0.78,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 32 * compactScale),
+                                    AnimatedOpacity(
+                                      opacity: isLoaded ? 1 : 0,
+                                      duration: const Duration(
+                                        milliseconds: 760,
+                                      ),
+                                      child: SizedBox(
+                                        height: 54,
+                                        child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              999,
+                                            ),
+                                            gradient: const LinearGradient(
+                                              colors: <Color>[
+                                                kColorPrimary,
+                                                kColorPrimaryAccent,
+                                              ],
+                                            ),
+                                            boxShadow: const <BoxShadow>[
+                                              BoxShadow(
+                                                blurRadius: 28,
+                                                spreadRadius: -18,
+                                                offset: Offset(0, 12),
+                                                color: kColorPrimary,
+                                              ),
+                                            ],
+                                          ),
+                                          child: ElevatedButton.icon(
+                                            onPressed: onGetStarted,
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              foregroundColor: kColorWhite,
+                                              shadowColor: Colors.transparent,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(999),
+                                              ),
+                                            ),
+                                            icon: Icon(
+                                              isArabic
+                                                  ? Icons.arrow_back_rounded
+                                                  : Icons.arrow_forward_rounded,
+                                              size: 20,
+                                            ),
+                                            label: Text(
+                                              getStartedLabel,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 12 * compactScale),
+                                    AnimatedOpacity(
+                                      opacity: isLoaded ? 1 : 0,
+                                      duration: const Duration(
+                                        milliseconds: 860,
+                                      ),
+                                      child: SizedBox(
+                                        height: 50,
+                                        child: OutlinedButton(
+                                          onPressed: onLogin,
+                                          style: OutlinedButton.styleFrom(
+                                            foregroundColor: kColorWhite,
+                                            side: BorderSide(
+                                              color: kColorWhite.withValues(
+                                                alpha: 0.38,
+                                              ),
+                                            ),
+                                            backgroundColor: kColorBlack
+                                                .withValues(alpha: 0.28),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(999),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            loginLabel,
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: kFixedTopSpace + kTopControlsVerticalOffset,
+              left: kTopControlsSidePadding,
+              right: kTopControlsSidePadding,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  const SizedBox(
+                    width: kTopControlWidth,
+                    height: kTopControlHeight,
+                  ),
+                  LanguageToggle(
+                    language: language,
+                    onToggle: onToggleLanguage,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

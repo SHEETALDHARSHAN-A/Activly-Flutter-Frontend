@@ -107,9 +107,9 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   final ScrollController _contentScrollController = ScrollController();
   final TextEditingController _messageController = TextEditingController();
   final TextEditingController _kidNameController = TextEditingController();
-  final TextEditingController _childAgeController = TextEditingController(
-    text: '6',
-  );
+  final TextEditingController _childAgeController = TextEditingController();
+  final TextEditingController _medicalIssuesController =
+      TextEditingController();
   final TextEditingController _specificInterestController =
       TextEditingController();
   final TextEditingController _locationController = TextEditingController(
@@ -124,6 +124,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
 
     _kidNameController.addListener(_onFormChanged);
     _childAgeController.addListener(_onFormChanged);
+    _medicalIssuesController.addListener(_onFormChanged);
     _specificInterestController.addListener(_onFormChanged);
     _locationController.addListener(_onFormChanged);
     unawaited(_restoreSavedKidDetails());
@@ -179,7 +180,10 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
       }
       if (interest != null && interest.isNotEmpty) {
         _selectedInterests.addAll(
-          interest.split(',').map((String e) => e.trim()).where((String e) => e.isNotEmpty),
+          interest
+              .split(',')
+              .map((String e) => e.trim())
+              .where((String e) => e.isNotEmpty),
         );
       }
 
@@ -314,12 +318,14 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
     _initialOverlayDelayTimer?.cancel();
     _kidNameController.removeListener(_onFormChanged);
     _childAgeController.removeListener(_onFormChanged);
+    _medicalIssuesController.removeListener(_onFormChanged);
     _specificInterestController.removeListener(_onFormChanged);
     _locationController.removeListener(_onFormChanged);
     _contentScrollController.dispose();
     _messageController.dispose();
     _kidNameController.dispose();
     _childAgeController.dispose();
+    _medicalIssuesController.dispose();
     _specificInterestController.dispose();
     _locationController.dispose();
     super.dispose();
@@ -428,17 +434,26 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                                             kidNameController:
                                                 _kidNameController,
                                             ageController: _childAgeController,
-                                            selectedInterests: _selectedInterests,
-                                            onToggleInterest: (String interest) {
-                                              setState(() {
-                                                if (_selectedInterests.contains(interest)) {
-                                                  _selectedInterests.remove(interest);
-                                                } else {
-                                                  _selectedInterests.add(interest);
-                                                }
-                                                _kidDetailsSaved = false;
-                                              });
-                                            },
+                                            medicalIssuesController:
+                                                _medicalIssuesController,
+                                            selectedInterests:
+                                                _selectedInterests,
+                                            onToggleInterest:
+                                                (String interest) {
+                                                  setState(() {
+                                                    if (_selectedInterests
+                                                        .contains(interest)) {
+                                                      _selectedInterests.remove(
+                                                        interest,
+                                                      );
+                                                    } else {
+                                                      _selectedInterests.add(
+                                                        interest,
+                                                      );
+                                                    }
+                                                    _kidDetailsSaved = false;
+                                                  });
+                                                },
                                             selectedGender: _selectedGender,
                                             kidDetailsSaved: _kidDetailsSaved,
                                             kidDetailsSavedAt:
@@ -966,8 +981,12 @@ class _AiThreeStepProgressBar extends StatelessWidget {
     final step = currentStep.clamp(1, 3);
     final progress = step / 3;
     final percent = (progress * 100).floor();
-    final stepLabel = isArabic ? 'Ø§Ù„Ø®Ø·ÙˆØ© $step Ù…Ù† 3' : 'Step $step of 3';
-    final percentLabel = isArabic ? '$percentÙª Ù…ÙƒØªÙ…Ù„' : '$percent% Complete';
+    final stepLabel = isArabic
+        ? 'Ø§Ù„Ø®Ø·ÙˆØ© $step Ù…Ù† 3'
+        : 'Step $step of 3';
+    final percentLabel = isArabic
+        ? '$percentÙª Ù…ÙƒØªÙ…Ù„'
+        : '$percent% Complete';
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
@@ -1042,7 +1061,9 @@ class _AiModeToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chatLabel = isArabic ? 'Ø§Ù„Ø¯Ø±Ø¯Ø´Ø©' : 'Chat';
-    final detailsLabel = isArabic ? 'Ø§Ø¯Ø®Ù„ Ø§Ù„ØªÙØ§ØµÙŠÙ„' : 'Fill Details';
+    final detailsLabel = isArabic
+        ? 'Ø§Ø¯Ø®Ù„ Ø§Ù„ØªÙØ§ØµÙŠÙ„'
+        : 'Fill Details';
 
     return _AiGlassPanel(
       padding: const EdgeInsets.all(5),
@@ -1143,7 +1164,11 @@ class _AiChatPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final optionTexts = isArabic
-        ? const <String>['Ø·Ø§Ù‚Ø© Ø¹Ø§Ù„ÙŠØ©', 'ØªØ±ÙƒÙŠØ² ÙˆÙ‡Ø¯ÙˆØ¡', 'Ù…Ø²ÙŠØ¬ Ù…ØªÙˆØ§Ø²Ù†']
+        ? const <String>[
+            'Ø·Ø§Ù‚Ø© Ø¹Ø§Ù„ÙŠØ©',
+            'ØªØ±ÙƒÙŠØ² ÙˆÙ‡Ø¯ÙˆØ¡',
+            'Ù…Ø²ÙŠØ¬ Ù…ØªÙˆØ§Ø²Ù†',
+          ]
         : const <String>['High Energy', 'Focused and Quiet', 'A Bit of Both'];
 
     return Column(
@@ -1158,7 +1183,9 @@ class _AiChatPanel extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         _AiUserBubble(
-          text: isArabic ? 'Ø¹Ù…Ø±Ù‡ 6 Ø³Ù†ÙˆØ§Øª.' : 'He just turned 6 last month.',
+          text: isArabic
+              ? 'Ø¹Ù…Ø±Ù‡ 6 Ø³Ù†ÙˆØ§Øª.'
+              : 'He just turned 6 last month.',
         ),
         const SizedBox(height: 12),
         _AiCoachBubble(
@@ -1198,14 +1225,20 @@ class _AiChatHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedEnergyLabel = isArabic
-        ? <String>['Ø·Ø§Ù‚Ø© Ø¹Ø§Ù„ÙŠØ©', 'ØªØ±ÙƒÙŠØ² ÙˆÙ‡Ø¯ÙˆØ¡', 'Ù…Ø²ÙŠØ¬ Ù…ØªÙˆØ§Ø²Ù†']
+        ? <String>[
+            'Ø·Ø§Ù‚Ø© Ø¹Ø§Ù„ÙŠØ©',
+            'ØªØ±ÙƒÙŠØ² ÙˆÙ‡Ø¯ÙˆØ¡',
+            'Ù…Ø²ÙŠØ¬ Ù…ØªÙˆØ§Ø²Ù†',
+          ]
         : <String>['High Energy', 'Focused and Quiet', 'Balanced Mix'];
 
     final currentEnergy = selectedEnergy >= 0 && selectedEnergy < 3
         ? selectedEnergyLabel[selectedEnergy]
         : (isArabic ? 'Ù…ØªÙƒÙŠÙ' : 'Adaptive');
 
-    final title = isArabic ? 'Ù…Ø³Ø§Ø¹Ø¯ Activly Ø¬Ø§Ù‡Ø²' : 'Activly Coach Is Ready';
+    final title = isArabic
+        ? 'Ù…Ø³Ø§Ø¹Ø¯ Activly Ø¬Ø§Ù‡Ø²'
+        : 'Activly Coach Is Ready';
     final subtitle = isArabic
         ? 'Ø³Ù†Ø®ØµØµ Ø§Ù„Ø§Ù‚ØªØ±Ø§Ø­Ø§Øª Ø¨Ø³Ø±Ø¹Ø© Ø­Ø³Ø¨ Ø§Ù„Ø¹Ù…Ø± ÙˆØ§Ù„Ø·Ø§Ù‚Ø© ÙˆØ§Ù„Ù‡Ø¯Ù.'
         : 'We will personalize activity picks by age, energy, and goal in seconds.';
@@ -1493,6 +1526,7 @@ class _AiDetailsPanel extends StatelessWidget {
     required this.detailsStep,
     required this.kidNameController,
     required this.ageController,
+    required this.medicalIssuesController,
     required this.selectedInterests,
     required this.onToggleInterest,
     required this.selectedGender,
@@ -1526,6 +1560,7 @@ class _AiDetailsPanel extends StatelessWidget {
   final int detailsStep;
   final TextEditingController kidNameController;
   final TextEditingController ageController;
+  final TextEditingController medicalIssuesController;
   final Set<String> selectedInterests;
   final ValueChanged<String> onToggleInterest;
   final String selectedGender;
@@ -1561,6 +1596,7 @@ class _AiDetailsPanel extends StatelessWidget {
         isArabic: isArabic,
         kidNameController: kidNameController,
         ageController: ageController,
+        medicalIssuesController: medicalIssuesController,
         selectedInterests: selectedInterests,
         onToggleInterest: onToggleInterest,
         selectedGender: selectedGender,
@@ -1577,6 +1613,7 @@ class _AiDetailsPanel extends StatelessWidget {
         isArabic: isArabic,
         skillLevel: skillLevel,
         specificInterestController: specificInterestController,
+        medicalIssuesController: medicalIssuesController,
         selectedFocusAreas: selectedFocusAreas,
         onSelectSkillLevel: onSelectSkillLevel,
         onToggleFocusArea: onToggleFocusArea,
@@ -1609,6 +1646,7 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
     required this.isArabic,
     required this.kidNameController,
     required this.ageController,
+    required this.medicalIssuesController,
     required this.selectedInterests,
     required this.onToggleInterest,
     required this.selectedGender,
@@ -1622,6 +1660,7 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
   final bool isArabic;
   final TextEditingController kidNameController;
   final TextEditingController ageController;
+  final TextEditingController medicalIssuesController;
   final Set<String> selectedInterests;
   final ValueChanged<String> onToggleInterest;
   final String selectedGender;
@@ -1633,12 +1672,12 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = isArabic ? 'Ù„Ù†Ø¨Ø¯Ø£ Ø¨Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø·ÙÙ„.' : 'Start with kid details.';
+    final title = isArabic
+        ? 'Ù„Ù†Ø¨Ø¯Ø£ Ø¨Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø·ÙÙ„.'
+        : 'Start with kid details.';
     final subtitle = isArabic
         ? 'Ù…Ù„Ù ØµØºÙŠØ± ÙˆØ¯Ù‚ÙŠÙ‚ ÙŠØ¹Ø·ÙŠ ØªØ·Ø§Ø¨Ù‚Ø§Øª Ø£Ø°ÙƒÙ‰ Ø®Ù„Ø§Ù„ Ø«ÙˆØ§Ù†Ù.'
         : 'A small precise profile gives smarter matches in seconds.';
-    final profileLabel = isArabic ? 'Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø·ÙÙ„' : 'KID DETAILS';
-    final nameHint = isArabic ? 'Ø§Ø³Ù… Ø§Ù„Ø·ÙÙ„' : 'Kid name';
     final ageHint = isArabic ? 'Ø§Ù„Ø¹Ù…Ø±' : 'Age';
     final genderLabel = isArabic ? 'Ø§Ù„Ø¬Ù†Ø³' : 'GENDER';
     final interestsLabel = isArabic
@@ -1735,28 +1774,11 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        _AiSectionLabel(label: profileLabel),
-        const SizedBox(height: 10),
-        Row(
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: _AiCompactInputField(
-                controller: kidNameController,
-                hintText: nameHint,
-                icon: Icons.badge_rounded,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: _AiCompactInputField(
-                controller: ageController,
-                hintText: ageHint,
-                icon: Icons.cake_rounded,
-                keyboardType: TextInputType.number,
-              ),
-            ),
-          ],
+        _AiCompactInputField(
+          controller: ageController,
+          hintText: ageHint,
+          icon: Icons.cake_rounded,
+          keyboardType: TextInputType.number,
         ),
         const SizedBox(height: 10),
         _AiSectionLabel(label: genderLabel),
@@ -1808,6 +1830,7 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
     required this.isArabic,
     required this.skillLevel,
     required this.specificInterestController,
+    required this.medicalIssuesController,
     required this.selectedFocusAreas,
     required this.onSelectSkillLevel,
     required this.onToggleFocusArea,
@@ -1818,6 +1841,7 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
   final bool isArabic;
   final String skillLevel;
   final TextEditingController specificInterestController;
+  final TextEditingController medicalIssuesController;
   final Set<String> selectedFocusAreas;
   final ValueChanged<String> onSelectSkillLevel;
   final ValueChanged<String> onToggleFocusArea;
@@ -1826,15 +1850,27 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = isArabic ? 'Ø·ÙˆØ± Ø§Ù„Ù…ØªØ¹Ø© Ø£ÙƒØ«Ø±.' : 'Level up the fun.';
+    final title = isArabic
+        ? 'Ø·ÙˆØ± Ø§Ù„Ù…ØªØ¹Ø© Ø£ÙƒØ«Ø±.'
+        : 'Level up the fun.';
     final subtitle = isArabic
         ? 'Ø£Ø®Ø¨Ø±Ù†Ø§ Ø¹Ù† Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ ÙˆØ§Ù„Ø£Ù‡Ø¯Ø§Ù Ø§Ù„Ù…Ø­Ø¯Ø¯Ø©.'
         : 'Tell us about their skill level and specific goals.';
-    final skillLabel = isArabic ? 'Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ' : 'CURRENT SKILL LEVEL';
-    final interestLabel = isArabic ? 'Ø§Ù‡ØªÙ…Ø§Ù… Ù…Ø­Ø¯Ø¯' : 'SPECIFIC INTEREST';
+    final skillLabel = isArabic
+        ? 'Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ'
+        : 'CURRENT SKILL LEVEL';
+    final interestLabel = isArabic
+        ? 'Ø§Ù‡ØªÙ…Ø§Ù… Ù…Ø­Ø¯Ø¯'
+        : 'SPECIFIC INTEREST';
     final focusLabel = isArabic
         ? 'Ù…Ø­Ø§ÙˆØ± Ø§Ù„ØªØ±ÙƒÙŠØ² ÙˆØ§Ù„Ø£Ù‡Ø¯Ø§Ù'
         : 'FOCUS AREAS & GOALS';
+    final medicalIssuesLabel = isArabic
+        ? 'Ø§Ù„Ù…Ø´ÙƒÙ„Ø§Øª Ø§Ù„Ø·Ø¨ÙŠØ©'
+        : 'Medical issues';
+    final medicalIssuesHint = isArabic
+        ? 'Ø¥Ù† ÙˆØ¬Ø¯ØªØŒ Ø§Ø°ÙƒØ±Ù‡Ø§ Ù‡Ù†Ø§'
+        : 'if any, specify here';
     final interestHint = isArabic
         ? 'Ù…Ø«Ø§Ù„: ØªØ¹Ù„Ù… ØªØ±ÙƒÙŠØ¨ Ø£Ø¬Ù‡Ø²Ø© Ø§Ù„ÙƒÙ…Ø¨ÙŠÙˆØªØ±...'
         : 'e.g. Learning to build custom PC builds...';
@@ -1848,9 +1884,21 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
             _AiSelectableLabel(value: 'Advanced', label: 'Ù…ØªÙ‚Ø¯Ù…'),
           ]
         : const <_AiSelectableLabel>[
-            _AiSelectableLabel(value: 'Beginner', label: 'Beginner', icon: Icons.settings_outlined),
-            _AiSelectableLabel(value: 'Intermediate', label: 'Intermediate', icon: Icons.tune_outlined),
-            _AiSelectableLabel(value: 'Advanced', label: 'Advanced', icon: Icons.rocket_launch_outlined),
+            _AiSelectableLabel(
+              value: 'Beginner',
+              label: 'Beginner',
+              icon: Icons.brightness_2,
+            ),
+            _AiSelectableLabel(
+              value: 'Intermediate',
+              label: 'Intermediate',
+              icon: Icons.brightness_6,
+            ),
+            _AiSelectableLabel(
+              value: 'Advanced',
+              label: 'Advanced',
+              icon: Icons.brightness_1,
+            ),
           ];
 
     final focusOptions = isArabic
@@ -2010,6 +2058,15 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
           }).toList(),
         ),
         const SizedBox(height: 24),
+        _AiSectionLabel(label: medicalIssuesLabel),
+        const SizedBox(height: 8),
+        _AiCompactInputField(
+          controller: medicalIssuesController,
+          hintText: medicalIssuesHint,
+          icon: Icons.health_and_safety_outlined,
+          keyboardType: TextInputType.text,
+        ),
+        const SizedBox(height: 24),
         _AiStepActionButtons(
           previousLabel: previousLabel,
           nextLabel: cta,
@@ -2061,10 +2118,16 @@ class _AiDetailsStepThreePanel extends StatelessWidget {
     final subtitle = isArabic
         ? 'Ø³Ø§Ø¹Ø¯Ù†Ø§ ÙÙŠ ØªØ­Ø¯ÙŠØ¯ Ø§Ù„ÙˆÙ‚Øª ÙˆØ§Ù„Ù…ÙƒØ§Ù† Ø§Ù„Ù…Ø«Ø§Ù„ÙŠÙŠÙ† Ù„Ù„ØªØ·Ø§Ø¨Ù‚Ø§Øª.'
         : 'Help us narrow down the perfect schedule and location for your matches.';
-    final daysLabel = isArabic ? 'Ø§Ù„Ø£ÙŠØ§Ù… Ø§Ù„Ù…ÙØ¶Ù„Ø©' : 'PREFERRED DAYS';
+    final daysLabel = isArabic
+        ? 'Ø§Ù„Ø£ÙŠØ§Ù… Ø§Ù„Ù…ÙØ¶Ù„Ø©'
+        : 'PREFERRED DAYS';
     final timeLabel = isArabic ? 'Ø§Ù„ÙˆÙ‚Øª Ø§Ù„Ù…ÙØ¶Ù„' : 'TIME PREFERENCE';
-    final budgetLabel = isArabic ? 'Ù†Ø·Ø§Ù‚ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©' : 'BUDGET RANGE';
-    final locationLabel = isArabic ? 'Ø§Ù„Ù…ÙˆÙ‚Ø¹ ÙˆÙ†Ø·Ø§Ù‚ Ø§Ù„Ø¨Ø­Ø«' : 'LOCATION & RADIUS';
+    final budgetLabel = isArabic
+        ? 'Ù†Ø·Ø§Ù‚ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©'
+        : 'BUDGET RANGE';
+    final locationLabel = isArabic
+        ? 'Ø§Ù„Ù…ÙˆÙ‚Ø¹ ÙˆÙ†Ø·Ø§Ù‚ Ø§Ù„Ø¨Ø­Ø«'
+        : 'LOCATION & RADIUS';
     final budgetValue =
         '\$${budgetRange.start.round()} â€” \$${budgetRange.end.round()}';
     final radiusValue = isArabic
@@ -3311,6 +3374,10 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
   @override
   Widget build(BuildContext context) {
     final isArabic = widget.isArabic;
+    final normalizedGender = widget.kidGender.trim().toLowerCase();
+    final avatarAssetPath = normalizedGender == 'girl'
+        ? 'assets/images/ai_match/music.png'
+        : 'assets/images/ai_match/child_avatar.png';
     final score =
         ((widget.kidName.isNotEmpty ? 0.32 : 0.0) +
                 (widget.kidAge.isNotEmpty ? 0.24 : 0.0) +
@@ -3389,14 +3456,18 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                     child: Image.asset(
                       badgePath,
                       fit: BoxFit.cover,
-                      errorBuilder: (BuildContext context, Object error,
-                          StackTrace? stackTrace) {
-                        return Icon(
-                          Icons.interests_rounded,
-                          size: 26,
-                          color: kAiColorPrimary,
-                        );
-                      },
+                      errorBuilder:
+                          (
+                            BuildContext context,
+                            Object error,
+                            StackTrace? stackTrace,
+                          ) {
+                            return Icon(
+                              Icons.interests_rounded,
+                              size: 26,
+                              color: kAiColorPrimary,
+                            );
+                          },
                     ),
                   )
                 : Icon(
@@ -3461,7 +3532,9 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      isArabic ? 'Ø¨Ø·Ø§Ù‚Ø© Ø§Ù„Ù…Ù„Ù Ø§Ù„Ø°ÙƒÙŠØ©' : 'Live Profile Card',
+                      isArabic
+                          ? 'Ø¨Ø·Ø§Ù‚Ø© Ø§Ù„Ù…Ù„Ù Ø§Ù„Ø°ÙƒÙŠØ©'
+                          : 'Live Profile Card',
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 13,
                         fontWeight: FontWeight.w800,
@@ -3528,49 +3601,42 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                                 ),
                                 child: ClipOval(
                                   child: Image.asset(
-                                    'assets/images/ai_match/child_avatar.png',
+                                    avatarAssetPath,
                                     fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object error,
-                                        StackTrace? stackTrace) {
-                                      return Icon(
-                                        Icons.child_care_rounded,
-                                        size: 32,
-                                        color: kAiColorPrimary,
-                                      );
-                                    },
+                                    errorBuilder:
+                                        (
+                                          BuildContext context,
+                                          Object error,
+                                          StackTrace? stackTrace,
+                                        ) {
+                                          return Icon(
+                                            Icons.child_care_rounded,
+                                            size: 32,
+                                            color: kAiColorPrimary,
+                                          );
+                                        },
                                   ),
                                 ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Wrap(
                                       spacing: 6,
                                       runSpacing: 6,
                                       children: <Widget>[
                                         profileChip(
-                                          icon: Icons.badge_rounded,
-                                          text: widget.kidName.isEmpty
-                                              ? (isArabic
-                                                  ? 'Ø§Ù„Ø§Ø³Ù…'
-                                                  : 'Name')
-                                              : widget.kidName,
-                                        ),
-                                        profileChip(
                                           icon: Icons.cake_rounded,
                                           text: widget.kidAge.isEmpty
                                               ? (isArabic
-                                                  ? 'Ø§Ù„Ø¹Ù…Ø±'
-                                                  : 'Age')
+                                                    ? 'Ø§Ù„Ø¹Ù…Ø±'
+                                                    : 'Age')
                                               : widget.kidAge,
                                         ),
                                         profileChip(
-                                          icon:
-                                              Icons.person_outline_rounded,
+                                          icon: Icons.person_outline_rounded,
                                           text: widget.kidGender,
                                         ),
                                       ],
@@ -3612,11 +3678,11 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                               physics: const BouncingScrollPhysics(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: widget.selectedInterests
-                                    .map((String interest) {
+                                children: widget.selectedInterests.map((
+                                  String interest,
+                                ) {
                                   return Padding(
-                                    padding:
-                                        const EdgeInsets.only(right: 18),
+                                    padding: const EdgeInsets.only(right: 18),
                                     child: passionBadge(interest),
                                   );
                                 }).toList(),
@@ -3693,8 +3759,6 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
   }
 }
 
-
-
 class _AiInterestOption {
   const _AiInterestOption({
     required this.value,
@@ -3769,9 +3833,7 @@ class _AiInterestVerticalCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
             border: Border.all(
-              color: selected
-                  ? kAiColorPrimary
-                  : _aiCardBorder(context),
+              color: selected ? kAiColorPrimary : _aiCardBorder(context),
               width: selected ? 2.5 : 1.2,
             ),
             boxShadow: <BoxShadow>[
@@ -3794,19 +3856,25 @@ class _AiInterestVerticalCard extends StatelessWidget {
                 Image.asset(
                   option.imagePath,
                   fit: BoxFit.cover,
-                  errorBuilder: (BuildContext context, Object error,
-                      StackTrace? stackTrace) {
-                    return Container(
-                      color: _aiSurfaceContainer(context),
-                      child: Center(
-                        child: Icon(
-                          option.icon,
-                          size: 48,
-                          color: _aiMutedText(context).withValues(alpha: 0.4),
-                        ),
-                      ),
-                    );
-                  },
+                  errorBuilder:
+                      (
+                        BuildContext context,
+                        Object error,
+                        StackTrace? stackTrace,
+                      ) {
+                        return Container(
+                          color: _aiSurfaceContainer(context),
+                          child: Center(
+                            child: Icon(
+                              option.icon,
+                              size: 48,
+                              color: _aiMutedText(
+                                context,
+                              ).withValues(alpha: 0.4),
+                            ),
+                          ),
+                        );
+                      },
                 ),
                 // Bottom gradient overlay for label readability
                 Positioned(
@@ -3861,10 +3929,7 @@ class _AiInterestVerticalCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: kAiColorPrimary,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
-                        ),
+                        border: Border.all(color: Colors.white, width: 2),
                         boxShadow: <BoxShadow>[
                           BoxShadow(
                             blurRadius: 8,
@@ -3938,7 +4003,9 @@ class _AiChatInput extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
               decoration: InputDecoration(
-                hintText: isArabic ? 'Ø§ÙƒØªØ¨ Ø±Ø³Ø§Ù„ØªÙƒ...' : 'Type your message...',
+                hintText: isArabic
+                    ? 'Ø§ÙƒØªØ¨ Ø±Ø³Ø§Ù„ØªÙƒ...'
+                    : 'Type your message...',
                 hintStyle: GoogleFonts.plusJakartaSans(
                   color: _aiMutedText(context),
                 ),

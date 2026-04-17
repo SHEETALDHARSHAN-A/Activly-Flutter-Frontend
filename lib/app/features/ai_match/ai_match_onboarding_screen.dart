@@ -102,6 +102,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
     'Competitive Prep',
   };
   final Set<int> _selectedPreferredDays = <int>{0, 2, 4};
+  final Set<String> _selectedInterests = <String>{};
 
   final ScrollController _contentScrollController = ScrollController();
   final TextEditingController _messageController = TextEditingController();
@@ -109,7 +110,6 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   final TextEditingController _childAgeController = TextEditingController(
     text: '6',
   );
-  final TextEditingController _goalsController = TextEditingController();
   final TextEditingController _specificInterestController =
       TextEditingController();
   final TextEditingController _locationController = TextEditingController(
@@ -124,7 +124,6 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
 
     _kidNameController.addListener(_onFormChanged);
     _childAgeController.addListener(_onFormChanged);
-    _goalsController.addListener(_onFormChanged);
     _specificInterestController.addListener(_onFormChanged);
     _locationController.addListener(_onFormChanged);
     unawaited(_restoreSavedKidDetails());
@@ -179,7 +178,9 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
         _selectedGender = gender;
       }
       if (interest != null && interest.isNotEmpty) {
-        _goalsController.text = interest;
+        _selectedInterests.addAll(
+          interest.split(',').map((String e) => e.trim()).where((String e) => e.isNotEmpty),
+        );
       }
 
       final hasSavedData =
@@ -195,14 +196,14 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   Future<void> _saveKidDetails({required bool isArabic}) async {
     final name = _kidNameController.text.trim();
     final age = _childAgeController.text.trim();
-    final interest = _goalsController.text.trim();
+    final interest = _selectedInterests.join(',');
 
     if (name.isEmpty || age.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
             isArabic
-                ? 'يرجى إدخال اسم الطفل والعمر قبل الحفظ.'
+                ? 'ÙŠØ±Ø¬Ù‰ Ø¥Ø¯Ø®Ø§Ù„ Ø§Ø³Ù… Ø§Ù„Ø·ÙÙ„ ÙˆØ§Ù„Ø¹Ù…Ø± Ù‚Ø¨Ù„ Ø§Ù„Ø­ÙØ¸.'
                 : 'Please enter kid name and age before saving.',
           ),
         ),
@@ -229,7 +230,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
       SnackBar(
         content: Text(
           isArabic
-              ? 'تم حفظ تفاصيل الطفل بنجاح.'
+              ? 'ØªÙ… Ø­ÙØ¸ ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø·ÙÙ„ Ø¨Ù†Ø¬Ø§Ø­.'
               : 'Kid details saved successfully.',
         ),
       ),
@@ -313,14 +314,12 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
     _initialOverlayDelayTimer?.cancel();
     _kidNameController.removeListener(_onFormChanged);
     _childAgeController.removeListener(_onFormChanged);
-    _goalsController.removeListener(_onFormChanged);
     _specificInterestController.removeListener(_onFormChanged);
     _locationController.removeListener(_onFormChanged);
     _contentScrollController.dispose();
     _messageController.dispose();
     _kidNameController.dispose();
     _childAgeController.dispose();
-    _goalsController.dispose();
     _specificInterestController.dispose();
     _locationController.dispose();
     super.dispose();
@@ -329,7 +328,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final isArabic = widget.language == AppLanguage.ar;
-    final title = isArabic ? 'مطابقة ذكية' : 'AI Match';
+    final title = isArabic ? 'Ù…Ø·Ø§Ø¨Ù‚Ø© Ø°ÙƒÙŠØ©' : 'AI Match';
 
     final showBackButton =
         widget.onBack != null &&
@@ -429,7 +428,17 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                                             kidNameController:
                                                 _kidNameController,
                                             ageController: _childAgeController,
-                                            goalsController: _goalsController,
+                                            selectedInterests: _selectedInterests,
+                                            onToggleInterest: (String interest) {
+                                              setState(() {
+                                                if (_selectedInterests.contains(interest)) {
+                                                  _selectedInterests.remove(interest);
+                                                } else {
+                                                  _selectedInterests.add(interest);
+                                                }
+                                                _kidDetailsSaved = false;
+                                              });
+                                            },
                                             selectedGender: _selectedGender,
                                             kidDetailsSaved: _kidDetailsSaved,
                                             kidDetailsSavedAt:
@@ -957,8 +966,8 @@ class _AiThreeStepProgressBar extends StatelessWidget {
     final step = currentStep.clamp(1, 3);
     final progress = step / 3;
     final percent = (progress * 100).floor();
-    final stepLabel = isArabic ? 'الخطوة $step من 3' : 'Step $step of 3';
-    final percentLabel = isArabic ? '$percent٪ مكتمل' : '$percent% Complete';
+    final stepLabel = isArabic ? 'Ø§Ù„Ø®Ø·ÙˆØ© $step Ù…Ù† 3' : 'Step $step of 3';
+    final percentLabel = isArabic ? '$percentÙª Ù…ÙƒØªÙ…Ù„' : '$percent% Complete';
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
@@ -1032,8 +1041,8 @@ class _AiModeToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatLabel = isArabic ? 'الدردشة' : 'Chat';
-    final detailsLabel = isArabic ? 'ادخل التفاصيل' : 'Fill Details';
+    final chatLabel = isArabic ? 'Ø§Ù„Ø¯Ø±Ø¯Ø´Ø©' : 'Chat';
+    final detailsLabel = isArabic ? 'Ø§Ø¯Ø®Ù„ Ø§Ù„ØªÙØ§ØµÙŠÙ„' : 'Fill Details';
 
     return _AiGlassPanel(
       padding: const EdgeInsets.all(5),
@@ -1134,7 +1143,7 @@ class _AiChatPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final optionTexts = isArabic
-        ? const <String>['طاقة عالية', 'تركيز وهدوء', 'مزيج متوازن']
+        ? const <String>['Ø·Ø§Ù‚Ø© Ø¹Ø§Ù„ÙŠØ©', 'ØªØ±ÙƒÙŠØ² ÙˆÙ‡Ø¯ÙˆØ¡', 'Ù…Ø²ÙŠØ¬ Ù…ØªÙˆØ§Ø²Ù†']
         : const <String>['High Energy', 'Focused and Quiet', 'A Bit of Both'];
 
     return Column(
@@ -1144,17 +1153,17 @@ class _AiChatPanel extends StatelessWidget {
         const SizedBox(height: 14),
         _AiCoachBubble(
           text: isArabic
-              ? 'اهلا! انا مساعد Activly. كم عمر طفلك الآن؟'
+              ? 'Ø§Ù‡Ù„Ø§! Ø§Ù†Ø§ Ù…Ø³Ø§Ø¹Ø¯ Activly. ÙƒÙ… Ø¹Ù…Ø± Ø·ÙÙ„Ùƒ Ø§Ù„Ø¢Ù†ØŸ'
               : 'Hi! I am your Activly Coach. How old is your child now?',
         ),
         const SizedBox(height: 12),
         _AiUserBubble(
-          text: isArabic ? 'عمره 6 سنوات.' : 'He just turned 6 last month.',
+          text: isArabic ? 'Ø¹Ù…Ø±Ù‡ 6 Ø³Ù†ÙˆØ§Øª.' : 'He just turned 6 last month.',
         ),
         const SizedBox(height: 12),
         _AiCoachBubble(
           text: isArabic
-              ? 'رائع. ما مستوى طاقته غالبا؟'
+              ? 'Ø±Ø§Ø¦Ø¹. Ù…Ø§ Ù…Ø³ØªÙˆÙ‰ Ø·Ø§Ù‚ØªÙ‡ ØºØ§Ù„Ø¨Ø§ØŸ'
               : 'Great. What is the usual energy level?',
         ),
         const SizedBox(height: 14),
@@ -1189,16 +1198,16 @@ class _AiChatHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedEnergyLabel = isArabic
-        ? <String>['طاقة عالية', 'تركيز وهدوء', 'مزيج متوازن']
+        ? <String>['Ø·Ø§Ù‚Ø© Ø¹Ø§Ù„ÙŠØ©', 'ØªØ±ÙƒÙŠØ² ÙˆÙ‡Ø¯ÙˆØ¡', 'Ù…Ø²ÙŠØ¬ Ù…ØªÙˆØ§Ø²Ù†']
         : <String>['High Energy', 'Focused and Quiet', 'Balanced Mix'];
 
     final currentEnergy = selectedEnergy >= 0 && selectedEnergy < 3
         ? selectedEnergyLabel[selectedEnergy]
-        : (isArabic ? 'متكيف' : 'Adaptive');
+        : (isArabic ? 'Ù…ØªÙƒÙŠÙ' : 'Adaptive');
 
-    final title = isArabic ? 'مساعد Activly جاهز' : 'Activly Coach Is Ready';
+    final title = isArabic ? 'Ù…Ø³Ø§Ø¹Ø¯ Activly Ø¬Ø§Ù‡Ø²' : 'Activly Coach Is Ready';
     final subtitle = isArabic
-        ? 'سنخصص الاقتراحات بسرعة حسب العمر والطاقة والهدف.'
+        ? 'Ø³Ù†Ø®ØµØµ Ø§Ù„Ø§Ù‚ØªØ±Ø§Ø­Ø§Øª Ø¨Ø³Ø±Ø¹Ø© Ø­Ø³Ø¨ Ø§Ù„Ø¹Ù…Ø± ÙˆØ§Ù„Ø·Ø§Ù‚Ø© ÙˆØ§Ù„Ù‡Ø¯Ù.'
         : 'We will personalize activity picks by age, energy, and goal in seconds.';
 
     return _AiGlassPanel(
@@ -1263,11 +1272,11 @@ class _AiChatHeroCard extends StatelessWidget {
             runSpacing: 8,
             children: <Widget>[
               _AiSignalChip(
-                label: isArabic ? 'مناسب للعمر' : 'Age tuned',
+                label: isArabic ? 'Ù…Ù†Ø§Ø³Ø¨ Ù„Ù„Ø¹Ù…Ø±' : 'Age tuned',
                 highlighted: false,
               ),
               _AiSignalChip(
-                label: isArabic ? 'يراعي الهدف' : 'Goal aware',
+                label: isArabic ? 'ÙŠØ±Ø§Ø¹ÙŠ Ø§Ù„Ù‡Ø¯Ù' : 'Goal aware',
                 highlighted: false,
               ),
               _AiSignalChip(
@@ -1484,7 +1493,8 @@ class _AiDetailsPanel extends StatelessWidget {
     required this.detailsStep,
     required this.kidNameController,
     required this.ageController,
-    required this.goalsController,
+    required this.selectedInterests,
+    required this.onToggleInterest,
     required this.selectedGender,
     required this.kidDetailsSaved,
     required this.kidDetailsSavedAt,
@@ -1516,7 +1526,8 @@ class _AiDetailsPanel extends StatelessWidget {
   final int detailsStep;
   final TextEditingController kidNameController;
   final TextEditingController ageController;
-  final TextEditingController goalsController;
+  final Set<String> selectedInterests;
+  final ValueChanged<String> onToggleInterest;
   final String selectedGender;
   final bool kidDetailsSaved;
   final DateTime? kidDetailsSavedAt;
@@ -1550,7 +1561,8 @@ class _AiDetailsPanel extends StatelessWidget {
         isArabic: isArabic,
         kidNameController: kidNameController,
         ageController: ageController,
-        goalsController: goalsController,
+        selectedInterests: selectedInterests,
+        onToggleInterest: onToggleInterest,
         selectedGender: selectedGender,
         kidDetailsSaved: kidDetailsSaved,
         kidDetailsSavedAt: kidDetailsSavedAt,
@@ -1597,7 +1609,8 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
     required this.isArabic,
     required this.kidNameController,
     required this.ageController,
-    required this.goalsController,
+    required this.selectedInterests,
+    required this.onToggleInterest,
     required this.selectedGender,
     required this.kidDetailsSaved,
     required this.kidDetailsSavedAt,
@@ -1609,7 +1622,8 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
   final bool isArabic;
   final TextEditingController kidNameController;
   final TextEditingController ageController;
-  final TextEditingController goalsController;
+  final Set<String> selectedInterests;
+  final ValueChanged<String> onToggleInterest;
   final String selectedGender;
   final bool kidDetailsSaved;
   final DateTime? kidDetailsSavedAt;
@@ -1619,26 +1633,25 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = isArabic ? 'لنبدأ ببيانات الطفل.' : 'Start with kid details.';
+    final title = isArabic ? 'Ù„Ù†Ø¨Ø¯Ø£ Ø¨Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø·ÙÙ„.' : 'Start with kid details.';
     final subtitle = isArabic
-        ? 'ملف صغير ودقيق يعطي تطابقات أذكى خلال ثوانٍ.'
+        ? 'Ù…Ù„Ù ØµØºÙŠØ± ÙˆØ¯Ù‚ÙŠÙ‚ ÙŠØ¹Ø·ÙŠ ØªØ·Ø§Ø¨Ù‚Ø§Øª Ø£Ø°ÙƒÙ‰ Ø®Ù„Ø§Ù„ Ø«ÙˆØ§Ù†Ù.'
         : 'A small precise profile gives smarter matches in seconds.';
-    final profileLabel = isArabic ? 'بيانات الطفل' : 'KID DETAILS';
-    final nameHint = isArabic ? 'اسم الطفل' : 'Kid name';
-    final ageHint = isArabic ? 'العمر' : 'Age';
-    final genderLabel = isArabic ? 'الجنس' : 'GENDER';
+    final profileLabel = isArabic ? 'Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø·ÙÙ„' : 'KID DETAILS';
+    final nameHint = isArabic ? 'Ø§Ø³Ù… Ø§Ù„Ø·ÙÙ„' : 'Kid name';
+    final ageHint = isArabic ? 'Ø§Ù„Ø¹Ù…Ø±' : 'Age';
+    final genderLabel = isArabic ? 'Ø§Ù„Ø¬Ù†Ø³' : 'GENDER';
     final interestsLabel = isArabic
-        ? 'ما الذي يثير فضوله؟'
+        ? 'Ù…Ø§ Ø§Ù„Ø°ÙŠ ÙŠØ«ÙŠØ± ÙØ¶ÙˆÙ„Ù‡ØŸ'
         : 'WHAT SPARKS THEIR CURIOSITY?';
-    final saveCta = isArabic ? 'حفظ التفاصيل' : 'Save Details';
-    final cta = isArabic ? 'التالي' : 'Next';
-    final currentInterest = goalsController.text.trim();
+    final saveCta = isArabic ? 'Ø­ÙØ¸ Ø§Ù„ØªÙØ§ØµÙŠÙ„' : 'Save Details';
+    final cta = isArabic ? 'Ø§Ù„ØªØ§Ù„ÙŠ' : 'Next';
 
     final genderOptions = isArabic
         ? const <_AiSelectableLabel>[
-            _AiSelectableLabel(value: 'Girl', label: 'بنت'),
-            _AiSelectableLabel(value: 'Boy', label: 'ولد'),
-            _AiSelectableLabel(value: 'Other', label: 'آخر'),
+            _AiSelectableLabel(value: 'Girl', label: 'Ø¨Ù†Øª'),
+            _AiSelectableLabel(value: 'Boy', label: 'ÙˆÙ„Ø¯'),
+            _AiSelectableLabel(value: 'Other', label: 'Ø¢Ø®Ø±'),
           ]
         : const <_AiSelectableLabel>[
             _AiSelectableLabel(value: 'Girl', label: 'Girl'),
@@ -1650,23 +1663,27 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
         ? const <_AiInterestOption>[
             _AiInterestOption(
               value: 'Art & Craft',
-              label: 'فن وأعمال',
+              label: 'ÙÙ† ÙˆØ£Ø¹Ù…Ø§Ù„',
               icon: Icons.palette_outlined,
+              imagePath: 'assets/images/ai_match/art_craft.png',
             ),
             _AiInterestOption(
               value: 'Soccer',
-              label: 'كرة القدم',
+              label: 'ÙƒØ±Ø© Ø§Ù„Ù‚Ø¯Ù…',
               icon: Icons.sports_soccer_outlined,
+              imagePath: 'assets/images/ai_match/soccer.png',
             ),
             _AiInterestOption(
               value: 'Science',
-              label: 'علوم',
+              label: 'Ø¹Ù„ÙˆÙ…',
               icon: Icons.science_outlined,
+              imagePath: 'assets/images/ai_match/science.png',
             ),
             _AiInterestOption(
               value: 'Music',
-              label: 'موسيقى',
+              label: 'Ù…ÙˆØ³ÙŠÙ‚Ù‰',
               icon: Icons.music_note_outlined,
+              imagePath: 'assets/images/ai_match/music.png',
             ),
           ]
         : const <_AiInterestOption>[
@@ -1674,21 +1691,25 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
               value: 'Art & Craft',
               label: 'Art & Craft',
               icon: Icons.palette_outlined,
+              imagePath: 'assets/images/ai_match/art_craft.png',
             ),
             _AiInterestOption(
               value: 'Soccer',
               label: 'Soccer',
               icon: Icons.sports_soccer_outlined,
+              imagePath: 'assets/images/ai_match/soccer.png',
             ),
             _AiInterestOption(
               value: 'Science',
               label: 'Science',
               icon: Icons.science_outlined,
+              imagePath: 'assets/images/ai_match/science.png',
             ),
             _AiInterestOption(
               value: 'Music',
               label: 'Music',
               icon: Icons.music_note_outlined,
+              imagePath: 'assets/images/ai_match/music.png',
             ),
           ];
 
@@ -1754,24 +1775,10 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
         const SizedBox(height: 14),
         _AiSectionLabel(label: interestsLabel),
         const SizedBox(height: 10),
-        GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: interests.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 6,
-            mainAxisSpacing: 6,
-            childAspectRatio: 2.25,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            final option = interests[index];
-            return _AiInterestCard(
-              option: option,
-              selected: currentInterest == option.value,
-              onTap: () => goalsController.text = option.value,
-            );
-          },
+        _AiInterestHorizontalList(
+          interests: interests,
+          selectedInterests: selectedInterests,
+          onToggleInterest: onToggleInterest,
         ),
         const SizedBox(height: 12),
         _AiKidLiveProfileCard(
@@ -1779,7 +1786,7 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
           kidName: kidNameController.text.trim(),
           kidAge: ageController.text.trim(),
           kidGender: selectedGender,
-          selectedInterest: currentInterest,
+          selectedInterests: selectedInterests,
           detailsSaved: kidDetailsSaved,
           savedAt: kidDetailsSavedAt,
         ),
@@ -1819,76 +1826,81 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = isArabic ? 'طور المتعة أكثر.' : 'Level up the fun.';
+    final title = isArabic ? 'Ø·ÙˆØ± Ø§Ù„Ù…ØªØ¹Ø© Ø£ÙƒØ«Ø±.' : 'Level up the fun.';
     final subtitle = isArabic
-        ? 'أخبرنا عن المستوى الحالي والأهداف المحددة.'
+        ? 'Ø£Ø®Ø¨Ø±Ù†Ø§ Ø¹Ù† Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ ÙˆØ§Ù„Ø£Ù‡Ø¯Ø§Ù Ø§Ù„Ù…Ø­Ø¯Ø¯Ø©.'
         : 'Tell us about their skill level and specific goals.';
-    final skillLabel = isArabic ? 'المستوى الحالي' : 'CURRENT SKILL LEVEL';
-    final interestLabel = isArabic ? 'اهتمام محدد' : 'SPECIFIC INTEREST';
+    final skillLabel = isArabic ? 'Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ' : 'CURRENT SKILL LEVEL';
+    final interestLabel = isArabic ? 'Ø§Ù‡ØªÙ…Ø§Ù… Ù…Ø­Ø¯Ø¯' : 'SPECIFIC INTEREST';
     final focusLabel = isArabic
-        ? 'محاور التركيز والأهداف'
+        ? 'Ù…Ø­Ø§ÙˆØ± Ø§Ù„ØªØ±ÙƒÙŠØ² ÙˆØ§Ù„Ø£Ù‡Ø¯Ø§Ù'
         : 'FOCUS AREAS & GOALS';
     final interestHint = isArabic
-        ? 'مثال: تعلم تركيب أجهزة الكمبيوتر...'
+        ? 'Ù…Ø«Ø§Ù„: ØªØ¹Ù„Ù… ØªØ±ÙƒÙŠØ¨ Ø£Ø¬Ù‡Ø²Ø© Ø§Ù„ÙƒÙ…Ø¨ÙŠÙˆØªØ±...'
         : 'e.g. Learning to build custom PC builds...';
-    final previousLabel = isArabic ? 'السابق' : 'Previous';
-    final cta = isArabic ? 'التالي' : 'Next';
+    final previousLabel = isArabic ? 'Ø§Ù„Ø³Ø§Ø¨Ù‚' : 'Previous';
+    final cta = isArabic ? 'Ø§Ù„ØªØ§Ù„ÙŠ' : 'Next';
 
     final skillOptions = isArabic
         ? const <_AiSelectableLabel>[
-            _AiSelectableLabel(value: 'Beginner', label: 'مبتدئ'),
-            _AiSelectableLabel(value: 'Intermediate', label: 'متوسط'),
-            _AiSelectableLabel(value: 'Advanced', label: 'متقدم'),
+            _AiSelectableLabel(value: 'Beginner', label: 'Ù…Ø¨ØªØ¯Ø¦'),
+            _AiSelectableLabel(value: 'Intermediate', label: 'Ù…ØªÙˆØ³Ø·'),
+            _AiSelectableLabel(value: 'Advanced', label: 'Ù…ØªÙ‚Ø¯Ù…'),
           ]
         : const <_AiSelectableLabel>[
-            _AiSelectableLabel(value: 'Beginner', label: 'Beginner'),
-            _AiSelectableLabel(value: 'Intermediate', label: 'Intermediate'),
-            _AiSelectableLabel(value: 'Advanced', label: 'Advanced'),
+            _AiSelectableLabel(value: 'Beginner', label: 'Beginner', icon: Icons.settings_outlined),
+            _AiSelectableLabel(value: 'Intermediate', label: 'Intermediate', icon: Icons.tune_outlined),
+            _AiSelectableLabel(value: 'Advanced', label: 'Advanced', icon: Icons.rocket_launch_outlined),
           ];
 
     final focusOptions = isArabic
         ? const <_AiSelectableLabel>[
             _AiSelectableLabel(
               value: 'Confidence Building',
-              label: 'بناء الثقة',
+              label: 'Ø¨Ù†Ø§Ø¡ Ø§Ù„Ø«Ù‚Ø©',
             ),
             _AiSelectableLabel(
               value: 'Technical Skills',
-              label: 'مهارات تقنية',
+              label: 'Ù…Ù‡Ø§Ø±Ø§Øª ØªÙ‚Ù†ÙŠØ©',
             ),
             _AiSelectableLabel(
               value: 'Social Interaction',
-              label: 'تفاعل اجتماعي',
+              label: 'ØªÙØ§Ø¹Ù„ Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ',
             ),
             _AiSelectableLabel(
               value: 'Competitive Prep',
-              label: 'استعداد تنافسي',
+              label: 'Ø§Ø³ØªØ¹Ø¯Ø§Ø¯ ØªÙ†Ø§ÙØ³ÙŠ',
             ),
             _AiSelectableLabel(
               value: 'Creative Expression',
-              label: 'تعبير إبداعي',
+              label: 'ØªØ¹Ø¨ÙŠØ± Ø¥Ø¨Ø¯Ø§Ø¹ÙŠ',
             ),
           ]
         : const <_AiSelectableLabel>[
             _AiSelectableLabel(
               value: 'Confidence Building',
               label: 'Confidence Building',
+              icon: Icons.trending_up_rounded,
             ),
             _AiSelectableLabel(
               value: 'Technical Skills',
               label: 'Technical Skills',
+              icon: Icons.build_outlined,
             ),
             _AiSelectableLabel(
               value: 'Social Interaction',
               label: 'Social Interaction',
+              icon: Icons.groups_outlined,
             ),
             _AiSelectableLabel(
               value: 'Competitive Prep',
               label: 'Competitive Prep',
+              icon: Icons.emoji_events_outlined,
             ),
             _AiSelectableLabel(
               value: 'Creative Expression',
               label: 'Creative Expression',
+              icon: Icons.brush_outlined,
             ),
           ];
 
@@ -1933,6 +1945,7 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
                   ),
                   child: _AiSkillLevelButton(
                     label: option.label,
+                    icon: option.icon,
                     selected: skillLevel == option.value,
                     onTap: () => onSelectSkillLevel(option.value),
                   ),
@@ -1990,6 +2003,7 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
           children: focusOptions.map((_AiSelectableLabel option) {
             return _AiFocusAreaChip(
               label: option.label,
+              icon: option.icon,
               selected: selectedFocusAreas.contains(option.value),
               onTap: () => onToggleFocusArea(option.value),
             );
@@ -2043,54 +2057,54 @@ class _AiDetailsStepThreePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = isArabic ? 'متى وأين؟' : 'When and where?';
+    final title = isArabic ? 'Ù…ØªÙ‰ ÙˆØ£ÙŠÙ†ØŸ' : 'When and where?';
     final subtitle = isArabic
-        ? 'ساعدنا في تحديد الوقت والمكان المثاليين للتطابقات.'
+        ? 'Ø³Ø§Ø¹Ø¯Ù†Ø§ ÙÙŠ ØªØ­Ø¯ÙŠØ¯ Ø§Ù„ÙˆÙ‚Øª ÙˆØ§Ù„Ù…ÙƒØ§Ù† Ø§Ù„Ù…Ø«Ø§Ù„ÙŠÙŠÙ† Ù„Ù„ØªØ·Ø§Ø¨Ù‚Ø§Øª.'
         : 'Help us narrow down the perfect schedule and location for your matches.';
-    final daysLabel = isArabic ? 'الأيام المفضلة' : 'PREFERRED DAYS';
-    final timeLabel = isArabic ? 'الوقت المفضل' : 'TIME PREFERENCE';
-    final budgetLabel = isArabic ? 'نطاق الميزانية' : 'BUDGET RANGE';
-    final locationLabel = isArabic ? 'الموقع ونطاق البحث' : 'LOCATION & RADIUS';
+    final daysLabel = isArabic ? 'Ø§Ù„Ø£ÙŠØ§Ù… Ø§Ù„Ù…ÙØ¶Ù„Ø©' : 'PREFERRED DAYS';
+    final timeLabel = isArabic ? 'Ø§Ù„ÙˆÙ‚Øª Ø§Ù„Ù…ÙØ¶Ù„' : 'TIME PREFERENCE';
+    final budgetLabel = isArabic ? 'Ù†Ø·Ø§Ù‚ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©' : 'BUDGET RANGE';
+    final locationLabel = isArabic ? 'Ø§Ù„Ù…ÙˆÙ‚Ø¹ ÙˆÙ†Ø·Ø§Ù‚ Ø§Ù„Ø¨Ø­Ø«' : 'LOCATION & RADIUS';
     final budgetValue =
-        '\$${budgetRange.start.round()} — \$${budgetRange.end.round()}';
+        '\$${budgetRange.start.round()} â€” \$${budgetRange.end.round()}';
     final radiusValue = isArabic
-        ? '${radiusMiles.round()} أميال'
+        ? '${radiusMiles.round()} Ø£Ù…ÙŠØ§Ù„'
         : '${radiusMiles.round()} Miles';
-    final radiusHint = isArabic ? 'النطاق' : 'RADIUS';
+    final radiusHint = isArabic ? 'Ø§Ù„Ù†Ø·Ø§Ù‚' : 'RADIUS';
     final locationHint = isArabic
-        ? 'أدخل الرمز البريدي أو الحي'
+        ? 'Ø£Ø¯Ø®Ù„ Ø§Ù„Ø±Ù…Ø² Ø§Ù„Ø¨Ø±ÙŠØ¯ÙŠ Ø£Ùˆ Ø§Ù„Ø­ÙŠ'
         : 'Enter zip code or neighborhood';
-    final previousLabel = isArabic ? 'السابق' : 'Previous';
-    final cta = isArabic ? 'ابحث عن التطابقات' : 'Find Matches';
+    final previousLabel = isArabic ? 'Ø§Ù„Ø³Ø§Ø¨Ù‚' : 'Previous';
+    final cta = isArabic ? 'Ø§Ø¨Ø­Ø« Ø¹Ù† Ø§Ù„ØªØ·Ø§Ø¨Ù‚Ø§Øª' : 'Find Matches';
     final engineCaption = isArabic
-        ? 'مدعوم بمحرك المطابقة الذكي'
+        ? 'Ù…Ø¯Ø¹ÙˆÙ… Ø¨Ù…Ø­Ø±Ùƒ Ø§Ù„Ù…Ø·Ø§Ø¨Ù‚Ø© Ø§Ù„Ø°ÙƒÙŠ'
         : 'Powered by AI Matchmaking Engine v4.2';
     final socialProofTitle = isArabic
-        ? 'عائلات في منطقتك تبحث الآن'
+        ? 'Ø¹Ø§Ø¦Ù„Ø§Øª ÙÙŠ Ù…Ù†Ø·Ù‚ØªÙƒ ØªØ¨Ø­Ø« Ø§Ù„Ø¢Ù†'
         : 'Families nearby are matching now';
     final socialProofSubtitle = isArabic
-        ? 'تابع لعرض أفضل الخيارات المقترحة لطفلك.'
+        ? 'ØªØ§Ø¨Ø¹ Ù„Ø¹Ø±Ø¶ Ø£ÙØ¶Ù„ Ø§Ù„Ø®ÙŠØ§Ø±Ø§Øª Ø§Ù„Ù…Ù‚ØªØ±Ø­Ø© Ù„Ø·ÙÙ„Ùƒ.'
         : 'Continue to unlock your best personalized matches.';
 
     final dayLabels = isArabic
-        ? const <String>['ن', 'ث', 'ر', 'خ', 'ج', 'س', 'ح']
+        ? const <String>['Ù†', 'Ø«', 'Ø±', 'Ø®', 'Ø¬', 'Ø³', 'Ø­']
         : const <String>['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
     final timeOptions = isArabic
         ? const <_AiTimeOption>[
             _AiTimeOption(
               value: 'Morning',
-              label: 'الصباح',
+              label: 'Ø§Ù„ØµØ¨Ø§Ø­',
               icon: Icons.light_mode_rounded,
             ),
             _AiTimeOption(
               value: 'Afternoon',
-              label: 'بعد الظهر',
+              label: 'Ø¨Ø¹Ø¯ Ø§Ù„Ø¸Ù‡Ø±',
               icon: Icons.wb_sunny_rounded,
             ),
             _AiTimeOption(
               value: 'Evening',
-              label: 'المساء',
+              label: 'Ø§Ù„Ù…Ø³Ø§Ø¡',
               icon: Icons.dark_mode_rounded,
             ),
           ]
@@ -2866,10 +2880,15 @@ class _AiRealtimeMapPreview extends StatelessWidget {
 }
 
 class _AiSelectableLabel {
-  const _AiSelectableLabel({required this.value, required this.label});
+  const _AiSelectableLabel({
+    required this.value,
+    required this.label,
+    this.icon,
+  });
 
   final String value;
   final String label;
+  final IconData? icon;
 }
 
 class _AiSkillLevelButton extends StatelessWidget {
@@ -2877,11 +2896,13 @@ class _AiSkillLevelButton extends StatelessWidget {
     required this.label,
     required this.selected,
     required this.onTap,
+    this.icon,
   });
 
   final String label;
   final bool selected;
   final VoidCallback onTap;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -2889,38 +2910,52 @@ class _AiSkillLevelButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(14),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 220),
           curve: Curves.easeOut,
           alignment: Alignment.center,
-          height: 44,
+          padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
-            color: selected ? _aiCardBackground(context) : Colors.transparent,
-            borderRadius: BorderRadius.circular(12),
+            color: selected ? kAiColorPrimary : Colors.transparent,
+            borderRadius: BorderRadius.circular(14),
             border: Border.all(
               color: selected
-                  ? _aiGlassBorderColor(context)
-                  : Colors.transparent,
+                  ? kAiColorPrimary
+                  : _aiGlassBorderColor(context).withValues(alpha: 0.4),
+              width: selected ? 1.5 : 1,
             ),
             boxShadow: selected
-                ? const <BoxShadow>[
+                ? <BoxShadow>[
                     BoxShadow(
                       blurRadius: 20,
-                      spreadRadius: -18,
-                      offset: Offset(0, 12),
-                      color: kAiShadowMedium,
+                      spreadRadius: -10,
+                      offset: const Offset(0, 8),
+                      color: kAiColorPrimary.withValues(alpha: 0.35),
                     ),
                   ]
                 : const <BoxShadow>[],
           ),
-          child: Text(
-            label,
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
-              color: selected ? kAiColorPrimary : _aiMutedText(context),
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              if (icon != null) ...<Widget>[
+                Icon(
+                  icon,
+                  size: 22,
+                  color: selected ? Colors.white : _aiMutedText(context),
+                ),
+                const SizedBox(height: 4),
+              ],
+              Text(
+                label,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w800,
+                  color: selected ? Colors.white : _aiMutedText(context),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -2933,11 +2968,13 @@ class _AiFocusAreaChip extends StatelessWidget {
     required this.label,
     required this.selected,
     required this.onTap,
+    this.icon,
   });
 
   final String label;
   final bool selected;
   final VoidCallback onTap;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -2947,9 +2984,9 @@ class _AiFocusAreaChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: onTap,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 220),
           curve: Curves.easeOut,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: selected
@@ -2959,14 +2996,53 @@ class _AiFocusAreaChip extends StatelessWidget {
               color: selected ? kAiColorPrimary : _aiCardBorder(context),
               width: selected ? 2 : 1,
             ),
+            boxShadow: selected
+                ? <BoxShadow>[
+                    BoxShadow(
+                      blurRadius: 16,
+                      spreadRadius: -8,
+                      offset: const Offset(0, 6),
+                      color: kAiColorPrimary.withValues(alpha: 0.18),
+                    ),
+                  ]
+                : const <BoxShadow>[],
           ),
-          child: Text(
-            label,
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 13,
-              fontWeight: FontWeight.w700,
-              color: selected ? kAiColorPrimary : _aiPrimaryText(context),
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              if (icon != null) ...<Widget>[
+                Icon(
+                  icon,
+                  size: 18,
+                  color: selected ? kAiColorPrimary : _aiMutedText(context),
+                ),
+                const SizedBox(width: 7),
+              ],
+              Text(
+                label,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+                ),
+              ),
+              if (selected) ...<Widget>[
+                const SizedBox(width: 7),
+                Container(
+                  width: 18,
+                  height: 18,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: kAiColorPrimary,
+                  ),
+                  child: const Icon(
+                    Icons.check_rounded,
+                    size: 12,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ],
           ),
         ),
       ),
@@ -3168,7 +3244,7 @@ class _AiKidLiveProfileCard extends StatefulWidget {
     required this.kidName,
     required this.kidAge,
     required this.kidGender,
-    required this.selectedInterest,
+    required this.selectedInterests,
     required this.detailsSaved,
     required this.savedAt,
   });
@@ -3177,7 +3253,7 @@ class _AiKidLiveProfileCard extends StatefulWidget {
   final String kidName;
   final String kidAge;
   final String kidGender;
-  final String selectedInterest;
+  final Set<String> selectedInterests;
   final bool detailsSaved;
   final DateTime? savedAt;
 
@@ -3188,32 +3264,48 @@ class _AiKidLiveProfileCard extends StatefulWidget {
 class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
   bool _showHint = false;
 
+  // Maps each interest value to its badge image asset path.
+  static const Map<String, String> _badgePaths = <String, String>{
+    'Art & Craft': 'assets/images/ai_match/badge_arts.png',
+    'Soccer': 'assets/images/ai_match/badge_soccer.png',
+    'Science': 'assets/images/ai_match/badge_science.png',
+    'Music': 'assets/images/ai_match/badge_music.png',
+  };
+
+  // Short display labels used under each badge.
+  static const Map<String, String> _badgeLabels = <String, String>{
+    'Art & Craft': 'Arts',
+    'Soccer': 'Soccer',
+    'Science': 'Science',
+    'Music': 'Music',
+  };
+
   String _interestHint(bool isArabic) {
-    final interest = widget.selectedInterest;
-    if (interest == 'Soccer') {
+    final interests = widget.selectedInterests;
+    if (interests.contains('Soccer')) {
       return isArabic
-          ? 'اختيار كرة القدم ممتاز. اقترح جلسة تجريبية مساءً لقياس الحماس.'
+          ? 'Ø§Ø®ØªÙŠØ§Ø± ÙƒØ±Ø© Ø§Ù„Ù‚Ø¯Ù… Ù…Ù…ØªØ§Ø². Ø§Ù‚ØªØ±Ø­ Ø¬Ù„Ø³Ø© ØªØ¬Ø±ÙŠØ¨ÙŠØ© Ù…Ø³Ø§Ø¡Ù‹ Ù„Ù‚ÙŠØ§Ø³ Ø§Ù„Ø­Ù…Ø§Ø³.'
           : 'Soccer is a strong pick. Try an evening trial first to test energy.';
     }
-    if (interest == 'Science') {
+    if (interests.contains('Science')) {
       return isArabic
-          ? 'ميول العلوم واضحة. ابحث عن برنامج تطبيقي وتجارب عملية.'
+          ? 'Ù…ÙŠÙˆÙ„ Ø§Ù„Ø¹Ù„ÙˆÙ… ÙˆØ§Ø¶Ø­Ø©. Ø§Ø¨Ø­Ø« Ø¹Ù† Ø¨Ø±Ù†Ø§Ù…Ø¬ ØªØ·Ø¨ÙŠÙ‚ÙŠ ÙˆØªØ¬Ø§Ø±Ø¨ Ø¹Ù…Ù„ÙŠØ©.'
           : 'Science interest looks clear. Prioritize hands-on experiment programs.';
     }
-    if (interest == 'Music') {
+    if (interests.contains('Music')) {
       return isArabic
-          ? 'الموسيقى خيار رائع. ابدأ بحصص قصيرة ثم زد المدة تدريجياً.'
+          ? 'Ø§Ù„Ù…ÙˆØ³ÙŠÙ‚Ù‰ Ø®ÙŠØ§Ø± Ø±Ø§Ø¦Ø¹. Ø§Ø¨Ø¯Ø£ Ø¨Ø­ØµØµ Ù‚ØµÙŠØ±Ø© Ø«Ù… Ø²Ø¯ Ø§Ù„Ù…Ø¯Ø© ØªØ¯Ø±ÙŠØ¬ÙŠØ§Ù‹.'
           : 'Music is a great path. Start with short sessions, then scale duration.';
     }
-    if (interest == 'Art & Craft') {
+    if (interests.contains('Art & Craft')) {
       return isArabic
-          ? 'الفن مناسب لهذا الملف. ركز على بيئة هادئة ومدربة صبورة.'
+          ? 'Ø§Ù„ÙÙ† Ù…Ù†Ø§Ø³Ø¨ Ù„Ù‡Ø°Ø§ Ø§Ù„Ù…Ù„Ù. Ø±ÙƒØ² Ø¹Ù„Ù‰ Ø¨ÙŠØ¦Ø© Ù‡Ø§Ø¯Ø¦Ø© ÙˆÙ…Ø¯Ø±Ø¨Ø© ØµØ¨ÙˆØ±Ø©.'
           : 'Art fits this profile well. Look for calm spaces with patient mentors.';
     }
 
     return isArabic
-        ? 'اختر اهتماماً واحداً لرفع دقة المطابقة قبل الانتقال للخطوة التالية.'
-        : 'Pick one interest to improve matching precision before continuing.';
+        ? 'Ø§Ø®ØªØ± Ø§Ù‡ØªÙ…Ø§Ù…Ø§Ù‹ Ù„Ø±ÙØ¹ Ø¯Ù‚Ø© Ø§Ù„Ù…Ø·Ø§Ø¨Ù‚Ø© Ù‚Ø¨Ù„ Ø§Ù„Ø§Ù†ØªÙ‚Ø§Ù„ Ù„Ù„Ø®Ø·ÙˆØ© Ø§Ù„ØªØ§Ù„ÙŠØ©.'
+        : 'Pick interests to improve matching precision before continuing.';
   }
 
   @override
@@ -3223,13 +3315,13 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
         ((widget.kidName.isNotEmpty ? 0.32 : 0.0) +
                 (widget.kidAge.isNotEmpty ? 0.24 : 0.0) +
                 (widget.kidGender.isNotEmpty ? 0.18 : 0.0) +
-                (widget.selectedInterest.isNotEmpty ? 0.26 : 0.0))
+                (widget.selectedInterests.isNotEmpty ? 0.26 : 0.0))
             .clamp(0.0, 1.0);
     final scorePercent = (score * 100).round();
     final status = score >= 0.8
-        ? (isArabic ? 'جاهز للمطابقة' : 'Ready to match')
+        ? (isArabic ? 'Ø¬Ø§Ù‡Ø² Ù„Ù„Ù…Ø·Ø§Ø¨Ù‚Ø©' : 'Ready to match')
         : (isArabic
-              ? 'الملف يحتاج لمسة أخيرة'
+              ? 'Ø§Ù„Ù…Ù„Ù ÙŠØ­ØªØ§Ø¬ Ù„Ù…Ø³Ø© Ø£Ø®ÙŠØ±Ø©'
               : 'Profile needs one more touch');
 
     String? savedAtLabel;
@@ -3237,13 +3329,13 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
       final hour = widget.savedAt!.hour.toString().padLeft(2, '0');
       final minute = widget.savedAt!.minute.toString().padLeft(2, '0');
       savedAtLabel = isArabic
-          ? 'آخر حفظ $hour:$minute'
+          ? 'Ø¢Ø®Ø± Ø­ÙØ¸ $hour:$minute'
           : 'Saved at $hour:$minute';
     }
 
     Widget profileChip({required IconData icon, required String text}) {
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
           color: _aiSurfaceContainer(context),
           borderRadius: BorderRadius.circular(999),
@@ -3252,12 +3344,12 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Icon(icon, size: 14, color: _aiMutedText(context)),
-            const SizedBox(width: 6),
+            Icon(icon, size: 13, color: _aiMutedText(context)),
+            const SizedBox(width: 5),
             Text(
               text,
               style: GoogleFonts.plusJakartaSans(
-                fontSize: 12,
+                fontSize: 11.5,
                 fontWeight: FontWeight.w700,
                 color: _aiPrimaryText(context),
               ),
@@ -3267,6 +3359,67 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
       );
     }
 
+    Widget passionBadge(String interest) {
+      final badgePath = _badgePaths[interest];
+      final label = _badgeLabels[interest] ?? interest;
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            width: 52,
+            height: 52,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _aiSurfaceContainer(context),
+              border: Border.all(
+                color: kAiColorPrimary.withValues(alpha: 0.15),
+                width: 1.5,
+              ),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  blurRadius: 12,
+                  spreadRadius: -4,
+                  color: kAiColorPrimary.withValues(alpha: 0.12),
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: badgePath != null
+                ? ClipOval(
+                    child: Image.asset(
+                      badgePath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object error,
+                          StackTrace? stackTrace) {
+                        return Icon(
+                          Icons.interests_rounded,
+                          size: 26,
+                          color: kAiColorPrimary,
+                        );
+                      },
+                    ),
+                  )
+                : Icon(
+                    Icons.interests_rounded,
+                    size: 26,
+                    color: kAiColorPrimary,
+                  ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            label,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+              color: _aiPrimaryText(context),
+            ),
+          ),
+        ],
+      );
+    }
+
+    final hasInterests = widget.selectedInterests.isNotEmpty;
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -3275,7 +3428,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 220),
           curve: Curves.easeOut,
-          padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+          padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
             color: _aiCardBackground(context),
@@ -3297,6 +3450,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              // â”€â”€ Header â”€â”€
               Row(
                 children: <Widget>[
                   Icon(
@@ -3307,7 +3461,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      isArabic ? 'بطاقة الملف الذكية' : 'Live Profile Card',
+                      isArabic ? 'Ø¨Ø·Ø§Ù‚Ø© Ø§Ù„Ù…Ù„Ù Ø§Ù„Ø°ÙƒÙŠØ©' : 'Live Profile Card',
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 13,
                         fontWeight: FontWeight.w800,
@@ -3323,9 +3477,11 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                     ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
+
+              // â”€â”€ Body â”€â”€
               AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 250),
                 switchInCurve: Curves.easeOut,
                 switchOutCurve: Curves.easeIn,
                 child: _showHint
@@ -3336,44 +3492,164 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: _aiMutedText(context),
-                          height: 1.35,
+                          height: 1.45,
                         ),
                       )
-                    : Wrap(
+                    : Column(
                         key: const ValueKey<String>('profile-mode'),
-                        spacing: 6,
-                        runSpacing: 6,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          profileChip(
-                            icon: Icons.badge_rounded,
-                            text: widget.kidName.isEmpty
-                                ? (isArabic ? 'الاسم' : 'Name')
-                                : widget.kidName,
+                          // Avatar + chips row
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                width: 64,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: _aiSurfaceContainer(context),
+                                  border: Border.all(
+                                    color: kAiColorPrimary.withValues(
+                                      alpha: 0.25,
+                                    ),
+                                    width: 2,
+                                  ),
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                      blurRadius: 16,
+                                      spreadRadius: -4,
+                                      color: kAiColorPrimary.withValues(
+                                        alpha: 0.18,
+                                      ),
+                                      offset: const Offset(0, 6),
+                                    ),
+                                  ],
+                                ),
+                                child: ClipOval(
+                                  child: Image.asset(
+                                    'assets/images/ai_match/child_avatar.png',
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                        Object error,
+                                        StackTrace? stackTrace) {
+                                      return Icon(
+                                        Icons.child_care_rounded,
+                                        size: 32,
+                                        color: kAiColorPrimary,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Wrap(
+                                      spacing: 6,
+                                      runSpacing: 6,
+                                      children: <Widget>[
+                                        profileChip(
+                                          icon: Icons.badge_rounded,
+                                          text: widget.kidName.isEmpty
+                                              ? (isArabic
+                                                  ? 'Ø§Ù„Ø§Ø³Ù…'
+                                                  : 'Name')
+                                              : widget.kidName,
+                                        ),
+                                        profileChip(
+                                          icon: Icons.cake_rounded,
+                                          text: widget.kidAge.isEmpty
+                                              ? (isArabic
+                                                  ? 'Ø§Ù„Ø¹Ù…Ø±'
+                                                  : 'Age')
+                                              : widget.kidAge,
+                                        ),
+                                        profileChip(
+                                          icon:
+                                              Icons.person_outline_rounded,
+                                          text: widget.kidGender,
+                                        ),
+                                      ],
+                                    ),
+                                    if (hasInterests) ...<Widget>[
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        isArabic
+                                            ? 'Ù…Ù„Ø®Øµ Ø§Ù„Ø´ØºÙ'
+                                            : 'Passions Summary',
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 11.5,
+                                          fontWeight: FontWeight.w800,
+                                          color: _aiPrimaryText(context),
+                                        ),
+                                      ),
+                                      Text(
+                                        isArabic
+                                            ? 'Ø­Ø§Ù„Ø© Ø§Ù„Ù…Ù„Ù:'
+                                            : 'Profile Status:',
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 10.5,
+                                          fontWeight: FontWeight.w600,
+                                          color: _aiMutedText(context),
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          profileChip(
-                            icon: Icons.cake_rounded,
-                            text: widget.kidAge.isEmpty
-                                ? (isArabic ? 'العمر' : 'Age')
-                                : widget.kidAge,
-                          ),
-                          profileChip(
-                            icon: Icons.person_outline_rounded,
-                            text: widget.kidGender,
-                          ),
-                          profileChip(
-                            icon: Icons.interests_rounded,
-                            text: widget.selectedInterest.isEmpty
-                                ? (isArabic ? 'الاهتمام' : 'Interest')
-                                : widget.selectedInterest,
-                          ),
+
+                          // Passion badges
+                          if (hasInterests) ...<Widget>[
+                            const SizedBox(height: 12),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: widget.selectedInterests
+                                    .map((String interest) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.only(right: 18),
+                                    child: passionBadge(interest),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+
+                          // Empty state
+                          if (!hasInterests) ...<Widget>[
+                            const SizedBox(height: 8),
+                            Text(
+                              isArabic
+                                  ? 'Ù„Ø§ ØªØ²Ø§Ù„ Ø´ØºÙØ§ØªÙƒ ÙÙŠ Ø§Ù†ØªØ¸Ø§Ø± Ø§Ù„Ø§ÙƒØªØ´Ø§Ùâ€¦'
+                                  : 'Passions yet to be discoveredâ€¦',
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 11.5,
+                                fontWeight: FontWeight.w600,
+                                color: _aiMutedText(context),
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
                         ],
                       ),
               ),
-              const SizedBox(height: 10),
+
+              const SizedBox(height: 12),
+
+              // â”€â”€ Progress bar â”€â”€
               ClipRRect(
                 borderRadius: BorderRadius.circular(999),
                 child: LinearProgressIndicator(
-                  minHeight: 8,
+                  minHeight: 7,
                   value: score,
                   backgroundColor: _aiSurfaceContainer(context),
                   valueColor: const AlwaysStoppedAnimation<Color>(
@@ -3382,11 +3658,13 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                 ),
               ),
               const SizedBox(height: 8),
+
+              // â”€â”€ Footer â”€â”€
               Row(
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      '$status • $scorePercent%',
+                      '$status â€¢ $scorePercent%',
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
@@ -3397,7 +3675,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                   Text(
                     savedAtLabel ??
                         (isArabic
-                            ? 'انقر للانتقال بين الملخص والنصيحة'
+                            ? 'Ø§Ù†Ù‚Ø± Ù„Ù„Ø§Ù†ØªÙ‚Ø§Ù„ Ø¨ÙŠÙ† Ø§Ù„Ù…Ù„Ø®Øµ ÙˆØ§Ù„Ù†ØµÙŠØ­Ø©'
                             : 'Tap to switch summary and hint'),
                     style: GoogleFonts.plusJakartaSans(
                       fontSize: 10.5,
@@ -3415,20 +3693,59 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
   }
 }
 
+
+
 class _AiInterestOption {
   const _AiInterestOption({
     required this.value,
     required this.label,
     required this.icon,
+    required this.imagePath,
   });
 
   final String value;
   final String label;
   final IconData icon;
+  final String imagePath;
 }
 
-class _AiInterestCard extends StatelessWidget {
-  const _AiInterestCard({
+class _AiInterestHorizontalList extends StatelessWidget {
+  const _AiInterestHorizontalList({
+    required this.interests,
+    required this.selectedInterests,
+    required this.onToggleInterest,
+  });
+
+  final List<_AiInterestOption> interests;
+  final Set<String> selectedInterests;
+  final ValueChanged<String> onToggleInterest;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        clipBehavior: Clip.none,
+        itemCount: interests.length,
+        separatorBuilder: (BuildContext context, int index) =>
+            const SizedBox(width: 12),
+        itemBuilder: (BuildContext context, int index) {
+          final option = interests[index];
+          return _AiInterestVerticalCard(
+            option: option,
+            selected: selectedInterests.contains(option.value),
+            onTap: () => onToggleInterest(option.value),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _AiInterestVerticalCard extends StatelessWidget {
+  const _AiInterestVerticalCard({
     required this.option,
     required this.selected,
     required this.onTap,
@@ -3444,62 +3761,127 @@ class _AiInterestCard extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(22),
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 240),
           curve: Curves.easeOut,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          width: 140,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            color: _aiCardBackground(context),
+            borderRadius: BorderRadius.circular(22),
             border: Border.all(
-              color: selected ? kAiColorPrimary : _aiCardBorder(context),
-              width: selected ? 1.5 : 1,
+              color: selected
+                  ? kAiColorPrimary
+                  : _aiCardBorder(context),
+              width: selected ? 2.5 : 1.2,
             ),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                blurRadius: 14,
-                spreadRadius: -12,
-                offset: const Offset(0, 8),
-                color: kAiShadowMedium,
+                blurRadius: selected ? 24 : 14,
+                spreadRadius: selected ? -8 : -12,
+                offset: const Offset(0, 10),
+                color: selected
+                    ? kAiColorPrimary.withValues(alpha: 0.30)
+                    : kAiShadowMedium,
               ),
             ],
           ),
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _aiSurfaceContainer(context),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(21),
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                // Background image
+                Image.asset(
+                  option.imagePath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object error,
+                      StackTrace? stackTrace) {
+                    return Container(
+                      color: _aiSurfaceContainer(context),
+                      child: Center(
+                        child: Icon(
+                          option.icon,
+                          size: 48,
+                          color: _aiMutedText(context).withValues(alpha: 0.4),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                child: Icon(
-                  option.icon,
-                  size: 17,
-                  color: selected ? kAiColorPrimary : _aiPrimaryText(context),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  option.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                    color: selected ? kAiColorPrimary : _aiPrimaryText(context),
+                // Bottom gradient overlay for label readability
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: <Color>[
+                          Colors.transparent,
+                          Colors.black.withValues(alpha: 0.70),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              if (selected)
-                const Icon(
-                  Icons.check_circle_rounded,
-                  size: 16,
-                  color: kAiColorPrimary,
+                // Label at bottom
+                Positioned(
+                  left: 10,
+                  right: 10,
+                  bottom: 10,
+                  child: Text(
+                    option.label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      shadows: <Shadow>[
+                        Shadow(
+                          blurRadius: 6,
+                          color: Colors.black.withValues(alpha: 0.5),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-            ],
+                // Selection indicator (top-right checkmark)
+                if (selected)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Container(
+                      width: 26,
+                      height: 26,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: kAiColorPrimary,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 2,
+                        ),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            blurRadius: 8,
+                            spreadRadius: -2,
+                            color: kAiColorPrimary.withValues(alpha: 0.5),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.check_rounded,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -3556,7 +3938,7 @@ class _AiChatInput extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
               decoration: InputDecoration(
-                hintText: isArabic ? 'اكتب رسالتك...' : 'Type your message...',
+                hintText: isArabic ? 'Ø§ÙƒØªØ¨ Ø±Ø³Ø§Ù„ØªÙƒ...' : 'Type your message...',
                 hintStyle: GoogleFonts.plusJakartaSans(
                   color: _aiMutedText(context),
                 ),

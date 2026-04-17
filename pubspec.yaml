@@ -66,6 +66,7 @@ flutter:
   assets:
     - assets/videos/
     - assets/
+    - assets/images/ai_match/
 
   fonts:
     - family: LTBeverage

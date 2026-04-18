@@ -54,6 +54,7 @@ class AiMatchOnboardingScreen extends StatefulWidget {
     required this.language,
     required this.t,
     required this.onToggleLanguage,
+    this.onFindMatches,
     this.onSkip,
     this.onBack,
     this.isInAppMode = false,
@@ -65,6 +66,7 @@ class AiMatchOnboardingScreen extends StatefulWidget {
   final AppLanguage language;
   final TranslationCopy t;
   final VoidCallback onToggleLanguage;
+  final VoidCallback? onFindMatches;
   final VoidCallback? onSkip;
   final VoidCallback? onBack;
   final bool isInAppMode;
@@ -555,7 +557,9 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                                                 () => _mapCenter = value,
                                               );
                                             },
-                                            onFindMatches: _setChatMode,
+                                            onFindMatches:
+                                                widget.onFindMatches ??
+                                                _setChatMode,
                                           ),
                                   ),
                                 ],
@@ -1887,17 +1891,17 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
             _AiSelectableLabel(
               value: 'Beginner',
               label: 'Beginner',
-              icon: Icons.brightness_2,
+              moonPhase: _AiMoonPhase.crescentThin,
             ),
             _AiSelectableLabel(
               value: 'Intermediate',
               label: 'Intermediate',
-              icon: Icons.brightness_6,
+              moonPhase: _AiMoonPhase.crescentWide,
             ),
             _AiSelectableLabel(
               value: 'Advanced',
               label: 'Advanced',
-              icon: Icons.brightness_1,
+              moonPhase: _AiMoonPhase.full,
             ),
           ];
 
@@ -1994,6 +1998,7 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
                   child: _AiSkillLevelButton(
                     label: option.label,
                     icon: option.icon,
+                    moonPhase: option.moonPhase,
                     selected: skillLevel == option.value,
                     onTap: () => onSelectSkillLevel(option.value),
                   ),
@@ -2859,7 +2864,7 @@ class _AiTimePreferenceButton extends StatelessWidget {
   }
 }
 
-class _AiRealtimeMapPreview extends StatelessWidget {
+class _AiRealtimeMapPreview extends StatefulWidget {
   const _AiRealtimeMapPreview({
     required this.mapCenter,
     required this.radiusMiles,
@@ -2871,26 +2876,106 @@ class _AiRealtimeMapPreview extends StatelessWidget {
   final ValueChanged<LatLng> onMapCenterChanged;
 
   @override
+  State<_AiRealtimeMapPreview> createState() => _AiRealtimeMapPreviewState();
+}
+
+class _AiRealtimeMapPreviewState extends State<_AiRealtimeMapPreview> {
+  late final MapController _mapController;
+  bool _isMapReady = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _mapController = MapController();
+  }
+
+  @override
+  void didUpdateWidget(covariant _AiRealtimeMapPreview oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.radiusMiles == widget.radiusMiles || !_isMapReady) {
+      return;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      _fitRadiusInView();
+    });
+  }
+
+  void _fitRadiusInView() {
+    final radiusMeters = _milesToMeters(
+      widget.radiusMiles,
+    ).clamp(1.0, 500000.0);
+    final latitudeRadians = widget.mapCenter.latitude * (math.pi / 180);
+    const metersPerLatDegree = 111320.0;
+    final metersPerLngDegree =
+        (metersPerLatDegree * math.cos(latitudeRadians).abs())
+            .clamp(1000.0, metersPerLatDegree)
+            .toDouble();
+
+    final latDelta = (radiusMeters / metersPerLatDegree).toDouble();
+    final lngDelta = (radiusMeters / metersPerLngDegree).toDouble();
+
+    final south = (widget.mapCenter.latitude - latDelta)
+        .clamp(-85.0, 85.0)
+        .toDouble();
+    final north = (widget.mapCenter.latitude + latDelta)
+        .clamp(-85.0, 85.0)
+        .toDouble();
+    final west = (widget.mapCenter.longitude - lngDelta)
+        .clamp(-180.0, 180.0)
+        .toDouble();
+    final east = (widget.mapCenter.longitude + lngDelta)
+        .clamp(-180.0, 180.0)
+        .toDouble();
+
+    final bounds = LatLngBounds(LatLng(south, west), LatLng(north, east));
+
+    _mapController.fitCamera(
+      CameraFit.bounds(
+        bounds: bounds,
+        padding: const EdgeInsets.all(26),
+        minZoom: 4,
+        maxZoom: 16,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _mapController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final radiusMeters = _milesToMeters(radiusMiles);
+    final radiusMeters = _milesToMeters(widget.radiusMiles);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(22),
       child: SizedBox(
         height: 210,
         child: FlutterMap(
+          mapController: _mapController,
           options: MapOptions(
-            initialCenter: mapCenter,
+            initialCenter: widget.mapCenter,
             initialZoom: 12.5,
             minZoom: 4,
             maxZoom: 18,
-            onTap: (_, LatLng point) => onMapCenterChanged(point),
+            onMapReady: () {
+              _isMapReady = true;
+              _fitRadiusInView();
+            },
+            onTap: (_, LatLng point) => widget.onMapCenterChanged(point),
             onPositionChanged: (position, bool hasGesture) {
               final center = position.center;
               if (!hasGesture) {
                 return;
               }
-              onMapCenterChanged(center);
+              widget.onMapCenterChanged(center);
             },
           ),
           children: <Widget>[
@@ -2901,7 +2986,7 @@ class _AiRealtimeMapPreview extends StatelessWidget {
             CircleLayer(
               circles: <CircleMarker>[
                 CircleMarker(
-                  point: mapCenter,
+                  point: widget.mapCenter,
                   radius: radiusMeters,
                   useRadiusInMeter: true,
                   color: kAiColorPrimary.withValues(alpha: 0.12),
@@ -2913,7 +2998,7 @@ class _AiRealtimeMapPreview extends StatelessWidget {
             MarkerLayer(
               markers: <Marker>[
                 Marker(
-                  point: mapCenter,
+                  point: widget.mapCenter,
                   width: 22,
                   height: 22,
                   alignment: Alignment.center,
@@ -2947,11 +3032,73 @@ class _AiSelectableLabel {
     required this.value,
     required this.label,
     this.icon,
+    this.moonPhase,
   });
 
   final String value;
   final String label;
   final IconData? icon;
+  final _AiMoonPhase? moonPhase;
+}
+
+enum _AiMoonPhase { full, crescentWide, crescentThin }
+
+class _AiMoonPhaseIcon extends StatelessWidget {
+  const _AiMoonPhaseIcon({
+    required this.phase,
+    required this.color,
+    required this.cutoutColor,
+    this.size = 20,
+  });
+
+  final _AiMoonPhase phase;
+  final Color color;
+  final Color cutoutColor;
+  final double size;
+
+  double get _cutoutShiftFraction {
+    switch (phase) {
+      case _AiMoonPhase.full:
+        return 1;
+      case _AiMoonPhase.crescentWide:
+        return 0.52;
+      case _AiMoonPhase.crescentThin:
+        return 0.28;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final shouldCutout = phase != _AiMoonPhase.full;
+
+    return SizedBox.square(
+      dimension: size,
+      child: Stack(
+        clipBehavior: Clip.hardEdge,
+        children: <Widget>[
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            ),
+          ),
+          if (shouldCutout)
+            Positioned(
+              left: size * _cutoutShiftFraction,
+              top: 0,
+              child: SizedBox.square(
+                dimension: size,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: cutoutColor,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
 }
 
 class _AiSkillLevelButton extends StatelessWidget {
@@ -2960,12 +3107,14 @@ class _AiSkillLevelButton extends StatelessWidget {
     required this.selected,
     required this.onTap,
     this.icon,
+    this.moonPhase,
   });
 
   final String label;
   final bool selected;
   final VoidCallback onTap;
   final IconData? icon;
+  final _AiMoonPhase? moonPhase;
 
   @override
   Widget build(BuildContext context) {
@@ -3002,7 +3151,17 @@ class _AiSkillLevelButton extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              if (icon != null) ...<Widget>[
+              if (moonPhase != null) ...<Widget>[
+                _AiMoonPhaseIcon(
+                  phase: moonPhase!,
+                  color: selected ? Colors.white : _aiPrimaryText(context),
+                  cutoutColor: selected
+                      ? kAiColorPrimary
+                      : _aiSurfaceContainer(context),
+                  size: 20,
+                ),
+                const SizedBox(height: 5),
+              ] else if (icon != null) ...<Widget>[
                 Icon(
                   icon,
                   size: 22,
@@ -3378,11 +3537,13 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
     final avatarAssetPath = normalizedGender == 'girl'
         ? 'assets/images/ai_match/music.png'
         : 'assets/images/ai_match/child_avatar.png';
+    final hasRequiredInterest = widget.selectedInterests.any(
+      _badgePaths.containsKey,
+    );
     final score =
-        ((widget.kidName.isNotEmpty ? 0.32 : 0.0) +
-                (widget.kidAge.isNotEmpty ? 0.24 : 0.0) +
-                (widget.kidGender.isNotEmpty ? 0.18 : 0.0) +
-                (widget.selectedInterests.isNotEmpty ? 0.26 : 0.0))
+        ((widget.kidAge.isNotEmpty ? 1 / 3 : 0.0) +
+                (widget.kidGender.isNotEmpty ? 1 / 3 : 0.0) +
+                (hasRequiredInterest ? 1 / 3 : 0.0))
             .clamp(0.0, 1.0);
     final scorePercent = (score * 100).round();
     final status = score >= 0.8

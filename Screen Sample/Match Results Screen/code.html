@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Activly - Match Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#8B5CF6",
+                        "brand-purple": "#8B5CF6",
+                        "on-background": "#1a1c1c",
+                        "on-surface": "#1a1c1c",
+                        "on-surface-variant": "#404751",
+                        "surface-container": "#efeeed",
+                        "surface-container-high": "#e9e8e8",
+                        outline: "#707882",
+                        "outline-variant": "#bfc7d3",
+                        surface: "#F9FAFB",
+                        background: "#F9FAFB"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "4xl": "2rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Plus Jakarta Sans"],
+                        body: ["Plus Jakarta Sans"],
+                        label: ["Plus Jakarta Sans"],
+                        display: "Plus Jakarta Sans"
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .pt-iphone-safe {
+            padding-top: 59px;
+        }
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5); }
+            50% { opacity: 0.95; box-shadow: 0 0 25px rgba(139, 92, 246, 0.7); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-background min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="w-full pt-iphone-safe bg-transparent relative z-50">
+<div class="flex items-center justify-between px-6 h-16">
+<button class="w-10 h-10 flex items-center justify-start text-on-background active:scale-95 transition-transform" style="">
+<span class="material-symbols-outlined text-[28px]" style="">chevron_left</span>
+</button>
+<h1 class="text-xl font-extrabold tracking-tight text-on-background font-headline" style="">Match Results</h1>
+<button class="w-10 h-10 flex items-center justify-end text-on-background active:scale-95 transition-transform" style="">
+<span class="material-symbols-outlined text-[28px]" style="">list</span>
+</button>
+</div>
+</header>
+<main class="flex-grow px-6 pb-32 relative z-10">
+<!-- Filters Section with List View Toggle -->
+<div class="flex items-center justify-between mb-8 overflow-x-auto hide-scrollbar -mx-2 px-2 pt-2">
+<div class="flex space-x-3">
+<button class="whitespace-nowrap px-6 py-2.5 rounded-full bg-brand-purple text-white font-bold text-[14px] shadow-lg shadow-brand-purple/20" style="">All</button>
+<button class="whitespace-nowrap px-6 py-2.5 rounded-full bg-white text-on-surface-variant font-bold text-[14px] border border-outline-variant shadow-sm" style="">Academy</button>
+<button class="whitespace-nowrap px-6 py-2.5 rounded-full bg-white text-on-surface-variant font-bold text-[14px] border border-outline-variant shadow-sm" style="">Coaches</button>
+</div>
+</div>
+<!-- Match Cards Stack -->
+<div class="relative w-full max-w-[340px] mx-auto min-h-[540px]">
+<!-- Card 4 (Deepest) -->
+<div class="absolute inset-x-8 -bottom-9 h-full bg-white/20 rounded-[2.5rem] border border-slate-200/30 -z-30 translate-y-6 scale-[0.88]"></div>
+<!-- Card 3 -->
+<div class="absolute inset-x-6 -bottom-6 h-full bg-white/30 rounded-[2.5rem] border border-slate-200/40 -z-20 translate-y-4 scale-[0.92]"></div>
+<!-- Card 2 (Original secondary card) -->
+<div class="absolute inset-x-4 -bottom-3 h-full bg-white/50 rounded-[2.5rem] border border-slate-200/50 -z-10 translate-y-2 scale-[0.96]"></div>
+<!-- Main Match Card - Height increased slightly to container buttons -->
+<div class="absolute inset-0 bg-white rounded-[2.5rem] shadow-[0_20px_50px_-12px_rgba(139,92,246,0.15)] overflow-hidden flex flex-col border border-slate-100">
+<!-- Image Section -->
+<div class="relative h-[55%] w-full">
+<img alt="Coach Marcus" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbUQQAq0qHgA0bAEC3z1nZ3uY-ypD2fJ_Y7yswefPA94ZD73H4si_GPuYrF8wR-kLtzsNjroBf_cJf_bZOF43ySHJlKBQncWYtjW6X9tPUKKYMWwcxkmLS7bgR251hCzQ5QPigw27fN0SM6soJW4bNcqnH7ulhGjApWwpERd4TACtO_xvaB8lZH29REM_bycD-4I1cbe_oUFZ12z8wRD2Q7H8m0hjqmQi6xLTP3VrvB3QpkUsOZNv9e6sqK9YE9vyvPMClpjXLowU" style=""/>
+<!-- Match Badge -->
+<div class="absolute top-5 right-5 bg-brand-purple px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-1.5 shadow-lg animate-pulse-slow">
+<span class="material-symbols-outlined text-white text-[14px]" style='font-variation-settings: "FILL" 1, "wght" 700;'>auto_awesome</span>
+<span class="text-white text-[10px] font-extrabold tracking-widest uppercase" style="">98% MATCH</span>
+</div>
+</div>
+<!-- Content Section -->
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-1">
+<div>
+<h2 class="text-2xl font-extrabold text-on-background tracking-tight font-headline" style="">Coach Marcus</h2>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="text-on-surface-variant font-semibold text-[14px]" style="">Soccer Specialist</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-on-surface-variant font-semibold text-[14px]" style="">2.4 mi</span>
+</div>
+</div>
+<div class="flex items-center gap-1 bg-[#FFFBEB] px-2.5 py-1 rounded-xl border border-yellow-100">
+<span class="material-symbols-outlined text-yellow-500 !text-sm" style='font-variation-settings: "FILL" 1;'>star</span>
+<span class="font-bold text-xs text-yellow-700" style="">4.9</span>
+</div>
+</div>
+<div class="mt-5 flex items-center gap-8">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-[0.1em] text-on-surface-variant/60 font-bold mb-0.5" style="">Rate</span>
+<span class="font-extrabold text-brand-purple text-xl" style="">$85<span class="text-xs font-semibold opacity-60" style="">/hr</span></span>
+</div>
+<div class="h-8 w-[1px] bg-slate-100"></div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-[0.1em] text-on-surface-variant/60 font-bold mb-0.5" style="">Experience</span>
+<span class="font-extrabold text-on-background text-xl" style="">8 Years</span>
+</div>
+</div>
+<!-- Actions - Contained clearly within the rounded card container -->
+<div class="mt-auto grid grid-cols-2 gap-3 pb-2 pt-4">
+<button class="bg-brand-purple text-white font-extrabold py-3.5 rounded-2xl active:scale-[0.98] transition-all shadow-lg shadow-brand-purple/20 text-sm" style="">
+                            Book Now
+                        </button>
+<button class="bg-white border-2 border-slate-100 text-on-background font-extrabold py-3.5 rounded-2xl active:scale-[0.98] transition-all hover:bg-slate-50 text-sm" style="">
+                            See Profile
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Swiping Controls -->
+<div class="mt-12 flex justify-center items-center gap-12">
+<div class="flex flex-col items-center gap-2 opacity-30">
+<div class="w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500 !text-2xl" style="">close</span>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest" style="">Skip</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-16 h-16 rounded-full bg-white shadow-xl flex items-center justify-center border border-slate-50 relative group active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-brand-purple !text-4xl" style='font-variation-settings: "wght" 300;'>swipe</span>
+</div>
+<span class="text-[11px] font-extrabold text-brand-purple uppercase tracking-[0.15em]" style="">Swipe for more</span>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-30">
+<div class="w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500 !text-2xl" style="">favorite</span>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest" style="">Save</span>
+</div>
+</div>
+</main>
+<!-- Bottom Decorative Wave -->
+<div class="fixed bottom-0 left-0 w-full h-40 pointer-events-none opacity-30 z-30 overflow-hidden">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1440 320">
+<path d="M0,192L48,197.3C96,203,192,213,288,192C384,171,480,117,576,122.7C672,128,768,192,864,202.7C960,213,1056,171,1152,144C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" fill="#8B5CF6" fill-opacity="1"></path>
+</svg>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-3 pb-safe bg-surface/90 backdrop-blur-xl border-t border-surface-container-high">
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 active:scale-95 transition-transform duration-200 hover:text-on-surface-variant cursor-pointer">
+<span class="material-symbols-outlined text-[26px]" style="">home</span>
+<span class="font-headline text-[10px] font-bold mt-1 uppercase tracking-tighter" style="">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 active:scale-95 transition-transform duration-200 hover:text-on-surface-variant cursor-pointer">
+<span class="material-symbols-outlined text-[26px]" style="">search</span>
+<span class="font-headline text-[10px] font-bold mt-1 uppercase tracking-tighter" style="">Search</span>
+</div>
+<div class="flex flex-col items-center justify-center text-brand-purple active:scale-95 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-[26px]" style='font-variation-settings: "FILL" 1;'>explore</span>
+<span class="font-headline text-[10px] font-bold mt-1 uppercase tracking-tighter" style="">Match</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 active:scale-95 transition-transform duration-200 hover:text-on-surface-variant cursor-pointer">
+<span class="material-symbols-outlined text-[26px]" style="">person</span>
+<span class="font-headline text-[10px] font-bold mt-1 uppercase tracking-tighter" style="">Profile</span>
+</div>
+</nav>
+</body></html>

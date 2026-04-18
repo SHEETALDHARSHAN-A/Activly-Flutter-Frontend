@@ -34,7 +34,7 @@ The app uses a monolithic part-based composition pattern:
 
 ### Navigation Model
 - Global page switching is state-driven in `ActivlyShell`.
-- Page enum: `AppPage { entry, landing, aiMatch, login, main, featuredAll }` in [lib/app/core/types/app_types.dart](lib/app/core/types/app_types.dart).
+- Page enum: `AppPage { entry, landing, aiMatch, matchResults, login, main, featuredAll }` in [lib/app/core/types/app_types.dart](lib/app/core/types/app_types.dart).
 - No router package is used.
 
 ### Feature Modules
@@ -42,6 +42,7 @@ The app uses a monolithic part-based composition pattern:
 - Landing: [lib/app/features/landing/landing_screen.dart](lib/app/features/landing/landing_screen.dart)
 - Auth: [lib/app/features/auth/auth_screen.dart](lib/app/features/auth/auth_screen.dart)
 - AI Match onboarding: [lib/app/features/ai_match/ai_match_onboarding_screen.dart](lib/app/features/ai_match/ai_match_onboarding_screen.dart)
+- Match Results: [lib/app/features/match_results/match_results_screen.dart](lib/app/features/match_results/match_results_screen.dart)
 - Main app shell: [lib/app/features/main/main_screen.dart](lib/app/features/main/main_screen.dart)
 - Main tabs:
   - [lib/app/features/main/tabs/home_tab.dart](lib/app/features/main/tabs/home_tab.dart)
@@ -236,6 +237,11 @@ Chat mode:
 - Explore: categories and discover cards.
 - Profile: avatar, stats, account actions.
 
+### 8.5 Match Results Screen
+- Triggered by the Step 3 `Find Matches` action in AI Match onboarding.
+- Presents filter chips (`All`, `Academy`, `Coaches`), stacked match cards, match confidence badge, rate/experience metrics, CTA buttons, and swipe controls.
+- Uses light AI palette tokens (`kAiColorPageBackground`, `kAiColorPrimary`, `kAiColorSurface`, `kAiColorSurfaceBorder`) for consistency with onboarding surfaces.
+
 ## 9. State, Persistence, And Data Contracts
 
 ### State Management
@@ -313,3 +319,4 @@ Current coverage profile:
 ## 15. Change Log
 
 - 2026-04-18: Replaced prior OpenCode-inspired draft with a complete project-wide Activly design system aligned to current implementation.
+- 2026-04-18: Added Match Results screen spec and updated navigation/feature module references.

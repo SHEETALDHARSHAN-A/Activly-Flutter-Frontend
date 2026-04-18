@@ -20,6 +20,7 @@ part 'app/features/shell/activly_shell.dart';
 part 'app/features/landing/landing_screen.dart';
 part 'app/features/auth/auth_screen.dart';
 part 'app/features/ai_match/ai_match_onboarding_screen.dart';
+part 'app/features/match_results/match_results_screen.dart';
 part 'app/shared/widgets/video_widgets.dart';
 part 'app/shared/widgets/loading_overlay.dart';
 part 'app/shared/widgets/language_toggle.dart';

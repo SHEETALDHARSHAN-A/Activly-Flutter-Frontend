@@ -276,6 +276,8 @@ class _ActivlyShellState extends State<ActivlyShell> {
           language: _language,
           t: _t,
           onToggleLanguage: _toggleLanguage,
+          onFindMatches: () =>
+              setState(() => _activePage = AppPage.matchResults),
           onBack: _aiMatchOpenedFromSkip
               ? () => setState(() {
                   _aiMatchOpenedFromSkip = false;
@@ -286,6 +288,13 @@ class _ActivlyShellState extends State<ActivlyShell> {
           showBottomNavInAppMode: false,
           showInAppBackButton: _aiMatchOpenedFromSkip,
           useMinimalBackArrow: _aiMatchOpenedFromSkip,
+        );
+      }
+
+      if (_activePage == AppPage.matchResults) {
+        return MatchResultsScreen(
+          language: _language,
+          onBack: () => setState(() => _activePage = AppPage.aiMatch),
         );
       }
 

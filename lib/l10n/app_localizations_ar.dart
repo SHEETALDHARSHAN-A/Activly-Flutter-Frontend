@@ -423,6 +423,297 @@ class AppLocalizationsAr extends AppLocalizations {
   String get matchResultsNavProfile => 'ملفي';
 
   @override
+  String get aiMatchTitle => 'مطابقة ذكية';
+
+  @override
+  String get aiMatchKidDetailsRequiredError =>
+      'يرجى إدخال اسم الطفل والعمر قبل الحفظ.';
+
+  @override
+  String get aiMatchKidDetailsSavedSuccess => 'تم حفظ تفاصيل الطفل بنجاح.';
+
+  @override
+  String aiMatchStepLabel(int step) {
+    return 'الخطوة $step من 3';
+  }
+
+  @override
+  String aiMatchPercentComplete(int percent) {
+    return '$percent% مكتمل';
+  }
+
+  @override
+  String get aiMatchToggleChat => 'الدردشة';
+
+  @override
+  String get aiMatchToggleFillDetails => 'ادخل التفاصيل';
+
+  @override
+  String get aiMatchEnergyHigh => 'طاقة عالية';
+
+  @override
+  String get aiMatchEnergyFocused => 'تركيز وهدوء';
+
+  @override
+  String get aiMatchEnergyBalanced => 'مزيج متوازن';
+
+  @override
+  String get aiMatchEnergyAdaptive => 'متكيف';
+
+  @override
+  String get aiMatchCoachIntroQuestion =>
+      'اهلا! انا مساعد Activly. كم عمر طفلك الآن؟';
+
+  @override
+  String get aiMatchUserAgeResponse => 'عمره 6 سنوات.';
+
+  @override
+  String get aiMatchCoachEnergyQuestion => 'رائع. ما مستوى طاقته غالبا؟';
+
+  @override
+  String get aiMatchCoachReadyTitle => 'مساعد Activly جاهز';
+
+  @override
+  String get aiMatchCoachReadySubtitle =>
+      'سنخصص الاقتراحات بسرعة حسب العمر والطاقة والهدف.';
+
+  @override
+  String get aiMatchSignalAgeTuned => 'مناسب للعمر';
+
+  @override
+  String get aiMatchSignalGoalAware => 'يراعي الهدف';
+
+  @override
+  String get aiMatchStep1Title => 'لنبدأ ببيانات الطفل.';
+
+  @override
+  String get aiMatchStep1Subtitle =>
+      'ملف صغير ودقيق يعطي تطابقات أذكى خلال ثوان.';
+
+  @override
+  String get aiMatchAgeHint => 'العمر';
+
+  @override
+  String get aiMatchGenderLabel => 'الجنس';
+
+  @override
+  String get aiMatchInterestsLabel => 'ما الذي يثير فضوله؟';
+
+  @override
+  String get aiMatchSaveDetails => 'حفظ التفاصيل';
+
+  @override
+  String get aiMatchNext => 'التالي';
+
+  @override
+  String get aiMatchPrevious => 'السابق';
+
+  @override
+  String get aiMatchGenderGirl => 'بنت';
+
+  @override
+  String get aiMatchGenderBoy => 'ولد';
+
+  @override
+  String get aiMatchGenderOther => 'آخر';
+
+  @override
+  String get aiMatchInterestArtCraft => 'فن وأعمال';
+
+  @override
+  String get aiMatchInterestSoccer => 'كرة القدم';
+
+  @override
+  String get aiMatchInterestScience => 'علوم';
+
+  @override
+  String get aiMatchInterestMusic => 'موسيقى';
+
+  @override
+  String get aiMatchStep2Title => 'طور المتعة أكثر.';
+
+  @override
+  String get aiMatchStep2Subtitle =>
+      'أخبرنا عن المستوى الحالي والأهداف المحددة.';
+
+  @override
+  String get aiMatchSkillLevelLabel => 'المستوى الحالي';
+
+  @override
+  String get aiMatchSpecificInterestLabel => 'اهتمام محدد';
+
+  @override
+  String get aiMatchFocusAreasLabel => 'محاور التركيز والأهداف';
+
+  @override
+  String get aiMatchMedicalIssuesLabel => 'المشكلات الطبية';
+
+  @override
+  String get aiMatchMedicalIssuesHint => 'إن وجدت، اذكرها هنا';
+
+  @override
+  String get aiMatchSpecificInterestHintExample =>
+      'مثال: تعلم تركيب أجهزة الكمبيوتر...';
+
+  @override
+  String get aiMatchSkillBeginner => 'مبتدئ';
+
+  @override
+  String get aiMatchSkillIntermediate => 'متوسط';
+
+  @override
+  String get aiMatchSkillAdvanced => 'متقدم';
+
+  @override
+  String get aiMatchFocusConfidence => 'بناء الثقة';
+
+  @override
+  String get aiMatchFocusTechnical => 'مهارات تقنية';
+
+  @override
+  String get aiMatchFocusSocial => 'تفاعل اجتماعي';
+
+  @override
+  String get aiMatchFocusCompetitive => 'استعداد تنافسي';
+
+  @override
+  String get aiMatchFocusCreative => 'تعبير إبداعي';
+
+  @override
+  String get aiMatchStep3Title => 'متى وأين؟';
+
+  @override
+  String get aiMatchStep3Subtitle =>
+      'ساعدنا في تحديد الوقت والمكان المثاليين للتطابقات.';
+
+  @override
+  String get aiMatchPreferredDaysLabel => 'الأيام المفضلة';
+
+  @override
+  String get aiMatchTimePreferenceLabel => 'الوقت المفضل';
+
+  @override
+  String get aiMatchBudgetRangeLabel => 'نطاق الميزانية';
+
+  @override
+  String get aiMatchLocationRadiusLabel => 'الموقع ونطاق البحث';
+
+  @override
+  String get aiMatchRadiusHint => 'النطاق';
+
+  @override
+  String get aiMatchLocationHint => 'أدخل الرمز البريدي أو الحي';
+
+  @override
+  String get aiMatchFindMatches => 'ابحث عن التطابقات';
+
+  @override
+  String get aiMatchEngineCaption => 'مدعوم بمحرك المطابقة الذكي';
+
+  @override
+  String get aiMatchSocialProofTitle => 'عائلات في منطقتك تبحث الآن';
+
+  @override
+  String get aiMatchSocialProofSubtitle =>
+      'تابع لعرض أفضل الخيارات المقترحة لطفلك.';
+
+  @override
+  String get aiMatchDayMon => 'ن';
+
+  @override
+  String get aiMatchDayTue => 'ث';
+
+  @override
+  String get aiMatchDayWed => 'ر';
+
+  @override
+  String get aiMatchDayThu => 'خ';
+
+  @override
+  String get aiMatchDayFri => 'ج';
+
+  @override
+  String get aiMatchDaySat => 'س';
+
+  @override
+  String get aiMatchDaySun => 'ح';
+
+  @override
+  String get aiMatchTimeMorning => 'الصباح';
+
+  @override
+  String get aiMatchTimeAfternoon => 'بعد الظهر';
+
+  @override
+  String get aiMatchTimeEvening => 'المساء';
+
+  @override
+  String aiMatchMilesValue(int miles) {
+    return '$miles أميال';
+  }
+
+  @override
+  String get aiMatchInterestHintSoccer =>
+      'اختيار كرة القدم ممتاز. اقترح جلسة تجريبية مساء لقياس الحماس.';
+
+  @override
+  String get aiMatchInterestHintScience =>
+      'ميول العلوم واضحة. ابحث عن برنامج تطبيقي وتجارب عملية.';
+
+  @override
+  String get aiMatchInterestHintMusic =>
+      'الموسيقى خيار رائع. ابدأ بحصص قصيرة ثم زد المدة تدريجيا.';
+
+  @override
+  String get aiMatchInterestHintArt =>
+      'الفن مناسب لهذا الملف. ركز على بيئة هادئة ومدربة صبورة.';
+
+  @override
+  String get aiMatchInterestHintDefault =>
+      'اختر اهتماما لرفع دقة المطابقة قبل الانتقال للخطوة التالية.';
+
+  @override
+  String get aiMatchStatusReady => 'جاهز للمطابقة';
+
+  @override
+  String get aiMatchStatusNeedsTouch => 'الملف يحتاج لمسة أخيرة';
+
+  @override
+  String aiMatchSavedAt(String time) {
+    return 'آخر حفظ $time';
+  }
+
+  @override
+  String get aiMatchLiveProfileCardTitle => 'بطاقة الملف الذكية';
+
+  @override
+  String get aiMatchPassionsSummary => 'ملخص الشغف';
+
+  @override
+  String get aiMatchProfileStatusLabel => 'حالة الملف:';
+
+  @override
+  String get aiMatchPassionsEmpty => 'لا تزال شغفاتك في انتظار الاكتشاف...';
+
+  @override
+  String get aiMatchTapSwitchHint => 'انقر للتنقل بين الملخص والنصيحة';
+
+  @override
+  String get aiMatchBadgeArts => 'فن';
+
+  @override
+  String get aiMatchBadgeSoccer => 'كرة';
+
+  @override
+  String get aiMatchBadgeScience => 'علوم';
+
+  @override
+  String get aiMatchBadgeMusic => 'موسيقى';
+
+  @override
+  String get aiMatchTypeMessage => 'اكتب رسالتك...';
+
+  @override
   String get en => 'EN';
 
   @override

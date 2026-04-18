@@ -424,6 +424,298 @@ class AppLocalizationsEn extends AppLocalizations {
   String get matchResultsNavProfile => 'PROFILE';
 
   @override
+  String get aiMatchTitle => 'AI Match';
+
+  @override
+  String get aiMatchKidDetailsRequiredError =>
+      'Please enter kid name and age before saving.';
+
+  @override
+  String get aiMatchKidDetailsSavedSuccess => 'Kid details saved successfully.';
+
+  @override
+  String aiMatchStepLabel(int step) {
+    return 'Step $step of 3';
+  }
+
+  @override
+  String aiMatchPercentComplete(int percent) {
+    return '$percent% Complete';
+  }
+
+  @override
+  String get aiMatchToggleChat => 'Chat';
+
+  @override
+  String get aiMatchToggleFillDetails => 'Fill Details';
+
+  @override
+  String get aiMatchEnergyHigh => 'High Energy';
+
+  @override
+  String get aiMatchEnergyFocused => 'Focused and Quiet';
+
+  @override
+  String get aiMatchEnergyBalanced => 'A Bit of Both';
+
+  @override
+  String get aiMatchEnergyAdaptive => 'Adaptive';
+
+  @override
+  String get aiMatchCoachIntroQuestion =>
+      'Hi! I am your Activly Coach. How old is your child now?';
+
+  @override
+  String get aiMatchUserAgeResponse => 'He just turned 6 last month.';
+
+  @override
+  String get aiMatchCoachEnergyQuestion =>
+      'Great. What is the usual energy level?';
+
+  @override
+  String get aiMatchCoachReadyTitle => 'Activly Coach Is Ready';
+
+  @override
+  String get aiMatchCoachReadySubtitle =>
+      'We will personalize activity picks by age, energy, and goal in seconds.';
+
+  @override
+  String get aiMatchSignalAgeTuned => 'Age tuned';
+
+  @override
+  String get aiMatchSignalGoalAware => 'Goal aware';
+
+  @override
+  String get aiMatchStep1Title => 'Start with kid details.';
+
+  @override
+  String get aiMatchStep1Subtitle =>
+      'A small precise profile gives smarter matches in seconds.';
+
+  @override
+  String get aiMatchAgeHint => 'Age';
+
+  @override
+  String get aiMatchGenderLabel => 'GENDER';
+
+  @override
+  String get aiMatchInterestsLabel => 'WHAT SPARKS THEIR CURIOSITY?';
+
+  @override
+  String get aiMatchSaveDetails => 'Save Details';
+
+  @override
+  String get aiMatchNext => 'Next';
+
+  @override
+  String get aiMatchPrevious => 'Previous';
+
+  @override
+  String get aiMatchGenderGirl => 'Girl';
+
+  @override
+  String get aiMatchGenderBoy => 'Boy';
+
+  @override
+  String get aiMatchGenderOther => 'Other';
+
+  @override
+  String get aiMatchInterestArtCraft => 'Art & Craft';
+
+  @override
+  String get aiMatchInterestSoccer => 'Soccer';
+
+  @override
+  String get aiMatchInterestScience => 'Science';
+
+  @override
+  String get aiMatchInterestMusic => 'Music';
+
+  @override
+  String get aiMatchStep2Title => 'Level up the fun.';
+
+  @override
+  String get aiMatchStep2Subtitle =>
+      'Tell us about their skill level and specific goals.';
+
+  @override
+  String get aiMatchSkillLevelLabel => 'CURRENT SKILL LEVEL';
+
+  @override
+  String get aiMatchSpecificInterestLabel => 'SPECIFIC INTEREST';
+
+  @override
+  String get aiMatchFocusAreasLabel => 'FOCUS AREAS & GOALS';
+
+  @override
+  String get aiMatchMedicalIssuesLabel => 'Medical issues';
+
+  @override
+  String get aiMatchMedicalIssuesHint => 'if any, specify here';
+
+  @override
+  String get aiMatchSpecificInterestHintExample =>
+      'e.g. Learning to build custom PC builds...';
+
+  @override
+  String get aiMatchSkillBeginner => 'Beginner';
+
+  @override
+  String get aiMatchSkillIntermediate => 'Intermediate';
+
+  @override
+  String get aiMatchSkillAdvanced => 'Advanced';
+
+  @override
+  String get aiMatchFocusConfidence => 'Confidence Building';
+
+  @override
+  String get aiMatchFocusTechnical => 'Technical Skills';
+
+  @override
+  String get aiMatchFocusSocial => 'Social Interaction';
+
+  @override
+  String get aiMatchFocusCompetitive => 'Competitive Prep';
+
+  @override
+  String get aiMatchFocusCreative => 'Creative Expression';
+
+  @override
+  String get aiMatchStep3Title => 'When and where?';
+
+  @override
+  String get aiMatchStep3Subtitle =>
+      'Help us narrow down the perfect schedule and location for your matches.';
+
+  @override
+  String get aiMatchPreferredDaysLabel => 'PREFERRED DAYS';
+
+  @override
+  String get aiMatchTimePreferenceLabel => 'TIME PREFERENCE';
+
+  @override
+  String get aiMatchBudgetRangeLabel => 'BUDGET RANGE';
+
+  @override
+  String get aiMatchLocationRadiusLabel => 'LOCATION & RADIUS';
+
+  @override
+  String get aiMatchRadiusHint => 'RADIUS';
+
+  @override
+  String get aiMatchLocationHint => 'Enter zip code or neighborhood';
+
+  @override
+  String get aiMatchFindMatches => 'Find Matches';
+
+  @override
+  String get aiMatchEngineCaption => 'Powered by AI Matchmaking Engine v4.2';
+
+  @override
+  String get aiMatchSocialProofTitle => 'Families nearby are matching now';
+
+  @override
+  String get aiMatchSocialProofSubtitle =>
+      'Continue to unlock your best personalized matches.';
+
+  @override
+  String get aiMatchDayMon => 'M';
+
+  @override
+  String get aiMatchDayTue => 'T';
+
+  @override
+  String get aiMatchDayWed => 'W';
+
+  @override
+  String get aiMatchDayThu => 'T';
+
+  @override
+  String get aiMatchDayFri => 'F';
+
+  @override
+  String get aiMatchDaySat => 'S';
+
+  @override
+  String get aiMatchDaySun => 'S';
+
+  @override
+  String get aiMatchTimeMorning => 'Morning';
+
+  @override
+  String get aiMatchTimeAfternoon => 'Afternoon';
+
+  @override
+  String get aiMatchTimeEvening => 'Evening';
+
+  @override
+  String aiMatchMilesValue(int miles) {
+    return '$miles Miles';
+  }
+
+  @override
+  String get aiMatchInterestHintSoccer =>
+      'Soccer is a strong pick. Try an evening trial first to test energy.';
+
+  @override
+  String get aiMatchInterestHintScience =>
+      'Science interest looks clear. Prioritize hands-on experiment programs.';
+
+  @override
+  String get aiMatchInterestHintMusic =>
+      'Music is a great path. Start with short sessions, then scale duration.';
+
+  @override
+  String get aiMatchInterestHintArt =>
+      'Art fits this profile well. Look for calm spaces with patient mentors.';
+
+  @override
+  String get aiMatchInterestHintDefault =>
+      'Pick interests to improve matching precision before continuing.';
+
+  @override
+  String get aiMatchStatusReady => 'Ready to match';
+
+  @override
+  String get aiMatchStatusNeedsTouch => 'Profile needs one more touch';
+
+  @override
+  String aiMatchSavedAt(String time) {
+    return 'Saved at $time';
+  }
+
+  @override
+  String get aiMatchLiveProfileCardTitle => 'Live Profile Card';
+
+  @override
+  String get aiMatchPassionsSummary => 'Passions Summary';
+
+  @override
+  String get aiMatchProfileStatusLabel => 'Profile Status:';
+
+  @override
+  String get aiMatchPassionsEmpty => 'Passions yet to be discovered...';
+
+  @override
+  String get aiMatchTapSwitchHint => 'Tap to switch summary and hint';
+
+  @override
+  String get aiMatchBadgeArts => 'Arts';
+
+  @override
+  String get aiMatchBadgeSoccer => 'Soccer';
+
+  @override
+  String get aiMatchBadgeScience => 'Science';
+
+  @override
+  String get aiMatchBadgeMusic => 'Music';
+
+  @override
+  String get aiMatchTypeMessage => 'Type your message...';
+
+  @override
   String get en => 'EN';
 
   @override

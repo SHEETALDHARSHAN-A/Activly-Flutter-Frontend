@@ -144,6 +144,128 @@
   "matchResultsNavSearch": "بحث",
   "matchResultsNavMatch": "مطابقة",
   "matchResultsNavProfile": "ملفي",
+  "aiMatchTitle": "مطابقة ذكية",
+  "aiMatchKidDetailsRequiredError": "يرجى إدخال اسم الطفل والعمر قبل الحفظ.",
+  "aiMatchKidDetailsSavedSuccess": "تم حفظ تفاصيل الطفل بنجاح.",
+  "aiMatchStepLabel": "الخطوة {step} من 3",
+  "@aiMatchStepLabel": {
+    "placeholders": {
+      "step": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "aiMatchPercentComplete": "{percent}% مكتمل",
+  "@aiMatchPercentComplete": {
+    "placeholders": {
+      "percent": {
+        "type": "int",
+        "example": "66"
+      }
+    }
+  },
+  "aiMatchToggleChat": "الدردشة",
+  "aiMatchToggleFillDetails": "ادخل التفاصيل",
+  "aiMatchEnergyHigh": "طاقة عالية",
+  "aiMatchEnergyFocused": "تركيز وهدوء",
+  "aiMatchEnergyBalanced": "مزيج متوازن",
+  "aiMatchEnergyAdaptive": "متكيف",
+  "aiMatchCoachIntroQuestion": "اهلا! انا مساعد Activly. كم عمر طفلك الآن؟",
+  "aiMatchUserAgeResponse": "عمره 6 سنوات.",
+  "aiMatchCoachEnergyQuestion": "رائع. ما مستوى طاقته غالبا؟",
+  "aiMatchCoachReadyTitle": "مساعد Activly جاهز",
+  "aiMatchCoachReadySubtitle": "سنخصص الاقتراحات بسرعة حسب العمر والطاقة والهدف.",
+  "aiMatchSignalAgeTuned": "مناسب للعمر",
+  "aiMatchSignalGoalAware": "يراعي الهدف",
+  "aiMatchStep1Title": "لنبدأ ببيانات الطفل.",
+  "aiMatchStep1Subtitle": "ملف صغير ودقيق يعطي تطابقات أذكى خلال ثوان.",
+  "aiMatchAgeHint": "العمر",
+  "aiMatchGenderLabel": "الجنس",
+  "aiMatchInterestsLabel": "ما الذي يثير فضوله؟",
+  "aiMatchSaveDetails": "حفظ التفاصيل",
+  "aiMatchNext": "التالي",
+  "aiMatchPrevious": "السابق",
+  "aiMatchGenderGirl": "بنت",
+  "aiMatchGenderBoy": "ولد",
+  "aiMatchGenderOther": "آخر",
+  "aiMatchInterestArtCraft": "فن وأعمال",
+  "aiMatchInterestSoccer": "كرة القدم",
+  "aiMatchInterestScience": "علوم",
+  "aiMatchInterestMusic": "موسيقى",
+  "aiMatchStep2Title": "طور المتعة أكثر.",
+  "aiMatchStep2Subtitle": "أخبرنا عن المستوى الحالي والأهداف المحددة.",
+  "aiMatchSkillLevelLabel": "المستوى الحالي",
+  "aiMatchSpecificInterestLabel": "اهتمام محدد",
+  "aiMatchFocusAreasLabel": "محاور التركيز والأهداف",
+  "aiMatchMedicalIssuesLabel": "المشكلات الطبية",
+  "aiMatchMedicalIssuesHint": "إن وجدت، اذكرها هنا",
+  "aiMatchSpecificInterestHintExample": "مثال: تعلم تركيب أجهزة الكمبيوتر...",
+  "aiMatchSkillBeginner": "مبتدئ",
+  "aiMatchSkillIntermediate": "متوسط",
+  "aiMatchSkillAdvanced": "متقدم",
+  "aiMatchFocusConfidence": "بناء الثقة",
+  "aiMatchFocusTechnical": "مهارات تقنية",
+  "aiMatchFocusSocial": "تفاعل اجتماعي",
+  "aiMatchFocusCompetitive": "استعداد تنافسي",
+  "aiMatchFocusCreative": "تعبير إبداعي",
+  "aiMatchStep3Title": "متى وأين؟",
+  "aiMatchStep3Subtitle": "ساعدنا في تحديد الوقت والمكان المثاليين للتطابقات.",
+  "aiMatchPreferredDaysLabel": "الأيام المفضلة",
+  "aiMatchTimePreferenceLabel": "الوقت المفضل",
+  "aiMatchBudgetRangeLabel": "نطاق الميزانية",
+  "aiMatchLocationRadiusLabel": "الموقع ونطاق البحث",
+  "aiMatchRadiusHint": "النطاق",
+  "aiMatchLocationHint": "أدخل الرمز البريدي أو الحي",
+  "aiMatchFindMatches": "ابحث عن التطابقات",
+  "aiMatchEngineCaption": "مدعوم بمحرك المطابقة الذكي",
+  "aiMatchSocialProofTitle": "عائلات في منطقتك تبحث الآن",
+  "aiMatchSocialProofSubtitle": "تابع لعرض أفضل الخيارات المقترحة لطفلك.",
+  "aiMatchDayMon": "ن",
+  "aiMatchDayTue": "ث",
+  "aiMatchDayWed": "ر",
+  "aiMatchDayThu": "خ",
+  "aiMatchDayFri": "ج",
+  "aiMatchDaySat": "س",
+  "aiMatchDaySun": "ح",
+  "aiMatchTimeMorning": "الصباح",
+  "aiMatchTimeAfternoon": "بعد الظهر",
+  "aiMatchTimeEvening": "المساء",
+  "aiMatchMilesValue": "{miles} أميال",
+  "@aiMatchMilesValue": {
+    "placeholders": {
+      "miles": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "aiMatchInterestHintSoccer": "اختيار كرة القدم ممتاز. اقترح جلسة تجريبية مساء لقياس الحماس.",
+  "aiMatchInterestHintScience": "ميول العلوم واضحة. ابحث عن برنامج تطبيقي وتجارب عملية.",
+  "aiMatchInterestHintMusic": "الموسيقى خيار رائع. ابدأ بحصص قصيرة ثم زد المدة تدريجيا.",
+  "aiMatchInterestHintArt": "الفن مناسب لهذا الملف. ركز على بيئة هادئة ومدربة صبورة.",
+  "aiMatchInterestHintDefault": "اختر اهتماما لرفع دقة المطابقة قبل الانتقال للخطوة التالية.",
+  "aiMatchStatusReady": "جاهز للمطابقة",
+  "aiMatchStatusNeedsTouch": "الملف يحتاج لمسة أخيرة",
+  "aiMatchSavedAt": "آخر حفظ {time}",
+  "@aiMatchSavedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "08:30"
+      }
+    }
+  },
+  "aiMatchLiveProfileCardTitle": "بطاقة الملف الذكية",
+  "aiMatchPassionsSummary": "ملخص الشغف",
+  "aiMatchProfileStatusLabel": "حالة الملف:",
+  "aiMatchPassionsEmpty": "لا تزال شغفاتك في انتظار الاكتشاف...",
+  "aiMatchTapSwitchHint": "انقر للتنقل بين الملخص والنصيحة",
+  "aiMatchBadgeArts": "فن",
+  "aiMatchBadgeSoccer": "كرة",
+  "aiMatchBadgeScience": "علوم",
+  "aiMatchBadgeMusic": "موسيقى",
+  "aiMatchTypeMessage": "اكتب رسالتك...",
   "en": "EN",
   "ar": "عربي"
 }

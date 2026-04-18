@@ -568,7 +568,7 @@ class _LandingEntryGateScreen extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          child: ElevatedButton.icon(
+                                          child: ElevatedButton(
                                             onPressed: onGetStarted,
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
@@ -580,18 +580,25 @@ class _LandingEntryGateScreen extends StatelessWidget {
                                                     BorderRadius.circular(999),
                                               ),
                                             ),
-                                            icon: Icon(
-                                              isArabic
-                                                  ? Icons.arrow_back_rounded
-                                                  : Icons.arrow_forward_rounded,
-                                              size: 20,
-                                            ),
-                                            label: Text(
-                                              getStartedLabel,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w700,
-                                              ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                Text(
+                                                  getStartedLabel,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 12),
+                                                const Text(
+                                                  '>',
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),

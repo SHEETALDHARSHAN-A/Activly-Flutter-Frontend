@@ -203,19 +203,16 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
     });
   }
 
-  Future<void> _saveKidDetails({required bool isArabic}) async {
+  Future<void> _saveKidDetails() async {
     final name = _kidNameController.text.trim();
     final age = _childAgeController.text.trim();
     final interest = _selectedInterests.join(',');
+    final l10n = AppLocalizations.of(context)!;
 
     if (name.isEmpty || age.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(
-            isArabic
-                ? 'ÙŠØ±Ø¬Ù‰ Ø¥Ø¯Ø®Ø§Ù„ Ø§Ø³Ù… Ø§Ù„Ø·ÙÙ„ ÙˆØ§Ù„Ø¹Ù…Ø± Ù‚Ø¨Ù„ Ø§Ù„Ø­ÙØ¸.'
-                : 'Please enter kid name and age before saving.',
-          ),
+          content: Text(l10n.aiMatchKidDetailsRequiredError),
         ),
       );
       return;
@@ -238,11 +235,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          isArabic
-              ? 'ØªÙ… Ø­ÙØ¸ ØªÙØ§ØµÙŠÙ„ Ø§Ù„Ø·ÙÙ„ Ø¨Ù†Ø¬Ø§Ø­.'
-              : 'Kid details saved successfully.',
-        ),
+        content: Text(l10n.aiMatchKidDetailsSavedSuccess),
       ),
     );
   }
@@ -340,7 +333,8 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final isArabic = widget.language == AppLanguage.ar;
-    final title = isArabic ? 'Ù…Ø·Ø§Ø¨Ù‚Ø© Ø°ÙƒÙŠØ©' : 'AI Match';
+    final l10n = AppLocalizations.of(context)!;
+    final title = l10n.aiMatchTitle;
 
     final showBackButton =
         widget.onBack != null &&
@@ -496,9 +490,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                                                   });
                                                 },
                                             onSaveKidDetails: () => unawaited(
-                                              _saveKidDetails(
-                                                isArabic: isArabic,
-                                              ),
+                                              _saveKidDetails(),
                                             ),
                                             onNext: () {
                                               if (_detailsStep < 3) {
@@ -598,7 +590,7 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                       right: kTopControlsSidePadding,
                       child: _AiTopBar(
                         title: title,
-                        skipLabel: widget.t.skipForNow,
+                        skipLabel: l10n.skipForNow,
                         isArabic: isArabic,
                         language: widget.language,
                         showBackButton: showBackButton,
@@ -619,7 +611,6 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
                           child: ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: 420),
                             child: _AiChatInput(
-                              isArabic: isArabic,
                               controller: _messageController,
                             ),
                           ),
@@ -986,15 +977,12 @@ class _AiThreeStepProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final step = currentStep.clamp(1, 3);
     final progress = step / 3;
     final percent = (progress * 100).floor();
-    final stepLabel = isArabic
-        ? 'Ø§Ù„Ø®Ø·ÙˆØ© $step Ù…Ù† 3'
-        : 'Step $step of 3';
-    final percentLabel = isArabic
-        ? '$percentÙª Ù…ÙƒØªÙ…Ù„'
-        : '$percent% Complete';
+    final stepLabel = l10n.aiMatchStepLabel(step);
+    final percentLabel = l10n.aiMatchPercentComplete(percent);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
@@ -1068,10 +1056,9 @@ class _AiModeToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatLabel = isArabic ? 'Ø§Ù„Ø¯Ø±Ø¯Ø´Ø©' : 'Chat';
-    final detailsLabel = isArabic
-        ? 'Ø§Ø¯Ø®Ù„ Ø§Ù„ØªÙØ§ØµÙŠÙ„'
-        : 'Fill Details';
+    final l10n = AppLocalizations.of(context)!;
+    final chatLabel = l10n.aiMatchToggleChat;
+    final detailsLabel = l10n.aiMatchToggleFillDetails;
 
     return _AiGlassPanel(
       padding: const EdgeInsets.all(5),
@@ -1171,13 +1158,12 @@ class _AiChatPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final optionTexts = isArabic
-        ? const <String>[
-            'Ø·Ø§Ù‚Ø© Ø¹Ø§Ù„ÙŠØ©',
-            'ØªØ±ÙƒÙŠØ² ÙˆÙ‡Ø¯ÙˆØ¡',
-            'Ù…Ø²ÙŠØ¬ Ù…ØªÙˆØ§Ø²Ù†',
-          ]
-        : const <String>['High Energy', 'Focused and Quiet', 'A Bit of Both'];
+    final l10n = AppLocalizations.of(context)!;
+    final optionTexts = <String>[
+      l10n.aiMatchEnergyHigh,
+      l10n.aiMatchEnergyFocused,
+      l10n.aiMatchEnergyBalanced,
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1185,21 +1171,15 @@ class _AiChatPanel extends StatelessWidget {
         _AiChatHeroCard(isArabic: isArabic, selectedEnergy: selectedEnergy),
         const SizedBox(height: 14),
         _AiCoachBubble(
-          text: isArabic
-              ? 'Ø§Ù‡Ù„Ø§! Ø§Ù†Ø§ Ù…Ø³Ø§Ø¹Ø¯ Activly. ÙƒÙ… Ø¹Ù…Ø± Ø·ÙÙ„Ùƒ Ø§Ù„Ø¢Ù†ØŸ'
-              : 'Hi! I am your Activly Coach. How old is your child now?',
+          text: l10n.aiMatchCoachIntroQuestion,
         ),
         const SizedBox(height: 12),
         _AiUserBubble(
-          text: isArabic
-              ? 'Ø¹Ù…Ø±Ù‡ 6 Ø³Ù†ÙˆØ§Øª.'
-              : 'He just turned 6 last month.',
+          text: l10n.aiMatchUserAgeResponse,
         ),
         const SizedBox(height: 12),
         _AiCoachBubble(
-          text: isArabic
-              ? 'Ø±Ø§Ø¦Ø¹. Ù…Ø§ Ù…Ø³ØªÙˆÙ‰ Ø·Ø§Ù‚ØªÙ‡ ØºØ§Ù„Ø¨Ø§ØŸ'
-              : 'Great. What is the usual energy level?',
+          text: l10n.aiMatchCoachEnergyQuestion,
         ),
         const SizedBox(height: 14),
         Padding(
@@ -1232,24 +1212,19 @@ class _AiChatHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedEnergyLabel = isArabic
-        ? <String>[
-            'Ø·Ø§Ù‚Ø© Ø¹Ø§Ù„ÙŠØ©',
-            'ØªØ±ÙƒÙŠØ² ÙˆÙ‡Ø¯ÙˆØ¡',
-            'Ù…Ø²ÙŠØ¬ Ù…ØªÙˆØ§Ø²Ù†',
-          ]
-        : <String>['High Energy', 'Focused and Quiet', 'Balanced Mix'];
+    final l10n = AppLocalizations.of(context)!;
+    final selectedEnergyLabel = <String>[
+      l10n.aiMatchEnergyHigh,
+      l10n.aiMatchEnergyFocused,
+      l10n.aiMatchEnergyBalanced,
+    ];
 
     final currentEnergy = selectedEnergy >= 0 && selectedEnergy < 3
         ? selectedEnergyLabel[selectedEnergy]
-        : (isArabic ? 'Ù…ØªÙƒÙŠÙ' : 'Adaptive');
+        : l10n.aiMatchEnergyAdaptive;
 
-    final title = isArabic
-        ? 'Ù…Ø³Ø§Ø¹Ø¯ Activly Ø¬Ø§Ù‡Ø²'
-        : 'Activly Coach Is Ready';
-    final subtitle = isArabic
-        ? 'Ø³Ù†Ø®ØµØµ Ø§Ù„Ø§Ù‚ØªØ±Ø§Ø­Ø§Øª Ø¨Ø³Ø±Ø¹Ø© Ø­Ø³Ø¨ Ø§Ù„Ø¹Ù…Ø± ÙˆØ§Ù„Ø·Ø§Ù‚Ø© ÙˆØ§Ù„Ù‡Ø¯Ù.'
-        : 'We will personalize activity picks by age, energy, and goal in seconds.';
+    final title = l10n.aiMatchCoachReadyTitle;
+    final subtitle = l10n.aiMatchCoachReadySubtitle;
 
     return _AiGlassPanel(
       padding: const EdgeInsets.fromLTRB(14, 14, 14, 13),
@@ -1313,11 +1288,11 @@ class _AiChatHeroCard extends StatelessWidget {
             runSpacing: 8,
             children: <Widget>[
               _AiSignalChip(
-                label: isArabic ? 'Ù…Ù†Ø§Ø³Ø¨ Ù„Ù„Ø¹Ù…Ø±' : 'Age tuned',
+                label: l10n.aiMatchSignalAgeTuned,
                 highlighted: false,
               ),
               _AiSignalChip(
-                label: isArabic ? 'ÙŠØ±Ø§Ø¹ÙŠ Ø§Ù„Ù‡Ø¯Ù' : 'Goal aware',
+                label: l10n.aiMatchSignalGoalAware,
                 highlighted: false,
               ),
               _AiSignalChip(
@@ -1680,85 +1655,47 @@ class _AiDetailsStepOnePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = isArabic
-        ? 'Ù„Ù†Ø¨Ø¯Ø£ Ø¨Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø·ÙÙ„.'
-        : 'Start with kid details.';
-    final subtitle = isArabic
-        ? 'Ù…Ù„Ù ØµØºÙŠØ± ÙˆØ¯Ù‚ÙŠÙ‚ ÙŠØ¹Ø·ÙŠ ØªØ·Ø§Ø¨Ù‚Ø§Øª Ø£Ø°ÙƒÙ‰ Ø®Ù„Ø§Ù„ Ø«ÙˆØ§Ù†Ù.'
-        : 'A small precise profile gives smarter matches in seconds.';
-    final ageHint = isArabic ? 'Ø§Ù„Ø¹Ù…Ø±' : 'Age';
-    final genderLabel = isArabic ? 'Ø§Ù„Ø¬Ù†Ø³' : 'GENDER';
-    final interestsLabel = isArabic
-        ? 'Ù…Ø§ Ø§Ù„Ø°ÙŠ ÙŠØ«ÙŠØ± ÙØ¶ÙˆÙ„Ù‡ØŸ'
-        : 'WHAT SPARKS THEIR CURIOSITY?';
-    final saveCta = isArabic ? 'Ø­ÙØ¸ Ø§Ù„ØªÙØ§ØµÙŠÙ„' : 'Save Details';
-    final cta = isArabic ? 'Ø§Ù„ØªØ§Ù„ÙŠ' : 'Next';
+    final l10n = AppLocalizations.of(context)!;
+    final title = l10n.aiMatchStep1Title;
+    final subtitle = l10n.aiMatchStep1Subtitle;
+    final ageHint = l10n.aiMatchAgeHint;
+    final genderLabel = l10n.aiMatchGenderLabel;
+    final interestsLabel = l10n.aiMatchInterestsLabel;
+    final saveCta = l10n.aiMatchSaveDetails;
+    final cta = l10n.aiMatchNext;
 
-    final genderOptions = isArabic
-        ? const <_AiSelectableLabel>[
-            _AiSelectableLabel(value: 'Girl', label: 'Ø¨Ù†Øª'),
-            _AiSelectableLabel(value: 'Boy', label: 'ÙˆÙ„Ø¯'),
-            _AiSelectableLabel(value: 'Other', label: 'Ø¢Ø®Ø±'),
-          ]
-        : const <_AiSelectableLabel>[
-            _AiSelectableLabel(value: 'Girl', label: 'Girl'),
-            _AiSelectableLabel(value: 'Boy', label: 'Boy'),
-            _AiSelectableLabel(value: 'Other', label: 'Other'),
-          ];
+    final genderOptions = <_AiSelectableLabel>[
+      _AiSelectableLabel(value: 'Girl', label: l10n.aiMatchGenderGirl),
+      _AiSelectableLabel(value: 'Boy', label: l10n.aiMatchGenderBoy),
+      _AiSelectableLabel(value: 'Other', label: l10n.aiMatchGenderOther),
+    ];
 
-    final interests = isArabic
-        ? const <_AiInterestOption>[
-            _AiInterestOption(
-              value: 'Art & Craft',
-              label: 'ÙÙ† ÙˆØ£Ø¹Ù…Ø§Ù„',
-              icon: Icons.palette_outlined,
-              imagePath: 'assets/images/ai_match/art_craft.png',
-            ),
-            _AiInterestOption(
-              value: 'Soccer',
-              label: 'ÙƒØ±Ø© Ø§Ù„Ù‚Ø¯Ù…',
-              icon: Icons.sports_soccer_outlined,
-              imagePath: 'assets/images/ai_match/soccer.png',
-            ),
-            _AiInterestOption(
-              value: 'Science',
-              label: 'Ø¹Ù„ÙˆÙ…',
-              icon: Icons.science_outlined,
-              imagePath: 'assets/images/ai_match/science.png',
-            ),
-            _AiInterestOption(
-              value: 'Music',
-              label: 'Ù…ÙˆØ³ÙŠÙ‚Ù‰',
-              icon: Icons.music_note_outlined,
-              imagePath: 'assets/images/ai_match/music.png',
-            ),
-          ]
-        : const <_AiInterestOption>[
-            _AiInterestOption(
-              value: 'Art & Craft',
-              label: 'Art & Craft',
-              icon: Icons.palette_outlined,
-              imagePath: 'assets/images/ai_match/art_craft.png',
-            ),
-            _AiInterestOption(
-              value: 'Soccer',
-              label: 'Soccer',
-              icon: Icons.sports_soccer_outlined,
-              imagePath: 'assets/images/ai_match/soccer.png',
-            ),
-            _AiInterestOption(
-              value: 'Science',
-              label: 'Science',
-              icon: Icons.science_outlined,
-              imagePath: 'assets/images/ai_match/science.png',
-            ),
-            _AiInterestOption(
-              value: 'Music',
-              label: 'Music',
-              icon: Icons.music_note_outlined,
-              imagePath: 'assets/images/ai_match/music.png',
-            ),
-          ];
+    final interests = <_AiInterestOption>[
+      _AiInterestOption(
+        value: 'Art & Craft',
+        label: l10n.aiMatchInterestArtCraft,
+        icon: Icons.palette_outlined,
+        imagePath: 'assets/images/ai_match/art_craft.png',
+      ),
+      _AiInterestOption(
+        value: 'Soccer',
+        label: l10n.aiMatchInterestSoccer,
+        icon: Icons.sports_soccer_outlined,
+        imagePath: 'assets/images/ai_match/soccer.png',
+      ),
+      _AiInterestOption(
+        value: 'Science',
+        label: l10n.aiMatchInterestScience,
+        icon: Icons.science_outlined,
+        imagePath: 'assets/images/ai_match/science.png',
+      ),
+      _AiInterestOption(
+        value: 'Music',
+        label: l10n.aiMatchInterestMusic,
+        icon: Icons.music_note_outlined,
+        imagePath: 'assets/images/ai_match/music.png',
+      ),
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1858,107 +1795,63 @@ class _AiDetailsStepTwoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = isArabic
-        ? 'Ø·ÙˆØ± Ø§Ù„Ù…ØªØ¹Ø© Ø£ÙƒØ«Ø±.'
-        : 'Level up the fun.';
-    final subtitle = isArabic
-        ? 'Ø£Ø®Ø¨Ø±Ù†Ø§ Ø¹Ù† Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ ÙˆØ§Ù„Ø£Ù‡Ø¯Ø§Ù Ø§Ù„Ù…Ø­Ø¯Ø¯Ø©.'
-        : 'Tell us about their skill level and specific goals.';
-    final skillLabel = isArabic
-        ? 'Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ'
-        : 'CURRENT SKILL LEVEL';
-    final interestLabel = isArabic
-        ? 'Ø§Ù‡ØªÙ…Ø§Ù… Ù…Ø­Ø¯Ø¯'
-        : 'SPECIFIC INTEREST';
-    final focusLabel = isArabic
-        ? 'Ù…Ø­Ø§ÙˆØ± Ø§Ù„ØªØ±ÙƒÙŠØ² ÙˆØ§Ù„Ø£Ù‡Ø¯Ø§Ù'
-        : 'FOCUS AREAS & GOALS';
-    final medicalIssuesLabel = isArabic
-        ? 'Ø§Ù„Ù…Ø´ÙƒÙ„Ø§Øª Ø§Ù„Ø·Ø¨ÙŠØ©'
-        : 'Medical issues';
-    final medicalIssuesHint = isArabic
-        ? 'Ø¥Ù† ÙˆØ¬Ø¯ØªØŒ Ø§Ø°ÙƒØ±Ù‡Ø§ Ù‡Ù†Ø§'
-        : 'if any, specify here';
-    final interestHint = isArabic
-        ? 'Ù…Ø«Ø§Ù„: ØªØ¹Ù„Ù… ØªØ±ÙƒÙŠØ¨ Ø£Ø¬Ù‡Ø²Ø© Ø§Ù„ÙƒÙ…Ø¨ÙŠÙˆØªØ±...'
-        : 'e.g. Learning to build custom PC builds...';
-    final previousLabel = isArabic ? 'Ø§Ù„Ø³Ø§Ø¨Ù‚' : 'Previous';
-    final cta = isArabic ? 'Ø§Ù„ØªØ§Ù„ÙŠ' : 'Next';
+    final l10n = AppLocalizations.of(context)!;
+    final title = l10n.aiMatchStep2Title;
+    final subtitle = l10n.aiMatchStep2Subtitle;
+    final skillLabel = l10n.aiMatchSkillLevelLabel;
+    final interestLabel = l10n.aiMatchSpecificInterestLabel;
+    final focusLabel = l10n.aiMatchFocusAreasLabel;
+    final medicalIssuesLabel = l10n.aiMatchMedicalIssuesLabel;
+    final medicalIssuesHint = l10n.aiMatchMedicalIssuesHint;
+    final interestHint = l10n.aiMatchSpecificInterestHintExample;
+    final previousLabel = l10n.aiMatchPrevious;
+    final cta = l10n.aiMatchNext;
 
-    final skillOptions = isArabic
-        ? const <_AiSelectableLabel>[
-            _AiSelectableLabel(value: 'Beginner', label: 'Ù…Ø¨ØªØ¯Ø¦'),
-            _AiSelectableLabel(value: 'Intermediate', label: 'Ù…ØªÙˆØ³Ø·'),
-            _AiSelectableLabel(value: 'Advanced', label: 'Ù…ØªÙ‚Ø¯Ù…'),
-          ]
-        : const <_AiSelectableLabel>[
-            _AiSelectableLabel(
-              value: 'Beginner',
-              label: 'Beginner',
-              moonPhase: _AiMoonPhase.crescentThin,
-            ),
-            _AiSelectableLabel(
-              value: 'Intermediate',
-              label: 'Intermediate',
-              moonPhase: _AiMoonPhase.crescentWide,
-            ),
-            _AiSelectableLabel(
-              value: 'Advanced',
-              label: 'Advanced',
-              moonPhase: _AiMoonPhase.full,
-            ),
-          ];
+    final skillOptions = <_AiSelectableLabel>[
+      _AiSelectableLabel(
+        value: 'Beginner',
+        label: l10n.aiMatchSkillBeginner,
+        moonPhase: _AiMoonPhase.crescentThin,
+      ),
+      _AiSelectableLabel(
+        value: 'Intermediate',
+        label: l10n.aiMatchSkillIntermediate,
+        moonPhase: _AiMoonPhase.crescentWide,
+      ),
+      _AiSelectableLabel(
+        value: 'Advanced',
+        label: l10n.aiMatchSkillAdvanced,
+        moonPhase: _AiMoonPhase.full,
+      ),
+    ];
 
-    final focusOptions = isArabic
-        ? const <_AiSelectableLabel>[
-            _AiSelectableLabel(
-              value: 'Confidence Building',
-              label: 'Ø¨Ù†Ø§Ø¡ Ø§Ù„Ø«Ù‚Ø©',
-            ),
-            _AiSelectableLabel(
-              value: 'Technical Skills',
-              label: 'Ù…Ù‡Ø§Ø±Ø§Øª ØªÙ‚Ù†ÙŠØ©',
-            ),
-            _AiSelectableLabel(
-              value: 'Social Interaction',
-              label: 'ØªÙØ§Ø¹Ù„ Ø§Ø¬ØªÙ…Ø§Ø¹ÙŠ',
-            ),
-            _AiSelectableLabel(
-              value: 'Competitive Prep',
-              label: 'Ø§Ø³ØªØ¹Ø¯Ø§Ø¯ ØªÙ†Ø§ÙØ³ÙŠ',
-            ),
-            _AiSelectableLabel(
-              value: 'Creative Expression',
-              label: 'ØªØ¹Ø¨ÙŠØ± Ø¥Ø¨Ø¯Ø§Ø¹ÙŠ',
-            ),
-          ]
-        : const <_AiSelectableLabel>[
-            _AiSelectableLabel(
-              value: 'Confidence Building',
-              label: 'Confidence Building',
-              icon: Icons.trending_up_rounded,
-            ),
-            _AiSelectableLabel(
-              value: 'Technical Skills',
-              label: 'Technical Skills',
-              icon: Icons.build_outlined,
-            ),
-            _AiSelectableLabel(
-              value: 'Social Interaction',
-              label: 'Social Interaction',
-              icon: Icons.groups_outlined,
-            ),
-            _AiSelectableLabel(
-              value: 'Competitive Prep',
-              label: 'Competitive Prep',
-              icon: Icons.emoji_events_outlined,
-            ),
-            _AiSelectableLabel(
-              value: 'Creative Expression',
-              label: 'Creative Expression',
-              icon: Icons.brush_outlined,
-            ),
-          ];
+    final focusOptions = <_AiSelectableLabel>[
+      _AiSelectableLabel(
+        value: 'Confidence Building',
+        label: l10n.aiMatchFocusConfidence,
+        icon: Icons.trending_up_rounded,
+      ),
+      _AiSelectableLabel(
+        value: 'Technical Skills',
+        label: l10n.aiMatchFocusTechnical,
+        icon: Icons.build_outlined,
+      ),
+      _AiSelectableLabel(
+        value: 'Social Interaction',
+        label: l10n.aiMatchFocusSocial,
+        icon: Icons.groups_outlined,
+      ),
+      _AiSelectableLabel(
+        value: 'Competitive Prep',
+        label: l10n.aiMatchFocusCompetitive,
+        icon: Icons.emoji_events_outlined,
+      ),
+      _AiSelectableLabel(
+        value: 'Creative Expression',
+        label: l10n.aiMatchFocusCreative,
+        icon: Icons.brush_outlined,
+      ),
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -2123,80 +2016,51 @@ class _AiDetailsStepThreePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = isArabic ? 'Ù…ØªÙ‰ ÙˆØ£ÙŠÙ†ØŸ' : 'When and where?';
-    final subtitle = isArabic
-        ? 'Ø³Ø§Ø¹Ø¯Ù†Ø§ ÙÙŠ ØªØ­Ø¯ÙŠØ¯ Ø§Ù„ÙˆÙ‚Øª ÙˆØ§Ù„Ù…ÙƒØ§Ù† Ø§Ù„Ù…Ø«Ø§Ù„ÙŠÙŠÙ† Ù„Ù„ØªØ·Ø§Ø¨Ù‚Ø§Øª.'
-        : 'Help us narrow down the perfect schedule and location for your matches.';
-    final daysLabel = isArabic
-        ? 'Ø§Ù„Ø£ÙŠØ§Ù… Ø§Ù„Ù…ÙØ¶Ù„Ø©'
-        : 'PREFERRED DAYS';
-    final timeLabel = isArabic ? 'Ø§Ù„ÙˆÙ‚Øª Ø§Ù„Ù…ÙØ¶Ù„' : 'TIME PREFERENCE';
-    final budgetLabel = isArabic
-        ? 'Ù†Ø·Ø§Ù‚ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ©'
-        : 'BUDGET RANGE';
-    final locationLabel = isArabic
-        ? 'Ø§Ù„Ù…ÙˆÙ‚Ø¹ ÙˆÙ†Ø·Ø§Ù‚ Ø§Ù„Ø¨Ø­Ø«'
-        : 'LOCATION & RADIUS';
+    final l10n = AppLocalizations.of(context)!;
+    final title = l10n.aiMatchStep3Title;
+    final subtitle = l10n.aiMatchStep3Subtitle;
+    final daysLabel = l10n.aiMatchPreferredDaysLabel;
+    final timeLabel = l10n.aiMatchTimePreferenceLabel;
+    final budgetLabel = l10n.aiMatchBudgetRangeLabel;
+    final locationLabel = l10n.aiMatchLocationRadiusLabel;
     final budgetValue =
-        '\$${budgetRange.start.round()} â€” \$${budgetRange.end.round()}';
-    final radiusValue = isArabic
-        ? '${radiusMiles.round()} Ø£Ù…ÙŠØ§Ù„'
-        : '${radiusMiles.round()} Miles';
-    final radiusHint = isArabic ? 'Ø§Ù„Ù†Ø·Ø§Ù‚' : 'RADIUS';
-    final locationHint = isArabic
-        ? 'Ø£Ø¯Ø®Ù„ Ø§Ù„Ø±Ù…Ø² Ø§Ù„Ø¨Ø±ÙŠØ¯ÙŠ Ø£Ùˆ Ø§Ù„Ø­ÙŠ'
-        : 'Enter zip code or neighborhood';
-    final previousLabel = isArabic ? 'Ø§Ù„Ø³Ø§Ø¨Ù‚' : 'Previous';
-    final cta = isArabic ? 'Ø§Ø¨Ø­Ø« Ø¹Ù† Ø§Ù„ØªØ·Ø§Ø¨Ù‚Ø§Øª' : 'Find Matches';
-    final engineCaption = isArabic
-        ? 'Ù…Ø¯Ø¹ÙˆÙ… Ø¨Ù…Ø­Ø±Ùƒ Ø§Ù„Ù…Ø·Ø§Ø¨Ù‚Ø© Ø§Ù„Ø°ÙƒÙŠ'
-        : 'Powered by AI Matchmaking Engine v4.2';
-    final socialProofTitle = isArabic
-        ? 'Ø¹Ø§Ø¦Ù„Ø§Øª ÙÙŠ Ù…Ù†Ø·Ù‚ØªÙƒ ØªØ¨Ø­Ø« Ø§Ù„Ø¢Ù†'
-        : 'Families nearby are matching now';
-    final socialProofSubtitle = isArabic
-        ? 'ØªØ§Ø¨Ø¹ Ù„Ø¹Ø±Ø¶ Ø£ÙØ¶Ù„ Ø§Ù„Ø®ÙŠØ§Ø±Ø§Øª Ø§Ù„Ù…Ù‚ØªØ±Ø­Ø© Ù„Ø·ÙÙ„Ùƒ.'
-        : 'Continue to unlock your best personalized matches.';
+        '\$${budgetRange.start.round()} - \$${budgetRange.end.round()}';
+    final radiusValue = l10n.aiMatchMilesValue(radiusMiles.round());
+    final radiusHint = l10n.aiMatchRadiusHint;
+    final locationHint = l10n.aiMatchLocationHint;
+    final previousLabel = l10n.aiMatchPrevious;
+    final cta = l10n.aiMatchFindMatches;
+    final engineCaption = l10n.aiMatchEngineCaption;
+    final socialProofTitle = l10n.aiMatchSocialProofTitle;
+    final socialProofSubtitle = l10n.aiMatchSocialProofSubtitle;
 
-    final dayLabels = isArabic
-        ? const <String>['Ù†', 'Ø«', 'Ø±', 'Ø®', 'Ø¬', 'Ø³', 'Ø­']
-        : const <String>['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    final dayLabels = <String>[
+      l10n.aiMatchDayMon,
+      l10n.aiMatchDayTue,
+      l10n.aiMatchDayWed,
+      l10n.aiMatchDayThu,
+      l10n.aiMatchDayFri,
+      l10n.aiMatchDaySat,
+      l10n.aiMatchDaySun,
+    ];
 
-    final timeOptions = isArabic
-        ? const <_AiTimeOption>[
-            _AiTimeOption(
-              value: 'Morning',
-              label: 'Ø§Ù„ØµØ¨Ø§Ø­',
-              icon: Icons.light_mode_rounded,
-            ),
-            _AiTimeOption(
-              value: 'Afternoon',
-              label: 'Ø¨Ø¹Ø¯ Ø§Ù„Ø¸Ù‡Ø±',
-              icon: Icons.wb_sunny_rounded,
-            ),
-            _AiTimeOption(
-              value: 'Evening',
-              label: 'Ø§Ù„Ù…Ø³Ø§Ø¡',
-              icon: Icons.dark_mode_rounded,
-            ),
-          ]
-        : const <_AiTimeOption>[
-            _AiTimeOption(
-              value: 'Morning',
-              label: 'Morning',
-              icon: Icons.light_mode_rounded,
-            ),
-            _AiTimeOption(
-              value: 'Afternoon',
-              label: 'Afternoon',
-              icon: Icons.wb_sunny_rounded,
-            ),
-            _AiTimeOption(
-              value: 'Evening',
-              label: 'Evening',
-              icon: Icons.dark_mode_rounded,
-            ),
-          ];
+    final timeOptions = <_AiTimeOption>[
+      _AiTimeOption(
+        value: 'Morning',
+        label: l10n.aiMatchTimeMorning,
+        icon: Icons.light_mode_rounded,
+      ),
+      _AiTimeOption(
+        value: 'Afternoon',
+        label: l10n.aiMatchTimeAfternoon,
+        icon: Icons.wb_sunny_rounded,
+      ),
+      _AiTimeOption(
+        value: 'Evening',
+        label: l10n.aiMatchTimeEvening,
+        icon: Icons.dark_mode_rounded,
+      ),
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -3498,45 +3362,42 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
     'Music': 'assets/images/ai_match/badge_music.png',
   };
 
-  // Short display labels used under each badge.
-  static const Map<String, String> _badgeLabels = <String, String>{
-    'Art & Craft': 'Arts',
-    'Soccer': 'Soccer',
-    'Science': 'Science',
-    'Music': 'Music',
-  };
+  String _badgeLabel(String interest, AppLocalizations l10n) {
+    switch (interest) {
+      case 'Art & Craft':
+        return l10n.aiMatchBadgeArts;
+      case 'Soccer':
+        return l10n.aiMatchBadgeSoccer;
+      case 'Science':
+        return l10n.aiMatchBadgeScience;
+      case 'Music':
+        return l10n.aiMatchBadgeMusic;
+      default:
+        return interest;
+    }
+  }
 
-  String _interestHint(bool isArabic) {
+  String _interestHint(AppLocalizations l10n) {
     final interests = widget.selectedInterests;
     if (interests.contains('Soccer')) {
-      return isArabic
-          ? 'Ø§Ø®ØªÙŠØ§Ø± ÙƒØ±Ø© Ø§Ù„Ù‚Ø¯Ù… Ù…Ù…ØªØ§Ø². Ø§Ù‚ØªØ±Ø­ Ø¬Ù„Ø³Ø© ØªØ¬Ø±ÙŠØ¨ÙŠØ© Ù…Ø³Ø§Ø¡Ù‹ Ù„Ù‚ÙŠØ§Ø³ Ø§Ù„Ø­Ù…Ø§Ø³.'
-          : 'Soccer is a strong pick. Try an evening trial first to test energy.';
+      return l10n.aiMatchInterestHintSoccer;
     }
     if (interests.contains('Science')) {
-      return isArabic
-          ? 'Ù…ÙŠÙˆÙ„ Ø§Ù„Ø¹Ù„ÙˆÙ… ÙˆØ§Ø¶Ø­Ø©. Ø§Ø¨Ø­Ø« Ø¹Ù† Ø¨Ø±Ù†Ø§Ù…Ø¬ ØªØ·Ø¨ÙŠÙ‚ÙŠ ÙˆØªØ¬Ø§Ø±Ø¨ Ø¹Ù…Ù„ÙŠØ©.'
-          : 'Science interest looks clear. Prioritize hands-on experiment programs.';
+      return l10n.aiMatchInterestHintScience;
     }
     if (interests.contains('Music')) {
-      return isArabic
-          ? 'Ø§Ù„Ù…ÙˆØ³ÙŠÙ‚Ù‰ Ø®ÙŠØ§Ø± Ø±Ø§Ø¦Ø¹. Ø§Ø¨Ø¯Ø£ Ø¨Ø­ØµØµ Ù‚ØµÙŠØ±Ø© Ø«Ù… Ø²Ø¯ Ø§Ù„Ù…Ø¯Ø© ØªØ¯Ø±ÙŠØ¬ÙŠØ§Ù‹.'
-          : 'Music is a great path. Start with short sessions, then scale duration.';
+      return l10n.aiMatchInterestHintMusic;
     }
     if (interests.contains('Art & Craft')) {
-      return isArabic
-          ? 'Ø§Ù„ÙÙ† Ù…Ù†Ø§Ø³Ø¨ Ù„Ù‡Ø°Ø§ Ø§Ù„Ù…Ù„Ù. Ø±ÙƒØ² Ø¹Ù„Ù‰ Ø¨ÙŠØ¦Ø© Ù‡Ø§Ø¯Ø¦Ø© ÙˆÙ…Ø¯Ø±Ø¨Ø© ØµØ¨ÙˆØ±Ø©.'
-          : 'Art fits this profile well. Look for calm spaces with patient mentors.';
+      return l10n.aiMatchInterestHintArt;
     }
 
-    return isArabic
-        ? 'Ø§Ø®ØªØ± Ø§Ù‡ØªÙ…Ø§Ù…Ø§Ù‹ Ù„Ø±ÙØ¹ Ø¯Ù‚Ø© Ø§Ù„Ù…Ø·Ø§Ø¨Ù‚Ø© Ù‚Ø¨Ù„ Ø§Ù„Ø§Ù†ØªÙ‚Ø§Ù„ Ù„Ù„Ø®Ø·ÙˆØ© Ø§Ù„ØªØ§Ù„ÙŠØ©.'
-        : 'Pick interests to improve matching precision before continuing.';
+    return l10n.aiMatchInterestHintDefault;
   }
 
   @override
   Widget build(BuildContext context) {
-    final isArabic = widget.isArabic;
+    final l10n = AppLocalizations.of(context)!;
     final normalizedGender = widget.kidGender.trim().toLowerCase();
     final avatarAssetPath = normalizedGender == 'girl'
         ? 'assets/images/ai_match/music.png'
@@ -3551,18 +3412,14 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
             .clamp(0.0, 1.0);
     final scorePercent = (score * 100).round();
     final status = score >= 0.8
-        ? (isArabic ? 'Ø¬Ø§Ù‡Ø² Ù„Ù„Ù…Ø·Ø§Ø¨Ù‚Ø©' : 'Ready to match')
-        : (isArabic
-              ? 'Ø§Ù„Ù…Ù„Ù ÙŠØ­ØªØ§Ø¬ Ù„Ù…Ø³Ø© Ø£Ø®ÙŠØ±Ø©'
-              : 'Profile needs one more touch');
+      ? l10n.aiMatchStatusReady
+      : l10n.aiMatchStatusNeedsTouch;
 
     String? savedAtLabel;
     if (widget.savedAt != null) {
       final hour = widget.savedAt!.hour.toString().padLeft(2, '0');
       final minute = widget.savedAt!.minute.toString().padLeft(2, '0');
-      savedAtLabel = isArabic
-          ? 'Ø¢Ø®Ø± Ø­ÙØ¸ $hour:$minute'
-          : 'Saved at $hour:$minute';
+        savedAtLabel = l10n.aiMatchSavedAt('$hour:$minute');
     }
 
     Widget profileChip({required IconData icon, required String text}) {
@@ -3593,7 +3450,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
 
     Widget passionBadge(String interest) {
       final badgePath = _badgePaths[interest];
-      final label = _badgeLabels[interest] ?? interest;
+      final label = _badgeLabel(interest, l10n);
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -3686,7 +3543,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              // â”€â”€ Header â”€â”€
+              // Header
               Row(
                 children: <Widget>[
                   Icon(
@@ -3697,9 +3554,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      isArabic
-                          ? 'Ø¨Ø·Ø§Ù‚Ø© Ø§Ù„Ù…Ù„Ù Ø§Ù„Ø°ÙƒÙŠØ©'
-                          : 'Live Profile Card',
+                      l10n.aiMatchLiveProfileCardTitle,
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 13,
                         fontWeight: FontWeight.w800,
@@ -3717,14 +3572,14 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
               ),
               const SizedBox(height: 12),
 
-              // â”€â”€ Body â”€â”€
+              // Body
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 250),
                 switchInCurve: Curves.easeOut,
                 switchOutCurve: Curves.easeIn,
                 child: _showHint
                     ? Text(
-                        _interestHint(isArabic),
+                    _interestHint(l10n),
                         key: const ValueKey<String>('hint-mode'),
                         style: GoogleFonts.plusJakartaSans(
                           fontSize: 12,
@@ -3795,9 +3650,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                                         profileChip(
                                           icon: Icons.cake_rounded,
                                           text: widget.kidAge.isEmpty
-                                              ? (isArabic
-                                                    ? 'Ø§Ù„Ø¹Ù…Ø±'
-                                                    : 'Age')
+                                              ? l10n.aiMatchAgeHint
                                               : widget.kidAge,
                                         ),
                                         profileChip(
@@ -3809,9 +3662,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                                     if (hasInterests) ...<Widget>[
                                       const SizedBox(height: 8),
                                       Text(
-                                        isArabic
-                                            ? 'Ù…Ù„Ø®Øµ Ø§Ù„Ø´ØºÙ'
-                                            : 'Passions Summary',
+                                        l10n.aiMatchPassionsSummary,
                                         style: GoogleFonts.plusJakartaSans(
                                           fontSize: 11.5,
                                           fontWeight: FontWeight.w800,
@@ -3819,9 +3670,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                                         ),
                                       ),
                                       Text(
-                                        isArabic
-                                            ? 'Ø­Ø§Ù„Ø© Ø§Ù„Ù…Ù„Ù:'
-                                            : 'Profile Status:',
+                                        l10n.aiMatchProfileStatusLabel,
                                         style: GoogleFonts.plusJakartaSans(
                                           fontSize: 10.5,
                                           fontWeight: FontWeight.w600,
@@ -3859,9 +3708,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                           if (!hasInterests) ...<Widget>[
                             const SizedBox(height: 8),
                             Text(
-                              isArabic
-                                  ? 'Ù„Ø§ ØªØ²Ø§Ù„ Ø´ØºÙØ§ØªÙƒ ÙÙŠ Ø§Ù†ØªØ¸Ø§Ø± Ø§Ù„Ø§ÙƒØªØ´Ø§Ùâ€¦'
-                                  : 'Passions yet to be discoveredâ€¦',
+                              l10n.aiMatchPassionsEmpty,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 11.5,
                                 fontWeight: FontWeight.w600,
@@ -3876,7 +3723,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
 
               const SizedBox(height: 12),
 
-              // â”€â”€ Progress bar â”€â”€
+              // Progress bar
               ClipRRect(
                 borderRadius: BorderRadius.circular(999),
                 child: LinearProgressIndicator(
@@ -3890,12 +3737,12 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
               ),
               const SizedBox(height: 8),
 
-              // â”€â”€ Footer â”€â”€
+              // Footer
               Row(
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      '$status â€¢ $scorePercent%',
+                      '$status - $scorePercent%',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.plusJakartaSans(
@@ -3909,9 +3756,7 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                   Flexible(
                     child: Text(
                       savedAtLabel ??
-                          (isArabic
-                              ? 'Ø§Ù†Ù‚Ø± Ù„Ù„Ø§Ù†ØªÙ‚Ø§Ù„ Ø¨ÙŠÙ† Ø§Ù„Ù…Ù„Ø®Øµ ÙˆØ§Ù„Ù†ØµÙŠØ­Ø©'
-                              : 'Tap to switch summary and hint'),
+                          l10n.aiMatchTapSwitchHint,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.end,
@@ -4128,13 +3973,13 @@ class _AiInterestVerticalCard extends StatelessWidget {
 }
 
 class _AiChatInput extends StatelessWidget {
-  const _AiChatInput({required this.isArabic, required this.controller});
+  const _AiChatInput({required this.controller});
 
-  final bool isArabic;
   final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return _AiGlassPanel(
       radius: 999,
       backgroundColor: _aiCardBackground(context),
@@ -4176,9 +4021,7 @@ class _AiChatInput extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
               decoration: InputDecoration(
-                hintText: isArabic
-                    ? 'Ø§ÙƒØªØ¨ Ø±Ø³Ø§Ù„ØªÙƒ...'
-                    : 'Type your message...',
+                hintText: l10n.aiMatchTypeMessage,
                 hintStyle: GoogleFonts.plusJakartaSans(
                   color: _aiMutedText(context),
                 ),

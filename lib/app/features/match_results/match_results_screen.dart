@@ -21,6 +21,7 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
   int _cardStartIndex = 0;
   bool _hasSwipedFirstCard = false;
   bool _showListLayout = false;
+  bool _didPrecacheMatchPhotos = false;
 
   static const List<_MatchCardData> _sampleCards = <_MatchCardData>[
     _MatchCardData(
@@ -31,6 +32,8 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
       matchPercent: 98,
       ratePerHour: 85,
       experienceYears: 8,
+      photoUrl:
+          'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1200',
       imageAssetPath: 'assets/images/ai_match/soccer.png',
     ),
     _MatchCardData(
@@ -41,6 +44,8 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
       matchPercent: 96,
       ratePerHour: 72,
       experienceYears: 6,
+      photoUrl:
+          'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=1200',
       imageAssetPath: 'assets/images/ai_match/music.png',
     ),
     _MatchCardData(
@@ -51,6 +56,8 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
       matchPercent: 94,
       ratePerHour: 68,
       experienceYears: 7,
+      photoUrl:
+          'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200',
       imageAssetPath: 'assets/images/ai_match/science.png',
     ),
   ];
@@ -88,6 +95,20 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
     setState(() {
       _showListLayout = !_showListLayout;
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_didPrecacheMatchPhotos) {
+      return;
+    }
+
+    for (final card in _sampleCards) {
+      precacheImage(NetworkImage(card.photoUrl), context);
+    }
+    _didPrecacheMatchPhotos = true;
   }
 
   Widget _buildFilterRow({required bool isArabic}) {
@@ -251,10 +272,9 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 39,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.w800,
                                   color: kAiColorTextDark,
-                                  letterSpacing: -0.6,
                                 ),
                               ),
                             ),
@@ -382,7 +402,7 @@ class _MatchFilterChip extends StatelessWidget {
           child: Text(
             label,
             style: GoogleFonts.plusJakartaSans(
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: FontWeight.w800,
               color: selected ? kColorWhite : _kAiMutedText,
             ),
@@ -408,15 +428,42 @@ class _MatchResultsCardStack extends StatefulWidget {
   State<_MatchResultsCardStack> createState() => _MatchResultsCardStackState();
 }
 
-class _MatchResultsCardStackState extends State<_MatchResultsCardStack> {
+class _MatchResultsCardStackState extends State<_MatchResultsCardStack>
+    with SingleTickerProviderStateMixin {
   static const double _swipeThreshold = 110;
   static const double _maxDragOffset = 260;
+  static const double _dismissDistance = 560;
+  static const SpringDescription _dismissSpring = SpringDescription(
+    mass: 0.9,
+    stiffness: 280,
+    damping: 27,
+  );
+  static const SpringDescription _returnSpring = SpringDescription(
+    mass: 1.0,
+    stiffness: 230,
+    damping: 24,
+  );
 
-  double _dragDx = 0;
+  late final AnimationController _dragController;
+  bool _isDragging = false;
   bool _isAnimatingOut = false;
   int _incomingEntranceTick = 0;
   String? _incomingTopCardKey;
   bool _lastSwipeToRight = true;
+
+  double get _dragDx => _dragController.value;
+
+  @override
+  void initState() {
+    super.initState();
+    _dragController = AnimationController.unbounded(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _dragController.dispose();
+    super.dispose();
+  }
 
   @override
   void didUpdateWidget(covariant _MatchResultsCardStack oldWidget) {
@@ -455,7 +502,7 @@ class _MatchResultsCardStackState extends State<_MatchResultsCardStack> {
     return TweenAnimationBuilder<double>(
       key: ValueKey<String>('flow-$cardKey-$_incomingEntranceTick'),
       tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 210),
+      duration: const Duration(milliseconds: 260),
       curve: Curves.easeOutCubic,
       child: child,
       builder: (BuildContext context, double t, Widget? animatedChild) {
@@ -478,47 +525,97 @@ class _MatchResultsCardStackState extends State<_MatchResultsCardStack> {
     );
   }
 
+  void _onPanStart(DragStartDetails details) {
+    if (_isAnimatingOut) {
+      return;
+    }
+
+    _dragController.stop();
+    if (!_isDragging) {
+      setState(() {
+        _isDragging = true;
+      });
+    }
+  }
+
   void _onPanUpdate(DragUpdateDetails details) {
     if (_isAnimatingOut) {
       return;
     }
 
-    setState(() {
-      _dragDx = (_dragDx + details.delta.dx)
-          .clamp(-_maxDragOffset, _maxDragOffset)
-          .toDouble();
-    });
+    _dragController.value = (_dragController.value + details.delta.dx)
+        .clamp(-_maxDragOffset, _maxDragOffset)
+        .toDouble();
   }
 
-  void _animateOutCard({required bool toRight}) {
+  Future<void> _animateOutCard({
+    required bool toRight,
+    required double velocityX,
+  }) async {
     if (_isAnimatingOut) {
       return;
     }
 
     _lastSwipeToRight = toRight;
-
     setState(() {
       _isAnimatingOut = true;
-      _dragDx = toRight ? 460 : -460;
+      _isDragging = false;
     });
 
-    Future<void>.delayed(const Duration(milliseconds: 220), () {
-      if (!mounted) {
-        return;
-      }
+    final target = toRight ? _dismissDistance : -_dismissDistance;
+    final initialVelocity = (velocityX / 1000).clamp(-4.5, 4.5).toDouble();
+    final simulation = SpringSimulation(
+      _dismissSpring,
+      _dragController.value,
+      target,
+      initialVelocity,
+    );
 
+    try {
+      await _dragController.animateWith(simulation).orCancel;
+    } on TickerCanceled {
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    _dragController.value = 0;
+    setState(() {
+      _isAnimatingOut = false;
+    });
+    widget.onCardSwiped(toRight);
+  }
+
+  Future<void> _animateBackToCenter({required double velocityX}) async {
+    if (_isDragging) {
       setState(() {
-        _dragDx = 0;
-        _isAnimatingOut = false;
+        _isDragging = false;
       });
+    }
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!mounted) {
-          return;
-        }
-        widget.onCardSwiped(toRight);
-      });
-    });
+    final initialVelocity = (velocityX / 1000).clamp(-3.5, 3.5).toDouble();
+    final simulation = SpringSimulation(
+      _returnSpring,
+      _dragController.value,
+      0,
+      initialVelocity,
+    );
+
+    try {
+      await _dragController.animateWith(simulation).orCancel;
+    } on TickerCanceled {
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    if (_dragController.value.abs() < 0.1) {
+      _dragController.value = 0;
+    }
   }
 
   void _onPanEnd(DragEndDetails details) {
@@ -531,18 +628,16 @@ class _MatchResultsCardStackState extends State<_MatchResultsCardStack> {
     final shouldSwipeLeft = _dragDx < -_swipeThreshold || velocityX < -900;
 
     if (shouldSwipeRight) {
-      _animateOutCard(toRight: true);
+      unawaited(_animateOutCard(toRight: true, velocityX: velocityX));
       return;
     }
 
     if (shouldSwipeLeft) {
-      _animateOutCard(toRight: false);
+      unawaited(_animateOutCard(toRight: false, velocityX: velocityX));
       return;
     }
 
-    setState(() {
-      _dragDx = 0;
-    });
+    unawaited(_animateBackToCenter(velocityX: velocityX));
   }
 
   @override
@@ -551,7 +646,7 @@ class _MatchResultsCardStackState extends State<_MatchResultsCardStack> {
 
     return SizedBox(
       width: 340,
-      height: 610,
+      height: 560,
       child: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
@@ -568,7 +663,7 @@ class _MatchResultsCardStackState extends State<_MatchResultsCardStack> {
     final horizontalInset = depth * 10.0;
     final topInset = depth * 12.0;
     final bottomInset = depth * -2.0;
-    final opacity = depth == 0
+    final layerOpacity = depth == 0
         ? 1.0
         : depth == 1
         ? 0.82
@@ -579,30 +674,41 @@ class _MatchResultsCardStackState extends State<_MatchResultsCardStack> {
         ? 0.97
         : 0.94;
 
-    Widget content = _MatchResultPrimaryCard(
-      data: card,
-      isArabic: widget.isArabic,
+    Widget content = RepaintBoundary(
+      child: _MatchResultPrimaryCard(data: card, isArabic: widget.isArabic),
     );
 
     if (isTopCard) {
-      final normalizedDrag = (_dragDx / _maxDragOffset).clamp(-1.0, 1.0);
-      final rotation = normalizedDrag * 0.09;
-
       content = GestureDetector(
         behavior: HitTestBehavior.translucent,
+        onPanStart: _onPanStart,
         onPanUpdate: _onPanUpdate,
         onPanEnd: _onPanEnd,
         onPanCancel: () {
-          setState(() {
-            _dragDx = 0;
-          });
+          unawaited(_animateBackToCenter(velocityX: 0));
         },
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: _isAnimatingOut ? 200 : 150),
-          curve: Curves.easeOut,
-          transform: Matrix4.translationValues(_dragDx, 0, 0)
-            ..rotateZ(rotation),
+        child: AnimatedBuilder(
+          animation: _dragController,
           child: content,
+          builder: (BuildContext context, Widget? animatedChild) {
+            final normalizedDrag = (_dragDx / _maxDragOffset).clamp(-1.0, 1.0);
+            final rotation = normalizedDrag * 0.068;
+            final verticalLift = -6.0 * normalizedDrag.abs();
+            final dismissProgress = (_dragDx.abs() / _dismissDistance).clamp(
+              0.0,
+              1.0,
+            );
+            final topCardOpacity = _isAnimatingOut
+                ? (1.0 - (0.18 * dismissProgress)).clamp(0.80, 1.0).toDouble()
+                : 1.0;
+
+            return Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.translationValues(_dragDx, verticalLift, 0)
+                ..rotateZ(rotation),
+              child: Opacity(opacity: topCardOpacity, child: animatedChild),
+            );
+          },
         ),
       );
 
@@ -610,7 +716,7 @@ class _MatchResultsCardStackState extends State<_MatchResultsCardStack> {
     }
 
     content = Opacity(
-      opacity: opacity,
+      opacity: layerOpacity,
       child: Transform.scale(
         scale: scale,
         alignment: Alignment.topCenter,
@@ -641,6 +747,7 @@ class _MatchCardData {
     required this.ratePerHour,
     required this.experienceYears,
     required this.imageAssetPath,
+    required this.photoUrl,
   });
 
   final String coachName;
@@ -650,6 +757,7 @@ class _MatchCardData {
   final int matchPercent;
   final int ratePerHour;
   final int experienceYears;
+  final String photoUrl;
   final String imageAssetPath;
 }
 
@@ -667,7 +775,6 @@ String _localizedCoachName(
   String name, {
   required bool isArabic,
 }) {
-
   switch (name) {
     case 'Coach Marcus':
       return _mrTr(
@@ -697,7 +804,6 @@ String _localizedSpecialty(
   String specialty, {
   required bool isArabic,
 }) {
-
   switch (specialty) {
     case 'Soccer Specialist':
       return _mrTr(
@@ -735,370 +841,441 @@ class _MatchResultPrimaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textScale = MediaQuery.textScalerOf(context).scale(1);
-    final useCompactLayout = textScale > 1.15;
-    final titleFontSize = useCompactLayout ? 27.0 : 30.0;
-    final subtitleFontSize = useCompactLayout ? 13.0 : 14.0;
-    final rateFontSize = useCompactLayout ? 24.0 : 28.0;
-    final experienceFontSize = useCompactLayout ? 23.0 : 27.0;
-    final verticalSectionGap = useCompactLayout ? 14.0 : 18.0;
-    final distanceUnit = _mrTr(
-      context,
-      isArabic ? 'ميل' : 'mi',
-      (l10n) => l10n.matchResultsDistanceUnitMiles,
-    );
-    final matchLabel = _mrTr(
-      context,
-      isArabic ? 'تطابق' : 'MATCH',
-      (l10n) => l10n.matchResultsBadgeMatch,
-    );
-    final rateLabel = _mrTr(
-      context,
-      isArabic ? 'السعر' : 'RATE',
-      (l10n) => l10n.matchResultsRateLabel,
-    );
-    final perHourLabel = _mrTr(
-      context,
-      isArabic ? '/ساعة' : '/hr',
-      (l10n) => l10n.matchResultsPerHour,
-    );
-    final experienceLabel = _mrTr(
-      context,
-      isArabic ? 'الخبرة' : 'EXPERIENCE',
-      (l10n) => l10n.matchResultsExperienceLabel,
-    );
-    final yearsLabel = _mrTr(
-      context,
-      isArabic ? 'سنوات' : 'Years',
-      (l10n) => l10n.matchResultsYears,
-    );
-    final bookNowLabel = _mrTr(
-      context,
-      isArabic ? 'احجز الآن' : 'Book Now',
-      (l10n) => l10n.matchResultsBookNow,
-    );
-    final seeProfileLabel = _mrTr(
-      context,
-      isArabic ? 'عرض الملف' : 'See Profile',
-      (l10n) => l10n.matchResultsSeeProfile,
-    );
-    final coachName = _localizedCoachName(
-      context,
-      data.coachName,
-      isArabic: isArabic,
-    );
-    final specialty = _localizedSpecialty(
-      context,
-      data.specialty,
-      isArabic: isArabic,
-    );
-    final contentPadding = EdgeInsets.fromLTRB(
-      22,
-      useCompactLayout ? 16 : 18,
-      22,
-      useCompactLayout ? 16 : 18,
-    );
-    final buttonVerticalPadding = useCompactLayout ? 12.0 : 14.0;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: kColorWhite,
-        borderRadius: BorderRadius.circular(40),
-        border: Border.all(color: kAiColorSurfaceBorder.withValues(alpha: 0.7)),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: kAiColorPrimary.withValues(alpha: 0.15),
-            blurRadius: 40,
-            spreadRadius: -12,
-            offset: const Offset(0, 18),
-          ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          SizedBox(
-            height: 300,
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                Image.asset(
-                  data.imageAssetPath,
-                  fit: BoxFit.cover,
-                  errorBuilder:
-                      (
-                        BuildContext context,
-                        Object error,
-                        StackTrace? stackTrace,
-                      ) {
-                        return Image.asset(
-                          'assets/images/ai_match/soccer.png',
-                          fit: BoxFit.cover,
-                        );
-                      },
-                ),
-                Positioned(
-                  top: 18,
-                  right: 18,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(999),
-                      gradient: const LinearGradient(
-                        colors: <Color>[kColorPrimary, kColorPrimaryAccent],
-                      ),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: kAiColorPrimary.withValues(alpha: 0.32),
-                          blurRadius: 16,
-                          spreadRadius: -4,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 7,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const Icon(
-                            Icons.auto_awesome_rounded,
-                            color: kColorWhite,
-                            size: 14,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            '${data.matchPercent}% $matchLabel',
-                            style: GoogleFonts.plusJakartaSans(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w800,
-                              color: kColorWhite,
-                              letterSpacing: 1.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final compactByHeight = constraints.maxHeight < 570;
+        final veryCompactByHeight = constraints.maxHeight < 535;
+        final useCompactLayout = textScale > 1.15 || compactByHeight;
+        final titleFontSize = veryCompactByHeight
+            ? 25.0
+            : useCompactLayout
+            ? 27.0
+            : 30.0;
+        final subtitleFontSize = veryCompactByHeight
+            ? 12.0
+            : useCompactLayout
+            ? 13.0
+            : 14.0;
+        final rateFontSize = veryCompactByHeight
+            ? 22.0
+            : useCompactLayout
+            ? 24.0
+            : 28.0;
+        final experienceFontSize = veryCompactByHeight
+            ? 21.0
+            : useCompactLayout
+            ? 23.0
+            : 27.0;
+        final verticalSectionGap = veryCompactByHeight
+            ? 10.0
+            : useCompactLayout
+            ? 14.0
+            : 18.0;
+        final imageHeight = veryCompactByHeight
+            ? 238.0
+            : compactByHeight
+            ? 258.0
+            : 300.0;
+        final metricDividerHeight = veryCompactByHeight ? 36.0 : 44.0;
+        final distanceUnit = _mrTr(
+          context,
+          isArabic ? 'ميل' : 'mi',
+          (l10n) => l10n.matchResultsDistanceUnitMiles,
+        );
+        final matchLabel = _mrTr(
+          context,
+          isArabic ? 'تطابق' : 'MATCH',
+          (l10n) => l10n.matchResultsBadgeMatch,
+        );
+        final rateLabel = _mrTr(
+          context,
+          isArabic ? 'السعر' : 'RATE',
+          (l10n) => l10n.matchResultsRateLabel,
+        );
+        final perHourLabel = _mrTr(
+          context,
+          isArabic ? '/ساعة' : '/hr',
+          (l10n) => l10n.matchResultsPerHour,
+        );
+        final experienceLabel = _mrTr(
+          context,
+          isArabic ? 'الخبرة' : 'EXPERIENCE',
+          (l10n) => l10n.matchResultsExperienceLabel,
+        );
+        final yearsLabel = _mrTr(
+          context,
+          isArabic ? 'سنوات' : 'Years',
+          (l10n) => l10n.matchResultsYears,
+        );
+        final bookNowLabel = _mrTr(
+          context,
+          isArabic ? 'احجز الآن' : 'Book Now',
+          (l10n) => l10n.matchResultsBookNow,
+        );
+        final seeProfileLabel = _mrTr(
+          context,
+          isArabic ? 'عرض الملف' : 'See Profile',
+          (l10n) => l10n.matchResultsSeeProfile,
+        );
+        final coachName = _localizedCoachName(
+          context,
+          data.coachName,
+          isArabic: isArabic,
+        );
+        final specialty = _localizedSpecialty(
+          context,
+          data.specialty,
+          isArabic: isArabic,
+        );
+        final contentPadding = EdgeInsets.fromLTRB(
+          22,
+          veryCompactByHeight
+              ? 12
+              : useCompactLayout
+              ? 16
+              : 18,
+          22,
+          veryCompactByHeight
+              ? 12
+              : useCompactLayout
+              ? 16
+              : 18,
+        );
+        final buttonVerticalPadding = veryCompactByHeight
+            ? 10.0
+            : useCompactLayout
+            ? 12.0
+            : 14.0;
+
+        return Container(
+          decoration: BoxDecoration(
+            color: kColorWhite,
+            borderRadius: BorderRadius.circular(40),
+            border: Border.all(
+              color: kAiColorSurfaceBorder.withValues(alpha: 0.7),
             ),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: kAiColorPrimary.withValues(alpha: 0.15),
+                blurRadius: 40,
+                spreadRadius: -12,
+                offset: const Offset(0, 18),
+              ),
+            ],
           ),
-          Expanded(
-            child: Padding(
-              padding: contentPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              coachName,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: titleFontSize,
-                                fontWeight: FontWeight.w800,
-                                color: kAiColorTextDark,
-                                letterSpacing: -0.6,
-                                height: 1.05,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '$specialty  •  ${data.distanceMiles.toStringAsFixed(1)} $distanceUnit',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: subtitleFontSize,
-                                fontWeight: FontWeight.w600,
-                                color: _kAiMutedText,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 13,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFFBEB),
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: const Color(0xFFFDE68A)),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            const Icon(
-                              Icons.star_rounded,
-                              color: Color(0xFFEAB308),
-                              size: 17,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              data.rating.toStringAsFixed(1),
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFFA16207),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: verticalSectionGap),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: _MatchMetricBlock(
-                          label: rateLabel,
-                          value: RichText(
-                            text: TextSpan(
-                              style: GoogleFonts.plusJakartaSans(
-                                color: kAiColorPrimary,
-                              ),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                  text: '\$${data.ratePerHour}',
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: rateFontSize,
-                                    fontWeight: FontWeight.w800,
-                                    height: 1.0,
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(
+                height: imageHeight,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Image.network(
+                      data.photoUrl,
+                      fit: BoxFit.cover,
+                      loadingBuilder:
+                          (
+                            BuildContext context,
+                            Widget child,
+                            ImageChunkEvent? loadingProgress,
+                          ) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+
+                            return ColoredBox(
+                              color: const Color(0xFFF4F2FF),
+                              child: Center(
+                                child: SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      kAiColorPrimary.withValues(alpha: 0.65),
+                                    ),
                                   ),
                                 ),
-                                TextSpan(
-                                  text: perHourLabel,
+                              ),
+                            );
+                          },
+                      errorBuilder:
+                          (
+                            BuildContext context,
+                            Object error,
+                            StackTrace? stackTrace,
+                          ) {
+                            return Image.asset(
+                              data.imageAssetPath,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                    ),
+                    Positioned(
+                      top: 18,
+                      right: 18,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(999),
+                          gradient: const LinearGradient(
+                            colors: <Color>[kColorPrimary, kColorPrimaryAccent],
+                          ),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: kAiColorPrimary.withValues(alpha: 0.32),
+                              blurRadius: 16,
+                              spreadRadius: -4,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 7,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              const Icon(
+                                Icons.auto_awesome_rounded,
+                                color: kColorWhite,
+                                size: 14,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                '${data.matchPercent}% $matchLabel',
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
+                                  color: kColorWhite,
+                                  letterSpacing: 0.4,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: contentPadding,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  coachName,
+                                  maxLines: veryCompactByHeight ? 1 : 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
+                                    fontSize: titleFontSize,
+                                    fontWeight: FontWeight.w800,
+                                    color: kAiColorTextDark,
+                                    height: 1.05,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  '$specialty  •  ${data.distanceMiles.toStringAsFixed(1)} $distanceUnit',
+                                  maxLines: useCompactLayout ? 1 : 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: subtitleFontSize,
+                                    fontWeight: FontWeight.w600,
                                     color: _kAiMutedText,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                      ),
-                      Container(
-                        width: 1,
-                        height: 44,
-                        color: kAiColorInputBorderLight,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 14),
-                          child: _MatchMetricBlock(
-                            label: experienceLabel,
-                            value: Text(
-                              '${data.experienceYears} $yearsLabel',
-                              style: GoogleFonts.plusJakartaSans(
-                                fontSize: experienceFontSize,
-                                fontWeight: FontWeight.w800,
-                                color: kAiColorTextDark,
-                                letterSpacing: -0.5,
-                              ),
+                          const SizedBox(width: 10),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 13,
+                              vertical: 8,
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(22),
-                            gradient: const LinearGradient(
-                              colors: <Color>[
-                                kColorPrimary,
-                                kColorPrimaryAccent,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFFFBEB),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: const Color(0xFFFDE68A)),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                const Icon(
+                                  Icons.star_rounded,
+                                  color: Color(0xFFEAB308),
+                                  size: 17,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  data.rating.toStringAsFixed(1),
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xFFA16207),
+                                  ),
+                                ),
                               ],
                             ),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                color: kAiColorPrimary.withValues(alpha: 0.25),
-                                blurRadius: 16,
-                                spreadRadius: -4,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
                           ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(22),
-                              onTap: () {},
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: buttonVerticalPadding,
-                                ),
-                                child: Text(
-                                  bookNowLabel,
-                                  textAlign: TextAlign.center,
+                        ],
+                      ),
+                      SizedBox(height: verticalSectionGap),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: _MatchMetricBlock(
+                              label: rateLabel,
+                              value: RichText(
+                                text: TextSpan(
                                   style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 17,
+                                    color: kAiColorPrimary,
+                                  ),
+                                  children: <InlineSpan>[
+                                    TextSpan(
+                                      text: '\$${data.ratePerHour}',
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: rateFontSize,
+                                        fontWeight: FontWeight.w800,
+                                        height: 1.0,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: perHourLabel,
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w700,
+                                        color: _kAiMutedText,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 1,
+                            height: metricDividerHeight,
+                            color: kAiColorInputBorderLight,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 14),
+                              child: _MatchMetricBlock(
+                                label: experienceLabel,
+                                value: Text(
+                                  '${data.experienceYears} $yearsLabel',
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: experienceFontSize,
                                     fontWeight: FontWeight.w800,
-                                    color: kColorWhite,
+                                    color: kAiColorTextDark,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(22),
-                            onTap: () {},
+                      const Spacer(),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
                             child: Container(
-                              padding: EdgeInsets.symmetric(
-                                vertical: buttonVerticalPadding,
-                              ),
                               decoration: BoxDecoration(
-                                color: kColorWhite,
                                 borderRadius: BorderRadius.circular(22),
-                                border: Border.all(
-                                  color: kAiColorInputBorderLight,
+                                gradient: const LinearGradient(
+                                  colors: <Color>[
+                                    kColorPrimary,
+                                    kColorPrimaryAccent,
+                                  ],
                                 ),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: kAiColorPrimary.withValues(alpha: 0.25),
+                                    blurRadius: 16,
+                                    spreadRadius: -4,
+                                    offset: const Offset(0, 8),
+                                  ),
+                                ],
                               ),
-                              child: Text(
-                                seeProfileLabel,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.plusJakartaSans(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w800,
-                                  color: kAiColorTextDark,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(22),
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: buttonVerticalPadding,
+                                    ),
+                                    child: Text(
+                                      bookNowLabel,
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.plusJakartaSans(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800,
+                                        color: kColorWhite,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(22),
+                                onTap: () {},
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: buttonVerticalPadding,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: kColorWhite,
+                                    borderRadius: BorderRadius.circular(22),
+                                    border: Border.all(
+                                      color: kAiColorInputBorderLight,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    seeProfileLabel,
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w800,
+                                      color: kAiColorTextDark,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -1236,9 +1413,21 @@ class _MatchResultListCard extends StatelessWidget {
             child: SizedBox(
               width: 108,
               height: 108,
-              child: Image.asset(
-                data.imageAssetPath,
+              child: Image.network(
+                data.photoUrl,
                 fit: BoxFit.cover,
+                loadingBuilder:
+                    (
+                      BuildContext context,
+                      Widget child,
+                      ImageChunkEvent? loadingProgress,
+                    ) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+
+                      return const ColoredBox(color: Color(0xFFF4F2FF));
+                    },
                 errorBuilder:
                     (
                       BuildContext context,
@@ -1246,7 +1435,7 @@ class _MatchResultListCard extends StatelessWidget {
                       StackTrace? stackTrace,
                     ) {
                       return Image.asset(
-                        'assets/images/ai_match/soccer.png',
+                        data.imageAssetPath,
                         fit: BoxFit.cover,
                       );
                     },
@@ -1270,7 +1459,6 @@ class _MatchResultListCard extends StatelessWidget {
                           fontSize: 22,
                           fontWeight: FontWeight.w800,
                           color: kAiColorTextDark,
-                          letterSpacing: -0.5,
                         ),
                       ),
                     ),
@@ -1414,10 +1602,10 @@ class _MatchMetricBlock extends StatelessWidget {
         Text(
           label,
           style: GoogleFonts.plusJakartaSans(
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: FontWeight.w800,
             color: _kAiMutedText,
-            letterSpacing: 1.8,
+            letterSpacing: 0.8,
           ),
         ),
         const SizedBox(height: 4),
@@ -1476,10 +1664,10 @@ class _MatchResultsSwipeControls extends StatelessWidget {
                 (l10n) => l10n.matchResultsSwipeForMore,
               ),
               style: GoogleFonts.plusJakartaSans(
-                fontSize: 14,
+                fontSize: 10,
                 fontWeight: FontWeight.w800,
                 color: kAiColorPrimary,
-                letterSpacing: isArabic ? 0.4 : 2.4,
+                letterSpacing: 0.4,
               ),
             ),
           ],
@@ -1582,9 +1770,9 @@ class _MatchBottomNavItem extends StatelessWidget {
           label,
           style: GoogleFonts.plusJakartaSans(
             fontSize: 10,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w800,
             color: color,
-            letterSpacing: 0.9,
+            letterSpacing: 0.4,
           ),
         ),
       ],

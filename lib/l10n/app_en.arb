@@ -144,6 +144,128 @@
   "matchResultsNavSearch": "SEARCH",
   "matchResultsNavMatch": "MATCH",
   "matchResultsNavProfile": "PROFILE",
+  "aiMatchTitle": "AI Match",
+  "aiMatchKidDetailsRequiredError": "Please enter kid name and age before saving.",
+  "aiMatchKidDetailsSavedSuccess": "Kid details saved successfully.",
+  "aiMatchStepLabel": "Step {step} of 3",
+  "@aiMatchStepLabel": {
+    "placeholders": {
+      "step": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "aiMatchPercentComplete": "{percent}% Complete",
+  "@aiMatchPercentComplete": {
+    "placeholders": {
+      "percent": {
+        "type": "int",
+        "example": "66"
+      }
+    }
+  },
+  "aiMatchToggleChat": "Chat",
+  "aiMatchToggleFillDetails": "Fill Details",
+  "aiMatchEnergyHigh": "High Energy",
+  "aiMatchEnergyFocused": "Focused and Quiet",
+  "aiMatchEnergyBalanced": "A Bit of Both",
+  "aiMatchEnergyAdaptive": "Adaptive",
+  "aiMatchCoachIntroQuestion": "Hi! I am your Activly Coach. How old is your child now?",
+  "aiMatchUserAgeResponse": "He just turned 6 last month.",
+  "aiMatchCoachEnergyQuestion": "Great. What is the usual energy level?",
+  "aiMatchCoachReadyTitle": "Activly Coach Is Ready",
+  "aiMatchCoachReadySubtitle": "We will personalize activity picks by age, energy, and goal in seconds.",
+  "aiMatchSignalAgeTuned": "Age tuned",
+  "aiMatchSignalGoalAware": "Goal aware",
+  "aiMatchStep1Title": "Start with kid details.",
+  "aiMatchStep1Subtitle": "A small precise profile gives smarter matches in seconds.",
+  "aiMatchAgeHint": "Age",
+  "aiMatchGenderLabel": "GENDER",
+  "aiMatchInterestsLabel": "WHAT SPARKS THEIR CURIOSITY?",
+  "aiMatchSaveDetails": "Save Details",
+  "aiMatchNext": "Next",
+  "aiMatchPrevious": "Previous",
+  "aiMatchGenderGirl": "Girl",
+  "aiMatchGenderBoy": "Boy",
+  "aiMatchGenderOther": "Other",
+  "aiMatchInterestArtCraft": "Art & Craft",
+  "aiMatchInterestSoccer": "Soccer",
+  "aiMatchInterestScience": "Science",
+  "aiMatchInterestMusic": "Music",
+  "aiMatchStep2Title": "Level up the fun.",
+  "aiMatchStep2Subtitle": "Tell us about their skill level and specific goals.",
+  "aiMatchSkillLevelLabel": "CURRENT SKILL LEVEL",
+  "aiMatchSpecificInterestLabel": "SPECIFIC INTEREST",
+  "aiMatchFocusAreasLabel": "FOCUS AREAS & GOALS",
+  "aiMatchMedicalIssuesLabel": "Medical issues",
+  "aiMatchMedicalIssuesHint": "if any, specify here",
+  "aiMatchSpecificInterestHintExample": "e.g. Learning to build custom PC builds...",
+  "aiMatchSkillBeginner": "Beginner",
+  "aiMatchSkillIntermediate": "Intermediate",
+  "aiMatchSkillAdvanced": "Advanced",
+  "aiMatchFocusConfidence": "Confidence Building",
+  "aiMatchFocusTechnical": "Technical Skills",
+  "aiMatchFocusSocial": "Social Interaction",
+  "aiMatchFocusCompetitive": "Competitive Prep",
+  "aiMatchFocusCreative": "Creative Expression",
+  "aiMatchStep3Title": "When and where?",
+  "aiMatchStep3Subtitle": "Help us narrow down the perfect schedule and location for your matches.",
+  "aiMatchPreferredDaysLabel": "PREFERRED DAYS",
+  "aiMatchTimePreferenceLabel": "TIME PREFERENCE",
+  "aiMatchBudgetRangeLabel": "BUDGET RANGE",
+  "aiMatchLocationRadiusLabel": "LOCATION & RADIUS",
+  "aiMatchRadiusHint": "RADIUS",
+  "aiMatchLocationHint": "Enter zip code or neighborhood",
+  "aiMatchFindMatches": "Find Matches",
+  "aiMatchEngineCaption": "Powered by AI Matchmaking Engine v4.2",
+  "aiMatchSocialProofTitle": "Families nearby are matching now",
+  "aiMatchSocialProofSubtitle": "Continue to unlock your best personalized matches.",
+  "aiMatchDayMon": "M",
+  "aiMatchDayTue": "T",
+  "aiMatchDayWed": "W",
+  "aiMatchDayThu": "T",
+  "aiMatchDayFri": "F",
+  "aiMatchDaySat": "S",
+  "aiMatchDaySun": "S",
+  "aiMatchTimeMorning": "Morning",
+  "aiMatchTimeAfternoon": "Afternoon",
+  "aiMatchTimeEvening": "Evening",
+  "aiMatchMilesValue": "{miles} Miles",
+  "@aiMatchMilesValue": {
+    "placeholders": {
+      "miles": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "aiMatchInterestHintSoccer": "Soccer is a strong pick. Try an evening trial first to test energy.",
+  "aiMatchInterestHintScience": "Science interest looks clear. Prioritize hands-on experiment programs.",
+  "aiMatchInterestHintMusic": "Music is a great path. Start with short sessions, then scale duration.",
+  "aiMatchInterestHintArt": "Art fits this profile well. Look for calm spaces with patient mentors.",
+  "aiMatchInterestHintDefault": "Pick interests to improve matching precision before continuing.",
+  "aiMatchStatusReady": "Ready to match",
+  "aiMatchStatusNeedsTouch": "Profile needs one more touch",
+  "aiMatchSavedAt": "Saved at {time}",
+  "@aiMatchSavedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "08:30"
+      }
+    }
+  },
+  "aiMatchLiveProfileCardTitle": "Live Profile Card",
+  "aiMatchPassionsSummary": "Passions Summary",
+  "aiMatchProfileStatusLabel": "Profile Status:",
+  "aiMatchPassionsEmpty": "Passions yet to be discovered...",
+  "aiMatchTapSwitchHint": "Tap to switch summary and hint",
+  "aiMatchBadgeArts": "Arts",
+  "aiMatchBadgeSoccer": "Soccer",
+  "aiMatchBadgeScience": "Science",
+  "aiMatchBadgeMusic": "Music",
+  "aiMatchTypeMessage": "Type your message...",
   "en": "EN",
   "ar": "عربي"
 }

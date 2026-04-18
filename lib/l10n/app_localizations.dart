@@ -908,6 +908,546 @@ abstract class AppLocalizations {
   /// **'PROFILE'**
   String get matchResultsNavProfile;
 
+  /// No description provided for @aiMatchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Match'**
+  String get aiMatchTitle;
+
+  /// No description provided for @aiMatchKidDetailsRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter kid name and age before saving.'**
+  String get aiMatchKidDetailsRequiredError;
+
+  /// No description provided for @aiMatchKidDetailsSavedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Kid details saved successfully.'**
+  String get aiMatchKidDetailsSavedSuccess;
+
+  /// No description provided for @aiMatchStepLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {step} of 3'**
+  String aiMatchStepLabel(int step);
+
+  /// No description provided for @aiMatchPercentComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% Complete'**
+  String aiMatchPercentComplete(int percent);
+
+  /// No description provided for @aiMatchToggleChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get aiMatchToggleChat;
+
+  /// No description provided for @aiMatchToggleFillDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill Details'**
+  String get aiMatchToggleFillDetails;
+
+  /// No description provided for @aiMatchEnergyHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High Energy'**
+  String get aiMatchEnergyHigh;
+
+  /// No description provided for @aiMatchEnergyFocused.
+  ///
+  /// In en, this message translates to:
+  /// **'Focused and Quiet'**
+  String get aiMatchEnergyFocused;
+
+  /// No description provided for @aiMatchEnergyBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'A Bit of Both'**
+  String get aiMatchEnergyBalanced;
+
+  /// No description provided for @aiMatchEnergyAdaptive.
+  ///
+  /// In en, this message translates to:
+  /// **'Adaptive'**
+  String get aiMatchEnergyAdaptive;
+
+  /// No description provided for @aiMatchCoachIntroQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi! I am your Activly Coach. How old is your child now?'**
+  String get aiMatchCoachIntroQuestion;
+
+  /// No description provided for @aiMatchUserAgeResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'He just turned 6 last month.'**
+  String get aiMatchUserAgeResponse;
+
+  /// No description provided for @aiMatchCoachEnergyQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Great. What is the usual energy level?'**
+  String get aiMatchCoachEnergyQuestion;
+
+  /// No description provided for @aiMatchCoachReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Activly Coach Is Ready'**
+  String get aiMatchCoachReadyTitle;
+
+  /// No description provided for @aiMatchCoachReadySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We will personalize activity picks by age, energy, and goal in seconds.'**
+  String get aiMatchCoachReadySubtitle;
+
+  /// No description provided for @aiMatchSignalAgeTuned.
+  ///
+  /// In en, this message translates to:
+  /// **'Age tuned'**
+  String get aiMatchSignalAgeTuned;
+
+  /// No description provided for @aiMatchSignalGoalAware.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal aware'**
+  String get aiMatchSignalGoalAware;
+
+  /// No description provided for @aiMatchStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Start with kid details.'**
+  String get aiMatchStep1Title;
+
+  /// No description provided for @aiMatchStep1Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A small precise profile gives smarter matches in seconds.'**
+  String get aiMatchStep1Subtitle;
+
+  /// No description provided for @aiMatchAgeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get aiMatchAgeHint;
+
+  /// No description provided for @aiMatchGenderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'GENDER'**
+  String get aiMatchGenderLabel;
+
+  /// No description provided for @aiMatchInterestsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'WHAT SPARKS THEIR CURIOSITY?'**
+  String get aiMatchInterestsLabel;
+
+  /// No description provided for @aiMatchSaveDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Details'**
+  String get aiMatchSaveDetails;
+
+  /// No description provided for @aiMatchNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get aiMatchNext;
+
+  /// No description provided for @aiMatchPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get aiMatchPrevious;
+
+  /// No description provided for @aiMatchGenderGirl.
+  ///
+  /// In en, this message translates to:
+  /// **'Girl'**
+  String get aiMatchGenderGirl;
+
+  /// No description provided for @aiMatchGenderBoy.
+  ///
+  /// In en, this message translates to:
+  /// **'Boy'**
+  String get aiMatchGenderBoy;
+
+  /// No description provided for @aiMatchGenderOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get aiMatchGenderOther;
+
+  /// No description provided for @aiMatchInterestArtCraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Art & Craft'**
+  String get aiMatchInterestArtCraft;
+
+  /// No description provided for @aiMatchInterestSoccer.
+  ///
+  /// In en, this message translates to:
+  /// **'Soccer'**
+  String get aiMatchInterestSoccer;
+
+  /// No description provided for @aiMatchInterestScience.
+  ///
+  /// In en, this message translates to:
+  /// **'Science'**
+  String get aiMatchInterestScience;
+
+  /// No description provided for @aiMatchInterestMusic.
+  ///
+  /// In en, this message translates to:
+  /// **'Music'**
+  String get aiMatchInterestMusic;
+
+  /// No description provided for @aiMatchStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Level up the fun.'**
+  String get aiMatchStep2Title;
+
+  /// No description provided for @aiMatchStep2Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about their skill level and specific goals.'**
+  String get aiMatchStep2Subtitle;
+
+  /// No description provided for @aiMatchSkillLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'CURRENT SKILL LEVEL'**
+  String get aiMatchSkillLevelLabel;
+
+  /// No description provided for @aiMatchSpecificInterestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'SPECIFIC INTEREST'**
+  String get aiMatchSpecificInterestLabel;
+
+  /// No description provided for @aiMatchFocusAreasLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'FOCUS AREAS & GOALS'**
+  String get aiMatchFocusAreasLabel;
+
+  /// No description provided for @aiMatchMedicalIssuesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical issues'**
+  String get aiMatchMedicalIssuesLabel;
+
+  /// No description provided for @aiMatchMedicalIssuesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'if any, specify here'**
+  String get aiMatchMedicalIssuesHint;
+
+  /// No description provided for @aiMatchSpecificInterestHintExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Learning to build custom PC builds...'**
+  String get aiMatchSpecificInterestHintExample;
+
+  /// No description provided for @aiMatchSkillBeginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get aiMatchSkillBeginner;
+
+  /// No description provided for @aiMatchSkillIntermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get aiMatchSkillIntermediate;
+
+  /// No description provided for @aiMatchSkillAdvanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get aiMatchSkillAdvanced;
+
+  /// No description provided for @aiMatchFocusConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence Building'**
+  String get aiMatchFocusConfidence;
+
+  /// No description provided for @aiMatchFocusTechnical.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical Skills'**
+  String get aiMatchFocusTechnical;
+
+  /// No description provided for @aiMatchFocusSocial.
+  ///
+  /// In en, this message translates to:
+  /// **'Social Interaction'**
+  String get aiMatchFocusSocial;
+
+  /// No description provided for @aiMatchFocusCompetitive.
+  ///
+  /// In en, this message translates to:
+  /// **'Competitive Prep'**
+  String get aiMatchFocusCompetitive;
+
+  /// No description provided for @aiMatchFocusCreative.
+  ///
+  /// In en, this message translates to:
+  /// **'Creative Expression'**
+  String get aiMatchFocusCreative;
+
+  /// No description provided for @aiMatchStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'When and where?'**
+  String get aiMatchStep3Title;
+
+  /// No description provided for @aiMatchStep3Subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us narrow down the perfect schedule and location for your matches.'**
+  String get aiMatchStep3Subtitle;
+
+  /// No description provided for @aiMatchPreferredDaysLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'PREFERRED DAYS'**
+  String get aiMatchPreferredDaysLabel;
+
+  /// No description provided for @aiMatchTimePreferenceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'TIME PREFERENCE'**
+  String get aiMatchTimePreferenceLabel;
+
+  /// No description provided for @aiMatchBudgetRangeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'BUDGET RANGE'**
+  String get aiMatchBudgetRangeLabel;
+
+  /// No description provided for @aiMatchLocationRadiusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'LOCATION & RADIUS'**
+  String get aiMatchLocationRadiusLabel;
+
+  /// No description provided for @aiMatchRadiusHint.
+  ///
+  /// In en, this message translates to:
+  /// **'RADIUS'**
+  String get aiMatchRadiusHint;
+
+  /// No description provided for @aiMatchLocationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter zip code or neighborhood'**
+  String get aiMatchLocationHint;
+
+  /// No description provided for @aiMatchFindMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Find Matches'**
+  String get aiMatchFindMatches;
+
+  /// No description provided for @aiMatchEngineCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Powered by AI Matchmaking Engine v4.2'**
+  String get aiMatchEngineCaption;
+
+  /// No description provided for @aiMatchSocialProofTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Families nearby are matching now'**
+  String get aiMatchSocialProofTitle;
+
+  /// No description provided for @aiMatchSocialProofSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to unlock your best personalized matches.'**
+  String get aiMatchSocialProofSubtitle;
+
+  /// No description provided for @aiMatchDayMon.
+  ///
+  /// In en, this message translates to:
+  /// **'M'**
+  String get aiMatchDayMon;
+
+  /// No description provided for @aiMatchDayTue.
+  ///
+  /// In en, this message translates to:
+  /// **'T'**
+  String get aiMatchDayTue;
+
+  /// No description provided for @aiMatchDayWed.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get aiMatchDayWed;
+
+  /// No description provided for @aiMatchDayThu.
+  ///
+  /// In en, this message translates to:
+  /// **'T'**
+  String get aiMatchDayThu;
+
+  /// No description provided for @aiMatchDayFri.
+  ///
+  /// In en, this message translates to:
+  /// **'F'**
+  String get aiMatchDayFri;
+
+  /// No description provided for @aiMatchDaySat.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get aiMatchDaySat;
+
+  /// No description provided for @aiMatchDaySun.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get aiMatchDaySun;
+
+  /// No description provided for @aiMatchTimeMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get aiMatchTimeMorning;
+
+  /// No description provided for @aiMatchTimeAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Afternoon'**
+  String get aiMatchTimeAfternoon;
+
+  /// No description provided for @aiMatchTimeEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get aiMatchTimeEvening;
+
+  /// No description provided for @aiMatchMilesValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{miles} Miles'**
+  String aiMatchMilesValue(int miles);
+
+  /// No description provided for @aiMatchInterestHintSoccer.
+  ///
+  /// In en, this message translates to:
+  /// **'Soccer is a strong pick. Try an evening trial first to test energy.'**
+  String get aiMatchInterestHintSoccer;
+
+  /// No description provided for @aiMatchInterestHintScience.
+  ///
+  /// In en, this message translates to:
+  /// **'Science interest looks clear. Prioritize hands-on experiment programs.'**
+  String get aiMatchInterestHintScience;
+
+  /// No description provided for @aiMatchInterestHintMusic.
+  ///
+  /// In en, this message translates to:
+  /// **'Music is a great path. Start with short sessions, then scale duration.'**
+  String get aiMatchInterestHintMusic;
+
+  /// No description provided for @aiMatchInterestHintArt.
+  ///
+  /// In en, this message translates to:
+  /// **'Art fits this profile well. Look for calm spaces with patient mentors.'**
+  String get aiMatchInterestHintArt;
+
+  /// No description provided for @aiMatchInterestHintDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick interests to improve matching precision before continuing.'**
+  String get aiMatchInterestHintDefault;
+
+  /// No description provided for @aiMatchStatusReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to match'**
+  String get aiMatchStatusReady;
+
+  /// No description provided for @aiMatchStatusNeedsTouch.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile needs one more touch'**
+  String get aiMatchStatusNeedsTouch;
+
+  /// No description provided for @aiMatchSavedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved at {time}'**
+  String aiMatchSavedAt(String time);
+
+  /// No description provided for @aiMatchLiveProfileCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Profile Card'**
+  String get aiMatchLiveProfileCardTitle;
+
+  /// No description provided for @aiMatchPassionsSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Passions Summary'**
+  String get aiMatchPassionsSummary;
+
+  /// No description provided for @aiMatchProfileStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Status:'**
+  String get aiMatchProfileStatusLabel;
+
+  /// No description provided for @aiMatchPassionsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Passions yet to be discovered...'**
+  String get aiMatchPassionsEmpty;
+
+  /// No description provided for @aiMatchTapSwitchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to switch summary and hint'**
+  String get aiMatchTapSwitchHint;
+
+  /// No description provided for @aiMatchBadgeArts.
+  ///
+  /// In en, this message translates to:
+  /// **'Arts'**
+  String get aiMatchBadgeArts;
+
+  /// No description provided for @aiMatchBadgeSoccer.
+  ///
+  /// In en, this message translates to:
+  /// **'Soccer'**
+  String get aiMatchBadgeSoccer;
+
+  /// No description provided for @aiMatchBadgeScience.
+  ///
+  /// In en, this message translates to:
+  /// **'Science'**
+  String get aiMatchBadgeScience;
+
+  /// No description provided for @aiMatchBadgeMusic.
+  ///
+  /// In en, this message translates to:
+  /// **'Music'**
+  String get aiMatchBadgeMusic;
+
+  /// No description provided for @aiMatchTypeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your message...'**
+  String get aiMatchTypeMessage;
+
   /// No description provided for @en.
   ///
   /// In en, this message translates to:

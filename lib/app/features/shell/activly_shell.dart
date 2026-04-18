@@ -1,9 +1,16 @@
 part of 'package:activly/activly_app.dart';
 
 class ActivlyShell extends StatefulWidget {
-  const ActivlyShell({super.key, required this.enableVideos});
+  const ActivlyShell({
+    super.key,
+    required this.enableVideos,
+    required this.appLocale,
+    required this.onLocaleChanged,
+  });
 
   final bool enableVideos;
+  final Locale appLocale;
+  final ValueChanged<Locale> onLocaleChanged;
 
   @override
   State<ActivlyShell> createState() => _ActivlyShellState();
@@ -18,6 +25,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
   AppPage _activePage = AppPage.entry;
   AppPage _loginBackTarget = AppPage.entry;
   bool _aiMatchOpenedFromSkip = false;
+  int _aiMatchInitialStep = 1;
 
   final List<bool> _videoError = List<bool>.filled(kVideoAssets.length, false);
   final List<VideoPlayerController?> _videoControllers =
@@ -48,13 +56,35 @@ class _ActivlyShellState extends State<ActivlyShell> {
     return !_isCurrentLandingVideoRenderable;
   }
 
+  AppLanguage _appLanguageFromLocale(Locale locale) {
+    return locale.languageCode.toLowerCase() == 'ar'
+        ? AppLanguage.ar
+        : AppLanguage.en;
+  }
+
+  Locale _localeFromAppLanguage(AppLanguage language) {
+    return language == AppLanguage.ar ? const Locale('ar') : const Locale('en');
+  }
+
   @override
   void initState() {
     super.initState();
 
+    _language = _appLanguageFromLocale(widget.appLocale);
+
     if (widget.enableVideos) {
       _startCarouselTimer();
       unawaited(_initializeVideos());
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant ActivlyShell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final languageFromLocale = _appLanguageFromLocale(widget.appLocale);
+    if (languageFromLocale != _language) {
+      _language = languageFromLocale;
     }
   }
 
@@ -189,9 +219,15 @@ class _ActivlyShellState extends State<ActivlyShell> {
   }
 
   void _toggleLanguage() {
+    final nextLanguage = _language == AppLanguage.en
+        ? AppLanguage.ar
+        : AppLanguage.en;
+
     setState(() {
-      _language = _language == AppLanguage.en ? AppLanguage.ar : AppLanguage.en;
+      _language = nextLanguage;
     });
+
+    widget.onLocaleChanged(_localeFromAppLanguage(nextLanguage));
   }
 
   Future<void> _goToAiMatchPage({bool fromSkipForNow = false}) async {
@@ -200,6 +236,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
     }
     setState(() {
       _aiMatchOpenedFromSkip = fromSkipForNow;
+      _aiMatchInitialStep = 1;
       _activePage = AppPage.aiMatch;
     });
   }
@@ -243,7 +280,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
       if (_activePage == AppPage.main) {
         return MainScreen(
           language: _language,
-          t: _t,
           onToggleLanguage: _toggleLanguage,
           onSeeAllFeatured: () =>
               setState(() => _activePage = AppPage.featuredAll),
@@ -260,7 +296,6 @@ class _ActivlyShellState extends State<ActivlyShell> {
         return LandingScreen(
           language: _language,
           isLoaded: _isLoaded,
-          t: _t,
           currentVideoIndex: _currentVideoIndex,
           totalVideos: kVideoAssets.length,
           onToggleLanguage: _toggleLanguage,
@@ -276,6 +311,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
           language: _language,
           t: _t,
           onToggleLanguage: _toggleLanguage,
+          initialDetailsStep: _aiMatchInitialStep,
           onFindMatches: () =>
               setState(() => _activePage = AppPage.matchResults),
           onBack: _aiMatchOpenedFromSkip
@@ -294,13 +330,16 @@ class _ActivlyShellState extends State<ActivlyShell> {
       if (_activePage == AppPage.matchResults) {
         return MatchResultsScreen(
           language: _language,
-          onBack: () => setState(() => _activePage = AppPage.aiMatch),
+          onToggleLanguage: _toggleLanguage,
+          onBack: () => setState(() {
+            _aiMatchInitialStep = 3;
+            _activePage = AppPage.aiMatch;
+          }),
         );
       }
 
       return AuthScreen(
         language: _language,
-        t: _t,
         onToggleLanguage: _toggleLanguage,
         onBackToLanding: () => setState(() => _activePage = _loginBackTarget),
         onAuthSuccess: () => unawaited(_goToAiMatchPage(fromSkipForNow: false)),

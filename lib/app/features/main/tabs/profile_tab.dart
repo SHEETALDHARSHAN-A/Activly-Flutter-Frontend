@@ -1,12 +1,28 @@
 part of 'package:activly/activly_app.dart';
 
 class ProfileTab extends StatelessWidget {
-  const ProfileTab({super.key, required this.t});
+  const ProfileTab({super.key});
 
-  final TranslationCopy t;
+  String _tr(
+    BuildContext context,
+    String fallback,
+    String Function(AppLocalizations l10n) selector,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    return l10n == null ? fallback : selector(l10n);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final title = _tr(context, 'Profile', (l10n) => l10n.profileTitle);
+    final workouts = _tr(context, 'Workouts', (l10n) => l10n.profileWorkouts);
+    final minutes = _tr(context, 'Minutes', (l10n) => l10n.profileMinutes);
+    final streaks = _tr(context, 'Streaks', (l10n) => l10n.profileStreaks);
+    final account = _tr(context, 'ACCOUNT', (l10n) => l10n.profileAccount);
+    final yourActivity = _tr(context, 'Your Activity', (l10n) => l10n.profileYourActivity);
+    final savedItems = _tr(context, 'Saved Items', (l10n) => l10n.profileSavedItems);
+    final logOut = _tr(context, 'Log Out', (l10n) => l10n.profileLogOut);
+
     return SafeArea(
       bottom: false,
       child: ListView(
@@ -15,8 +31,8 @@ class ProfileTab extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Profile',
+              Text(
+                title,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
@@ -101,16 +117,16 @@ class ProfileTab extends StatelessWidget {
           const SizedBox(height: 32),
           Row(
             children: [
-              Expanded(child: _buildStatStat('24', 'Workouts', false)),
+              Expanded(child: _buildStatStat('24', workouts, false)),
               const SizedBox(width: 12),
-              Expanded(child: _buildStatStat('1,250', 'Minutes', true)),
+              Expanded(child: _buildStatStat('1,250', minutes, true)),
               const SizedBox(width: 12),
-              Expanded(child: _buildStatStat('12', 'Streaks', false)),
+              Expanded(child: _buildStatStat('12', streaks, false)),
             ],
           ),
           const SizedBox(height: 32),
-          const Text(
-            'ACCOUNT',
+          Text(
+            account,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -121,21 +137,21 @@ class ProfileTab extends StatelessWidget {
           const SizedBox(height: 16),
           _buildActionTile(
             icon: Icons.monitor_heart_outlined,
-            title: 'Your Activity',
+            title: yourActivity,
             iconColor: const Color(0xFFB5A1D6),
             iconBgColor: const Color(0xFF2A2234),
           ),
           const SizedBox(height: 12),
           _buildActionTile(
             icon: Icons.bookmark_border,
-            title: 'Saved Items',
+            title: savedItems,
             iconColor: const Color(0xFFC084FC),
             iconBgColor: const Color(0xFF291D38),
           ),
           const SizedBox(height: 12),
           _buildActionTile(
             icon: Icons.logout,
-            title: 'Log Out',
+            title: logOut,
             iconColor: const Color(0xFFEA4335),
             iconBgColor: const Color(0xFF2E1A1A),
             isDestructive: true,

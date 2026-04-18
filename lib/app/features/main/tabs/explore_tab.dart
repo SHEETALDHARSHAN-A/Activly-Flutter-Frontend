@@ -1,19 +1,55 @@
 part of 'package:activly/activly_app.dart';
 
 class ExploreTab extends StatelessWidget {
-  const ExploreTab({super.key, required this.t});
+  const ExploreTab({super.key});
 
-  final TranslationCopy t;
+  String _tr(
+    BuildContext context,
+    String fallback,
+    String Function(AppLocalizations l10n) selector,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    return l10n == null ? fallback : selector(l10n);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final title = _tr(context, 'Explore', (l10n) => l10n.exploreTitle);
+    final trending = _tr(context, 'Trending', (l10n) => l10n.exploreTrending);
+    final nutrition = _tr(context, 'Nutrition', (l10n) => l10n.exploreNutrition);
+    final mindfulness = _tr(context, 'Mindfulness', (l10n) => l10n.exploreMindfulness);
+    final cardio = _tr(context, 'Cardio', (l10n) => l10n.exploreCardio);
+    final discover = _tr(context, 'Discover', (l10n) => l10n.exploreDiscover);
+    final articleTag = _tr(context, 'ARTICLE', (l10n) => l10n.exploreArticleTag);
+    final videoTag = _tr(context, 'VIDEO', (l10n) => l10n.exploreVideoTag);
+    final articleOneTitle = _tr(
+      context,
+      'The Science of Muscle Hypertrophy',
+      (l10n) => l10n.exploreArticleOneTitle,
+    );
+    final articleOneSubtitle = _tr(
+      context,
+      'By Dr. Sarah Jenkins',
+      (l10n) => l10n.exploreArticleOneSubtitle,
+    );
+    final articleTwoTitle = _tr(
+      context,
+      'Quick Home Workout with your dog',
+      (l10n) => l10n.exploreArticleTwoTitle,
+    );
+    final articleTwoSubtitle = _tr(
+      context,
+      '10 Min routine',
+      (l10n) => l10n.exploreArticleTwoSubtitle,
+    );
+
     return SafeArea(
       bottom: false,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(24, 24, 24, 120),
         children: [
-          const Text(
-            'Explore',
+          Text(
+            title,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -28,15 +64,15 @@ class ExploreTab extends StatelessWidget {
             crossAxisSpacing: 16,
             childAspectRatio: 1.8,
             children: [
-              _buildCategoryCard('Trending', Icons.local_fire_department_outlined, const Color(0xFFA0523C)),
-              _buildCategoryCard('Nutrition', Icons.eco_outlined, const Color(0xFF2E6B4B)),
-              _buildCategoryCard('Mindfulness', Icons.explore_outlined, const Color(0xFF454C8F)),
-              _buildCategoryCard('Cardio', Icons.monitor_heart_outlined, const Color(0xFF7A2B4E)),
+              _buildCategoryCard(trending, Icons.local_fire_department_outlined, const Color(0xFFA0523C)),
+              _buildCategoryCard(nutrition, Icons.eco_outlined, const Color(0xFF2E6B4B)),
+              _buildCategoryCard(mindfulness, Icons.explore_outlined, const Color(0xFF454C8F)),
+              _buildCategoryCard(cardio, Icons.monitor_heart_outlined, const Color(0xFF7A2B4E)),
             ],
           ),
           const SizedBox(height: 40),
-          const Text(
-            'Discover',
+          Text(
+            discover,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -44,16 +80,16 @@ class ExploreTab extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _buildArticleCard(
-            tag: 'ARTICLE',
-            title: 'The Science of Muscle Hypertrophy',
-            subtitle: 'By Dr. Sarah Jenkins',
+            tag: articleTag,
+            title: articleOneTitle,
+            subtitle: articleOneSubtitle,
             imageUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=600',
           ),
           const SizedBox(height: 16),
           _buildArticleCard(
-            tag: 'VIDEO',
-            title: 'Quick Home Workout with your dog',
-            subtitle: '10 Min routine',
+            tag: videoTag,
+            title: articleTwoTitle,
+            subtitle: articleTwoSubtitle,
             imageUrl: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=600',
           ),
         ],

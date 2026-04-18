@@ -4,13 +4,11 @@ class MainScreen extends StatefulWidget {
   const MainScreen({
     super.key,
     required this.language,
-    required this.t,
     required this.onToggleLanguage,
     required this.onSeeAllFeatured,
   });
 
   final AppLanguage language;
-  final TranslationCopy t;
   final VoidCallback onToggleLanguage;
   final VoidCallback onSeeAllFeatured;
 
@@ -20,6 +18,14 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+
+  String _tr(
+    String fallback,
+    String Function(AppLocalizations l10n) selector,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    return l10n == null ? fallback : selector(l10n);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,21 +77,27 @@ class _MainScreenState extends State<MainScreen> {
   Widget _buildBody() {
     switch (_currentIndex) {
       case 0:
-        return HomeTab(t: widget.t, onSeeAll: widget.onSeeAllFeatured);
+        return HomeTab(onSeeAll: widget.onSeeAllFeatured);
       case 1:
         return const SearchTab();
       case 2:
-        return AiTab(t: widget.t);
+        return const AiTab();
       case 3:
-        return ExploreTab(t: widget.t);
+        return const ExploreTab();
       case 4:
-        return ProfileTab(t: widget.t);
+        return const ProfileTab();
       default:
         return const SizedBox();
     }
   }
 
   Widget _buildBottomNavigationBar() {
+    final searchLabel = _tr('Search', (l10n) => l10n.mainNavSearch);
+    final exploreLabel = _tr('Explore', (l10n) => l10n.mainNavExplore);
+    final homeLabel = _tr('Home', (l10n) => l10n.mainNavHome);
+    final aiLabel = _tr('AI', (l10n) => l10n.mainNavAi);
+    final profileLabel = _tr('Profile', (l10n) => l10n.mainNavProfile);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(32),
       child: BackdropFilter(
@@ -100,11 +112,11 @@ class _MainScreenState extends State<MainScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(1, Icons.search_outlined, 'Search'),
-              _buildNavItem(3, Icons.explore_outlined, 'Explore'),
-              _buildNavItem(0, Icons.home_outlined, 'Home', isGlow: true),
-              _buildNavItem(2, Icons.auto_awesome, 'AI'),
-              _buildNavItem(4, Icons.person_outline, 'Profile'),
+              _buildNavItem(1, Icons.search_outlined, searchLabel),
+              _buildNavItem(3, Icons.explore_outlined, exploreLabel),
+              _buildNavItem(0, Icons.home_outlined, homeLabel, isGlow: true),
+              _buildNavItem(2, Icons.auto_awesome, aiLabel),
+              _buildNavItem(4, Icons.person_outline, profileLabel),
             ],
           ),
         ),

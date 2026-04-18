@@ -1,4 +1,5 @@
 import 'package:activly/activly_app.dart';
+import 'package:activly/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,10 +10,12 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: const Locale('en'),
         home: Scaffold(
           body: AuthScreen(
             language: AppLanguage.en,
-            t: kTranslations[AppLanguage.en]!,
             onToggleLanguage: () {},
             onBackToLanding: () {},
             onAuthSuccess: () {},

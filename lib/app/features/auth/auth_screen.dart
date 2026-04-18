@@ -4,14 +4,12 @@ class AuthScreen extends StatefulWidget {
   const AuthScreen({
     super.key,
     required this.language,
-    required this.t,
     required this.onToggleLanguage,
     required this.onBackToLanding,
     required this.onAuthSuccess,
   });
 
   final AppLanguage language;
-  final TranslationCopy t;
   final VoidCallback onToggleLanguage;
   final VoidCallback onBackToLanding;
   final VoidCallback onAuthSuccess;
@@ -65,6 +63,10 @@ class _AuthScreenState extends State<AuthScreen> {
   Timer? _resendTimer;
 
   bool get _isArabic => widget.language == AppLanguage.ar;
+
+  String _tr(String Function(AppLocalizations) selector) {
+    return selector(AppLocalizations.of(context)!);
+  }
 
   @override
   void initState() {
@@ -187,22 +189,18 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   String get _passwordMismatchText =>
-      _isArabic ? 'كلمتا المرور غير متطابقتين.' : 'Passwords do not match.';
+      _tr((l10n) => l10n.authPasswordsDoNotMatch);
 
-  String get _missingSignupFieldsText => _isArabic
-      ? 'يرجى إدخال البريد والهاتف.'
-      : 'Please enter both email and phone.';
+  String get _missingSignupFieldsText =>
+      _tr((l10n) => l10n.authMissingSignupFields);
 
-  String get _missingIdentifierText => _isArabic
-      ? 'يرجى إدخال البريد أو الهاتف.'
-      : 'Please enter your email or phone.';
+  String get _missingIdentifierText =>
+      _tr((l10n) => l10n.authMissingIdentifier);
 
-  String get _missingSignInFieldsText => _isArabic
-      ? 'يرجى إدخال البريد او الهاتف وكلمة المرور.'
-      : 'Please enter your email/phone and password.';
+  String get _missingSignInFieldsText =>
+      _tr((l10n) => l10n.authMissingSignInFields);
 
-  String get _expiredOtpText =>
-      _isArabic ? 'انتهت صلاحية الرمز' : 'Expired OTP';
+  String get _expiredOtpText => _tr((l10n) => l10n.authExpiredOtp);
 
   void _handleTopBack() {
     if (_step == AuthStep.signIn) {
@@ -334,7 +332,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
 
     setState(() {
-      _notice = widget.t.passwordResetSuccess;
+      _notice = _tr((l10n) => l10n.passwordResetSuccess);
       _signInIdentifier.text = _otpDestination;
       _signInPassword.clear();
       _step = AuthStep.signIn;
@@ -352,14 +350,11 @@ class _AuthScreenState extends State<AuthScreen> {
     widget.onAuthSuccess();
   }
 
-  String get _orContinueWithText =>
-      _isArabic ? 'أو المتابعة عبر' : 'Or continue with';
+  String get _orContinueWithText => _tr((l10n) => l10n.authOrContinueWith);
 
   void _handleSocialProviderTap(String provider) {
     setState(() {
-      _notice = _isArabic
-          ? 'تسجيل الدخول عبر $provider سيكون متاحا قريباً.'
-          : '$provider sign in will be available soon.';
+      _notice = _tr((l10n) => l10n.authSocialSignInComingSoon(provider));
     });
   }
 
@@ -399,7 +394,7 @@ class _AuthScreenState extends State<AuthScreen> {
           children: <Widget>[
             Expanded(
               child: _AuthProviderButton(
-                label: widget.t.continueWithGoogle,
+                label: _tr((l10n) => l10n.continueWithGoogle),
                 icon: const _GoogleBrandIcon(size: 18),
                 onTap: () => _handleSocialProviderTap('Google'),
               ),
@@ -407,7 +402,7 @@ class _AuthScreenState extends State<AuthScreen> {
             const SizedBox(width: 10),
             Expanded(
               child: _AuthProviderButton(
-                label: widget.t.continueWithApple,
+                label: _tr((l10n) => l10n.continueWithApple),
                 icon: const Icon(Icons.apple_rounded, size: 20),
                 onTap: () => _handleSocialProviderTap('Apple'),
               ),
@@ -552,19 +547,19 @@ class _AuthScreenState extends State<AuthScreen> {
     final actionIcon = _isArabic ? Icons.chevron_left : Icons.chevron_right;
 
     final stepTitle = switch (_step) {
-      AuthStep.signIn => widget.t.loginTitle,
-      AuthStep.createAccount => widget.t.createAccountTitle,
-      AuthStep.forgotPassword => widget.t.forgotPasswordTitle,
-      AuthStep.otp => widget.t.otpTitle,
-      AuthStep.resetPassword => widget.t.resetPasswordTitle,
+      AuthStep.signIn => _tr((l10n) => l10n.loginTitle),
+      AuthStep.createAccount => _tr((l10n) => l10n.createAccountTitle),
+      AuthStep.forgotPassword => _tr((l10n) => l10n.forgotPasswordTitle),
+      AuthStep.otp => _tr((l10n) => l10n.otpTitle),
+      AuthStep.resetPassword => _tr((l10n) => l10n.resetPasswordTitle),
     };
 
     final stepSubtitle = switch (_step) {
-      AuthStep.signIn => widget.t.loginSubtitle,
-      AuthStep.createAccount => widget.t.createAccountSubtitle,
-      AuthStep.forgotPassword => widget.t.forgotPasswordSubtitle,
-      AuthStep.otp => widget.t.otpSubtitle,
-      AuthStep.resetPassword => widget.t.resetPasswordSubtitle,
+      AuthStep.signIn => _tr((l10n) => l10n.loginSubtitle),
+      AuthStep.createAccount => _tr((l10n) => l10n.createAccountSubtitle),
+      AuthStep.forgotPassword => _tr((l10n) => l10n.forgotPasswordSubtitle),
+      AuthStep.otp => _tr((l10n) => l10n.otpSubtitle),
+      AuthStep.resetPassword => _tr((l10n) => l10n.resetPasswordSubtitle),
     };
 
     final showAuthTypeSwitch =
@@ -698,7 +693,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                       children: <Widget>[
                                         Expanded(
                                           child: _SegmentButton(
-                                            label: widget.t.signInCta,
+                                            label: _tr(
+                                              (l10n) => l10n.signInCta,
+                                            ),
                                             selected: _step == AuthStep.signIn,
                                             onTap: () async =>
                                                 _goToStep(AuthStep.signIn),
@@ -706,7 +703,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                         ),
                                         Expanded(
                                           child: _SegmentButton(
-                                            label: widget.t.createNewAccount,
+                                            label: _tr(
+                                              (l10n) => l10n.createNewAccount,
+                                            ),
                                             selected:
                                                 _step == AuthStep.createAccount,
                                             onTap: () async => _goToStep(
@@ -725,17 +724,17 @@ class _AuthScreenState extends State<AuthScreen> {
                                         CrossAxisAlignment.stretch,
                                     children: <Widget>[
                                       _inputField(
-                                        label: widget.t.emailOrPhone,
+                                        label: _tr((l10n) => l10n.emailOrPhone),
                                         controller: _signInIdentifier,
                                         focusNode: _signInIdentifierFocus,
                                         icon: Icons.mail_outline,
-                                        hint: widget.t.emailOrPhone,
+                                        hint: _tr((l10n) => l10n.emailOrPhone),
                                         showText: true,
                                         onToggle: () {},
                                       ),
                                       const SizedBox(height: 12),
                                       _inputField(
-                                        label: widget.t.password,
+                                        label: _tr((l10n) => l10n.password),
                                         controller: _signInPassword,
                                         focusNode: _signInPasswordFocus,
                                         icon: Icons.lock_outline,
@@ -753,7 +752,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: _LoadingTextButton(
-                                          label: widget.t.forgotPassword,
+                                          label: _tr(
+                                            (l10n) => l10n.forgotPassword,
+                                          ),
                                           onTap: () async => _goToStep(
                                             AuthStep.forgotPassword,
                                           ),
@@ -767,7 +768,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                         ),
                                       ),
                                       _ActionButton(
-                                        label: widget.t.signInCta,
+                                        label: _tr((l10n) => l10n.signInCta),
                                         icon: actionIcon,
                                         onTap: () async =>
                                             _handleSignInSubmit(),
@@ -786,13 +787,15 @@ class _AuthScreenState extends State<AuthScreen> {
                                           children: <InlineSpan>[
                                             TextSpan(
                                               text:
-                                                  '${widget.t.dontHaveAccount} ',
+                                                  '${_tr((l10n) => l10n.dontHaveAccount)} ',
                                             ),
                                             WidgetSpan(
                                               alignment:
                                                   PlaceholderAlignment.middle,
                                               child: _LoadingLinkText(
-                                                text: widget.t.createOne,
+                                                text: _tr(
+                                                  (l10n) => l10n.createOne,
+                                                ),
                                                 onTap: () async => _goToStep(
                                                   AuthStep.createAccount,
                                                 ),
@@ -804,7 +807,10 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        '${widget.t.byContinuing} ${widget.t.terms} ${_isArabic ? 'و' : 'and'} ${widget.t.privacyPolicy}.',
+                                        _tr(
+                                          (l10n) =>
+                                              l10n.authTermsAndPrivacyAgreement,
+                                        ),
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 11,
@@ -821,19 +827,19 @@ class _AuthScreenState extends State<AuthScreen> {
                                         CrossAxisAlignment.stretch,
                                     children: <Widget>[
                                       _inputField(
-                                        label: widget.t.fullName,
+                                        label: _tr((l10n) => l10n.fullName),
                                         controller: _createName,
                                         focusNode: _createNameFocus,
                                         icon: Icons.person_outline,
-                                        hint: _isArabic
-                                            ? 'اسمك الكامل'
-                                            : 'Your full name',
+                                        hint: _tr(
+                                          (l10n) => l10n.authFullNameHint,
+                                        ),
                                         showText: true,
                                         onToggle: () {},
                                       ),
                                       const SizedBox(height: 12),
                                       _inputField(
-                                        label: widget.t.email,
+                                        label: _tr((l10n) => l10n.email),
                                         controller: _createEmail,
                                         focusNode: _createEmailFocus,
                                         icon: Icons.mail_outline,
@@ -845,7 +851,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 12),
                                       _inputField(
-                                        label: widget.t.phone,
+                                        label: _tr((l10n) => l10n.phone),
                                         controller: _createPhone,
                                         focusNode: _createPhoneFocus,
                                         icon: Icons.phone_outlined,
@@ -856,7 +862,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 12),
                                       _inputField(
-                                        label: widget.t.password,
+                                        label: _tr((l10n) => l10n.password),
                                         controller: _createPassword,
                                         focusNode: _createPasswordFocus,
                                         icon: Icons.lock_outline,
@@ -870,7 +876,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 12),
                                       _inputField(
-                                        label: widget.t.confirmPassword,
+                                        label: _tr(
+                                          (l10n) => l10n.confirmPassword,
+                                        ),
                                         controller: _createConfirmPassword,
                                         focusNode: _createConfirmPasswordFocus,
                                         icon: Icons.lock_outline,
@@ -887,7 +895,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 12),
                                       _ActionButton(
-                                        label: widget.t.createAccountCta,
+                                        label: _tr(
+                                          (l10n) => l10n.createAccountCta,
+                                        ),
                                         icon: actionIcon,
                                         onTap: () async =>
                                             _handleCreateAccount(),
@@ -906,13 +916,15 @@ class _AuthScreenState extends State<AuthScreen> {
                                           children: <InlineSpan>[
                                             TextSpan(
                                               text:
-                                                  '${widget.t.alreadyHaveAccount} ',
+                                                  '${_tr((l10n) => l10n.alreadyHaveAccount)} ',
                                             ),
                                             WidgetSpan(
                                               alignment:
                                                   PlaceholderAlignment.middle,
                                               child: _LoadingLinkText(
-                                                text: widget.t.signInCta,
+                                                text: _tr(
+                                                  (l10n) => l10n.signInCta,
+                                                ),
                                                 onTap: () async =>
                                                     _goToStep(AuthStep.signIn),
                                               ),
@@ -929,11 +941,11 @@ class _AuthScreenState extends State<AuthScreen> {
                                         CrossAxisAlignment.stretch,
                                     children: <Widget>[
                                       _inputField(
-                                        label: widget.t.emailOrPhone,
+                                        label: _tr((l10n) => l10n.emailOrPhone),
                                         controller: _forgotIdentifier,
                                         focusNode: _forgotIdentifierFocus,
                                         icon: Icons.mail_outline,
-                                        hint: widget.t.emailOrPhone,
+                                        hint: _tr((l10n) => l10n.emailOrPhone),
                                         showText: true,
                                         textInputAction: TextInputAction.done,
                                         onSubmitted: (_) =>
@@ -942,14 +954,14 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 12),
                                       _ActionButton(
-                                        label: widget.t.sendCode,
+                                        label: _tr((l10n) => l10n.sendCode),
                                         icon: actionIcon,
                                         onTap: () async =>
                                             _handleSendResetCode(),
                                       ),
                                       const SizedBox(height: 10),
                                       _LoadingTextButton(
-                                        label: widget.t.backToSignIn,
+                                        label: _tr((l10n) => l10n.backToSignIn),
                                         onTap: () async =>
                                             _goToStep(AuthStep.signIn),
                                         textStyle: TextStyle(
@@ -998,7 +1010,10 @@ class _AuthScreenState extends State<AuthScreen> {
                                             Expanded(
                                               child: Text(
                                                 _otpDestination.isEmpty
-                                                    ? widget.t.emailOrPhone
+                                                    ? _tr(
+                                                        (l10n) =>
+                                                            l10n.emailOrPhone,
+                                                      )
                                                     : _otpDestination,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: const TextStyle(
@@ -1008,7 +1023,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                               ),
                                             ),
                                             _LoadingTextButton(
-                                              label: widget.t.changeContact,
+                                              label: _tr(
+                                                (l10n) => l10n.changeContact,
+                                              ),
                                               onTap: () async {
                                                 _goToStep(
                                                   _otpPurpose ==
@@ -1149,7 +1166,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 14),
                                       _ActionButton(
-                                        label: widget.t.verifyCode,
+                                        label: _tr((l10n) => l10n.verifyCode),
                                         icon: actionIcon,
                                         enabled:
                                             _otpDigits.join().length >=
@@ -1164,7 +1181,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                         children: <Widget>[
                                           Text(
                                             _resendSeconds > 0
-                                                ? '${widget.t.resendCode} : $_resendSeconds'
+                                                ? '${_tr((l10n) => l10n.resendCode)} : $_resendSeconds'
                                                 : _expiredOtpText,
                                             style: TextStyle(
                                               color: kColorWhite.withValues(
@@ -1175,7 +1192,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                             ),
                                           ),
                                           _LoadingTextButton(
-                                            label: widget.t.resendCode,
+                                            label: _tr(
+                                              (l10n) => l10n.resendCode,
+                                            ),
                                             enabled: _resendSeconds == 0,
                                             onTap: () async {
                                               setState(() {
@@ -1202,7 +1221,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                         CrossAxisAlignment.stretch,
                                     children: <Widget>[
                                       _inputField(
-                                        label: widget.t.password,
+                                        label: _tr((l10n) => l10n.password),
                                         controller: _resetPassword,
                                         focusNode: _resetPasswordFocus,
                                         icon: Icons.lock_outline,
@@ -1216,7 +1235,9 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 12),
                                       _inputField(
-                                        label: widget.t.confirmPassword,
+                                        label: _tr(
+                                          (l10n) => l10n.confirmPassword,
+                                        ),
                                         controller: _resetConfirmPassword,
                                         focusNode: _resetConfirmPasswordFocus,
                                         icon: Icons.lock_outline,
@@ -1233,14 +1254,16 @@ class _AuthScreenState extends State<AuthScreen> {
                                       ),
                                       const SizedBox(height: 12),
                                       _ActionButton(
-                                        label: widget.t.saveNewPassword,
+                                        label: _tr(
+                                          (l10n) => l10n.saveNewPassword,
+                                        ),
                                         icon: actionIcon,
                                         onTap: () async =>
                                             _handleSaveNewPassword(),
                                       ),
                                       const SizedBox(height: 10),
                                       _LoadingTextButton(
-                                        label: widget.t.backToSignIn,
+                                        label: _tr((l10n) => l10n.backToSignIn),
                                         onTap: () async =>
                                             _goToStep(AuthStep.signIn),
                                         textStyle: TextStyle(
@@ -1270,7 +1293,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         _LoadingOutlinedButtonIcon(
                           onTap: () async => _handleTopBack(),
                           icon: Icon(backIcon, size: 16),
-                          label: widget.t.back,
+                          label: _tr((l10n) => l10n.back),
                         ),
                         LanguageToggle(
                           language: widget.language,

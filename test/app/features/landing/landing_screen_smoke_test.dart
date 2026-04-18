@@ -1,9 +1,18 @@
 import 'package:activly/activly_app.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Landing renders action buttons', (WidgetTester tester) async {
+    tester.binding.platformDispatcher.localeTestValue = const Locale('en');
+    addTearDown(tester.binding.platformDispatcher.clearLocaleTestValue);
+
     await tester.pumpWidget(const ActivlyApp(enableVideos: false));
+    await tester.pump(const Duration(seconds: 1));
+
+    expect(find.text('Get Started'), findsOneWidget);
+    await tester.tap(find.text('Get Started'));
+    await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 
     expect(find.text('Email'), findsOneWidget);

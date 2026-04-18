@@ -5,7 +5,6 @@ class LandingScreen extends StatefulWidget {
     super.key,
     required this.language,
     required this.isLoaded,
-    required this.t,
     required this.currentVideoIndex,
     required this.totalVideos,
     required this.onToggleLanguage,
@@ -17,7 +16,6 @@ class LandingScreen extends StatefulWidget {
 
   final AppLanguage language;
   final bool isLoaded;
-  final TranslationCopy t;
   final int currentVideoIndex;
   final int totalVideos;
   final VoidCallback onToggleLanguage;
@@ -34,11 +32,22 @@ class _LandingScreenState extends State<LandingScreen> {
   int _selectedSocial = -1;
   int _selectedPill = -1;
 
+  String _tr(String Function(AppLocalizations) selector) {
+    return selector(AppLocalizations.of(context)!);
+  }
+
   @override
   Widget build(BuildContext context) {
     final language = widget.language;
     final isLoaded = widget.isLoaded;
-    final t = widget.t;
+    final taglineLine1 = _tr((l10n) => l10n.taglineLine1);
+    final taglineLine2 = _tr((l10n) => l10n.taglineLine2);
+    final continueWithGoogle = _tr((l10n) => l10n.continueWithGoogle);
+    final continueWithApple = _tr((l10n) => l10n.continueWithApple);
+    final orText = _tr((l10n) => l10n.or);
+    final emailText = _tr((l10n) => l10n.email);
+    final phoneText = _tr((l10n) => l10n.phone);
+    final skipForNowText = _tr((l10n) => l10n.skipForNow);
     final currentVideoIndex = widget.currentVideoIndex;
     final totalVideos = widget.totalVideos;
     final onToggleLanguage = widget.onToggleLanguage;
@@ -60,194 +69,225 @@ class _LandingScreenState extends State<LandingScreen> {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 420),
                   child: LayoutBuilder(
-                    builder: (BuildContext context, BoxConstraints constraints) {
-                      final compact = constraints.maxHeight < 620;
-                      final compactScale = compact ? 0.82 : 1.0;
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                          final compact = constraints.maxHeight < 620;
+                          final compactScale = compact ? 0.82 : 1.0;
 
-                      return SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minHeight: constraints.maxHeight,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(24, 20, 24, 48),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  _FadeSlide(
-                                    visible: isLoaded,
-                                    yOffset: 0.15,
-                                    delay: const Duration(milliseconds: 450),
-                                    child: Image.asset(
-                                      'assets/Activly-logo.png',
-                                      width: compact ? 260 : 310,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                  SizedBox(height: 18 * compactScale),
-                                  _FadeSlide(
-                                    visible: isLoaded,
-                                    yOffset: 0.12,
-                                    delay: const Duration(milliseconds: 500),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          t.taglineLine1,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: compact ? 14 : 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: kColorWhite,
-                                          ),
+                          return SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: constraints.maxHeight,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  24,
+                                  20,
+                                  24,
+                                  48,
+                                ),
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      _FadeSlide(
+                                        visible: isLoaded,
+                                        yOffset: 0.15,
+                                        delay: const Duration(
+                                          milliseconds: 450,
                                         ),
-                                        Text(
-                                          t.taglineLine2,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: compact ? 14 : 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: kColorWhite,
-                                          ),
+                                        child: Image.asset(
+                                          'assets/Activly-logo.png',
+                                          width: compact ? 260 : 310,
+                                          fit: BoxFit.contain,
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 28 * compactScale),
-                                  _FadeSlide(
-                                    visible: isLoaded,
-                                    yOffset: 0.25,
-                                    delay: const Duration(milliseconds: 600),
-                                    child: _SocialButton(
-                                      title: t.continueWithGoogle,
-                                      compact: compact,
-                                      selected: _selectedSocial == 0,
-                                      icon: const _GoogleBrandIcon(size: 20),
-                                      onPressed: () async {
-                                        if (mounted) {
-                                          setState(() => _selectedSocial = 0);
-                                        }
-                                      },
-                                      arrowIcon: arrowIcon,
-                                    ),
-                                  ),
-                                  SizedBox(height: 12 * compactScale),
-                                  _FadeSlide(
-                                    visible: isLoaded,
-                                    yOffset: 0.25,
-                                    delay: const Duration(milliseconds: 700),
-                                    child: _SocialButton(
-                                      title: t.continueWithApple,
-                                      compact: compact,
-                                      selected: _selectedSocial == 1,
-                                      icon: SvgPicture.asset(
-                                        'assets/Apple_light.svg',
-                                        width: 20,
-                                        height: 20,
                                       ),
-                                      onPressed: () async {
-                                        if (mounted) {
-                                          setState(() => _selectedSocial = 1);
-                                        }
-                                      },
-                                      arrowIcon: arrowIcon,
-                                    ),
-                                  ),
-                                  SizedBox(height: 14 * compactScale),
-                                  _FadeSlide(
-                                    visible: isLoaded,
-                                    delay: const Duration(milliseconds: 800),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Container(
-                                            height: 1,
-                                            color: kColorWhite.withValues(
-                                              alpha: 0.20,
-                                            ),
-                                          ),
+                                      SizedBox(height: 18 * compactScale),
+                                      _FadeSlide(
+                                        visible: isLoaded,
+                                        yOffset: 0.12,
+                                        delay: const Duration(
+                                          milliseconds: 500,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                          ),
-                                          child: Text(
-                                            t.or,
-                                            style: TextStyle(
-                                              color: kColorWhite.withValues(
-                                                alpha: 0.55,
+                                        child: Column(
+                                          children: <Widget>[
+                                            Text(
+                                              taglineLine1,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: compact ? 14 : 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: kColorWhite,
                                               ),
-                                              fontSize: 12,
                                             ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            height: 1,
-                                            color: kColorWhite.withValues(
-                                              alpha: 0.20,
+                                            Text(
+                                              taglineLine2,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: compact ? 14 : 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: kColorWhite,
+                                              ),
                                             ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 28 * compactScale),
+                                      _FadeSlide(
+                                        visible: isLoaded,
+                                        yOffset: 0.25,
+                                        delay: const Duration(
+                                          milliseconds: 600,
+                                        ),
+                                        child: _SocialButton(
+                                          title: continueWithGoogle,
+                                          compact: compact,
+                                          selected: _selectedSocial == 0,
+                                          icon: const _GoogleBrandIcon(
+                                            size: 20,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 14 * compactScale),
-                                  _FadeSlide(
-                                    visible: isLoaded,
-                                    delay: const Duration(milliseconds: 900),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        _PillButton(
-                                          label: t.email,
-                                          icon: Icons.mail_outline,
-                                          arrowIcon: arrowIcon,
-                                          selected: _selectedPill == 0,
-                                          onTap: () async {
+                                          onPressed: () async {
                                             if (mounted) {
-                                              setState(() => _selectedPill = 0);
+                                              setState(
+                                                () => _selectedSocial = 0,
+                                              );
                                             }
-                                            await widget.onContinueEmail();
                                           },
-                                        ),
-                                        const SizedBox(width: 10),
-                                        _PillButton(
-                                          label: t.phone,
-                                          icon: Icons.phone_outlined,
                                           arrowIcon: arrowIcon,
-                                          selected: _selectedPill == 1,
-                                          onTap: () async {
-                                            if (mounted) {
-                                              setState(() => _selectedPill = 1);
-                                            }
-                                            await widget.onContinuePhone();
-                                          },
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(height: 12 * compactScale),
+                                      _FadeSlide(
+                                        visible: isLoaded,
+                                        yOffset: 0.25,
+                                        delay: const Duration(
+                                          milliseconds: 700,
+                                        ),
+                                        child: _SocialButton(
+                                          title: continueWithApple,
+                                          compact: compact,
+                                          selected: _selectedSocial == 1,
+                                          icon: SvgPicture.asset(
+                                            'assets/Apple_light.svg',
+                                            width: 20,
+                                            height: 20,
+                                          ),
+                                          onPressed: () async {
+                                            if (mounted) {
+                                              setState(
+                                                () => _selectedSocial = 1,
+                                              );
+                                            }
+                                          },
+                                          arrowIcon: arrowIcon,
+                                        ),
+                                      ),
+                                      SizedBox(height: 14 * compactScale),
+                                      _FadeSlide(
+                                        visible: isLoaded,
+                                        delay: const Duration(
+                                          milliseconds: 800,
+                                        ),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                              child: Container(
+                                                height: 1,
+                                                color: kColorWhite.withValues(
+                                                  alpha: 0.20,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                  ),
+                                              child: Text(
+                                                orText,
+                                                style: TextStyle(
+                                                  color: kColorWhite.withValues(
+                                                    alpha: 0.55,
+                                                  ),
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Container(
+                                                height: 1,
+                                                color: kColorWhite.withValues(
+                                                  alpha: 0.20,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 14 * compactScale),
+                                      _FadeSlide(
+                                        visible: isLoaded,
+                                        delay: const Duration(
+                                          milliseconds: 900,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            _PillButton(
+                                              label: emailText,
+                                              icon: Icons.mail_outline,
+                                              arrowIcon: arrowIcon,
+                                              selected: _selectedPill == 0,
+                                              onTap: () async {
+                                                if (mounted) {
+                                                  setState(
+                                                    () => _selectedPill = 0,
+                                                  );
+                                                }
+                                                await widget.onContinueEmail();
+                                              },
+                                            ),
+                                            const SizedBox(width: 10),
+                                            _PillButton(
+                                              label: phoneText,
+                                              icon: Icons.phone_outlined,
+                                              arrowIcon: arrowIcon,
+                                              selected: _selectedPill == 1,
+                                              onTap: () async {
+                                                if (mounted) {
+                                                  setState(
+                                                    () => _selectedPill = 1,
+                                                  );
+                                                }
+                                                await widget.onContinuePhone();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 8 * compactScale),
+                                      _FadeSlide(
+                                        visible: isLoaded,
+                                        delay: const Duration(
+                                          milliseconds: 1100,
+                                        ),
+                                        child: _AnimatedSkipForNow(
+                                          label: skipForNowText,
+                                          icon: Icon(arrowIcon, size: 18),
+                                          onTap: widget.onSkipForNow,
+                                        ),
+                                      ),
+                                      SizedBox(height: 22 * compactScale),
+                                    ],
                                   ),
-                                  SizedBox(height: 8 * compactScale),
-                                  _FadeSlide(
-                                    visible: isLoaded,
-                                    delay: const Duration(milliseconds: 1100),
-                                    child: _AnimatedSkipForNow(
-                                      label: t.skipForNow,
-                                      icon: Icon(arrowIcon, size: 18),
-                                      onTap: widget.onSkipForNow,
-                                    ),
-                                  ),
-                                  SizedBox(height: 22 * compactScale),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
+                          );
+                        },
                   ),
                 ),
               ),

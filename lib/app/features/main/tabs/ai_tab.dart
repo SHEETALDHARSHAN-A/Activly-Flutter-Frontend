@@ -1,9 +1,7 @@
 part of 'package:activly/activly_app.dart';
 
 class AiTab extends StatefulWidget {
-  const AiTab({super.key, required this.t});
-
-  final TranslationCopy t;
+  const AiTab({super.key});
 
   @override
   State<AiTab> createState() => _AiTabState();
@@ -21,6 +19,14 @@ class _AiTabState extends State<AiTab> {
     'What should I eat after training?',
     'How to improve my sleep?',
   ];
+
+  String _tr(
+    String fallback,
+    String Function(AppLocalizations l10n) selector,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    return l10n == null ? fallback : selector(l10n);
+  }
 
   void _sendMessage(String text) {
     if (text.trim().isEmpty) return;
@@ -46,6 +52,18 @@ class _AiTabState extends State<AiTab> {
 
   @override
   Widget build(BuildContext context) {
+    final aiTitle = _tr('Activly AI', (l10n) => l10n.aiTitle);
+    final initialMessage = _tr(
+      _messages.first,
+      (l10n) => l10n.aiInitialMessage,
+    );
+    final askAnything = _tr('Ask anything...', (l10n) => l10n.aiAskAnything);
+    final suggestions = [
+      _tr(_suggestions[0], (l10n) => l10n.aiSuggestionCoreWorkout),
+      _tr(_suggestions[1], (l10n) => l10n.aiSuggestionPostTraining),
+      _tr(_suggestions[2], (l10n) => l10n.aiSuggestionSleep),
+    ];
+
     return SafeArea(
       bottom: false,
       child: Column(
@@ -57,8 +75,8 @@ class _AiTabState extends State<AiTab> {
               children: [
                 const Icon(Icons.auto_awesome_outlined, color: Color(0xFFC084FC), size: 28),
                 const SizedBox(width: 8),
-                const Text(
-                  'Activly AI',
+                Text(
+                  aiTitle,
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -75,7 +93,8 @@ class _AiTabState extends State<AiTab> {
               separatorBuilder: (context, index) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
                 final isBot = index == 0; // Simple logic since we only send user messages after initially
-                return _buildMessageBubble(_messages[index], isBot);
+                final text = isBot ? initialMessage : _messages[index];
+                return _buildMessageBubble(text, isBot);
               },
             ),
           ),
@@ -86,7 +105,7 @@ class _AiTabState extends State<AiTab> {
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 child: Row(
-                  children: _suggestions.map((suggestion) {
+                  children: suggestions.map((suggestion) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 12),
                       child: Material(
@@ -136,15 +155,15 @@ class _AiTabState extends State<AiTab> {
                       style: const TextStyle(fontSize: 15),
                       textInputAction: TextInputAction.send,
                       onSubmitted: _sendMessage,
-                      decoration: const InputDecoration(
-                        hintText: 'Ask anything...',
-                        hintStyle: TextStyle(
+                      decoration: InputDecoration(
+                        hintText: askAnything,
+                        hintStyle: const TextStyle(
                           color: Colors.white38,
                           fontSize: 15,
                         ),
                         border: InputBorder.none,
                         isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 8),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8),
                       ),
                     ),
                   ),

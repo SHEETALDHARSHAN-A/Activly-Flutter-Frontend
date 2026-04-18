@@ -6,6 +6,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:activly/l10n/app_localizations.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,10 +41,87 @@ void runActivlyApp() {
   runApp(const ActivlyApp());
 }
 
-class ActivlyApp extends StatelessWidget {
+class ActivlyApp extends StatefulWidget {
   const ActivlyApp({super.key, this.enableVideos = true});
 
   final bool enableVideos;
+
+  @override
+  State<ActivlyApp> createState() => _ActivlyAppState();
+}
+
+class _ActivlyAppState extends State<ActivlyApp> {
+  static const String _localePreferenceKey = 'app.locale';
+
+  late Locale _locale;
+
+  Locale? _supportedLocaleForLanguageCode(String? languageCode) {
+    if (languageCode == null) {
+      return null;
+    }
+
+    for (final locale in AppLocalizations.supportedLocales) {
+      if (locale.languageCode == languageCode) {
+        return locale;
+      }
+    }
+
+    return null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _locale =
+        _supportedLocaleForLanguageCode(
+          WidgetsBinding.instance.platformDispatcher.locale.languageCode,
+        ) ??
+        const Locale('en');
+
+    unawaited(_restoreLocalePreference());
+  }
+
+  Future<void> _restoreLocalePreference() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final storedLanguageCode = prefs.getString(_localePreferenceKey);
+      final storedLocale = _supportedLocaleForLanguageCode(storedLanguageCode);
+
+      if (storedLocale == null || !mounted) {
+        return;
+      }
+
+      if (storedLocale.languageCode != _locale.languageCode) {
+        setState(() {
+          _locale = storedLocale;
+        });
+      }
+    } catch (_) {
+      // Keep the in-memory locale when preference restore fails.
+    }
+  }
+
+  Future<void> _setLocale(Locale locale) async {
+    final nextLocale =
+        _supportedLocaleForLanguageCode(locale.languageCode) ??
+        const Locale('en');
+
+    if (nextLocale.languageCode == _locale.languageCode) {
+      return;
+    }
+
+    setState(() {
+      _locale = nextLocale;
+    });
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_localePreferenceKey, nextLocale.languageCode);
+    } catch (_) {
+      // Keep runtime locale even if persistence fails.
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +130,14 @@ class ActivlyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Activly',
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: _locale,
       theme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: kColorBlack,
@@ -66,7 +153,11 @@ class ActivlyApp extends StatelessWidget {
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         scrollbars: false,
       ),
-      home: ActivlyShell(enableVideos: enableVideos),
+      home: ActivlyShell(
+        enableVideos: widget.enableVideos,
+        appLocale: _locale,
+        onLocaleChanged: _setLocale,
+      ),
     );
   }
 }

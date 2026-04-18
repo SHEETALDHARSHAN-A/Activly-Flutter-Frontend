@@ -3,15 +3,69 @@ part of 'package:activly/activly_app.dart';
 class HomeTab extends StatelessWidget {
   const HomeTab({
     super.key,
-    required this.t,
     required this.onSeeAll,
   });
 
-  final TranslationCopy t;
   final VoidCallback onSeeAll;
+
+  String _tr(
+    BuildContext context,
+    String fallback,
+    String Function(AppLocalizations l10n) selector,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    return l10n == null ? fallback : selector(l10n);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final goodMorning = _tr(context, 'Good Morning,', (l10n) => l10n.homeGoodMorning);
+    final dailyChallenge = _tr(context, 'DAILY CHALLENGE', (l10n) => l10n.homeDailyChallenge);
+    final challengeTitle = _tr(context, 'Full Body Power', (l10n) => l10n.homeChallengeTitle);
+    final challengeSubtitle = _tr(
+      context,
+      "Join 2,450 others in today's challenge",
+      (l10n) => l10n.homeChallengeSubtitle,
+    );
+    final startNow = _tr(context, 'Start Now', (l10n) => l10n.homeStartNow);
+    final featured = _tr(context, 'Featured', (l10n) => l10n.homeFeatured);
+    final seeAll = _tr(context, 'See All', (l10n) => l10n.homeSeeAll);
+    final recommendedForYou = _tr(
+      context,
+      'Recommended for you',
+      (l10n) => l10n.homeRecommendedForYou,
+    );
+    final featuredCardOneTitle = _tr(
+      context,
+      'Morning Yoga Flow',
+      (l10n) => l10n.homeFeaturedCardOneTitle,
+    );
+    final featuredCardOneCategory = _tr(
+      context,
+      'WELLNESS',
+      (l10n) => l10n.homeFeaturedCardOneCategory,
+    );
+    final featuredCardOneDuration = _tr(
+      context,
+      '15 min',
+      (l10n) => l10n.homeFeaturedCardOneDuration,
+    );
+    final featuredCardTwoTitle = _tr(
+      context,
+      'HIIT Core Crusher',
+      (l10n) => l10n.homeFeaturedCardTwoTitle,
+    );
+    final featuredCardTwoCategory = _tr(
+      context,
+      'FITNESS',
+      (l10n) => l10n.homeFeaturedCardTwoCategory,
+    );
+    final featuredCardTwoDuration = _tr(
+      context,
+      '30 min',
+      (l10n) => l10n.homeFeaturedCardTwoDuration,
+    );
+
     return SafeArea(
       bottom: false,
       child: ListView(
@@ -25,8 +79,8 @@ class HomeTab extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Good Morning,',
+                    Text(
+                      goodMorning,
                       style: TextStyle(
                         color: Colors.white70,
                         fontSize: 16,
@@ -77,22 +131,22 @@ class HomeTab extends StatelessWidget {
                     color: Colors.white24,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Text(
-                    'DAILY CHALLENGE',
+                  child: Text(
+                    dailyChallenge,
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1),
                   ),
                 ),
                 const Spacer(),
-                const Text(
-                  'Full Body Power',
+                Text(
+                  challengeTitle,
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
-                const Text(
-                  "Join 2,450 others in today's challenge",
+                Text(
+                  challengeSubtitle,
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.white70,
@@ -110,14 +164,14 @@ class HomeTab extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.play_arrow, color: Colors.black, size: 18),
-                          SizedBox(width: 4),
+                          const Icon(Icons.play_arrow, color: Colors.black, size: 18),
+                          const SizedBox(width: 4),
                           Text(
-                            'Start Now',
-                            style: TextStyle(
+                            startNow,
+                            style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
                             ),
@@ -134,12 +188,12 @@ class HomeTab extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
                   Icon(Icons.trending_up, color: Colors.white54, size: 20),
                   SizedBox(width: 8),
                   Text(
-                    'Featured',
+                    featured,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -152,7 +206,7 @@ class HomeTab extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      'See All',
+                      seeAll,
                       style: TextStyle(
                         color: Colors.white54,
                         fontSize: 13,
@@ -172,24 +226,24 @@ class HomeTab extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 _buildFeaturedCard(
-                  title: 'Morning Yoga Flow',
-                  category: 'WELLNESS',
-                  duration: '15 min',
+                  title: featuredCardOneTitle,
+                  category: featuredCardOneCategory,
+                  duration: featuredCardOneDuration,
                   imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400',
                 ),
                 const SizedBox(width: 16),
                 _buildFeaturedCard(
-                  title: 'HIIT Core Crusher',
-                  category: 'FITNESS',
-                  duration: '30 min',
+                  title: featuredCardTwoTitle,
+                  category: featuredCardTwoCategory,
+                  duration: featuredCardTwoDuration,
                   imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400',
                 ),
               ],
             ),
           ),
           const SizedBox(height: 32),
-          const Text(
-            'Recommended for you',
+          Text(
+            recommendedForYou,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

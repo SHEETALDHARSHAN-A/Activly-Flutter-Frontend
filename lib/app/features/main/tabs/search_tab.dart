@@ -19,12 +19,13 @@ class _SearchTabState extends State<SearchTab> {
     'Recipes',
   ];
 
-  final List<String> _recentSearches = [
-    'Core Workout',
-    'Yoga for Beginners',
-    'Healthy Recipes',
-    'Meditation',
-  ];
+  String _tr(
+    String fallback,
+    String Function(AppLocalizations l10n) selector,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    return l10n == null ? fallback : selector(l10n);
+  }
 
   @override
   void dispose() {
@@ -34,13 +35,33 @@ class _SearchTabState extends State<SearchTab> {
 
   @override
   Widget build(BuildContext context) {
+    final title = _tr('Search', (l10n) => l10n.searchTitle);
+    final hint = _tr('Workouts, recipes, articles...', (l10n) => l10n.searchHint);
+    final recentSearchesTitle = _tr(
+      'RECENT SEARCHES',
+      (l10n) => l10n.searchRecentSearches,
+    );
+    final filters = [
+      _tr(_filters[0], (l10n) => l10n.searchFilterAll),
+      _tr(_filters[1], (l10n) => l10n.searchFilterFitness),
+      _tr(_filters[2], (l10n) => l10n.searchFilterMindfulness),
+      _tr(_filters[3], (l10n) => l10n.searchFilterNutrition),
+      _tr(_filters[4], (l10n) => l10n.searchFilterRecipes),
+    ];
+    final recentSearches = [
+      _tr('Core Workout', (l10n) => l10n.searchRecentCoreWorkout),
+      _tr('Yoga for Beginners', (l10n) => l10n.searchRecentYogaBeginners),
+      _tr('Healthy Recipes', (l10n) => l10n.searchRecentHealthyRecipes),
+      _tr('Meditation', (l10n) => l10n.searchRecentMeditation),
+    ];
+
     return SafeArea(
       bottom: false,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(24, 24, 24, 120),
         children: [
-          const Text(
-            'Search',
+          Text(
+            title,
             style: TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -51,7 +72,7 @@ class _SearchTabState extends State<SearchTab> {
             controller: _searchController,
             style: const TextStyle(fontSize: 16),
             decoration: InputDecoration(
-              hintText: 'Workouts, recipes, articles...',
+              hintText: hint,
               hintStyle: TextStyle(
                 color: Colors.white.withValues(alpha: 0.4),
                 fontSize: 14,
@@ -88,7 +109,7 @@ class _SearchTabState extends State<SearchTab> {
             height: 36,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: _filters.length + 1,
+              itemCount: filters.length + 1,
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Padding(
@@ -147,7 +168,7 @@ class _SearchTabState extends State<SearchTab> {
                         ),
                         child: Center(
                           child: Text(
-                            _filters[filterIdx],
+                            filters[filterIdx],
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: isSelected
@@ -168,7 +189,7 @@ class _SearchTabState extends State<SearchTab> {
           ),
           const SizedBox(height: 32),
           Text(
-            'RECENT SEARCHES',
+            recentSearchesTitle,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -180,11 +201,11 @@ class _SearchTabState extends State<SearchTab> {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: _recentSearches.length,
+            itemCount: recentSearches.length,
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  _searchController.text = _recentSearches[index];
+                  _searchController.text = recentSearches[index];
                 },
                 borderRadius: BorderRadius.circular(8),
                 child: Padding(
@@ -198,7 +219,7 @@ class _SearchTabState extends State<SearchTab> {
                       ),
                       const SizedBox(width: 16),
                       Text(
-                        _recentSearches[index],
+                        recentSearches[index],
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,

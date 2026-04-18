@@ -57,6 +57,7 @@ class AiMatchOnboardingScreen extends StatefulWidget {
     this.onFindMatches,
     this.onSkip,
     this.onBack,
+    this.initialDetailsStep = 1,
     this.isInAppMode = false,
     this.showBottomNavInAppMode = true,
     this.showInAppBackButton = false,
@@ -69,6 +70,7 @@ class AiMatchOnboardingScreen extends StatefulWidget {
   final VoidCallback? onFindMatches;
   final VoidCallback? onSkip;
   final VoidCallback? onBack;
+  final int initialDetailsStep;
   final bool isInAppMode;
   final bool showBottomNavInAppMode;
   final bool showInAppBackButton;
@@ -123,6 +125,8 @@ class _AiMatchOnboardingScreenState extends State<AiMatchOnboardingScreen> {
   @override
   void initState() {
     super.initState();
+
+    _detailsStep = widget.initialDetailsStep.clamp(1, 3);
 
     _kidNameController.addListener(_onFormChanged);
     _childAgeController.addListener(_onFormChanged);
@@ -3892,6 +3896,8 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                   Expanded(
                     child: Text(
                       '$status â€¢ $scorePercent%',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.plusJakartaSans(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
@@ -3899,15 +3905,21 @@ class _AiKidLiveProfileCardState extends State<_AiKidLiveProfileCard> {
                       ),
                     ),
                   ),
-                  Text(
-                    savedAtLabel ??
-                        (isArabic
-                            ? 'Ø§Ù†Ù‚Ø± Ù„Ù„Ø§Ù†ØªÙ‚Ø§Ù„ Ø¨ÙŠÙ† Ø§Ù„Ù…Ù„Ø®Øµ ÙˆØ§Ù„Ù†ØµÙŠØ­Ø©'
-                            : 'Tap to switch summary and hint'),
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 10.5,
-                      fontWeight: FontWeight.w600,
-                      color: _aiMutedText(context),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      savedAtLabel ??
+                          (isArabic
+                              ? 'Ø§Ù†Ù‚Ø± Ù„Ù„Ø§Ù†ØªÙ‚Ø§Ù„ Ø¨ÙŠÙ† Ø§Ù„Ù…Ù„Ø®Øµ ÙˆØ§Ù„Ù†ØµÙŠØ­Ø©'
+                              : 'Tap to switch summary and hint'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.w600,
+                        color: _aiMutedText(context),
+                      ),
                     ),
                   ),
                 ],

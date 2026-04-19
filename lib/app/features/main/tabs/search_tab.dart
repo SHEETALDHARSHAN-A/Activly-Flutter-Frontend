@@ -19,10 +19,7 @@ class _SearchTabState extends State<SearchTab> {
     'Recipes',
   ];
 
-  String _tr(
-    String fallback,
-    String Function(AppLocalizations l10n) selector,
-  ) {
+  String _tr(String fallback, String Function(AppLocalizations l10n) selector) {
     final l10n = AppLocalizations.of(context);
     return l10n == null ? fallback : selector(l10n);
   }
@@ -36,7 +33,10 @@ class _SearchTabState extends State<SearchTab> {
   @override
   Widget build(BuildContext context) {
     final title = _tr('Search', (l10n) => l10n.searchTitle);
-    final hint = _tr('Workouts, recipes, articles...', (l10n) => l10n.searchHint);
+    final hint = _tr(
+      'Workouts, recipes, articles...',
+      (l10n) => l10n.searchHint,
+    );
     final recentSearchesTitle = _tr(
       'RECENT SEARCHES',
       (l10n) => l10n.searchRecentSearches,
@@ -55,184 +55,200 @@ class _SearchTabState extends State<SearchTab> {
       _tr('Meditation', (l10n) => l10n.searchRecentMeditation),
     ];
 
-    return SafeArea(
-      bottom: false,
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 120),
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 28),
+      children: <Widget>[
+        Text(
+          title,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+            color: kAiColorTextDark,
           ),
-          const SizedBox(height: 24),
-          TextField(
+        ),
+        const SizedBox(height: 18),
+        Container(
+          decoration: BoxDecoration(
+            color: kAiColorInputFillLight,
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: kAiColorInputBorderLight),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                color: kAiColorPrimary.withValues(alpha: 0.10),
+                blurRadius: 20,
+                spreadRadius: -10,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: TextField(
             controller: _searchController,
-            style: const TextStyle(fontSize: 16),
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: kAiColorTextDark,
+            ),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: TextStyle(
-                color: Colors.white.withValues(alpha: 0.4),
+              hintStyle: GoogleFonts.plusJakartaSans(
+                color: kAiColorHint,
                 fontSize: 14,
+                fontWeight: FontWeight.w600,
               ),
-              prefixIcon: Icon(
-                Icons.search_outlined,
-                color: Colors.white.withValues(alpha: 0.4),
+              prefixIcon: const Icon(
+                Icons.search_rounded,
+                color: kAiColorTextMutedDark,
               ),
-              filled: true,
-              fillColor: const Color(0xFF141414),
-              contentPadding: const EdgeInsets.symmetric(vertical: 16),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(24),
-                borderSide: BorderSide(
-                  color: Colors.white.withValues(alpha: 0.1),
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(24),
-                borderSide: BorderSide(
-                  color: Colors.white.withValues(alpha: 0.1),
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(24),
-                borderSide: BorderSide(
-                  color: kColorPrimary.withValues(alpha: 0.5),
-                ),
-              ),
+              border: InputBorder.none,
+              contentPadding: const EdgeInsets.symmetric(vertical: 15),
             ),
           ),
-          const SizedBox(height: 24),
-          SizedBox(
-            height: 36,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: filters.length + 1,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: Container(
-                      width: 36,
-                      height: 36,
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 42,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: filters.length,
+            itemBuilder: (BuildContext context, int index) {
+              final isSelected = _selectedFilterIndex == index;
+
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(999),
+                    onTap: () {
+                      setState(() => _selectedFilterIndex = index);
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 220),
+                      curve: Curves.easeOut,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF141414),
-                        shape: BoxShape.circle,
+                        gradient: isSelected
+                            ? const LinearGradient(
+                                colors: <Color>[
+                                  kColorPrimary,
+                                  kColorPrimaryAccent,
+                                ],
+                              )
+                            : null,
+                        color: isSelected ? null : kColorWhite,
+                        borderRadius: BorderRadius.circular(999),
                         border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.1),
+                          color: isSelected
+                              ? Colors.transparent
+                              : kAiColorInputBorderLight,
                         ),
                       ),
-                      child: const Icon(
-                        Icons.filter_list,
-                        color: Colors.white70,
-                        size: 18,
-                      ),
-                    ),
-                  );
-                }
-
-                final filterIdx = index - 1;
-                final isSelected = _selectedFilterIndex == filterIdx;
-
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    curve: Curves.easeInOut,
-                    decoration: BoxDecoration(
-                      gradient: isSelected
-                          ? const LinearGradient(
-                              colors: [Color(0xFFC084FC), kColorPrimary],
-                            )
-                          : null,
-                      color: isSelected ? null : const Color(0xFF141414),
-                      borderRadius: BorderRadius.circular(20),
-                      border: isSelected
-                          ? null
-                          : Border.all(
-                              color: Colors.white.withValues(alpha: 0.1),
-                            ),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          _selectedFilterIndex = filterIdx;
-                        });
-                      },
-                      borderRadius: BorderRadius.circular(20),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                        ),
-                        child: Center(
-                          child: Text(
-                            filters[filterIdx],
-                            style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: isSelected
-                                  ? FontWeight.bold
-                                  : FontWeight.w500,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          if (index == 0) ...<Widget>[
+                            Icon(
+                              Icons.filter_list_rounded,
+                              size: 14,
                               color: isSelected
-                                  ? Colors.white
-                                  : Colors.white70,
+                                  ? kColorWhite
+                                  : kAiColorTextMutedDark,
+                            ),
+                            const SizedBox(width: 6),
+                          ],
+                          Text(
+                            filters[index],
+                            style: GoogleFonts.plusJakartaSans(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: isSelected
+                                  ? kColorWhite
+                                  : kAiColorTextDark,
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 32),
-          Text(
-            recentSearchesTitle,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: Colors.white.withValues(alpha: 0.5),
-              letterSpacing: 1.2,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: recentSearches.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  _searchController.text = recentSearches[index];
-                },
-                borderRadius: BorderRadius.circular(8),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.access_time,
-                        color: Colors.white.withValues(alpha: 0.5),
-                        size: 18,
-                      ),
-                      const SizedBox(width: 16),
-                      Text(
-                        recentSearches[index],
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               );
             },
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          recentSearchesTitle,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 11,
+            fontWeight: FontWeight.w800,
+            color: kAiColorTextMutedDark,
+            letterSpacing: 0.8,
+          ),
+        ),
+        const SizedBox(height: 12),
+        ...recentSearches.map((String item) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(16),
+                onTap: () {
+                  _searchController.text = item;
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: kColorWhite,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: kAiColorSurfaceBorder),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                          color: kAiColorSurfaceContainerLight,
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: const Icon(
+                          Icons.access_time_rounded,
+                          size: 16,
+                          color: kAiColorTextMutedDark,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          item,
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: kAiColorTextDark,
+                          ),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.north_west_rounded,
+                        size: 16,
+                        color: kAiColorTextMutedDark,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }),
+      ],
     );
   }
 }

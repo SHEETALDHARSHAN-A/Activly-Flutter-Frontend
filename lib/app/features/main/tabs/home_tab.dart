@@ -1,10 +1,7 @@
 part of 'package:activly/activly_app.dart';
 
 class HomeTab extends StatelessWidget {
-  const HomeTab({
-    super.key,
-    required this.onSeeAll,
-  });
+  const HomeTab({super.key, required this.onSeeAll});
 
   final VoidCallback onSeeAll;
 
@@ -19,9 +16,21 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final goodMorning = _tr(context, 'Good Morning,', (l10n) => l10n.homeGoodMorning);
-    final dailyChallenge = _tr(context, 'DAILY CHALLENGE', (l10n) => l10n.homeDailyChallenge);
-    final challengeTitle = _tr(context, 'Full Body Power', (l10n) => l10n.homeChallengeTitle);
+    final goodMorning = _tr(
+      context,
+      'Good Morning,',
+      (l10n) => l10n.homeGoodMorning,
+    );
+    final dailyChallenge = _tr(
+      context,
+      'DAILY CHALLENGE',
+      (l10n) => l10n.homeDailyChallenge,
+    );
+    final challengeTitle = _tr(
+      context,
+      'Full Body Power',
+      (l10n) => l10n.homeChallengeTitle,
+    );
     final challengeSubtitle = _tr(
       context,
       "Join 2,450 others in today's challenge",
@@ -66,191 +75,326 @@ class HomeTab extends StatelessWidget {
       (l10n) => l10n.homeFeaturedCardTwoDuration,
     );
 
-    return SafeArea(
-      bottom: false,
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 120),
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      goodMorning,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    ShaderMask(
-                      shaderCallback: (bounds) => const LinearGradient(
-                        colors: [Color(0xFFE2B0FF), Color(0xFF9F44D3)],
-                      ).createShader(bounds),
-                      child: const Text(
-                        'Alex',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 28),
+      children: <Widget>[
+        _buildWelcomeHeader(goodMorning: goodMorning),
+        const SizedBox(height: 18),
+        _buildChallengeCard(
+          dailyChallenge: dailyChallenge,
+          challengeTitle: challengeTitle,
+          challengeSubtitle: challengeSubtitle,
+          startNow: startNow,
+        ),
+        const SizedBox(height: 22),
+        _buildSectionHeader(
+          title: featured,
+          trailingLabel: seeAll,
+          onTrailingTap: onSeeAll,
+        ),
+        const SizedBox(height: 14),
+        SizedBox(
+          height: 246,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            children: <Widget>[
+              _buildFeaturedCard(
+                title: featuredCardOneTitle,
+                category: featuredCardOneCategory,
+                duration: featuredCardOneDuration,
+                imageUrl:
+                    'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400',
               ),
-              const CircleAvatar(
-                radius: 20,
-                backgroundImage: NetworkImage('https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&q=80&w=100'),
-              )
+              const SizedBox(width: 14),
+              _buildFeaturedCard(
+                title: featuredCardTwoTitle,
+                category: featuredCardTwoCategory,
+                duration: featuredCardTwoDuration,
+                imageUrl:
+                    'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400',
+              ),
             ],
           ),
-          const SizedBox(height: 32),
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              image: const DecorationImage(
-                image: NetworkImage('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=600'),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Colors.black45, BlendMode.darken),
-              ),
-            ),
-            padding: const EdgeInsets.all(24),
+        ),
+        const SizedBox(height: 22),
+        Text(
+          recommendedForYou,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+            color: kAiColorTextDark,
+          ),
+        ),
+        const SizedBox(height: 12),
+        _buildRecommendationTile(
+          title: featuredCardOneTitle,
+          subtitle: challengeSubtitle,
+          icon: Icons.play_circle_fill_rounded,
+          imageUrl:
+              'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400',
+        ),
+        const SizedBox(height: 10),
+        _buildRecommendationTile(
+          title: featuredCardTwoTitle,
+          subtitle: featuredCardTwoDuration,
+          icon: Icons.auto_awesome_rounded,
+          imageUrl:
+              'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWelcomeHeader({required String goodMorning}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+      decoration: BoxDecoration(
+        color: kColorWhite.withValues(alpha: 0.92),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: kAiColorSurfaceBorder),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: kAiColorPrimary.withValues(alpha: 0.12),
+            blurRadius: 24,
+            spreadRadius: -10,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white24,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(
-                    dailyChallenge,
-                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1),
+              children: <Widget>[
+                Text(
+                  goodMorning,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: kAiColorTextMutedDark,
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 3),
+                ShaderMask(
+                  shaderCallback: (Rect bounds) {
+                    return const LinearGradient(
+                      colors: <Color>[kColorPrimary, kColorPrimaryAccent],
+                    ).createShader(bounds);
+                  },
+                  child: Text(
+                    'Alex',
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 27,
+                      fontWeight: FontWeight.w800,
+                      color: kColorWhite,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: const LinearGradient(
+                colors: <Color>[kColorPrimary, kColorPrimaryAccent],
+              ),
+            ),
+            child: const CircleAvatar(
+              radius: 24,
+              backgroundImage: NetworkImage(
+                'https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&q=80&w=100',
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildChallengeCard({
+    required String dailyChallenge,
+    required String challengeTitle,
+    required String challengeSubtitle,
+    required String startNow,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: kColorWhite,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: kAiColorSurfaceBorder),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: kAiColorPrimary.withValues(alpha: 0.14),
+            blurRadius: 34,
+            spreadRadius: -12,
+            offset: const Offset(0, 16),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          SizedBox(
+            height: 156,
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                Image.network(
+                  'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=600',
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  top: 14,
+                  left: 14,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: kColorBlack.withValues(alpha: 0.40),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      dailyChallenge,
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        color: kColorWhite,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 Text(
                   challengeTitle,
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                    color: kAiColorTextDark,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   challengeSubtitle,
-                  style: TextStyle(
+                  style: GoogleFonts.plusJakartaSans(
                     fontSize: 13,
-                    color: Colors.white70,
+                    fontWeight: FontWeight.w600,
+                    color: kAiColorTextMutedDark,
                   ),
                 ),
-                const SizedBox(height: 16),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(Icons.play_arrow, color: Colors.black, size: 18),
-                          const SizedBox(width: 4),
-                          Text(
-                            startNow,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
+                const SizedBox(height: 14),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: <Color>[kColorPrimary, kColorPrimaryAccent],
+                    ),
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(22),
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 10,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const Icon(
+                              Icons.play_arrow_rounded,
+                              color: kColorWhite,
+                              size: 18,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 4),
+                            Text(
+                              startNow,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
+                                color: kColorWhite,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(height: 32),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.trending_up, color: Colors.white54, size: 20),
-                  SizedBox(width: 8),
-                  Text(
-                    featured,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              GestureDetector(
-                onTap: onSeeAll,
-                child: Row(
-                  children: [
-                    Text(
-                      seeAll,
-                      style: TextStyle(
-                        color: Colors.white54,
-                        fontSize: 13,
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    const Icon(Icons.arrow_forward, color: Colors.white54, size: 14),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 240,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                _buildFeaturedCard(
-                  title: featuredCardOneTitle,
-                  category: featuredCardOneCategory,
-                  duration: featuredCardOneDuration,
-                  imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400',
-                ),
-                const SizedBox(width: 16),
-                _buildFeaturedCard(
-                  title: featuredCardTwoTitle,
-                  category: featuredCardTwoCategory,
-                  duration: featuredCardTwoDuration,
-                  imageUrl: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400',
                 ),
               ],
-            ),
-          ),
-          const SizedBox(height: 32),
-          Text(
-            recommendedForYou,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSectionHeader({
+    required String title,
+    required String trailingLabel,
+    required VoidCallback onTrailingTap,
+  }) {
+    return Row(
+      children: <Widget>[
+        const Icon(Icons.auto_graph_rounded, color: kAiColorPrimary, size: 20),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            title,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: kAiColorTextDark,
+            ),
+          ),
+        ),
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: onTrailingTap,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    trailingLabel,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: kAiColorTextMutedDark,
+                    ),
+                  ),
+                  const SizedBox(width: 2),
+                  const Icon(
+                    Icons.chevron_right_rounded,
+                    color: kAiColorTextMutedDark,
+                    size: 16,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -261,84 +405,153 @@ class HomeTab extends StatelessWidget {
     required String imageUrl,
   }) {
     return Container(
-      width: 200,
+      width: 206,
       decoration: BoxDecoration(
-        color: const Color(0xFF141414),
-        borderRadius: BorderRadius.circular(20),
+        color: kColorWhite,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: kAiColorSurfaceBorder),
       ),
       clipBehavior: Clip.antiAlias,
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 140,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(imageUrl),
-                    fit: BoxFit.cover,
-                    colorFilter: const ColorFilter.mode(Colors.black26, BlendMode.darken),
-                  ),
-                ),
-                alignment: Alignment.topRight,
-                padding: const EdgeInsets.all(12),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.timer_outlined, color: Colors.white, size: 12),
-                      const SizedBox(width: 4),
-                      Text(
-                        duration,
-                        style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      category,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                        color: Colors.white54,
-                      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 144,
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                Image.network(imageUrl, fit: BoxFit.cover),
+                Positioned(
+                  top: 12,
+                  right: 12,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 9,
+                      vertical: 5,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                    decoration: BoxDecoration(
+                      color: kColorBlack.withValues(alpha: 0.48),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  ],
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Icon(
+                          Icons.timer_outlined,
+                          color: kColorWhite,
+                          size: 12,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          duration,
+                          style: GoogleFonts.plusJakartaSans(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            color: kColorWhite,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Positioned.fill(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(20),
-              ),
+              ],
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  category,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.6,
+                    color: kAiColorTextMutedDark,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: kAiColorTextDark,
+                    height: 1.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecommendationTile({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required String imageUrl,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: kColorWhite,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: kAiColorSurfaceBorder),
+      ),
+      child: Row(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: Image.network(
+              imageUrl,
+              width: 74,
+              height: 74,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: kAiColorTextDark,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: kAiColorTextMutedDark,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: kAiColorPrimary.withValues(alpha: 0.14),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: kAiColorPrimary, size: 18),
           ),
         ],
       ),

@@ -34,7 +34,6 @@ part 'app/features/main/main_screen.dart';
 part 'app/features/main/featured_all_screen.dart';
 part 'app/features/main/tabs/home_tab.dart';
 part 'app/features/main/tabs/search_tab.dart';
-part 'app/features/main/tabs/explore_tab.dart';
 part 'app/features/main/tabs/ai_tab.dart';
 part 'app/features/main/tabs/profile_tab.dart';
 

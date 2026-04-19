@@ -6,11 +6,13 @@ class MatchResultsScreen extends StatefulWidget {
     required this.language,
     required this.onToggleLanguage,
     required this.onBack,
+    required this.onNavigateToMainTab,
   });
 
   final AppLanguage language;
   final VoidCallback onToggleLanguage;
   final VoidCallback onBack;
+  final ValueChanged<int> onNavigateToMainTab;
 
   @override
   State<MatchResultsScreen> createState() => _MatchResultsScreenState();
@@ -18,8 +20,7 @@ class MatchResultsScreen extends StatefulWidget {
 
 class _MatchResultsScreenState extends State<MatchResultsScreen> {
   int _selectedFilterIndex = 0;
-  int _cardStartIndex = 0;
-  bool _hasSwipedFirstCard = false;
+  int _activeSliderDotIndex = 0;
   bool _showListLayout = false;
   bool _didPrecacheMatchPhotos = false;
 
@@ -63,31 +64,21 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
   ];
 
   List<_MatchCardData> get _orderedCards {
-    if (_sampleCards.isEmpty) {
-      return const <_MatchCardData>[];
-    }
-
-    return List<_MatchCardData>.generate(_sampleCards.length, (int index) {
-      final sourceIndex = (_cardStartIndex + index) % _sampleCards.length;
-      return _sampleCards[sourceIndex];
-    }, growable: false);
+    return _sampleCards;
   }
 
-  void _showNextCard({
-    required bool swipedRight,
-    bool markSwipeHintConsumed = false,
-  }) {
+  void _onSliderPageChanged(int pageIndex) {
     if (_sampleCards.isEmpty) {
       return;
     }
 
-    final step = swipedRight ? 1 : 1;
+    final normalizedIndex = pageIndex % _sampleCards.length;
+    if (normalizedIndex == _activeSliderDotIndex) {
+      return;
+    }
 
     setState(() {
-      _cardStartIndex = (_cardStartIndex + step) % _sampleCards.length;
-      if (markSwipeHintConsumed) {
-        _hasSwipedFirstCard = true;
-      }
+      _activeSliderDotIndex = normalizedIndex;
     });
   }
 
@@ -150,30 +141,30 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
     );
   }
 
-  Widget _buildSwipeResultsContent({
+  Widget _buildSliderResultsContent({
     required double bottomInset,
     required bool isArabic,
   }) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.fromLTRB(20, 16, 20, 270 + bottomInset),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Center(
-            child: _MatchResultsCardStack(
-              cards: _orderedCards.take(3).toList(growable: false),
-              isArabic: isArabic,
-              onCardSwiped: (bool swipedRight) {
-                _showNextCard(
-                  swipedRight: swipedRight,
-                  markSwipeHintConsumed: true,
-                );
-              },
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final sliderHeight = (constraints.maxHeight - (170 + bottomInset))
+            .clamp(360.0, 590.0)
+            .toDouble();
+
+        return Padding(
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 138 + bottomInset),
+          child: Center(
+            child: SizedBox(
+              height: sliderHeight,
+              child: _MatchResultsCardSlider(
+                cards: _orderedCards,
+                isArabic: isArabic,
+                onPageChanged: _onSliderPageChanged,
+              ),
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -237,6 +228,53 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
       isArabic ? 'نتائج المطابقة' : 'Match Results',
       (l10n) => l10n.matchResultsTitle,
     );
+    final mainNavItems = <_MainNavEntry>[
+      _MainNavEntry(
+        index: 0,
+        icon: Icons.home_rounded,
+        label: _mrTr(
+          context,
+          isArabic ? 'الرئيسية' : 'Home',
+          (l10n) => l10n.mainNavHome,
+        ),
+      ),
+      _MainNavEntry(
+        index: 1,
+        icon: Icons.search_rounded,
+        label: _mrTr(
+          context,
+          isArabic ? 'بحث' : 'Search',
+          (l10n) => l10n.mainNavSearch,
+        ),
+      ),
+      _MainNavEntry(
+        index: 2,
+        icon: Icons.auto_awesome_rounded,
+        label: _mrTr(
+          context,
+          isArabic ? 'الذكاء الاصطناعي' : 'AI',
+          (l10n) => l10n.mainNavAi,
+        ),
+      ),
+      _MainNavEntry(
+        index: 3,
+        icon: Icons.explore_rounded,
+        label: _mrTr(
+          context,
+          isArabic ? 'استكشاف' : 'Explore',
+          (l10n) => l10n.mainNavExplore,
+        ),
+      ),
+      _MainNavEntry(
+        index: 4,
+        icon: Icons.person_rounded,
+        label: _mrTr(
+          context,
+          isArabic ? 'الملف الشخصي' : 'Profile',
+          (l10n) => l10n.mainNavProfile,
+        ),
+      ),
+    ];
 
     return Theme(
       data: Theme.of(context).copyWith(brightness: Brightness.light),
@@ -305,7 +343,7 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
                                 bottomInset: bottomInset,
                                 isArabic: isArabic,
                               )
-                            : _buildSwipeResultsContent(
+                            : _buildSliderResultsContent(
                                 bottomInset: bottomInset,
                                 isArabic: isArabic,
                               ),
@@ -315,12 +353,12 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
                 ),
                 if (!_showListLayout)
                   Positioned(
-                    left: 24,
-                    right: 24,
-                    bottom: 118 + bottomInset,
-                    child: _MatchResultsSwipeControls(
-                      showHint: !_hasSwipedFirstCard,
-                      isArabic: isArabic,
+                    left: 0,
+                    right: 0,
+                    bottom: 126 + bottomInset,
+                    child: _MatchResultsSliderDots(
+                      activeIndex: _activeSliderDotIndex,
+                      itemCount: _sampleCards.length,
                     ),
                   ),
                 if (!_showListLayout)
@@ -339,9 +377,17 @@ class _MatchResultsScreenState extends State<MatchResultsScreen> {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  child: _MatchResultsBottomNav(
+                  child: _MainBottomNavigationBar(
                     bottomInset: bottomInset,
-                    isArabic: isArabic,
+                    currentIndex: 3,
+                    items: mainNavItems,
+                    onSelected: (int index) {
+                      if (index == 3) {
+                        return;
+                      }
+
+                      widget.onNavigateToMainTab(index);
+                    },
                   ),
                 ),
               ],
@@ -413,326 +459,129 @@ class _MatchFilterChip extends StatelessWidget {
   }
 }
 
-class _MatchResultsCardStack extends StatefulWidget {
-  const _MatchResultsCardStack({
+class _MatchResultsCardSlider extends StatefulWidget {
+  const _MatchResultsCardSlider({
     required this.cards,
     required this.isArabic,
-    required this.onCardSwiped,
+    required this.onPageChanged,
   });
 
   final List<_MatchCardData> cards;
   final bool isArabic;
-  final ValueChanged<bool> onCardSwiped;
+  final ValueChanged<int> onPageChanged;
 
   @override
-  State<_MatchResultsCardStack> createState() => _MatchResultsCardStackState();
+  State<_MatchResultsCardSlider> createState() =>
+      _MatchResultsCardSliderState();
 }
 
-class _MatchResultsCardStackState extends State<_MatchResultsCardStack>
-    with SingleTickerProviderStateMixin {
-  static const double _swipeThreshold = 110;
-  static const double _maxDragOffset = 260;
-  static const double _dismissDistance = 560;
-  static const SpringDescription _dismissSpring = SpringDescription(
-    mass: 0.9,
-    stiffness: 280,
-    damping: 27,
-  );
-  static const SpringDescription _returnSpring = SpringDescription(
-    mass: 1.0,
-    stiffness: 230,
-    damping: 24,
-  );
-
-  late final AnimationController _dragController;
-  bool _isDragging = false;
-  bool _isAnimatingOut = false;
-  int _incomingEntranceTick = 0;
-  String? _incomingTopCardKey;
-  bool _lastSwipeToRight = true;
-
-  double get _dragDx => _dragController.value;
+class _MatchResultsCardSliderState extends State<_MatchResultsCardSlider> {
+  static const int _loopSeedPage = 10000;
+  late final PageController _pageController;
+  late int _initialLoopPage;
 
   @override
   void initState() {
     super.initState();
-    _dragController = AnimationController.unbounded(vsync: this);
+    final cardCount = widget.cards.isEmpty ? 1 : widget.cards.length;
+    _initialLoopPage = _loopSeedPage - (_loopSeedPage % cardCount);
+    _pageController = PageController(
+      initialPage: _initialLoopPage,
+      viewportFraction: 0.86,
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || widget.cards.isEmpty) {
+        return;
+      }
+      widget.onPageChanged(_initialLoopPage % widget.cards.length);
+    });
   }
 
   @override
   void dispose() {
-    _dragController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
   @override
-  void didUpdateWidget(covariant _MatchResultsCardStack oldWidget) {
+  void didUpdateWidget(covariant _MatchResultsCardSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    final oldTopCardKey = oldWidget.cards.isEmpty
-        ? null
-        : _cardIdentity(oldWidget.cards.first);
-    final newTopCardKey = widget.cards.isEmpty
-        ? null
-        : _cardIdentity(widget.cards.first);
-
-    if (newTopCardKey != null && newTopCardKey != oldTopCardKey) {
-      _incomingTopCardKey = newTopCardKey;
-      _incomingEntranceTick++;
+    if (oldWidget.cards.length == widget.cards.length || widget.cards.isEmpty) {
+      return;
     }
+
+    final currentPage = _pageController.hasClients
+        ? (_pageController.page?.round() ?? _pageController.initialPage)
+        : _pageController.initialPage;
+    widget.onPageChanged(currentPage % widget.cards.length);
   }
 
-  String _cardIdentity(_MatchCardData card) {
-    return '${card.coachName}:${card.imageAssetPath}:${card.matchPercent}';
-  }
-
-  Widget _buildFlowingEntrance({
-    required Widget child,
-    required String cardKey,
-  }) {
-    final shouldAnimateEntrance =
-        _incomingTopCardKey == cardKey &&
-        !_isAnimatingOut &&
-        _dragDx.abs() < 0.1;
-
-    if (!shouldAnimateEntrance) {
-      return child;
-    }
-
-    return TweenAnimationBuilder<double>(
-      key: ValueKey<String>('flow-$cardKey-$_incomingEntranceTick'),
-      tween: Tween<double>(begin: 0, end: 1),
-      duration: const Duration(milliseconds: 260),
-      curve: Curves.easeOutCubic,
-      child: child,
-      builder: (BuildContext context, double t, Widget? animatedChild) {
-        final direction = _lastSwipeToRight ? -1.0 : 1.0;
-        final driftX = direction * 14 * (1 - t);
-        final driftY = 9 * (1 - t);
-        final arcLift = 6 * t * (1 - t);
-        final rotation = direction * 0.018 * (1 - t);
-        final flowScale = 0.97 + (0.03 * t);
-
-        return Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.identity()
-            ..translate(driftX, driftY - arcLift)
-            ..rotateZ(rotation)
-            ..scale(flowScale),
-          child: Opacity(opacity: 0.90 + (0.10 * t), child: animatedChild),
-        );
-      },
-    );
-  }
-
-  void _onPanStart(DragStartDetails details) {
-    if (_isAnimatingOut) {
-      return;
-    }
-
-    _dragController.stop();
-    if (!_isDragging) {
-      setState(() {
-        _isDragging = true;
-      });
-    }
-  }
-
-  void _onPanUpdate(DragUpdateDetails details) {
-    if (_isAnimatingOut) {
-      return;
-    }
-
-    _dragController.value = (_dragController.value + details.delta.dx)
-        .clamp(-_maxDragOffset, _maxDragOffset)
-        .toDouble();
-  }
-
-  Future<void> _animateOutCard({
-    required bool toRight,
-    required double velocityX,
-  }) async {
-    if (_isAnimatingOut) {
-      return;
-    }
-
-    _lastSwipeToRight = toRight;
-    setState(() {
-      _isAnimatingOut = true;
-      _isDragging = false;
-    });
-
-    final target = toRight ? _dismissDistance : -_dismissDistance;
-    final initialVelocity = (velocityX / 1000).clamp(-4.5, 4.5).toDouble();
-    final simulation = SpringSimulation(
-      _dismissSpring,
-      _dragController.value,
-      target,
-      initialVelocity,
-    );
-
-    try {
-      await _dragController.animateWith(simulation).orCancel;
-    } on TickerCanceled {
-      return;
-    }
-
-    if (!mounted) {
-      return;
-    }
-
-    _dragController.value = 0;
-    setState(() {
-      _isAnimatingOut = false;
-    });
-    widget.onCardSwiped(toRight);
-  }
-
-  Future<void> _animateBackToCenter({required double velocityX}) async {
-    if (_isDragging) {
-      setState(() {
-        _isDragging = false;
-      });
-    }
-
-    final initialVelocity = (velocityX / 1000).clamp(-3.5, 3.5).toDouble();
-    final simulation = SpringSimulation(
-      _returnSpring,
-      _dragController.value,
-      0,
-      initialVelocity,
-    );
-
-    try {
-      await _dragController.animateWith(simulation).orCancel;
-    } on TickerCanceled {
-      return;
-    }
-
-    if (!mounted) {
-      return;
-    }
-
-    if (_dragController.value.abs() < 0.1) {
-      _dragController.value = 0;
-    }
-  }
-
-  void _onPanEnd(DragEndDetails details) {
-    if (_isAnimatingOut) {
-      return;
-    }
-
-    final velocityX = details.velocity.pixelsPerSecond.dx;
-    final shouldSwipeRight = _dragDx > _swipeThreshold || velocityX > 900;
-    final shouldSwipeLeft = _dragDx < -_swipeThreshold || velocityX < -900;
-
-    if (shouldSwipeRight) {
-      unawaited(_animateOutCard(toRight: true, velocityX: velocityX));
-      return;
-    }
-
-    if (shouldSwipeLeft) {
-      unawaited(_animateOutCard(toRight: false, velocityX: velocityX));
-      return;
-    }
-
-    unawaited(_animateBackToCenter(velocityX: velocityX));
+  double _pageDeltaFor(int pageIndex) {
+    final currentPage = _pageController.hasClients
+        ? (_pageController.page ?? _pageController.initialPage.toDouble())
+        : _pageController.initialPage.toDouble();
+    return pageIndex - currentPage;
   }
 
   @override
   Widget build(BuildContext context) {
-    final cards = widget.cards.take(3).toList(growable: false);
-
-    return SizedBox(
-      width: 340,
-      height: 560,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: <Widget>[
-          for (int depth = cards.length - 1; depth >= 0; depth--)
-            _buildCardLayer(card: cards[depth], depth: depth),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCardLayer({required _MatchCardData card, required int depth}) {
-    final isTopCard = depth == 0;
-    final cardKey = _cardIdentity(card);
-    final horizontalInset = depth * 10.0;
-    final topInset = depth * 12.0;
-    final bottomInset = depth * -2.0;
-    final layerOpacity = depth == 0
-        ? 1.0
-        : depth == 1
-        ? 0.82
-        : 0.62;
-    final scale = depth == 0
-        ? 1.0
-        : depth == 1
-        ? 0.97
-        : 0.94;
-
-    Widget content = RepaintBoundary(
-      child: _MatchResultPrimaryCard(data: card, isArabic: widget.isArabic),
-    );
-
-    if (isTopCard) {
-      content = GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onPanStart: _onPanStart,
-        onPanUpdate: _onPanUpdate,
-        onPanEnd: _onPanEnd,
-        onPanCancel: () {
-          unawaited(_animateBackToCenter(velocityX: 0));
-        },
-        child: AnimatedBuilder(
-          animation: _dragController,
-          child: content,
-          builder: (BuildContext context, Widget? animatedChild) {
-            final normalizedDrag = (_dragDx / _maxDragOffset).clamp(-1.0, 1.0);
-            final rotation = normalizedDrag * 0.068;
-            final verticalLift = -6.0 * normalizedDrag.abs();
-            final dismissProgress = (_dragDx.abs() / _dismissDistance).clamp(
-              0.0,
-              1.0,
-            );
-            final topCardOpacity = _isAnimatingOut
-                ? (1.0 - (0.18 * dismissProgress)).clamp(0.80, 1.0).toDouble()
-                : 1.0;
-
-            return Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.translationValues(_dragDx, verticalLift, 0)
-                ..rotateZ(rotation),
-              child: Opacity(opacity: topCardOpacity, child: animatedChild),
-            );
-          },
-        ),
-      );
-
-      content = _buildFlowingEntrance(child: content, cardKey: cardKey);
+    if (widget.cards.isEmpty) {
+      return const SizedBox.shrink();
     }
 
-    content = Opacity(
-      opacity: layerOpacity,
-      child: Transform.scale(
-        scale: scale,
-        alignment: Alignment.topCenter,
-        child: isTopCard ? content : IgnorePointer(child: content),
-      ),
-    );
+    return SizedBox(
+      width: 360,
+      child: PageView.builder(
+        controller: _pageController,
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (BuildContext context, int pageIndex) {
+          final card = widget.cards[pageIndex % widget.cards.length];
 
-    return AnimatedPositioned(
-      key: ValueKey<String>('layer-$cardKey'),
-      duration: const Duration(milliseconds: 170),
-      curve: Curves.easeOut,
-      left: horizontalInset,
-      right: horizontalInset,
-      top: topInset,
-      bottom: bottomInset,
-      child: content,
+          return AnimatedBuilder(
+            animation: _pageController,
+            child: RepaintBoundary(
+              child: _MatchResultPrimaryCard(
+                data: card,
+                isArabic: widget.isArabic,
+              ),
+            ),
+            builder: (BuildContext context, Widget? animatedChild) {
+              final pageDelta = _pageDeltaFor(pageIndex);
+              final clampedDistance = pageDelta
+                  .abs()
+                  .clamp(0.0, 1.4)
+                  .toDouble();
+              final scale = (1 - (clampedDistance * 0.10))
+                  .clamp(0.86, 1.0)
+                  .toDouble();
+              final translateY = (clampedDistance * 18).toDouble();
+              final opacity = (1 - (clampedDistance * 0.22))
+                  .clamp(0.70, 1.0)
+                  .toDouble();
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+                child: Opacity(
+                  opacity: opacity,
+                  child: Transform.translate(
+                    offset: Offset(0, translateY),
+                    child: Transform.scale(
+                      scale: scale,
+                      alignment: Alignment.topCenter,
+                      child: animatedChild,
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        onPageChanged: (int pageIndex) {
+          widget.onPageChanged(pageIndex % widget.cards.length);
+        },
+      ),
     );
   }
 }
@@ -1110,7 +959,9 @@ class _MatchResultPrimaryCard extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: const Color(0xFFFFFBEB),
                               borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: const Color(0xFFFDE68A)),
+                              border: Border.all(
+                                color: const Color(0xFFFDE68A),
+                              ),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -1205,7 +1056,9 @@ class _MatchResultPrimaryCard extends StatelessWidget {
                                 ),
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
-                                    color: kAiColorPrimary.withValues(alpha: 0.25),
+                                    color: kAiColorPrimary.withValues(
+                                      alpha: 0.25,
+                                    ),
                                     blurRadius: 16,
                                     spreadRadius: -4,
                                     offset: const Offset(0, 8),
@@ -1615,62 +1468,62 @@ class _MatchMetricBlock extends StatelessWidget {
   }
 }
 
-class _MatchResultsSwipeControls extends StatelessWidget {
-  const _MatchResultsSwipeControls({
-    required this.showHint,
-    required this.isArabic,
+class _MatchResultsSliderDots extends StatelessWidget {
+  const _MatchResultsSliderDots({
+    required this.activeIndex,
+    required this.itemCount,
   });
 
-  final bool showHint;
-  final bool isArabic;
+  final int activeIndex;
+  final int itemCount;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      opacity: showHint ? 1 : 0,
-      duration: const Duration(milliseconds: 320),
-      curve: Curves.easeOut,
-      child: IgnorePointer(
-        ignoring: !showHint,
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: 74,
-              height: 74,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: kColorWhite,
-                border: Border.all(color: kAiColorInputBorderLight),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: kAiColorPrimary.withValues(alpha: 0.14),
-                    blurRadius: 24,
-                    spreadRadius: -8,
-                    offset: const Offset(0, 10),
-                  ),
-                ],
-              ),
-              child: const Icon(
-                Icons.swipe_rounded,
-                color: kAiColorPrimary,
-                size: 40,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              _mrTr(
-                context,
-                isArabic ? 'اسحب للمزيد' : 'SWIPE FOR MORE',
-                (l10n) => l10n.matchResultsSwipeForMore,
-              ),
-              style: GoogleFonts.plusJakartaSans(
-                fontSize: 10,
-                fontWeight: FontWeight.w800,
-                color: kAiColorPrimary,
-                letterSpacing: 0.4,
-              ),
+    if (itemCount <= 1) {
+      return const SizedBox.shrink();
+    }
+
+    return Center(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: kColorWhite.withValues(alpha: 0.9),
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(
+            color: kAiColorInputBorderLight.withValues(alpha: 0.85),
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: kAiColorPrimary.withValues(alpha: 0.12),
+              blurRadius: 24,
+              spreadRadius: -10,
+              offset: const Offset(0, 10),
             ),
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: List<Widget>.generate(itemCount, (int index) {
+              final selected = index == activeIndex;
+
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOut,
+                width: selected ? 18 : 8,
+                height: 8,
+                margin: EdgeInsetsDirectional.only(
+                  end: index == itemCount - 1 ? 0 : 6,
+                ),
+                decoration: BoxDecoration(
+                  color: selected
+                      ? kAiColorPrimary
+                      : kAiColorInputBorderLight.withValues(alpha: 0.9),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              );
+            }),
+          ),
         ),
       ),
     );
@@ -1681,10 +1534,12 @@ class _MatchResultsBottomNav extends StatelessWidget {
   const _MatchResultsBottomNav({
     required this.bottomInset,
     required this.isArabic,
+    required this.onHomeTap,
   });
 
   final double bottomInset;
   final bool isArabic;
+  final VoidCallback onHomeTap;
 
   @override
   Widget build(BuildContext context) {
@@ -1704,6 +1559,7 @@ class _MatchResultsBottomNav extends StatelessWidget {
               isArabic ? 'الرئيسية' : 'HOME',
               (l10n) => l10n.matchResultsNavHome,
             ),
+            onTap: onHomeTap,
           ),
           _MatchBottomNavItem(
             icon: Icons.search_rounded,
@@ -1741,17 +1597,18 @@ class _MatchBottomNavItem extends StatelessWidget {
     required this.icon,
     required this.label,
     this.selected = false,
+    this.onTap,
   });
 
   final IconData icon;
   final String label;
   final bool selected;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final color = selected ? kAiColorPrimary : _kAiMutedText;
-
-    return Column(
+    final content = Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
@@ -1776,6 +1633,22 @@ class _MatchBottomNavItem extends StatelessWidget {
           ),
         ),
       ],
+    );
+
+    if (onTap == null) {
+      return content;
+    }
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
+          child: content,
+        ),
+      ),
     );
   }
 }

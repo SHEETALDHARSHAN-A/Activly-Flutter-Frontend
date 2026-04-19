@@ -11,7 +11,7 @@ class _AiTabState extends State<AiTab> {
   final TextEditingController _promptController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final List<String> _messages = [
-    "Hi Alex! I'm your personal AI fitness coach. How can I help you reach your goals today?"
+    "Hi Alex! I'm your personal AI fitness coach. How can I help you reach your goals today?",
   ];
 
   final List<String> _suggestions = [
@@ -20,21 +20,26 @@ class _AiTabState extends State<AiTab> {
     'How to improve my sleep?',
   ];
 
-  String _tr(
-    String fallback,
-    String Function(AppLocalizations l10n) selector,
-  ) {
+  String _tr(String fallback, String Function(AppLocalizations l10n) selector) {
     final l10n = AppLocalizations.of(context);
     return l10n == null ? fallback : selector(l10n);
   }
 
   void _sendMessage(String text) {
-    if (text.trim().isEmpty) return;
+    if (text.trim().isEmpty) {
+      return;
+    }
+
     setState(() {
       _messages.add(text);
       _promptController.clear();
     });
+
     Future.delayed(const Duration(milliseconds: 100), () {
+      if (!_scrollController.hasClients) {
+        return;
+      }
+
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
@@ -64,131 +69,173 @@ class _AiTabState extends State<AiTab> {
       _tr(_suggestions[2], (l10n) => l10n.aiSuggestionSleep),
     ];
 
-    return SafeArea(
-      bottom: false,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: 34,
+                height: 34,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: kAiColorPrimary.withValues(alpha: 0.14),
+                ),
+                child: const Icon(
+                  Icons.auto_awesome_rounded,
+                  color: kAiColorPrimary,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Text(
+                aiTitle,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w800,
+                  color: kAiColorTextDark,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (_messages.length == 1)
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+            padding: const EdgeInsets.only(left: 20, bottom: 10),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                children: suggestions
+                    .map((String suggestion) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(999),
+                            onTap: () {
+                              _promptController.text = suggestion;
+                              _sendMessage(suggestion);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 9,
+                              ),
+                              decoration: BoxDecoration(
+                                color: kColorWhite,
+                                borderRadius: BorderRadius.circular(999),
+                                border: Border.all(
+                                  color: kAiColorInputBorderLight,
+                                ),
+                              ),
+                              child: Text(
+                                suggestion,
+                                style: GoogleFonts.plusJakartaSans(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: kAiColorTextDark,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    })
+                    .toList(growable: false),
+              ),
+            ),
+          ),
+        Expanded(
+          child: ListView.separated(
+            controller: _scrollController,
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+            physics: const BouncingScrollPhysics(),
+            itemCount: _messages.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(height: 12);
+            },
+            itemBuilder: (BuildContext context, int index) {
+              final isBot = index == 0;
+              final text = isBot ? initialMessage : _messages[index];
+              return _buildMessageBubble(text, isBot);
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 14),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            decoration: BoxDecoration(
+              color: kColorWhite.withValues(alpha: 0.95),
+              borderRadius: BorderRadius.circular(26),
+              border: Border.all(color: kAiColorInputBorderLight),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: kAiColorPrimary.withValues(alpha: 0.10),
+                  blurRadius: 18,
+                  spreadRadius: -9,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
             child: Row(
-              children: [
-                const Icon(Icons.auto_awesome_outlined, color: Color(0xFFC084FC), size: 28),
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    controller: _promptController,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: kAiColorTextDark,
+                    ),
+                    textInputAction: TextInputAction.send,
+                    onSubmitted: _sendMessage,
+                    decoration: InputDecoration(
+                      hintText: askAnything,
+                      hintStyle: GoogleFonts.plusJakartaSans(
+                        color: kAiColorHint,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      border: InputBorder.none,
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                    ),
+                  ),
+                ),
                 const SizedBox(width: 8),
-                Text(
-                  aiTitle,
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
+                DecoratedBox(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: <Color>[kColorPrimary, kColorPrimaryAccent],
+                    ),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(999),
+                      onTap: () => _sendMessage(_promptController.text),
+                      child: const Padding(
+                        padding: EdgeInsets.all(9),
+                        child: Icon(
+                          Icons.send_rounded,
+                          color: kColorWhite,
+                          size: 18,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Expanded(
-            child: ListView.separated(
-              controller: _scrollController,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              itemCount: _messages.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemBuilder: (context, index) {
-                final isBot = index == 0; // Simple logic since we only send user messages after initially
-                final text = isBot ? initialMessage : _messages[index];
-                return _buildMessageBubble(text, isBot);
-              },
-            ),
-          ),
-          if (_messages.length == 1) // Only show suggestions initially
-            Padding(
-              padding: const EdgeInsets.only(left: 24, bottom: 16),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                child: Row(
-                  children: suggestions.map((suggestion) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            _promptController.text = suggestion;
-                            _sendMessage(suggestion);
-                          },
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF1A1A1A),
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: Colors.white10),
-                            ),
-                            child: Text(
-                              suggestion,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Colors.white10),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _promptController,
-                      style: const TextStyle(fontSize: 15),
-                      textInputAction: TextInputAction.send,
-                      onSubmitted: _sendMessage,
-                      decoration: InputDecoration(
-                        hintText: askAnything,
-                        hintStyle: const TextStyle(
-                          color: Colors.white38,
-                          fontSize: 15,
-                        ),
-                        border: InputBorder.none,
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => _sendMessage(_promptController.text),
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF2A2A2A),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(Icons.send_outlined, color: Colors.white54, size: 18),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -196,33 +243,40 @@ class _AiTabState extends State<AiTab> {
     if (isBot) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
-            padding: const EdgeInsets.all(8),
-            decoration: const BoxDecoration(
-              color: Color(0xFF5521B5),
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
+              color: kAiColorPrimary.withValues(alpha: 0.16),
             ),
-            child: const Icon(Icons.smart_toy_outlined, color: Colors.white, size: 20),
+            child: const Icon(
+              Icons.smart_toy_outlined,
+              color: kAiColorPrimary,
+              size: 18,
+            ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 10),
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: const Color(0xFF141414),
+                color: kColorWhite,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(4),
                   topRight: Radius.circular(20),
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
-                border: Border.all(color: Colors.white10),
+                border: Border.all(color: kAiColorSurfaceBorder),
               ),
               child: Text(
                 text,
-                style: const TextStyle(
+                style: GoogleFonts.plusJakartaSans(
                   fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: kAiColorTextDark,
                   height: 1.5,
                 ),
               ),
@@ -233,24 +287,32 @@ class _AiTabState extends State<AiTab> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 48),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: kColorPrimary.withValues(alpha: 0.2),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(4),
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
+      padding: const EdgeInsets.only(left: 54),
+      child: Align(
+        alignment: AlignmentDirectional.centerEnd,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: <Color>[kColorPrimary, kColorPrimaryAccent],
+            ),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(4),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
           ),
-          border: Border.all(color: kColorPrimary.withValues(alpha: 0.5)),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 15,
-            height: 1.5,
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Text(
+              text,
+              style: GoogleFonts.plusJakartaSans(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: kColorWhite,
+                height: 1.4,
+              ),
+            ),
           ),
         ),
       ),

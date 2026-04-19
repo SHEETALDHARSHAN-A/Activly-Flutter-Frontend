@@ -26,6 +26,7 @@ class _ActivlyShellState extends State<ActivlyShell> {
   AppPage _loginBackTarget = AppPage.entry;
   bool _aiMatchOpenedFromSkip = false;
   int _aiMatchInitialStep = 1;
+  int _mainInitialTabIndex = 0;
 
   final List<bool> _videoError = List<bool>.filled(kVideoAssets.length, false);
   final List<VideoPlayerController?> _videoControllers =
@@ -262,6 +263,14 @@ class _ActivlyShellState extends State<ActivlyShell> {
     });
   }
 
+  void _openMainAtTab(int tabIndex) {
+    final normalizedIndex = tabIndex.clamp(0, 4).toInt();
+    setState(() {
+      _mainInitialTabIndex = normalizedIndex;
+      _activePage = AppPage.main;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
@@ -281,15 +290,16 @@ class _ActivlyShellState extends State<ActivlyShell> {
         return MainScreen(
           language: _language,
           onToggleLanguage: _toggleLanguage,
+          initialTabIndex: _mainInitialTabIndex,
           onSeeAllFeatured: () =>
               setState(() => _activePage = AppPage.featuredAll),
+          onOpenMatchResults: () =>
+              setState(() => _activePage = AppPage.matchResults),
         );
       }
 
       if (_activePage == AppPage.featuredAll) {
-        return FeaturedAllScreen(
-          onBack: () => setState(() => _activePage = AppPage.main),
-        );
+        return FeaturedAllScreen(onBack: () => _openMainAtTab(0));
       }
 
       if (_activePage == AppPage.landing) {
@@ -331,10 +341,8 @@ class _ActivlyShellState extends State<ActivlyShell> {
         return MatchResultsScreen(
           language: _language,
           onToggleLanguage: _toggleLanguage,
-          onBack: () => setState(() {
-            _aiMatchInitialStep = 3;
-            _activePage = AppPage.aiMatch;
-          }),
+          onBack: () => _openMainAtTab(0),
+          onNavigateToMainTab: _openMainAtTab,
         );
       }
 
